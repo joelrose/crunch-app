@@ -1,11 +1,26 @@
 import 'package:alpaca/routes.dart' as routes;
 import 'package:alpaca/theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  runApp(const AlpacaApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('de', 'DE'),
+      ],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en', 'US'),
+      useOnlyLangCode: true,
+      child: const AlpacaApp(),
+    ),
+  );
 }
 
 class AlpacaApp extends StatefulWidget {
@@ -29,6 +44,9 @@ class _AlpacaAppState extends State<AlpacaApp> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: routes.Router.generateRoute,
             initialRoute: routes.startRoute,

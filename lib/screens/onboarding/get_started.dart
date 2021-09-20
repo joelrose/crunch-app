@@ -1,6 +1,7 @@
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/onboarding/onboarding_wrapper.dart';
 import 'package:alpaca/shared/buttons.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class GetStartedScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Welcome aboard!',
+                  'get_started.welcome'.tr(),
                   style: theme.headline1,
                 ),
                 Padding(
@@ -38,13 +39,13 @@ class GetStartedScreen extends StatelessWidget {
                   ),
                 ),
                 ActionButton(
-                  buttonText: 'Get Started',
+                  buttonText: 'getStarted'.tr(),
                   onPressed: () =>
                       {Navigator.of(context).pushNamed(welcomeRoute)},
                   isPrimaryButton: false,
                 ),
                 ActionButton(
-                  buttonText: 'I already have an account',
+                  buttonText: 'iAlreadyHaveAnAccount'.tr(),
                   onPressed: () => {},
                 ),
               ],
