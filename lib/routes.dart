@@ -1,4 +1,4 @@
-import 'package:alpaca/screens/start.dart';
+import 'package:alpaca/screens/start/start.dart';
 import 'package:flutter/material.dart';
 
 const String startRoute = '/';

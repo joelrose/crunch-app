@@ -1,6 +1,7 @@
 import 'package:alpaca/routes.dart' as routes;
 import 'package:alpaca/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -27,7 +28,7 @@ class _AlpacaAppState extends State<AlpacaApp> {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(
+          return CupertinoApp(
             debugShowCheckedModeBanner: false,
             onGenerateRoute: routes.Router.generateRoute,
             initialRoute: routes.startRoute,

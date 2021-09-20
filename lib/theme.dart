@@ -1,18 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-ThemeData getThemeData(BuildContext context) {
-  return ThemeData(
-    fontFamily: 'Poppins',
-    bottomAppBarTheme: const BottomAppBarTheme(color: Colors.purple),
-    appBarTheme: AppBarTheme(
-      shadowColor: Theme.of(context).scaffoldBackgroundColor,
-      color: Colors.purple,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
-    ),
+CupertinoThemeData getThemeData(BuildContext context) {
+  return CupertinoThemeData(
     brightness: Brightness.light,
-    colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: Colors.purple,
+    textTheme: CupertinoTextThemeData(
+      textStyle: GoogleFonts.inter(
+        textStyle: const TextStyle(
+          color: Color.fromRGBO(43, 45, 66, 1),
+          letterSpacing: .5,
+        ),
+      ),
     ),
   );
 }
