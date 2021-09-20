@@ -1,17 +1,26 @@
+import 'package:alpaca/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-CupertinoThemeData getThemeData(BuildContext context) {
-  return CupertinoThemeData(
+ThemeData getThemeData(BuildContext context) {
+  return ThemeData(
     brightness: Brightness.light,
-    textTheme: CupertinoTextThemeData(
-      textStyle: GoogleFonts.inter(
-        textStyle: const TextStyle(
-          color: Color.fromRGBO(43, 45, 66, 1),
-          letterSpacing: .5,
-        ),
+    fontFamily: GoogleFonts.inter().fontFamily,
+    textTheme: const TextTheme(
+      headline1: TextStyle(
+        color: AlpacaColor.white100Color,
+        fontSize: 30,
+        fontWeight: FontWeight.w600,
+      ),
+      subtitle1: TextStyle(
+        color: AlpacaColor.white80Color,
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+      ),
+      bodyText2: TextStyle(
+        color: AlpacaColor.white80Color,
       ),
     ),
   );

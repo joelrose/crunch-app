@@ -28,7 +28,7 @@ class _AlpacaAppState extends State<AlpacaApp> {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          return CupertinoApp(
+          return MaterialApp(
             debugShowCheckedModeBanner: false,
             onGenerateRoute: routes.Router.generateRoute,
             initialRoute: routes.startRoute,

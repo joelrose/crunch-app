@@ -1,3 +1,4 @@
+import 'package:alpaca/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,18 +12,12 @@ Widget getSocialButton(
 }) {
   return CupertinoButton(
     onPressed: () => {},
-    padding: EdgeInsets.zero,
+    padding: const EdgeInsets.symmetric(vertical: 5),
     child: Container(
-      margin: const EdgeInsets.symmetric(horizontal: 18),
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(8),
-          topRight: Radius.circular(8),
-          bottomLeft: Radius.circular(8),
-          bottomRight: Radius.circular(8),
-        ),
-        color: backgroundWhite ? Colors.white : Colors.black,
+        borderRadius: BorderRadius.circular(8),
+        color: backgroundWhite ? AlpacaColor.white100Color : Colors.black,
       ),
       child: Row(
         children: <Widget>[
@@ -39,7 +34,7 @@ Widget getSocialButton(
             style: GoogleFonts.inter(
               color: backgroundWhite
                   ? const Color.fromRGBO(43, 45, 66, 1)
-                  : Colors.white,
+                  : AlpacaColor.white100Color,
               fontSize: 16,
               letterSpacing: 0,
               fontWeight: FontWeight.w600,
@@ -50,4 +45,68 @@ Widget getSocialButton(
       ),
     ),
   );
+}
+
+class _AlpacaButton extends StatelessWidget {
+  const _AlpacaButton({
+    Key? key,
+    required this.backgroundColor,
+    required this.textColor,
+    required this.buttonText,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final Color backgroundColor;
+  final Color textColor;
+  final String buttonText;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoButton(
+      onPressed: onPressed,
+      disabledColor: Colors.red,
+      color: backgroundColor,
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: SizedBox(
+        width: double.infinity,
+        child: Text(
+          buttonText,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.inter(
+            color: textColor,
+            fontSize: 16,
+            letterSpacing: 0,
+            fontWeight: FontWeight.w600,
+            height: 1,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ActionButton extends StatelessWidget {
+  const ActionButton({
+    Key? key,
+    this.isPrimaryButton = true,
+    required this.buttonText,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final bool isPrimaryButton;
+  final String buttonText;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return _AlpacaButton(
+      backgroundColor:
+          isPrimaryButton ? AlpacaColor.primary100 : AlpacaColor.white100Color,
+      textColor:
+          isPrimaryButton ? AlpacaColor.white100Color : AlpacaColor.primary100,
+      buttonText: buttonText,
+      onPressed: onPressed,
+    );
+  }
 }
