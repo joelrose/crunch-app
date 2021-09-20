@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "295391330962",
+    "project_id": "alpaca-91e4b",
+    "storage_bucket": "alpaca-91e4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295391330962:android:e6c4849f3c7c6d220edc4b",
+        "android_client_info": {
+          "package_name": "tech.getcrunch.crunch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295391330962-48npbbjg5vklkb9jd1o6tfmj5chjcmbc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6Vz5lQ7OwMBXxDGAFFzy-LTQjuwYhgjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295391330962-48npbbjg5vklkb9jd1o6tfmj5chjcmbc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "295391330962-au3si6q7mvj113a5f1os9d8eohfv9lt6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "tech.getcrunch.crunch"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
