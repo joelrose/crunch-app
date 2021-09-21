@@ -18,15 +18,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: AlpacaColor.primary100,
+      backgroundColor: AlpacaColor.white100Color,
       body: SafeArea(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 15),
-              child: Text('Authenticated!'),
-            ),
+            homeMain(),
             ActionButton(
               buttonText: 'Logout',
               onPressed: () async {
@@ -64,6 +62,197 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class homeMain extends StatelessWidget {
+  const homeMain({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          height: 113,
+          margin: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Spacer(),
+                  Container(
+                    height: 36,
+                    width: 36,
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(
+                            color: AlpacaColor.primary100, width: 3)),
+                  )
+                ],
+              ),
+              Container(
+                  width: double.infinity,
+                  height: 44,
+                  margin: const EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffF5F5F6),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.search,
+                          color: AlpacaColor.darkGreyColor,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 11),
+                          child: Text(
+                            'Search for food, stores or tags',
+                            style: TextStyle(color: AlpacaColor.darkGreyColor),
+                          ),
+                        )
+                      ],
+                    ),
+                  ))
+            ],
+          ),
+        ),
+        Divider(
+          height: 1,
+        ),
+        Container(
+          margin: const EdgeInsets.fromLTRB(18, 14, 18, 0),
+          width: double.infinity,
+          height: 123,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: AlpacaColor.primary100,
+          ),
+          child: Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Not sure what \nto grab?",
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                              color: AlpacaColor.white100Color,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Text("Lets find something together.",
+                            style: TextStyle(
+                                color: AlpacaColor.white100Color,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600))
+                      ]),
+                  Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(45),
+                      color: AlpacaColor.white100Color,
+                    ),
+                    child: Icon(
+                      Icons.arrow_forward_rounded,
+                      size: 19,
+                    ),
+                  )
+                ],
+              )),
+        ),
+        Container(
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Favourite stores",
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w700,
+                                  color: AlpacaColor.darkNavyColor)),
+                          Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: AlpacaColor.greyColor),
+                                  borderRadius: BorderRadius.circular(4)),
+                              child: Center(
+                                child: Text(
+                                  "View all",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: AlpacaColor.darkNavyColor),
+                                ),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Container(height: 18),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(18, 0, 0, 0),
+                      height: 194,
+                      child: ListView.separated(
+                          clipBehavior: Clip.none,
+                          scrollDirection: Axis.horizontal,
+                          separatorBuilder: (context, index) =>
+                              SizedBox(width: 16),
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              height: 194,
+                              width: 235,
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: AlpacaColor.white100Color,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: AlpacaColor.blackColor
+                                            .withOpacity(0.1),
+                                        spreadRadius: 2,
+                                        blurRadius: 10,
+                                        offset: Offset(3, 3))
+                                  ]),
+                              child: Column(
+                                children: [
+                                  Container(
+                                      width: double.infinity,
+                                      height: 123,
+                                      decoration: BoxDecoration(
+                                        color: AlpacaColor.greyColor,
+                                      ))
+                                ],
+                              ),
+                            );
+                          }),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 }
