@@ -1,6 +1,9 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/screens/onboarding/onboarding_wrapper.dart';
+import 'package:alpaca/services/auth_service.dart';
+import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,6 +16,8 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
+  final AuthService auth = locator<AuthService>();
+
   late TextEditingController _textController;
 
   @override
@@ -69,13 +74,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 TextField(
                   controller: _textController,
                   textInputAction: TextInputAction.send,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.phone,
                   autocorrect: false,
                   cursorColor: AlpacaColor.white100Color,
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
-                      onTap: () => {
+                      onTap: () async {
+                        final bool loggedIn = await auth.verifyNumber(
+                          _textController.text,
+                        );
 
+                        print(loggedIn);
                       },
                       child: const Icon(
                         Icons.arrow_forward,
@@ -135,11 +144,19 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   'Sign up with Google',
                   'assets/google-logo.svg',
                   MediaQuery.of(context).size.width,
+                  () async {
+                    final User? user = await auth.signInWithGoogle();
+                    debugPrint(user?.email);
+                  },
                 ),
                 getSocialButton(
                   'Sign up with Apple',
                   'assets/apple-logo.svg',
                   MediaQuery.of(context).size.width,
+                  () async {
+                    final User? user = await auth.signInWithApple();
+                    debugPrint(user?.email);
+                  },
                   backgroundWhite: false,
                 ),
                 const Padding(

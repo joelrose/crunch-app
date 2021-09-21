@@ -7,11 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 Widget getSocialButton(
   String buttonText,
   String assetPath,
-  double width, {
+  double width,
+  void Function() onPressed, {
   bool backgroundWhite = true,
 }) {
   return CupertinoButton(
-    onPressed: () => {},
+    onPressed: onPressed,
     padding: const EdgeInsets.symmetric(vertical: 5),
     child: Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
