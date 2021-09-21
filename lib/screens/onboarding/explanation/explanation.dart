@@ -1,13 +1,13 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/onboarding/onboarding_wrapper.dart';
+import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+class OnboardingExplanationScreen extends StatelessWidget {
+  const OnboardingExplanationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class WelcomeScreen extends StatelessWidget {
               ActionButton(
                 buttonText: 'Next',
                 onPressed: () =>
-                    {Navigator.of(context).pushNamed(createAccountRoute)},
+                    {Navigator.of(context).pushNamed(onboardingAccountRoute)},
                 isPrimaryButton: false,
               ),
             ],

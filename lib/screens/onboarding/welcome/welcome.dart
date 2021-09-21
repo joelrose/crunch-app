@@ -1,12 +1,12 @@
 import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/onboarding/onboarding_wrapper.dart';
+import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class GetStartedScreen extends StatelessWidget {
-  const GetStartedScreen({Key? key}) : super(key: key);
+class OnboardingWelcomeScreen extends StatelessWidget {
+  const OnboardingWelcomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +40,11 @@ class GetStartedScreen extends StatelessWidget {
                 ),
                 ActionButton(
                   buttonText: 'getStarted'.tr(),
-                  onPressed: () =>
-                      {Navigator.of(context).pushNamed(welcomeRoute)},
+                  onPressed: () => {
+                    Navigator.of(context).pushNamed(
+                      onboardingExplanationRoute,
+                    ),
+                  },
                   isPrimaryButton: false,
                 ),
                 ActionButton(

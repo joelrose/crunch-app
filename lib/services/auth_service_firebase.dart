@@ -23,7 +23,7 @@ class AuthServiceFirebase implements AuthService {
 
   @override
   Future<User?> get getUser => Future<User?>.value(_firebaseAuth.currentUser);
-  
+
   @override
   Stream<User?> get user => _firebaseAuth.authStateChanges();
 
@@ -143,28 +143,29 @@ class AuthServiceFirebase implements AuthService {
   }
 
   @override
-  Future<bool> verifyNumber(String number) async {
+  Future<void> verifyNumber(
+    String number,
+    void Function(String) verifyCallback,
+  ) async {
     try {
       await _firebaseAuth.verifyPhoneNumber(
         phoneNumber: number,
         codeSent: (String verificationId, int? resendToken) async {
-          // Update the UI - wait for the user to enter the SMS code
-          String smsCode = '999999';
-
+          verifyCallback(verificationId);
           // Create a PhoneAuthCredential with the code
-          final PhoneAuthCredential credential = PhoneAuthProvider.credential(
-              verificationId: verificationId, smsCode: smsCode);
+          // final PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          //   verificationId: verificationId,
+          //   smsCode: smsCode,
+          // );
 
-          // Sign the user in (or link) with the credential
-          await _firebaseAuth.currentUser!.linkWithCredential(credential);
+          // // Sign the user in (or link) with the credential
+          // await _firebaseAuth.currentUser!.linkWithCredential(credential);
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
         verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
         verificationFailed: (FirebaseAuthException error) {},
       );
-      return true;
     } catch (e) {
-      return false;
     }
   }
 

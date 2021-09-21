@@ -1,5 +1,7 @@
 import 'package:alpaca/global.dart';
-import 'package:alpaca/screens/onboarding/onboarding_wrapper.dart';
+import 'package:alpaca/routes.dart';
+import 'package:alpaca/screens/onboarding/create/create_account.dart';
+import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
 import 'package:alpaca/services/auth_service.dart';
 import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/buttons.dart';
@@ -8,14 +10,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class CreateAccountScreen extends StatefulWidget {
-  const CreateAccountScreen({Key? key}) : super(key: key);
+class OnboardingAccountScreen extends StatefulWidget {
+  const OnboardingAccountScreen({Key? key}) : super(key: key);
 
   @override
-  State<CreateAccountScreen> createState() => _CreateAccountScreenState();
+  State<OnboardingAccountScreen> createState() =>
+      _OnboardingAccountScreenState();
 }
 
-class _CreateAccountScreenState extends State<CreateAccountScreen> {
+class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
   final AuthService auth = locator<AuthService>();
 
   late TextEditingController _textController;
@@ -80,11 +83,19 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
                       onTap: () async {
-                        final bool loggedIn = await auth.verifyNumber(
-                          _textController.text,
-                        );
+                        // await auth.verifyNumber(
+                        //   _textController.text,
+                        //   (String verificationId) {
 
-                        print(loggedIn);
+                        //   }
+                        // );
+                        Navigator.of(context).pushNamed(
+                          onboardingCreateAccountRoute,
+                          arguments: CreateAccountData(
+                            phoneNumber: _textController.text,
+                            isSocialLogin: true,
+                          ),
+                        );
                       },
                       child: const Icon(
                         Icons.arrow_forward,

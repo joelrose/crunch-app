@@ -1,28 +1,44 @@
 import 'package:alpaca/screens/home/home.dart';
 import 'package:alpaca/screens/loading/loading.dart';
-import 'package:alpaca/screens/onboarding/create_account.dart';
-import 'package:alpaca/screens/onboarding/get_started.dart';
-import 'package:alpaca/screens/onboarding/welcome.dart';
+import 'package:alpaca/screens/onboarding/account/account.dart';
+import 'package:alpaca/screens/onboarding/create/create_account.dart';
+import 'package:alpaca/screens/onboarding/explanation/explanation.dart';
+import 'package:alpaca/screens/onboarding/welcome/welcome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const String loadingRoute = '/';
-const String startRoute = '/onboarding/start';
-const String welcomeRoute = '/onboarding/welcome';
-const String createAccountRoute = '/onboarding/createAccount';
+const String onboardingWelcomeRoute = '/onboarding/welcome';
+const String onboardingExplanationRoute = '/onboarding/explanation';
+const String onboardingAccountRoute = '/onboarding/account';
+const String onboardingCreateAccountRoute = '/onboarding/account/create';
 const String homeRoute = '/home';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case loadingRoute:
-        return CupertinoPageRoute(builder: (_) => const LoadingScreen());
-      case startRoute:
-        return CupertinoPageRoute(builder: (_) => const GetStartedScreen());
-      case welcomeRoute:
-        return CupertinoPageRoute(builder: (_) => const WelcomeScreen());
-      case createAccountRoute:
-        return CupertinoPageRoute(builder: (_) => const CreateAccountScreen());
+        return CupertinoPageRoute(
+          builder: (_) => const LoadingScreen(),
+        );
+      case onboardingWelcomeRoute:
+        return CupertinoPageRoute(
+          builder: (_) => const OnboardingWelcomeScreen(),
+        );
+      case onboardingExplanationRoute:
+        return CupertinoPageRoute(
+          builder: (_) => const OnboardingExplanationScreen(),
+        );
+      case onboardingAccountRoute:
+        return CupertinoPageRoute(
+          builder: (_) => const OnboardingAccountScreen(),
+        );
+      case onboardingCreateAccountRoute:
+        final args = settings.arguments! as CreateAccountData;
+
+        return CupertinoPageRoute(
+          builder: (_) => OnboardingCreateAccountScreen(data: args),
+        );
       case homeRoute:
         return CupertinoPageRoute(builder: (_) => const HomeScreen());
       default:

@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () async {
                 await auth.signOut();
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                  startRoute,
+                  onboardingWelcomeRoute,
                   (route) => false,
                 );
               },

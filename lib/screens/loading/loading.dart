@@ -37,7 +37,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
               .pushNamedAndRemoveUntil(homeRoute, (route) => false);
         } else {
           Navigator.of(context)
-              .pushNamedAndRemoveUntil(startRoute, (route) => false);
+              .pushNamedAndRemoveUntil(onboardingWelcomeRoute, (route) => false);
         }
       },
     );
