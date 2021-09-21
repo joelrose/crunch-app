@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            homeMain(),
+            HomeMain(),
             ActionButton(
               buttonText: 'Logout',
               onPressed: () async {
@@ -66,8 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class homeMain extends StatelessWidget {
-  const homeMain({Key? key}) : super(key: key);
+class HomeMain extends StatelessWidget {
+  const HomeMain({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,13 +104,13 @@ class homeMain extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 12),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.search,
                           color: AlpacaColor.darkGreyColor,
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 11),
-                          child: Text(
+                          child: const Text(
                             'Search for food, stores or tags',
                             style: TextStyle(color: AlpacaColor.darkGreyColor),
                           ),
@@ -121,7 +121,7 @@ class homeMain extends StatelessWidget {
             ],
           ),
         ),
-        Divider(
+        const Divider(
           height: 1,
         ),
         Container(
@@ -139,23 +139,27 @@ class homeMain extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Not sure what \nto grab?",
-                          overflow: TextOverflow.fade,
-                          style: TextStyle(
-                              color: AlpacaColor.white100Color,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w700),
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Not sure what \nto grab?',
+                        overflow: TextOverflow.fade,
+                        style: TextStyle(
+                            color: AlpacaColor.white100Color,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        'Lets find something together.',
+                        style: TextStyle(
+                          color: AlpacaColor.white100Color,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Text("Lets find something together.",
-                            style: TextStyle(
-                                color: AlpacaColor.white100Color,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600))
-                      ]),
+                      )
+                    ],
+                  ),
                   Container(
                     alignment: Alignment.center,
                     height: 50,
@@ -164,7 +168,7 @@ class homeMain extends StatelessWidget {
                       borderRadius: BorderRadius.circular(45),
                       color: AlpacaColor.white100Color,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_forward_rounded,
                       size: 19,
                     ),
@@ -172,86 +176,84 @@ class homeMain extends StatelessWidget {
                 ],
               )),
         ),
-        Container(
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Favourite stores",
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w700,
-                                  color: AlpacaColor.darkNavyColor)),
-                          Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 6),
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: AlpacaColor.greyColor),
-                                  borderRadius: BorderRadius.circular(4)),
-                              child: Center(
-                                child: Text(
-                                  "View all",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: AlpacaColor.darkNavyColor),
-                                ),
-                              ))
-                        ],
-                      ),
-                    ),
-                    Container(height: 18),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(18, 0, 0, 0),
-                      height: 194,
-                      child: ListView.separated(
-                          clipBehavior: Clip.none,
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) =>
-                              SizedBox(width: 16),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: 194,
-                              width: 235,
-                              clipBehavior: Clip.hardEdge,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: AlpacaColor.white100Color,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: AlpacaColor.blackColor
-                                            .withOpacity(0.1),
-                                        spreadRadius: 2,
-                                        blurRadius: 10,
-                                        offset: Offset(3, 3))
-                                  ]),
-                              child: Column(
-                                children: [
-                                  Container(
-                                      width: double.infinity,
-                                      height: 123,
-                                      decoration: BoxDecoration(
-                                        color: AlpacaColor.greyColor,
-                                      ))
-                                ],
+        Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 18),
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Favourite stores',
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                                color: AlpacaColor.darkNavyColor)),
+                        Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: AlpacaColor.greyColor),
+                                borderRadius: BorderRadius.circular(4)),
+                            child: const Center(
+                              child: Text(
+                                'View all',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: AlpacaColor.darkNavyColor),
                               ),
-                            );
-                          }),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        )
+                            ))
+                      ],
+                    ),
+                  ),
+                  Container(height: 18),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                    height: 194,
+                    child: ListView.separated(
+                        clipBehavior: Clip.none,
+                        scrollDirection: Axis.horizontal,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 16),
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: 194,
+                            width: 235,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: AlpacaColor.white100Color,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AlpacaColor.blackColor
+                                          .withOpacity(0.1),
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      offset: const Offset(3, 3))
+                                ]),
+                            child: Column(
+                              children: [
+                                Container(
+                                    width: double.infinity,
+                                    height: 123,
+                                    decoration: const BoxDecoration(
+                                      color: AlpacaColor.greyColor,
+                                    ))
+                              ],
+                            ),
+                          );
+                        }),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ],
     );
   }
