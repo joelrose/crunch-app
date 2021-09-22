@@ -1,6 +1,9 @@
 import 'package:alpaca/global.dart';
+import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/onboarding/create/steps/insert_name.dart';
 import 'package:alpaca/screens/onboarding/create/steps/phone_verification.dart';
+import 'package:alpaca/screens/onboarding/create/steps/placeholder.dart';
+import 'package:alpaca/screens/onboarding/create/steps/set_password.dart';
 import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,10 +17,13 @@ class CreateAccountData {
 }
 
 class OnboardingCreateAccountScreen extends StatefulWidget {
-  const OnboardingCreateAccountScreen({Key? key, required this.data})
-      : super(key: key);
+  OnboardingCreateAccountScreen({Key? key, required this.data})
+      : super(key: key) {
+    maxSteps = data!.isSocialLogin ? 2 : 3;
+  }
 
   final CreateAccountData? data;
+  late int maxSteps;
 
   @override
   _OnboardingCreateAccountScreenState createState() =>
@@ -27,7 +33,11 @@ class OnboardingCreateAccountScreen extends StatefulWidget {
 class _OnboardingCreateAccountScreenState
     extends State<OnboardingCreateAccountScreen> {
   int step = 0;
-  int maxSteps = 4;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +54,7 @@ class _OnboardingCreateAccountScreenState
                   Container(
                     alignment: Alignment.center,
                     child: Text(
-                      'Step ${step + 1}/$maxSteps',
+                      'Step ${step + 1}/${widget.maxSteps}',
                       style: Theme.of(context).textTheme.bodyText1!.merge(
                             const TextStyle(
                               fontWeight: FontWeight.w600,
@@ -56,7 +66,12 @@ class _OnboardingCreateAccountScreenState
                   Positioned(
                     left: 0,
                     child: GestureDetector(
-                      onTap: () => {Navigator.of(context).pop()},
+                      onTap: () => {
+                        if (step == 0)
+                          {Navigator.of(context).pop()}
+                        else
+                          {previousStep()}
+                      },
                       child: const Icon(
                         Icons.arrow_back_ios,
                         size: 20,
@@ -67,29 +82,30 @@ class _OnboardingCreateAccountScreenState
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 25.0),
+                padding: const EdgeInsets.only(top: 25.0, bottom: 25),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      height: 6,
+                      height: 5,
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: maxSteps,
+                        itemCount: widget.maxSteps,
                         itemBuilder: (context, index) {
                           return Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: (step - index) >= 0
                                   ? AlpacaColor.primary100
-                                  : Colors.grey,
+                                  : AlpacaColor.lightGreyColor90,
                             ),
-                            margin: index < (maxSteps - 1)
+                            margin: index < (widget.maxSteps - 1)
                                 ? const EdgeInsets.only(right: 10)
                                 : EdgeInsets.zero,
-                            width: MediaQuery.of(context).size.width * 0.21,
+                            width: MediaQuery.of(context).size.width *
+                                (widget.data!.isSocialLogin ? 0.445 : 0.285),
                             height: 8,
                           );
                         },
@@ -103,14 +119,37 @@ class _OnboardingCreateAccountScreenState
           Flexible(
             child: IndexedStack(
               index: step,
-              children: const [
-                StepInsertName(),
-                StepPhoneVerification(),
+              children: [
+                if (!widget.data!.isSocialLogin) ...[
+                  StepPhoneVerification(
+                    phoneNumber: widget.data!.phoneNumber!,
+                    onFinish: nextStep,
+                  ),
+                  StepSetPassword(onFinish: nextStep),
+                ],
+                StepInsertName(onFinish: nextStep),
+                StepPlaceholder(
+                  onFinish: () {
+                    Navigator.of(context).pushNamed(homeRoute);
+                  },
+                ),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  void nextStep() {
+    setState(() {
+      step++;
+    });
+  }
+
+  void previousStep() {
+    setState(() {
+      step--;
+    });
   }
 }

@@ -123,6 +123,7 @@ class AlpacaTextField extends StatelessWidget {
     this.cursorColor = AlpacaColor.blackColor,
     this.textInputAction = TextInputAction.next,
     this.textInputType = TextInputType.text,
+    this.obscureText = false,
   }) : super(key: key);
 
   final String hintText;
@@ -133,6 +134,7 @@ class AlpacaTextField extends StatelessWidget {
   final TextInputAction textInputAction;
   final TextInputType textInputType;
   final TextEditingController textController;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +144,7 @@ class AlpacaTextField extends StatelessWidget {
       keyboardType: textInputType,
       autocorrect: false,
       cursorColor: cursorColor,
+      obscureText: obscureText,
       style: TextStyle(
         color: textColor,
       ),

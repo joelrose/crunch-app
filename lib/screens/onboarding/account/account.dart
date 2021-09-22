@@ -92,7 +92,7 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           onboardingCreateAccountRoute,
                           arguments: CreateAccountData(
                             phoneNumber: _textController.text,
-                            isSocialLogin: true,
+                            isSocialLogin: false,
                           ),
                         );
                       },
@@ -158,7 +158,15 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                   MediaQuery.of(context).size.width,
                   () async {
                     final User? user = await auth.signInWithGoogle();
-                    debugPrint(user?.email);
+                    if (user != null) {
+                      Navigator.of(context).pushNamed(
+                        onboardingCreateAccountRoute,
+                        arguments: CreateAccountData(
+                          phoneNumber: _textController.text,
+                          isSocialLogin: true,
+                        ),
+                      );
+                    }
                   },
                 ),
                 getSocialButton(
@@ -167,7 +175,15 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                   MediaQuery.of(context).size.width,
                   () async {
                     final User? user = await auth.signInWithApple();
-                    debugPrint(user?.email);
+                    if (user != null) {
+                      Navigator.of(context).pushNamed(
+                        onboardingCreateAccountRoute,
+                        arguments: CreateAccountData(
+                          phoneNumber: _textController.text,
+                          isSocialLogin: true,
+                        ),
+                      );
+                    }
                   },
                   backgroundWhite: false,
                 ),

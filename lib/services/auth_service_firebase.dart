@@ -30,6 +30,9 @@ class AuthServiceFirebase implements AuthService {
   @override
   Future<bool> get appleSignInAvailable => TheAppleSignIn.isAvailable();
 
+  @override
+  FirebaseAuth get firebaseAuth => _firebaseAuth;
+
   // Signin with google
   @override
   Future<User?> signInWithGoogle() async {

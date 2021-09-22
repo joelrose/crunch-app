@@ -1,26 +1,25 @@
 import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
 
-class StepInsertName extends StatefulWidget {
-  const StepInsertName({Key? key, required this.onFinish}) : super(key: key);
+class StepSetPassword extends StatefulWidget {
+  const StepSetPassword({Key? key, required this.onFinish}) : super(key: key);
 
   final void Function() onFinish;
 
   @override
-  _StepInsertNameState createState() => _StepInsertNameState();
+  _StepSetPasswordState createState() => _StepSetPasswordState();
 }
 
-class _StepInsertNameState extends State<StepInsertName> {
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
+class _StepSetPasswordState extends State<StepSetPassword> {
+  late TextEditingController _passwordController;
+  late TextEditingController _passwordRepeatController;
 
   @override
   void initState() {
     super.initState();
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
+    _passwordController = TextEditingController();
+    _passwordRepeatController = TextEditingController();
   }
 
   @override
@@ -45,7 +44,7 @@ class _StepInsertNameState extends State<StepInsertName> {
         Padding(
           padding: const EdgeInsets.only(bottom: 40, top: 10),
           child: Text(
-            'We need a little more information from you? What can we call you?',
+            'We need a little more information from you? Please set your password!',
             style: theme.subtitle1!.merge(
               const TextStyle(
                 color: AlpacaColor.blackColor,
@@ -56,15 +55,19 @@ class _StepInsertNameState extends State<StepInsertName> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: AlpacaTextField(
-            hintText: 'First name',
-            textController: _firstNameController,
+            hintText: 'Password',
+            textController: _passwordController,
+            obscureText: true,
+            textInputType: TextInputType.visiblePassword,
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: AlpacaTextField(
-            hintText: 'Last name',
-            textController: _lastNameController,
+            hintText: 'Repeat password',
+            textController: _passwordRepeatController,
+            obscureText: true,
+            textInputType: TextInputType.visiblePassword,
           ),
         ),
         Expanded(
@@ -73,7 +76,7 @@ class _StepInsertNameState extends State<StepInsertName> {
         ActionButton(
           buttonText: 'Continue',
           onPressed: () {
-           widget.onFinish();
+            widget.onFinish();
           },
         ),
       ],
