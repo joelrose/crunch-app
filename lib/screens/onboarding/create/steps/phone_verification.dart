@@ -22,22 +22,24 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
           style: theme.headline1!.merge(
             const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 30,
+              fontSize: 28,
               color: AlpacaColor.blackColor,
               height: 1.4,
+              letterSpacing: -0.24,
             ),
           ),
         ),
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            '+49 174 3645092',
+            '+491743645092',
             style: theme.headline1!.merge(
               const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 30,
+                fontSize: 28,
                 color: AlpacaColor.primary100,
                 height: 1.4,
+                letterSpacing: -0.24,
               ),
             ),
           ),
@@ -70,7 +72,11 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
         ),
         ActionButton(
           buttonText: 'Continue',
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              
+            });
+          },
         ),
       ],
     );

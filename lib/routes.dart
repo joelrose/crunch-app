@@ -30,8 +30,10 @@ class Router {
           builder: (_) => const OnboardingExplanationScreen(),
         );
       case onboardingAccountRoute:
+        final args = settings.arguments! as bool;
+
         return CupertinoPageRoute(
-          builder: (_) => const OnboardingAccountScreen(),
+          builder: (_) => OnboardingAccountScreen(isSignUp: args),
         );
       case onboardingCreateAccountRoute:
         final args = settings.arguments! as CreateAccountData;

@@ -1,4 +1,5 @@
 import 'package:alpaca/global.dart';
+import 'package:alpaca/screens/onboarding/create/steps/insert_name.dart';
 import 'package:alpaca/screens/onboarding/create/steps/phone_verification.dart';
 import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -103,6 +104,7 @@ class _OnboardingCreateAccountScreenState
             child: IndexedStack(
               index: step,
               children: const [
+                StepInsertName(),
                 StepPhoneVerification(),
               ],
             ),

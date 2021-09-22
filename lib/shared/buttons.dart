@@ -111,3 +111,68 @@ class ActionButton extends StatelessWidget {
     );
   }
 }
+
+class AlpacaTextField extends StatelessWidget {
+  const AlpacaTextField({
+    Key? key,
+    required this.hintText,
+    required this.textController,
+    this.fillColor = AlpacaColor.lightGreyColor80,
+    this.hintTextColor = AlpacaColor.lightGreyColor100,
+    this.textColor = AlpacaColor.blackColor,
+    this.cursorColor = AlpacaColor.blackColor,
+    this.textInputAction = TextInputAction.next,
+    this.textInputType = TextInputType.text,
+  }) : super(key: key);
+
+  final String hintText;
+  final Color fillColor;
+  final Color hintTextColor;
+  final Color textColor;
+  final Color cursorColor;
+  final TextInputAction textInputAction;
+  final TextInputType textInputType;
+  final TextEditingController textController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: textController,
+      textInputAction: textInputAction,
+      keyboardType: textInputType,
+      autocorrect: false,
+      cursorColor: cursorColor,
+      style: TextStyle(
+        color: textColor,
+      ),
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 15.0,
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: fillColor,
+          ),
+        ),
+        fillColor: fillColor,
+        hintText: hintText,
+        filled: true,
+        hintStyle: TextStyle(
+          color: hintTextColor,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: fillColor,
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: fillColor,
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    );
+  }
+}

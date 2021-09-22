@@ -11,7 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class OnboardingAccountScreen extends StatefulWidget {
-  const OnboardingAccountScreen({Key? key}) : super(key: key);
+  const OnboardingAccountScreen({Key? key, required this.isSignUp})
+      : super(key: key);
+
+  final bool isSignUp;
 
   @override
   State<OnboardingAccountScreen> createState() =>
@@ -60,7 +63,7 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  'Create account',
+                  widget.isSignUp ? 'Create account' : 'Welcome back!',
                   style: theme.headline1,
                 ),
                 Padding(
@@ -70,7 +73,9 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                     right: 40,
                   ),
                   child: Text(
-                    'Let’s get started by choosing one of the ways to sign up below.',
+                    widget.isSignUp
+                        ? 'Let’s get started by choosing one of the ways to sign up below.'
+                        : 'Please enter you phone number to log in again!',
                     style: theme.subtitle1,
                   ),
                 ),
@@ -83,12 +88,6 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
                       onTap: () async {
-                        // await auth.verifyNumber(
-                        //   _textController.text,
-                        //   (String verificationId) {
-
-                        //   }
-                        // );
                         Navigator.of(context).pushNamed(
                           onboardingCreateAccountRoute,
                           arguments: CreateAccountData(
@@ -152,7 +151,9 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                   ],
                 ),
                 getSocialButton(
-                  'Sign up with Google',
+                  widget.isSignUp
+                      ? 'Sign up with Google'
+                      : 'Sign in with Google',
                   'assets/google-logo.svg',
                   MediaQuery.of(context).size.width,
                   () async {
@@ -161,7 +162,7 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                   },
                 ),
                 getSocialButton(
-                  'Sign up with Apple',
+                  widget.isSignUp ? 'Sign up with Apple' : 'Sign in with Apple',
                   'assets/apple-logo.svg',
                   MediaQuery.of(context).size.width,
                   () async {
