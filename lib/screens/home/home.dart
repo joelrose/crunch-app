@@ -211,50 +211,61 @@ class HomeMain extends StatelessWidget {
                     ),
                   ),
                   Container(height: 18),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                    height: 194,
-                    child: ListView.separated(
-                        clipBehavior: Clip.none,
-                        scrollDirection: Axis.horizontal,
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 16),
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            height: 194,
-                            width: 235,
-                            clipBehavior: Clip.hardEdge,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: AlpacaColor.white100Color,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: AlpacaColor.blackColor
-                                          .withOpacity(0.1),
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      offset: const Offset(3, 3))
-                                ]),
-                            child: Column(
-                              children: [
-                                Container(
-                                    width: double.infinity,
-                                    height: 123,
-                                    decoration: const BoxDecoration(
-                                      color: AlpacaColor.greyColor,
-                                    ))
-                              ],
-                            ),
-                          );
-                        }),
-                  )
+                  const LeftToRightScrollingList(),
+                  const LeftToRightScrollingList(),
                 ],
               ),
             )
           ],
         ),
       ],
+    );
+  }
+}
+
+class LeftToRightScrollingList extends StatelessWidget {
+  const LeftToRightScrollingList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+      height: 194,
+      child: ListView.separated(
+        clipBehavior: Clip.none,
+        scrollDirection: Axis.horizontal,
+        separatorBuilder: (context, index) => const SizedBox(width: 16),
+        itemCount: 5,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 194,
+            width: 235,
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: AlpacaColor.white100Color,
+              boxShadow: [
+                BoxShadow(
+                  color: AlpacaColor.blackColor.withOpacity(0.1),
+                  spreadRadius: 2,
+                  blurRadius: 10,
+                  offset: const Offset(3, 3),
+                )
+              ],
+            ),
+            child: Column(
+              children: [
+                Container(
+                    width: double.infinity,
+                    height: 123,
+                    decoration: const BoxDecoration(
+                      color: AlpacaColor.greyColor,
+                    ))
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
