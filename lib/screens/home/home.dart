@@ -5,6 +5,7 @@ import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,13 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: AlpacaColor.white100Color,
       body: SafeArea(
         child: Column(
           children: [
-            HomeMain(),
+            const HomeMain(),
             ActionButton(
               buttonText: 'Logout',
               onPressed: () async {
@@ -80,15 +80,18 @@ class HomeMain extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  SvgPicture.asset('assets/logo/crunch-logo.svg',
+                      width: 100, color: AlpacaColor.primary100),
                   const Spacer(),
                   Container(
                     height: 36,
                     width: 36,
                     padding: const EdgeInsets.all(3),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(
-                            color: AlpacaColor.primary100, width: 3)),
+                      borderRadius: BorderRadius.circular(100),
+                      border:
+                          Border.all(color: AlpacaColor.primary100, width: 3),
+                    ),
                   )
                 ],
               ),
@@ -133,48 +136,49 @@ class HomeMain extends StatelessWidget {
             color: AlpacaColor.primary100,
           ),
           child: Container(
-              margin:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'Not sure what \nto grab?',
-                        overflow: TextOverflow.fade,
-                        style: TextStyle(
-                            color: AlpacaColor.white100Color,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'Lets find something together.',
-                        style: TextStyle(
+            margin:
+                const EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Not sure what \nto grab?',
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(
                           color: AlpacaColor.white100Color,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      )
-                    ],
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      'Lets find something together.',
+                      style: TextStyle(
+                        color: AlpacaColor.white100Color,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
+                  ],
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(45),
+                    color: AlpacaColor.white100Color,
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(45),
-                      color: AlpacaColor.white100Color,
-                    ),
-                    child: const Icon(
-                      Icons.arrow_forward_rounded,
-                      size: 19,
-                    ),
-                  )
-                ],
-              )),
+                  child: const Icon(
+                    Icons.arrow_forward_rounded,
+                    size: 19,
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
         Column(
           children: [

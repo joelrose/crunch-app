@@ -23,11 +23,12 @@ class _StepPhoneVerificationState extends State<StepPlaceholder> {
     final size = MediaQuery.of(context).size;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: EdgeInsets.only(right: size.width * 0.2),
           child: Text(
-            "We've sent a verification Code to",
+            "Placeholder",
             style: theme.headline1!.merge(
               const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -42,7 +43,7 @@ class _StepPhoneVerificationState extends State<StepPlaceholder> {
         Padding(
           padding: const EdgeInsets.only(bottom: 40, top: 10),
           child: Text(
-            'Please check your messages and enter the code in the boxes below.',
+            'Placeholder',
             style: theme.subtitle1!.merge(
               const TextStyle(
                 color: AlpacaColor.blackColor,

@@ -63,22 +63,23 @@ class _OnboardingCreateAccountScreenState
                           ),
                     ),
                   ),
-                  Positioned(
-                    left: 0,
-                    child: GestureDetector(
-                      onTap: () => {
-                        if (step == 0)
-                          {Navigator.of(context).pop()}
-                        else
-                          {previousStep()}
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios,
-                        size: 20,
-                        color: AlpacaColor.blackColor,
+                  if (step != 0)
+                    Positioned(
+                      left: 0,
+                      child: GestureDetector(
+                        onTap: () => {
+                          if (step == 0)
+                            {Navigator.of(context).pop()}
+                          else
+                            {previousStep()}
+                        },
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          size: 20,
+                          color: AlpacaColor.blackColor,
+                        ),
                       ),
-                    ),
-                  )
+                    )
                 ],
               ),
               Padding(
@@ -130,7 +131,8 @@ class _OnboardingCreateAccountScreenState
                 StepInsertName(onFinish: nextStep),
                 StepPlaceholder(
                   onFinish: () {
-                    Navigator.of(context).pushNamed(homeRoute);
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil(homeRoute, (route) => false);
                   },
                 ),
               ],
