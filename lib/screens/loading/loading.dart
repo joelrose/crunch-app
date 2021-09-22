@@ -56,14 +56,7 @@ class _LoadingScreenState extends State<LoadingScreen>
           weight: 20.0,
         ),
       ],
-    ).animate(animationController)
-      ..addStatusListener((AnimationStatus status) {
-        if (status == AnimationStatus.completed) {
-          // setState(() {
-          //   isLogoVisible = false;
-          // });
-        }
-      });
+    ).animate(animationController);
 
     widthSequence = TweenSequence<double>(
       <TweenSequenceItem<double>>[
@@ -93,7 +86,7 @@ class _LoadingScreenState extends State<LoadingScreen>
   }
 
   Future<Timer> _loadWidget() async {
-    const _duration = Duration(seconds: 10000);
+    const _duration = Duration(milliseconds: 1600);
     return Timer(_duration, navigationPage);
   }
 
