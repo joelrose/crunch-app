@@ -21,12 +21,8 @@ class _LoadingScreenState extends State<LoadingScreen>
   late AnimationController animationController;
   late Animation<double> heightSequence;
   late Animation<double> widthSequence;
-  late Animation<double> borderRadiusSequence;
 
-  Tween<double> scaleTween = Tween<double>(begin: 0, end: 1);
-
-  double height = 0;
-  double width = 0;
+  bool isLogoVisible = true;
 
   @override
   void initState() {
@@ -34,83 +30,70 @@ class _LoadingScreenState extends State<LoadingScreen>
 
     // Defining controller with animation duration of two seconds
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
 
     heightSequence = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 0.6)
+          tween: Tween<double>(begin: 0, end: 0.9)
               .chain(CurveTween(curve: Curves.ease)),
           weight: 50.0,
         ),
         TweenSequenceItem<double>(
-          tween: ConstantTween<double>(0.6),
+          tween: ConstantTween<double>(0.9),
           weight: 20.0,
         ),
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.6, end: 0.55)
+          tween: Tween<double>(begin: 0.9, end: 0.85)
               .chain(CurveTween(curve: Curves.ease)),
           weight: 10.0,
         ),
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.55, end: 1)
+          tween: Tween<double>(begin: 0.85, end: 2)
               .chain(CurveTween(curve: Curves.ease)),
           weight: 20.0,
         ),
       ],
-    ).animate(animationController);
+    ).animate(animationController)
+      ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          // setState(() {
+          //   isLogoVisible = false;
+          // });
+        }
+      });
 
     widthSequence = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1)
+          tween: Tween<double>(begin: 0, end: 4)
               .chain(CurveTween(curve: Curves.ease)),
           weight: 20.0,
         ),
         TweenSequenceItem<double>(
-          tween: ConstantTween<double>(1),
+          tween: ConstantTween<double>(4),
           weight: 80.0,
         ),
       ],
     ).animate(animationController);
 
-    borderRadiusSequence = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1)
-              .chain(CurveTween(curve: Curves.ease)),
-          weight: 50.0,
-        ),
-        TweenSequenceItem<double>(
-          tween: ConstantTween<double>(1),
-          weight: 30.0,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1, end: 0)
-              .chain(CurveTween(curve: Curves.ease)),
-          weight: 20.0,
-        ),
-      ],
-    ).animate(animationController);
-
     animationController.addListener(() {
-      setState(() {});
+      if (isLogoVisible && heightSequence.value > 1) {
+        setState(() {
+          isLogoVisible = false;
+        });
+      }
     });
-
-    _loadWidget();
 
     animationController.forward();
 
-    // Future.delayed(const Duration(seconds: 1)).then(
-    //   (value) => setState(() {
-    //     height = 1000;
-    //     width = 500;
-    //   }),
-    // );
+    _loadWidget();
   }
 
   Future<Timer> _loadWidget() async {
-    const _duration = Duration(seconds: 100);
+    const _duration = Duration(seconds: 10000);
     return Timer(_duration, navigationPage);
   }
 
@@ -139,22 +122,21 @@ class _LoadingScreenState extends State<LoadingScreen>
         child: Stack(
           children: <Widget>[
             Positioned.fill(
-              bottom: -40,
+              left: -size.height,
+              right: -size.height,
+              bottom: -(size.width / 2),
+              top: -100,
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: AnimatedBuilder(
                   builder: (BuildContext context, Widget? child) {
                     return Container(
-                      height: size.height * 0.7,
-                      width: widthSequence.value * (size.width * 2),
+                      height: heightSequence.value * size.height,
+                      width: widthSequence.value * size.width,
                       alignment: Alignment.bottomCenter,
                       decoration: const BoxDecoration(
                         color: AlpacaColor.primary100,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            250,
-                          ),
-                        ),
+                        shape: BoxShape.circle,
                       ),
                     );
                   },
@@ -164,34 +146,17 @@ class _LoadingScreenState extends State<LoadingScreen>
             ),
             Positioned.fill(
               child: Align(
-                child: SvgPicture.asset(
-                  'assets/logo/crunch-logo.svg',
-                  color: AlpacaColor.white100Color,
-                  width: MediaQuery.of(context).size.width * 0.8,
+                child: AnimatedOpacity(
+                  opacity: isLogoVisible ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 300),
+                  child: SvgPicture.asset(
+                    'assets/logo/crunch-logo.svg',
+                    color: AlpacaColor.white100Color,
+                    width: MediaQuery.of(context).size.width * 0.65,
+                  ),
                 ),
               ),
             ),
-            // Positioned.fill(
-            //   bottom: -MediaQuery.of(context).size.height,
-            //   child: Align(
-            //     alignment: Alignment.bottomCenter,
-            //     child: Container(
-            //       height: sizeSequence.value *
-            //           2 *
-            //           MediaQuery.of(context).size.height,
-            //       width: 60,
-            //       alignment: Alignment.bottomCenter,
-            //       decoration: const BoxDecoration(
-            //         color: AlpacaColor.blackColor,
-            //         borderRadius: BorderRadius.all(
-            //           Radius.circular(
-            //             50,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
