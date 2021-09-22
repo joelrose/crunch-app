@@ -181,7 +181,7 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
   List<String> filterSearchTerms({
     @required String filter = '',
   }) {
-    if (filter != null && filter.isNotEmpty) {
+    if (filter != '' && filter.isNotEmpty) {
       return _searchHistory.reversed
           .where((term) => term.startsWith(filter))
           .toList();
@@ -201,12 +201,12 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
       _searchHistory.removeRange(0, _searchHistory.length - historyLenght);
     }
 
-    filteredSearchHistory = filterSearchTerms();
+    filteredSearchHistory = filterSearchTerms(filter: '');
   }
 
   void deleteSearchTerm(String term) {
     _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms();
+    filteredSearchHistory = filterSearchTerms(filter: '');
   }
 
   void putSearchTermFirst(String term) {
@@ -218,6 +218,7 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    filteredSearchHistory = filterSearchTerms(filter: '');
   }
 
   @override
