@@ -216,7 +216,6 @@ class HomeMain extends StatelessWidget {
                   ),
                   Container(height: 18),
                   const LeftToRightScrollingList(),
-                  const LeftToRightScrollingList(),
                 ],
               ),
             )
