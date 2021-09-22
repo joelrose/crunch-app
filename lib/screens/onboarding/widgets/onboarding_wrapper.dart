@@ -9,19 +9,21 @@ class OnboardingPageWrapper extends StatelessWidget {
     required this.child,
     this.padding = const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
     this.statusBarStyle = SystemUiOverlayStyle.light,
+    this.backgroundColor = AlpacaColor.primary100,
   }) : super(key: key);
 
   final Widget child;
   final EdgeInsets padding;
-  final SystemUiOverlayStyle statusBarStyle; 
+  final SystemUiOverlayStyle statusBarStyle;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AlpacaColor.primary100,
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: statusBarStyle,
-        child: SafeArea(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: statusBarStyle,
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Padding(
             padding: padding,
             child: child,

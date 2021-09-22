@@ -4,6 +4,7 @@ abstract class AuthService {
   Future<User?> get getUser;
   Stream<User?> get user;
   Future<bool> get appleSignInAvailable;
+  FirebaseAuth get firebaseAuth;
 
   Future<User?> signInWithGoogle();
   Future<User?> signInWithEmail(String email, String password);

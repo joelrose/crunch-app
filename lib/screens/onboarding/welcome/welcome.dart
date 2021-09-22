@@ -49,7 +49,12 @@ class OnboardingWelcomeScreen extends StatelessWidget {
                 ),
                 ActionButton(
                   buttonText: 'iAlreadyHaveAnAccount'.tr(),
-                  onPressed: () => {},
+                  onPressed: () => {
+                    Navigator.of(context).pushNamed(
+                      onboardingAccountRoute,
+                      arguments: false,
+                    ),
+                  },
                 ),
               ],
             ),

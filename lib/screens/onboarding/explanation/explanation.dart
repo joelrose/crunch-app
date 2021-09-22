@@ -63,13 +63,15 @@ class OnboardingExplanationScreen extends StatelessWidget {
                   style: theme.subtitle1,
                 ),
               ),
-              const SizedBox(height: 25),
               ActionButton(
                 buttonText: 'Next',
-                onPressed: () =>
-                    {Navigator.of(context).pushNamed(onboardingAccountRoute)},
+                onPressed: () => {
+                  Navigator.of(context)
+                      .pushNamed(onboardingAccountRoute, arguments: true)
+                },
                 isPrimaryButton: false,
               ),
+              const SizedBox(height: 35),
             ],
           ),
         ],
