@@ -138,7 +138,7 @@ class AlpacaTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: textController,
       textInputAction: textInputAction,
       keyboardType: textInputType,

@@ -1,6 +1,7 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/screens/home/base/discover.dart';
 import 'package:alpaca/screens/home/base/favorites.dart';
+import 'package:alpaca/screens/home/base/search.dart';
 import 'package:alpaca/screens/home/base/vouchers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     DiscoverScreen(),
     VoucherScreen(),
     FavoritesScreen(),
-    VoucherScreen(),
+    SearchScreen(),
   ];
 
   @override

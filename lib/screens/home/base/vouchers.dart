@@ -22,10 +22,23 @@ class VoucherScreen extends StatelessWidget {
           ),
         ),
         const Divider(),
-        const Expanded(
+        Expanded(
           child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Text(
-                  'Hey, unfortunately we are still building this feature 😟')),
+                'Hey, unfortunately we are still building this feature 😟',
+                style: Theme.of(context).textTheme.bodyText1!.merge(
+                      const TextStyle(
+                        color: AlpacaColor.darkGreyColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
         ),
       ],
     );

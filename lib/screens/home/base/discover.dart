@@ -11,6 +11,7 @@ class DiscoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
       child: Column(
         children: [
           const HomeHeader(),
@@ -68,8 +69,8 @@ class DiscoverNavBar extends StatelessWidget {
         GestureDetector(
           onTap: () => {Navigator.of(context).pushNamed(profileRoute)},
           child: Container(
-            height: 36,
-            width: 36,
+            height: 45,
+            width: 45,
             padding: const EdgeInsets.all(3),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
