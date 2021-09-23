@@ -19,7 +19,7 @@ class CreateAccountData {
 class OnboardingCreateAccountScreen extends StatefulWidget {
   OnboardingCreateAccountScreen({Key? key, required this.data})
       : super(key: key) {
-    maxSteps = data!.isSocialLogin ? 2 : 3;
+    maxSteps = data!.isSocialLogin ? 2 : 4;
   }
 
   final CreateAccountData? data;
@@ -63,7 +63,7 @@ class _OnboardingCreateAccountScreenState
                           ),
                     ),
                   ),
-                  if (step != 0)
+                  if (step != 0 && (step != 1 && !widget.data!.isSocialLogin))
                     Positioned(
                       left: 0,
                       child: GestureDetector(

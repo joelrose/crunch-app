@@ -26,6 +26,8 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
 
   late TextEditingController _textController;
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -38,176 +40,217 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
     return PageWrapper(
       padding: EdgeInsets.zero,
       backgroundColor: AlpacaColor.primary100,
-      child: Stack(
-        fit: StackFit.passthrough,
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => {Navigator.of(context).pop()},
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    size: 20,
-                    color: AlpacaColor.white100Color,
-                  ),
-                ),
-              ],
-            ),
+      child: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+          _scrollController.jumpTo(0);
+        },
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          physics: const ClampingScrollPhysics(
+            parent: NeverScrollableScrollPhysics(),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  widget.isSignUp ? 'Create account' : 'Welcome back!',
-                  style: theme.headline1,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 30,
-                    top: 10,
-                    right: 40,
-                  ),
-                  child: Text(
-                    widget.isSignUp
-                        ? 'Let’s get started by choosing one of the ways to sign up below.'
-                        : 'Please enter you phone number to log in again!',
-                    style: theme.subtitle1,
-                  ),
-                ),
-                TextField(
-                  controller: _textController,
-                  textInputAction: TextInputAction.send,
-                  keyboardType: TextInputType.phone,
-                  autocorrect: false,
-                  cursorColor: AlpacaColor.white100Color,
-                  decoration: InputDecoration(
-                    suffixIcon: GestureDetector(
-                      onTap: () async {
-                        Navigator.of(context).pushNamed(
-                          onboardingCreateAccountRoute,
-                          arguments: CreateAccountData(
-                            phoneNumber: _textController.text,
-                            isSocialLogin: false,
+          child: SizedBox(
+            height: (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top) *
+                0.98,
+            child: IntrinsicHeight(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    child: Stack(
+                      children: [
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 30,
                           ),
-                        );
-                      },
-                      child: const Icon(
-                        Icons.arrow_forward,
-                        color: AlpacaColor.white80Color,
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 15.0,
-                    ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AlpacaColor.primary80,
-                      ),
-                    ),
-                    fillColor: AlpacaColor.primary80,
-                    hintText: 'Please enter your phone number',
-                    filled: true,
-                    hintStyle: const TextStyle(color: AlpacaColor.white80Color),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AlpacaColor.primary80,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AlpacaColor.primary80,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () => {Navigator.of(context).pop()},
+                                child: const Icon(
+                                  Icons.arrow_back_ios,
+                                  size: 20,
+                                  color: AlpacaColor.white100Color,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          right: -70,
+                          top: -15,
+                          height: MediaQuery.of(context).size.height * 0.45,
+                          child: Transform.rotate(
+                            angle: -45,
+                            child: Image.asset(
+                              'assets/onboarding/create-account-3D.png',
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                Row(
-                  children: <Widget>[
-                    const Expanded(
-                      child: Divider(
-                        color: AlpacaColor.white100Color,
-                        height: 40,
-                      ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 30,
+                      horizontal: 15,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        'or',
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    ),
-                    const Expanded(
-                      child: Divider(
-                        color: AlpacaColor.white100Color,
-                        height: 40,
-                      ),
-                    ),
-                  ],
-                ),
-                getSocialButton(
-                  widget.isSignUp
-                      ? 'Sign up with Google'
-                      : 'Sign in with Google',
-                  'assets/google-logo.svg',
-                  MediaQuery.of(context).size.width,
-                  () async {
-                    final User? user = await auth.signInWithGoogle();
-                    if (user != null) {
-                      Navigator.of(context).pushNamed(
-                        onboardingCreateAccountRoute,
-                        arguments: CreateAccountData(
-                          phoneNumber: _textController.text,
-                          isSocialLogin: true,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          widget.isSignUp ? 'Create account' : 'Welcome back!',
+                          style: theme.headline1,
                         ),
-                      );
-                    }
-                  },
-                ),
-                getSocialButton(
-                  widget.isSignUp ? 'Sign up with Apple' : 'Sign in with Apple',
-                  'assets/apple-logo.svg',
-                  MediaQuery.of(context).size.width,
-                  () async {
-                    final User? user = await auth.signInWithApple();
-                    if (user != null) {
-                      Navigator.of(context).pushNamed(
-                        onboardingCreateAccountRoute,
-                        arguments: CreateAccountData(
-                          phoneNumber: _textController.text,
-                          isSocialLogin: true,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 30,
+                            top: 10,
+                            right: 40,
+                          ),
+                          child: Text(
+                            widget.isSignUp
+                                ? 'Let’s get started by choosing one of the ways to sign up below.'
+                                : 'Please enter you phone number to log in again!',
+                            style: theme.subtitle1,
+                          ),
                         ),
-                      );
-                    }
-                  },
-                  backgroundWhite: false,
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-                  child: Text(
-                    'By continuing, I agree to Crunch’s Terms of service and Privacy Policy.',
-                    textAlign: TextAlign.center,
+                        TextField(
+                          controller: _textController,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.phone,
+                          autocorrect: false,
+                          cursorColor: AlpacaColor.white100Color,
+                          scrollPadding: const EdgeInsets.only(bottom: 30),
+                          decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              onTap: () async {
+                                Navigator.of(context).pushNamed(
+                                  onboardingCreateAccountRoute,
+                                  arguments: CreateAccountData(
+                                    phoneNumber: _textController.text,
+                                    isSocialLogin: false,
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.arrow_forward,
+                                color: AlpacaColor.white80Color,
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 15.0,
+                            ),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AlpacaColor.primary80,
+                              ),
+                            ),
+                            fillColor: AlpacaColor.primary80,
+                            hintText: 'Please enter your phone number',
+                            filled: true,
+                            hintStyle: const TextStyle(
+                              color: AlpacaColor.white80Color,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: AlpacaColor.primary80,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: AlpacaColor.primary80,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            const Expanded(
+                              child: Divider(
+                                color: AlpacaColor.white100Color,
+                                height: 40,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Text(
+                                'or',
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                            const Expanded(
+                              child: Divider(
+                                color: AlpacaColor.white100Color,
+                                height: 40,
+                              ),
+                            ),
+                          ],
+                        ),
+                        getSocialButton(
+                          widget.isSignUp
+                              ? 'Sign up with Google'
+                              : 'Sign in with Google',
+                          'assets/google-logo.svg',
+                          MediaQuery.of(context).size.width,
+                          () async {
+                            final User? user = await auth.signInWithGoogle();
+                            if (user != null) {
+                              Navigator.of(context).pushNamed(
+                                onboardingCreateAccountRoute,
+                                arguments: CreateAccountData(
+                                  phoneNumber: _textController.text,
+                                  isSocialLogin: true,
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        getSocialButton(
+                          widget.isSignUp
+                              ? 'Sign up with Apple'
+                              : 'Sign in with Apple',
+                          'assets/apple-logo.svg',
+                          MediaQuery.of(context).size.width,
+                          () async {
+                            final User? user = await auth.signInWithApple();
+                            if (user != null) {
+                              Navigator.of(context).pushNamed(
+                                onboardingCreateAccountRoute,
+                                arguments: CreateAccountData(
+                                  phoneNumber: _textController.text,
+                                  isSocialLogin: true,
+                                ),
+                              );
+                            }
+                          },
+                          backgroundWhite: false,
+                        ),
+                        const Padding(
+                          padding:
+                              EdgeInsets.only(left: 20, right: 20, top: 10),
+                          child: Text(
+                            'By continuing, I agree to Crunch’s Terms of service and Privacy Policy.',
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
           ),
-          Positioned(
-            right: -75,
-            top: -25,
-            height: 375,
-            child: Transform.rotate(
-              angle: -45,
-              child: Image.asset('assets/onboarding/create-account-3D.png'),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

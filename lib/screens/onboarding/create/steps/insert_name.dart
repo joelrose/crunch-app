@@ -27,56 +27,61 @@ class _StepInsertNameState extends State<StepInsertName> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Woo, you're not a robot!",
-          style: theme.headline1!.merge(
-            const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 28,
-              color: AlpacaColor.blackColor,
-              height: 1.4,
-              letterSpacing: -0.24,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 40, top: 10),
-          child: Text(
-            'We need a little more information from you? What can we call you?',
-            style: theme.subtitle1!.merge(
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Woo, you're not a robot!",
+            style: theme.headline1!.merge(
               const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
                 color: AlpacaColor.blackColor,
+                height: 1.4,
+                letterSpacing: -0.24,
               ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: AlpacaTextField(
-            hintText: 'First name',
-            textController: _firstNameController,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 40, top: 10),
+            child: Text(
+              'We need a little more information from you? What can we call you?',
+              style: theme.subtitle1!.merge(
+                const TextStyle(
+                  color: AlpacaColor.blackColor,
+                ),
+              ),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: AlpacaTextField(
-            hintText: 'Last name',
-            textController: _lastNameController,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: AlpacaTextField(
+              hintText: 'First name',
+              textController: _firstNameController,
+            ),
           ),
-        ),
-        Expanded(
-          child: Container(),
-        ),
-        ActionButton(
-          buttonText: 'Continue',
-          onPressed: () {
-           widget.onFinish();
-          },
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: AlpacaTextField(
+              hintText: 'Last name',
+              textController: _lastNameController,
+            ),
+          ),
+          Expanded(
+            child: Container(),
+          ),
+          ActionButton(
+            buttonText: 'Continue',
+            onPressed: () {
+              widget.onFinish();
+            },
+          ),
+        ],
+      ),
     );
   }
 }
