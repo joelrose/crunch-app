@@ -9,20 +9,22 @@ class HomeMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const HomeHeader(),
-        const Divider(
-          height: 1,
-        ),
-        const RestaurantRandomPickGenerator(),
-        Column(
-          children: const [
-            LeftToRightScrollingList(),
-            LeftToRightScrollingList(),
-          ],
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const HomeHeader(),
+          const Divider(
+            height: 1,
+          ),
+          const RestaurantRandomPickGenerator(),
+          Column(
+            children: const [
+              LeftToRightScrollingList(),
+              LeftToRightScrollingList(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
