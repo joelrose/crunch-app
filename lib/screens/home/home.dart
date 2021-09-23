@@ -8,6 +8,58 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
+final bottonNavItems = <BottomNavigationBarItem>[
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset('assets/icons/compass.svg'),
+    label: 'Discover',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/voucher.svg',
+    ),
+    label: 'Vouchers',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset('assets/icons/star.svg'),
+    label: 'Favorites',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset('assets/icons/search.svg'),
+    label: 'Search',
+  ),
+];
+
+final bottonNavHighlitedItems = <BottomNavigationBarItem>[
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/compass.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Discover',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/voucher.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Vouchers',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/star.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Favorites',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/search.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Search',
+  ),
+];
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -44,26 +96,13 @@ class _HomeScreenState extends State<HomeScreen> {
           currentIndex: _selectedIndex, //New
           onTap: _onItemTapped,
           showUnselectedLabels: true,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/compass.svg'),
-              label: 'Discover',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/voucher.svg',
-              ),
-              label: 'Vouchers',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/star.svg'),
-              label: 'Favorites',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/search.svg'),
-              label: 'Search',
-            ),
-          ],
+          items: bottonNavItems.asMap().entries.map((entry) {
+            final int index = entry.key;
+            final BottomNavigationBarItem value = entry.value;
+            return index == _selectedIndex
+                ? bottonNavHighlitedItems[index]
+                : value;
+          }).toList(),
         ),
       ),
     );
