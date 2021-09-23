@@ -1,10 +1,10 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/onboarding/create/create_account.dart';
-import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
 import 'package:alpaca/services/auth_service.dart';
 import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/buttons.dart';
+import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +35,9 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    return OnboardingPageWrapper(
+    return PageWrapper(
       padding: EdgeInsets.zero,
+      backgroundColor: AlpacaColor.primary100,
       child: Stack(
         fit: StackFit.passthrough,
         children: [

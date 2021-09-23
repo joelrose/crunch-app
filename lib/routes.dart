@@ -4,6 +4,7 @@ import 'package:alpaca/screens/onboarding/account/account.dart';
 import 'package:alpaca/screens/onboarding/create/create_account.dart';
 import 'package:alpaca/screens/onboarding/explanation/explanation.dart';
 import 'package:alpaca/screens/onboarding/welcome/welcome.dart';
+import 'package:alpaca/screens/profile/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ const String onboardingExplanationRoute = '/onboarding/explanation';
 const String onboardingAccountRoute = '/onboarding/account';
 const String onboardingCreateAccountRoute = '/onboarding/account/create';
 const String homeRoute = '/home';
+const String profileRoute = '/profile';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -43,6 +45,8 @@ class Router {
         );
       case homeRoute:
         return CupertinoPageRoute(builder: (_) => const HomeScreen());
+      case profileRoute:
+        return CupertinoPageRoute(builder: (_) => const ProfileScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

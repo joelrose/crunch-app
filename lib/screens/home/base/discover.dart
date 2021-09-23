@@ -1,11 +1,12 @@
 import 'package:alpaca/global.dart';
+import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/home/widgets/restaurant_random_picker.dart';
 import 'package:alpaca/screens/home/widgets/scrolling_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeMain extends StatelessWidget {
-  const HomeMain({Key? key}) : super(key: key);
+class DiscoverScreen extends StatelessWidget {
+  const DiscoverScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +38,25 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 15.0),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 18.0,
+        vertical: 15.0,
+      ),
       child: Column(
-        children: [navBar(), searchBar()],
+        children: const [
+          DiscoverNavBar(),
+          DiscoverSearchBar(),
+        ],
       ),
     );
   }
+}
 
-  Row navBar() {
+class DiscoverNavBar extends StatelessWidget {
+  const DiscoverNavBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
         SvgPicture.asset(
@@ -53,20 +65,28 @@ class HomeHeader extends StatelessWidget {
           color: AlpacaColor.primary100,
         ),
         const Spacer(),
-        Container(
-          height: 36,
-          width: 36,
-          padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(color: AlpacaColor.primary100, width: 3),
+        GestureDetector(
+          onTap: () => {Navigator.of(context).pushNamed(profileRoute)},
+          child: Container(
+            height: 36,
+            width: 36,
+            padding: const EdgeInsets.all(3),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              border: Border.all(color: AlpacaColor.primary100, width: 3),
+            ),
           ),
         )
       ],
     );
   }
+}
 
-  Container searchBar() {
+class DiscoverSearchBar extends StatelessWidget {
+  const DiscoverSearchBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 44,

@@ -4,7 +4,7 @@ import 'package:alpaca/screens/onboarding/create/steps/insert_name.dart';
 import 'package:alpaca/screens/onboarding/create/steps/phone_verification.dart';
 import 'package:alpaca/screens/onboarding/create/steps/placeholder.dart';
 import 'package:alpaca/screens/onboarding/create/steps/set_password.dart';
-import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
+import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -41,7 +41,7 @@ class _OnboardingCreateAccountScreenState
 
   @override
   Widget build(BuildContext context) {
-    return OnboardingPageWrapper(
+    return PageWrapper(
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,
       child: Column(
