@@ -4,6 +4,10 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - cloud_firestore (2.5.3):
+    - Firebase/Firestore (= 8.6.0)
+    - firebase_core
+    - Flutter
   - Firebase/Auth (8.6.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.6.0)
@@ -86,8 +90,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - Firebase/Auth
-  - Firebase/Firestore
+  - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.6.0`)
@@ -113,6 +116,8 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
+  cloud_firestore:
+    :path: ".symlinks/plugins/cloud_firestore/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -138,6 +143,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  cloud_firestore: bb4fcf1d62a2bf48586fad7a7e9612f20a719cda
   Firebase: 21ac9f28b09a8bdfc005f34c984fca84e7e8786d
   firebase_auth: a5da789c2876fda3ad7407bd2828e502dfeebc42
   firebase_core: c21ac09a8d23afd3594b56ed786bad12e5266bba
@@ -158,6 +164,6 @@ SPEC CHECKSUMS:
   shared_preferences: 5033afbb22d372e15aff8ff766df9021b845f273
   the_apple_sign_in: 2e78c83cdb09eba07bb16dcc1f3bc12fcdc8263d
 
-PODFILE CHECKSUM: dc2c68c4d899ef4a5a88e30f92e735fa82117674
+PODFILE CHECKSUM: adfd6d1533516448b637277b458ae895ae97a06c
 
 COCOAPODS: 1.11.2
