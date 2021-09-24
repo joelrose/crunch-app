@@ -95,7 +95,9 @@ class _SearchBarState extends State<SearchBar> {
         actions: [
           FloatingSearchBarAction.icon(
             icon: Icons.close,
-            onTap: () {},
+            onTap: () {
+              controller;
+            },
             showIfClosed: false,
             showIfOpened: true,
           ),
@@ -115,12 +117,22 @@ class _SearchBarState extends State<SearchBar> {
         builder: (context, transition) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: const Material(
-              color: AlpacaColor.white100Color,
-              child: Placeholder(
-                fallbackHeight: 200,
-              ),
-            ),
+            child: Material(
+                color: AlpacaColor.white100Color,
+                child: Container(
+                  height: 200,
+                  color: AlpacaColor.primary100,
+                  child: const Center(
+                    child: Text(
+                      'Work in progress...',
+                      style: TextStyle(
+                        color: AlpacaColor.white100Color,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                )),
           );
         },
         body: HomeBody(),
