@@ -18,8 +18,11 @@ class OnboardingWelcomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Placeholder(
-            fallbackHeight: MediaQuery.of(context).size.height * 0.5,
+          Image.asset(
+            'assets/onboarding/splash-graphic.png',
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.5,
+            fit: BoxFit.scaleDown,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
