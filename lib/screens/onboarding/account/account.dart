@@ -131,12 +131,14 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           decoration: InputDecoration(
                             suffixIcon: GestureDetector(
                               onTap: () async {
-                                Navigator.of(context).pushNamed(
+                                Navigator.of(context).pushNamedAndRemoveUntil(
                                   onboardingCreateAccountRoute,
+                                  (route) => false,
                                   arguments: CreateAccountData(
                                     phoneNumber: _textController.text,
                                     isSocialLogin: false,
                                   ),
+                                  
                                 );
                               },
                               child: const Icon(
@@ -205,8 +207,9 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           () async {
                             final User? user = await auth.signInWithGoogle();
                             if (user != null) {
-                              Navigator.of(context).pushNamed(
+                              Navigator.of(context).pushNamedAndRemoveUntil(
                                 onboardingCreateAccountRoute,
+                                (route) => false,
                                 arguments: CreateAccountData(
                                   phoneNumber: _textController.text,
                                   isSocialLogin: true,
