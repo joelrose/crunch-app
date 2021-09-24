@@ -106,7 +106,7 @@ class _OnboardingCreateAccountScreenState
                                 ? const EdgeInsets.only(right: 10)
                                 : EdgeInsets.zero,
                             width: MediaQuery.of(context).size.width *
-                                (widget.data!.isSocialLogin ? 0.445 : 0.285),
+                                (widget.data!.isSocialLogin ? 0.445 : 0.21),
                             height: 8,
                           );
                         },
