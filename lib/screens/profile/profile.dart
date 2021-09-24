@@ -20,7 +20,7 @@ class ProfileTile extends StatelessWidget {
       children: [
         const Divider(),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -70,53 +70,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return PageWrapper(
+      padding: const EdgeInsets.symmetric(vertical: 30),
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 85,
-              width: 85,
-              margin: const EdgeInsets.only(bottom: 30),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(color: AlpacaColor.primary100, width: 3),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              Container(
+                height: 85,
+                width: 85,
+                margin: const EdgeInsets.only(bottom: 30),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(color: AlpacaColor.primary100, width: 3),
+                ),
               ),
-            ),
-            const ProfileTile(title: 'My orders', icon: Icons.menu),
-            const Divider(),
-            Container(
-              height: 20,
-            ),
-            const ProfileTile(title: 'My details', icon: Icons.person_outlined),
-            const ProfileTile(
-              title: 'Payment methods',
-              icon: Icons.credit_card,
-            ),
-            const ProfileTile(title: 'Preferences', icon: Icons.settings),
-            const Divider(),
-            Container(
-              height: 20,
-            ),
-            const ProfileTile(title: 'Get support', icon: Icons.help_outline),
-            const Divider(),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: ActionButton(
-                buttonText: 'Logout',
-                isPrimaryButton: false,
-                onPressed: () async {
-                  await auth.signOut();
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    onboardingWelcomeRoute,
-                    (route) => false,
-                  );
-                },
+              const ProfileTile(title: 'My orders', icon: Icons.menu),
+              const Divider(),
+              Container(
+                height: 20,
               ),
+              const ProfileTile(
+                  title: 'My details', icon: Icons.person_outlined),
+              const ProfileTile(
+                title: 'Payment methods',
+                icon: Icons.credit_card,
+              ),
+              const ProfileTile(title: 'Preferences', icon: Icons.settings),
+              const Divider(),
+              Container(
+                height: 20,
+              ),
+              const ProfileTile(
+                title: 'Get support',
+                icon: Icons.help_outline,
+              ),
+              const Divider(),
+            ],
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 18.0),
+            child: ActionButton(
+              buttonText: 'Logout',
+              isPrimaryButton: false,
+              textColor: AlpacaColor.redColor,
+              onPressed: () async {
+                await auth.signOut();
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  onboardingWelcomeRoute,
+                  (route) => false,
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
