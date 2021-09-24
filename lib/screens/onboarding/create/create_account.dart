@@ -97,16 +97,14 @@ class _OnboardingCreateAccountScreenState
                         itemBuilder: (context, index) {
                           return Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: _getBorderRadius(index),
                               color: (step - index) >= 0
                                   ? AlpacaColor.primary100
                                   : AlpacaColor.lightGreyColor90,
                             ),
-                            margin: index < (widget.maxSteps - 1)
-                                ? const EdgeInsets.only(right: 10)
-                                : EdgeInsets.zero,
+                            margin: EdgeInsets.zero,
                             width: MediaQuery.of(context).size.width *
-                                (widget.data!.isSocialLogin ? 0.445 : 0.285),
+                                (widget.data!.isSocialLogin ? 0.445 : 0.21),
                             height: 8,
                           );
                         },
@@ -153,5 +151,19 @@ class _OnboardingCreateAccountScreenState
     setState(() {
       step--;
     });
+  }
+
+  BorderRadius _getBorderRadius(int index) {
+    if (index == 0) {
+      return const BorderRadius.horizontal(
+        left: Radius.circular(20),
+      );
+    } else if ((index + 1) == widget.maxSteps) {
+      return const BorderRadius.horizontal(
+        right: Radius.circular(20),
+      );
+    }
+
+    return BorderRadius.zero;
   }
 }
