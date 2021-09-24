@@ -1,6 +1,7 @@
 import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:alpaca/screens/home/base/discover.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -74,14 +75,31 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 400,
+      height: MediaQuery.of(context).size.height,
       child: FloatingSearchBar(
+        backgroundColor: AlpacaColor.lightGreyColor80,
+        backdropColor: AlpacaColor.white100Color,
+        shadowColor: Colors.transparent,
+        iconColor: AlpacaColor.darkGreyColor,
+        queryStyle: const TextStyle(color: AlpacaColor.blackColor),
         scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
         controller: controller,
         transition: CircularFloatingSearchBarTransition(),
-        physics: BouncingScrollPhysics(),
-        hint: 'Search and find out...',
-        actions: [FloatingSearchBarAction.searchToClear()],
+        physics: const BouncingScrollPhysics(),
+        hint: 'Search for food, stores or tags...',
+        leadingActions: const [
+          Icon(
+            Icons.search,
+          ),
+        ],
+        actions: [
+          FloatingSearchBarAction.icon(
+            icon: Icons.close,
+            onTap: () {},
+            showIfClosed: false,
+            showIfOpened: true,
+          ),
+        ],
         onQueryChanged: (query) {
           setState(() {
             filteredSearchHistory = filterSearchTerms(filter: query);
@@ -99,13 +117,13 @@ class _SearchBarState extends State<SearchBar> {
             borderRadius: BorderRadius.circular(8),
             child: const Material(
               color: AlpacaColor.white100Color,
-              elevation: 4,
               child: Placeholder(
                 fallbackHeight: 200,
               ),
             ),
           );
         },
+        body: HomeBody(),
       ),
     );
   }

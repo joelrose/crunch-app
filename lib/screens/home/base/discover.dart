@@ -13,25 +13,9 @@ class DiscoverScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
-      child: Stack(
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const HomeHeader(),
-              const Divider(
-                height: 1,
-              ),
-              const RestaurantRandomPickGenerator(),
-              Column(
-                children: const [
-                  LeftToRightScrollingList(),
-                  LeftToRightScrollingList(),
-                ],
-              ),
-            ],
-          ),
-          const SearchBar(),
+      child: Column(
+        children: const [
+          HomeHeader(),
         ],
       ),
     );
@@ -53,9 +37,34 @@ class HomeHeader extends StatelessWidget {
       child: Column(
         children: const [
           DiscoverNavBar(),
-          DiscoverSearchBar(),
+          SearchBar(),
         ],
       ),
+    );
+  }
+}
+
+class HomeBody extends StatelessWidget {
+  const HomeBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          height: 70,
+        ),
+        const Divider(
+          height: 1,
+        ),
+        const RestaurantRandomPickGenerator(),
+        Column(
+          children: const [
+            LeftToRightScrollingList(),
+            LeftToRightScrollingList(),
+          ],
+        ),
+      ],
     );
   }
 }
