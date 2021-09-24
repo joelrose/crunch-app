@@ -1,21 +1,22 @@
-
+import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-class FloatingSearchBar extends StatefulWidget {
-  const FloatingSearchBar({Key? key}) : super(key: key);
+class SearchBar extends StatefulWidget {
+  const SearchBar({Key? key}) : super(key: key);
 
   @override
-  _FloatingSearchBarState createState() => _FloatingSearchBarState();
+  _SearchBarState createState() => _SearchBarState();
 }
 
-class _FloatingSearchBarState extends State<FloatingSearchBar> {
+class _SearchBarState extends State<SearchBar> {
   static const historyLenght = 5;
 
-  List<String> _searchHistory = ['Flutter', 'Future'];
+  final List<String> _searchHistory = ['Flutter', 'Future'];
 
-  List<String> filteredSearchHistory = [];
+  List<String>? filteredSearchHistory;
 
-  String selectedTerm = '';
+  String? selectedTerm;
 
   List<String> filterSearchTerms({
     @required String filter = '',
@@ -53,15 +54,59 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
     addSearchTerm(term);
   }
 
+  FloatingSearchBarController? controller;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    controller = FloatingSearchBarController();
     filteredSearchHistory = filterSearchTerms(filter: '');
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    controller?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container();
+    return SizedBox(
+      height: 400,
+      child: FloatingSearchBar(
+        scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+        controller: controller,
+        transition: CircularFloatingSearchBarTransition(),
+        physics: BouncingScrollPhysics(),
+        hint: 'Search and find out...',
+        actions: [FloatingSearchBarAction.searchToClear()],
+        onQueryChanged: (query) {
+          setState(() {
+            filteredSearchHistory = filterSearchTerms(filter: query);
+          });
+        },
+        onSubmitted: (query) {
+          setState(() {
+            addSearchTerm(query);
+            selectedTerm = query;
+          });
+          controller?.close();
+        },
+        builder: (context, transition) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: const Material(
+              color: AlpacaColor.white100Color,
+              elevation: 4,
+              child: Placeholder(
+                fallbackHeight: 200,
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

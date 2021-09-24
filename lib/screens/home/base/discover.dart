@@ -1,5 +1,6 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
+import 'package:alpaca/screens/home/widgets/floating_search_bar.dart';
 import 'package:alpaca/screens/home/widgets/restaurant_random_picker.dart';
 import 'package:alpaca/screens/home/widgets/scrolling_list.dart';
 import 'package:flutter/material.dart';
@@ -12,19 +13,25 @@ class DiscoverScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
-      child: Column(
+      child: Stack(
         children: [
-          const HomeHeader(),
-          const Divider(
-            height: 1,
-          ),
-          const RestaurantRandomPickGenerator(),
           Column(
-            children: const [
-              LeftToRightScrollingList(),
-              LeftToRightScrollingList(),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const HomeHeader(),
+              const Divider(
+                height: 1,
+              ),
+              const RestaurantRandomPickGenerator(),
+              Column(
+                children: const [
+                  LeftToRightScrollingList(),
+                  LeftToRightScrollingList(),
+                ],
+              ),
             ],
           ),
+          const SearchBar(),
         ],
       ),
     );
