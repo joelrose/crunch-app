@@ -29,7 +29,7 @@ class Router {
         );
       case onboardingExplanationRoute:
         return CupertinoPageRoute(
-          builder: (_) => const OnboardingExplanationScreen(),
+          builder: (_) => OnboardingExplanationScreen(),
         );
       case onboardingAccountRoute:
         final args = settings.arguments! as bool;
