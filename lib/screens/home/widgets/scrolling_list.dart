@@ -1,5 +1,8 @@
-
 import 'package:alpaca/global.dart';
+import 'package:alpaca/routes.dart';
+import 'package:alpaca/screens/home/models/restaurant_overview_model.dart';
+import 'package:alpaca/shared/base_screen.dart';
+import 'package:alpaca/shared/viewstate.dart';
 import 'package:flutter/material.dart';
 
 class LeftToRightScrollingList extends StatelessWidget {
@@ -46,48 +49,84 @@ class LeftToRightScrollingList extends StatelessWidget {
             ),
           ),
           Container(height: 18),
-          Container(
-            margin: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-            height: 194,
-            child: ListView.separated(
-              clipBehavior: Clip.none,
-              scrollDirection: Axis.horizontal,
-              separatorBuilder: (context, index) => const SizedBox(width: 16),
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return Container(
-                  height: 194,
-                  width: 235,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AlpacaColor.white100Color,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AlpacaColor.blackColor.withOpacity(0.1),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: const Offset(3, 3),
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 123,
-                        decoration: const BoxDecoration(
-                          color: AlpacaColor.greyColor,
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          )
+          const RestaurantOverviewList(),
         ],
       ),
+    );
+  }
+}
+
+class RestaurantOverviewList extends StatefulWidget {
+  const RestaurantOverviewList({Key? key}) : super(key: key);
+
+  @override
+  _RestaurantOverviewListState createState() => _RestaurantOverviewListState();
+}
+
+class _RestaurantOverviewListState extends State<RestaurantOverviewList> {
+  @override
+  Widget build(BuildContext context) {
+    return BaseScreen<RestaurantScreenModel>(
+      onModelReady: (model) {
+        model.fetchRestaurants();
+      },
+      builder: (context, model, child) => model.state == ViewState.busy
+          ? Container(
+              height: 194,
+            )
+          : Container(
+              margin: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+              height: 194,
+              child: ListView.separated(
+                clipBehavior: Clip.none,
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (context, index) => const SizedBox(width: 16),
+                itemCount: model.restaurants.length,
+                itemBuilder: (context, index) {
+                  final restaurant = model.restaurants[index];
+                  return GestureDetector(
+                    onTap: () => {
+                      Navigator.of(context)
+                          .pushNamed(storeRoute, arguments: restaurant.id)
+                    },
+                    child: Card(
+                      elevation: 5,
+                      child: SizedBox(
+                        height: 200,
+                        width: 250,
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 123,
+                              width: 250,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    restaurant.image,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 20,
+                              ),
+                              child: Text(
+                                restaurant.name,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
     );
   }
 }

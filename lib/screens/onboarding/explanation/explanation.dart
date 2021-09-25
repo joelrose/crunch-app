@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/onboarding/explanation/widgets/dots_indicator.dart';
