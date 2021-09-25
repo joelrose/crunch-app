@@ -26,6 +26,7 @@ class DiscoverBody extends StatelessWidget {
         Container(
           height: 70,
         ),
+        Container(),
         const Divider(
           height: 1,
         ),
