@@ -1,6 +1,7 @@
+import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
 import 'package:alpaca/shared/buttons.dart';
+import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +12,17 @@ class OnboardingWelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    return OnboardingPageWrapper(
+    return PageWrapper(
       padding: EdgeInsets.zero,
+      backgroundColor: AlpacaColor.primary100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Placeholder(
-            fallbackHeight: MediaQuery.of(context).size.height * 0.5,
+          Image.asset(
+            'assets/onboarding/splash-graphic.png',
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.5,
+            fit: BoxFit.scaleDown,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(

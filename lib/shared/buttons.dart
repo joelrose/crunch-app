@@ -93,19 +93,24 @@ class ActionButton extends StatelessWidget {
     this.isPrimaryButton = true,
     required this.buttonText,
     required this.onPressed,
+    this.textColor,
   }) : super(key: key);
 
   final bool isPrimaryButton;
   final String buttonText;
   final void Function() onPressed;
 
+  final Color? textColor;
+
   @override
   Widget build(BuildContext context) {
     return _AlpacaButton(
+      textColor: textColor ??
+          (isPrimaryButton
+              ? AlpacaColor.white100Color
+              : AlpacaColor.primary100),
       backgroundColor:
           isPrimaryButton ? AlpacaColor.primary100 : AlpacaColor.white100Color,
-      textColor:
-          isPrimaryButton ? AlpacaColor.white100Color : AlpacaColor.primary100,
       buttonText: buttonText,
       onPressed: onPressed,
     );
@@ -138,7 +143,7 @@ class AlpacaTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: textController,
       textInputAction: textInputAction,
       keyboardType: textInputType,

@@ -1,11 +1,64 @@
 import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
-import 'package:alpaca/services/auth_service.dart';
-import 'package:alpaca/services/service_locator.dart';
-import 'package:alpaca/shared/buttons.dart';
+import 'package:alpaca/screens/home/base/discover.dart';
+import 'package:alpaca/screens/home/base/favorites.dart';
+import 'package:alpaca/screens/home/base/search.dart';
+import 'package:alpaca/screens/home/base/vouchers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+
+final bottonNavItems = <BottomNavigationBarItem>[
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset('assets/icons/compass.svg'),
+    label: 'Discover',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/voucher.svg',
+    ),
+    label: 'Vouchers',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset('assets/icons/star.svg'),
+    label: 'Favorites',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset('assets/icons/search.svg'),
+    label: 'Search',
+  ),
+];
+
+final bottonNavHighlitedItems = <BottomNavigationBarItem>[
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/compass.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Discover',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/voucher.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Vouchers',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/star.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Favorites',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/search.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Search',
+  ),
+];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,365 +68,50 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  AuthService auth = locator<AuthService>();
+  int _selectedIndex = 0;
+
+  static const List<Widget> _pages = <Widget>[
+    DiscoverScreen(),
+    VoucherScreen(),
+    FavoritesScreen(),
+    SearchScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AlpacaColor.white100Color,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 18.0),
-                child: ActionButton(
-                  buttonText: 'Logout',
-                  onPressed: () async {
-                    await auth.signOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      onboardingWelcomeRoute,
-                      (route) => false,
-                    );
-                  },
-                ),
-              ),
-              const HomeMain(),
-            ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        backgroundColor: AlpacaColor.white100Color,
+        body: SafeArea(
+          child: IndexedStack(
+            index: _selectedIndex,
+            children: _pages,
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: AlpacaColor.primary100,
-        unselectedItemColor: AlpacaColor.greyColor,
-        showUnselectedLabels: true,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.compass_calibration),
-            label: 'Discover',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard),
-            label: 'Vouchers',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class HomeMain extends StatelessWidget {
-  const HomeMain({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const HomeHeader(),
-        const Divider(
-          height: 1,
-        ),
-        const RestaurantRandomPickGenerator(),
-        Column(
-          children: const [
-            LeftToRightScrollingList(),
-            LeftToRightScrollingList(),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class HomeHeader extends StatelessWidget {
-  const HomeHeader({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 15.0),
-      child: Column(
-        children: [navBar(), searchBar()],
-      ),
-    );
-  }
-
-  Row navBar() {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          'assets/logo/crunch-logo.svg',
-          width: 100,
-          color: AlpacaColor.primary100,
-        ),
-        const Spacer(),
-        Container(
-          height: 36,
-          width: 36,
-          padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(color: AlpacaColor.primary100, width: 3),
-          ),
-        )
-      ],
-    );
-  }
-
-  Container searchBar() {
-    return Container(
-      width: double.infinity,
-      height: 44,
-      margin: const EdgeInsets.only(top: 20),
-      decoration: BoxDecoration(
-        color: const Color(0xffF5F5F6),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.search,
-              color: AlpacaColor.darkGreyColor,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 11),
-              child: const Text(
-                'Search for food, stores or tags',
-                style: TextStyle(color: AlpacaColor.darkGreyColor),
-              ),
-            )
-          ],
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: AlpacaColor.primary100,
+          unselectedItemColor: AlpacaColor.greyColor,
+          unselectedFontSize: 14.0,
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          showUnselectedLabels: true,
+          items: bottonNavItems.asMap().entries.map((entry) {
+            final int index = entry.key;
+            final BottomNavigationBarItem value = entry.value;
+            return index == _selectedIndex
+                ? bottonNavHighlitedItems[index]
+                : value;
+          }).toList(),
         ),
       ),
     );
   }
-}
 
-class FloatingSearchBar extends StatefulWidget {
-  const FloatingSearchBar({Key? key}) : super(key: key);
-
-  @override
-  _FloatingSearchBarState createState() => _FloatingSearchBarState();
-}
-
-class _FloatingSearchBarState extends State<FloatingSearchBar> {
-  static const historyLenght = 5;
-
-  List<String> _searchHistory = ['Flutter', 'Future'];
-
-  List<String> filteredSearchHistory = [];
-
-  String selectedTerm = '';
-
-  List<String> filterSearchTerms({
-    @required String filter = '',
-  }) {
-    if (filter != null && filter.isNotEmpty) {
-      return _searchHistory.reversed
-          .where((term) => term.startsWith(filter))
-          .toList();
-    } else {
-      return _searchHistory.reversed.toList();
-    }
-  }
-
-  void addSearchTerm(String term) {
-    if (_searchHistory.contains(term)) {
-      putSearchTermFirst(term);
-      return;
-    }
-
-    _searchHistory.add(term);
-    if (_searchHistory.length > historyLenght) {
-      _searchHistory.removeRange(0, _searchHistory.length - historyLenght);
-    }
-
-    filteredSearchHistory = filterSearchTerms();
-  }
-
-  void deleteSearchTerm(String term) {
-    _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms();
-  }
-
-  void putSearchTermFirst(String term) {
-    deleteSearchTerm(term);
-    addSearchTerm(term);
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class RestaurantRandomPickGenerator extends StatelessWidget {
-  const RestaurantRandomPickGenerator({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(18, 14, 18, 0),
-      width: double.infinity,
-      height: 123,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: AlpacaColor.primary100,
-      ),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Not sure what \nto grab?',
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                    color: AlpacaColor.white100Color,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text(
-                  'Lets find something together.',
-                  style: TextStyle(
-                    color: AlpacaColor.white100Color,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                  ),
-                )
-              ],
-            ),
-            Container(
-              alignment: Alignment.center,
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(45),
-                color: AlpacaColor.white100Color,
-              ),
-              child: const Icon(
-                Icons.arrow_forward_rounded,
-                size: 19,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LeftToRightScrollingList extends StatelessWidget {
-  const LeftToRightScrollingList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(0, 18, 0, 0),
-      child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 18),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Favourite stores',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: AlpacaColor.darkNavyColor,
-                  ),
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AlpacaColor.greyColor),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'View all',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AlpacaColor.darkNavyColor,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(height: 18),
-          Container(
-            margin: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-            height: 194,
-            child: ListView.separated(
-              clipBehavior: Clip.none,
-              scrollDirection: Axis.horizontal,
-              separatorBuilder: (context, index) => const SizedBox(width: 16),
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return Container(
-                  height: 194,
-                  width: 235,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AlpacaColor.white100Color,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AlpacaColor.blackColor.withOpacity(0.1),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: const Offset(3, 3),
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 123,
-                        decoration: const BoxDecoration(
-                          color: AlpacaColor.greyColor,
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }

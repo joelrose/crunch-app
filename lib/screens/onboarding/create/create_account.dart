@@ -4,7 +4,7 @@ import 'package:alpaca/screens/onboarding/create/steps/insert_name.dart';
 import 'package:alpaca/screens/onboarding/create/steps/phone_verification.dart';
 import 'package:alpaca/screens/onboarding/create/steps/placeholder.dart';
 import 'package:alpaca/screens/onboarding/create/steps/set_password.dart';
-import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
+import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -19,7 +19,7 @@ class CreateAccountData {
 class OnboardingCreateAccountScreen extends StatefulWidget {
   OnboardingCreateAccountScreen({Key? key, required this.data})
       : super(key: key) {
-    maxSteps = data!.isSocialLogin ? 2 : 3;
+    maxSteps = data!.isSocialLogin ? 2 : 4;
   }
 
   final CreateAccountData? data;
@@ -41,7 +41,7 @@ class _OnboardingCreateAccountScreenState
 
   @override
   Widget build(BuildContext context) {
-    return OnboardingPageWrapper(
+    return PageWrapper(
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,
       child: Column(
@@ -63,7 +63,7 @@ class _OnboardingCreateAccountScreenState
                           ),
                     ),
                   ),
-                  if (step != 0)
+                  if (step != 0 && (step != 1 && !widget.data!.isSocialLogin))
                     Positioned(
                       left: 0,
                       child: GestureDetector(
@@ -97,16 +97,14 @@ class _OnboardingCreateAccountScreenState
                         itemBuilder: (context, index) {
                           return Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: _getBorderRadius(index),
                               color: (step - index) >= 0
                                   ? AlpacaColor.primary100
                                   : AlpacaColor.lightGreyColor90,
                             ),
-                            margin: index < (widget.maxSteps - 1)
-                                ? const EdgeInsets.only(right: 10)
-                                : EdgeInsets.zero,
+                            margin: EdgeInsets.zero,
                             width: MediaQuery.of(context).size.width *
-                                (widget.data!.isSocialLogin ? 0.445 : 0.285),
+                                (widget.data!.isSocialLogin ? 0.445 : 0.21),
                             height: 8,
                           );
                         },
@@ -153,5 +151,19 @@ class _OnboardingCreateAccountScreenState
     setState(() {
       step--;
     });
+  }
+
+  BorderRadius _getBorderRadius(int index) {
+    if (index == 0) {
+      return const BorderRadius.horizontal(
+        left: Radius.circular(20),
+      );
+    } else if ((index + 1) == widget.maxSteps) {
+      return const BorderRadius.horizontal(
+        right: Radius.circular(20),
+      );
+    }
+
+    return BorderRadius.zero;
   }
 }
