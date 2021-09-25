@@ -74,69 +74,84 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: FloatingSearchBar(
-        backgroundColor: AlpacaColor.lightGreyColor80,
-        backdropColor: AlpacaColor.white100Color,
-        shadowColor: Colors.transparent,
-        iconColor: AlpacaColor.darkGreyColor,
-        queryStyle: const TextStyle(color: AlpacaColor.blackColor),
-        scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-        controller: controller,
-        transition: CircularFloatingSearchBarTransition(),
-        physics: const BouncingScrollPhysics(),
-        hint: 'Search for food, stores or tags...',
-        leadingActions: const [
-          Icon(
-            Icons.search,
-          ),
-        ],
-        actions: [
-          FloatingSearchBarAction.icon(
-            icon: Icons.close,
-            onTap: () {
-              controller;
+    return Column(
+      children: [
+        DiscoverNavBar(),
+        Expanded(
+          child: FloatingSearchBar(
+            backgroundColor: AlpacaColor.lightGreyColor80,
+            backdropColor: AlpacaColor.white100Color,
+            shadowColor: Colors.transparent,
+            iconColor: AlpacaColor.darkGreyColor,
+            queryStyle: const TextStyle(color: AlpacaColor.blackColor),
+            scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+            controller: controller,
+            transition: CircularFloatingSearchBarTransition(),
+            hint: 'Search for food, stores or tags...',
+            leadingActions: const [
+              Icon(
+                Icons.search,
+              ),
+            ],
+            actions: [
+              FloatingSearchBarAction.icon(
+                icon: Icons.close,
+                onTap: () {
+                  controller!.clear();
+                },
+                showIfClosed: false,
+                showIfOpened: true,
+              ),
+            ],
+            onQueryChanged: (query) {
+              setState(() {
+                filteredSearchHistory = filterSearchTerms(filter: query);
+              });
             },
-            showIfClosed: false,
-            showIfOpened: true,
-          ),
-        ],
-        onQueryChanged: (query) {
-          setState(() {
-            filteredSearchHistory = filterSearchTerms(filter: query);
-          });
-        },
-        onSubmitted: (query) {
-          setState(() {
-            addSearchTerm(query);
-            selectedTerm = query;
-          });
-          controller?.close();
-        },
-        builder: (context, transition) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Material(
-                color: AlpacaColor.white100Color,
-                child: Container(
-                  height: 200,
-                  color: AlpacaColor.primary100,
-                  child: const Center(
-                    child: Text(
-                      'Work in progress...',
-                      style: TextStyle(
-                        color: AlpacaColor.white100Color,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+            onSubmitted: (query) {
+              setState(() {
+                addSearchTerm(query);
+                selectedTerm = query;
+              });
+              controller?.close();
+            },
+            builder: (context, transition) {
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Material(
+                  color: AlpacaColor.white100Color,
+                  child: Container(
+                    height: 200,
+                    color: AlpacaColor.primary100,
+                    child: const Center(
+                      child: Text(
+                        'Work in progress...',
+                        style: TextStyle(
+                          color: AlpacaColor.white100Color,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
-                )),
-          );
-        },
-        body: HomeBody(),
-      ),
+                ),
+              );
+            },
+            body: Column(
+              children: [
+                SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: const [
+                      HomeBody(),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

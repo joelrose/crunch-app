@@ -11,14 +11,10 @@ class DiscoverScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      child: Column(
-        children: const [
-          HomeHeader(),
-        ],
-      ),
-    );
+    return const SearchBar();
+    // return const SingleChildScrollView(
+    //   physics: AlwaysScrollableScrollPhysics(),
+    //   child: HomeHeader(),
   }
 }
 
@@ -29,17 +25,10 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 18.0,
-        vertical: 15.0,
-      ),
-      child: Column(
-        children: const [
-          DiscoverNavBar(),
-          SearchBar(),
-        ],
-      ),
+    return Column(
+      children: const [
+        SearchBar(),
+      ],
     );
   }
 }
@@ -74,27 +63,33 @@ class DiscoverNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          'assets/logo/crunch-logo.svg',
-          width: 100,
-          color: AlpacaColor.primary100,
-        ),
-        const Spacer(),
-        GestureDetector(
-          onTap: () => {Navigator.of(context).pushNamed(profileRoute)},
-          child: Container(
-            height: 45,
-            width: 45,
-            padding: const EdgeInsets.all(3),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              border: Border.all(color: AlpacaColor.primary100, width: 3),
-            ),
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 18.0,
+        vertical: 15.0,
+      ),
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            'assets/logo/crunch-logo.svg',
+            width: 100,
+            color: AlpacaColor.primary100,
           ),
-        )
-      ],
+          const Spacer(),
+          GestureDetector(
+            onTap: () => {Navigator.of(context).pushNamed(profileRoute)},
+            child: Container(
+              height: 45,
+              width: 45,
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(color: AlpacaColor.primary100, width: 3),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -104,31 +99,17 @@ class DiscoverSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController();
     return Container(
       width: double.infinity,
       height: 44,
-      margin: const EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 18),
       decoration: BoxDecoration(
         color: const Color(0xffF5F5F6),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.search,
-              color: AlpacaColor.darkGreyColor,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 11),
-              child: const Text(
-                'Search for food, stores or tags',
-                style: TextStyle(color: AlpacaColor.darkGreyColor),
-              ),
-            )
-          ],
-        ),
+      child: TextField(
+        controller: controller,
       ),
     );
   }
