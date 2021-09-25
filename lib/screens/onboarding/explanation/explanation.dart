@@ -1,14 +1,16 @@
+import 'dart:math';
+
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
+import 'package:alpaca/screens/onboarding/explanation/widgets/dots_indicator.dart';
 import 'package:alpaca/screens/onboarding/explanation/widgets/slide_widget.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingExplanationScreen extends StatefulWidget {
-  OnboardingExplanationScreen({Key? key}) : super(key: key);
+  const OnboardingExplanationScreen({Key? key}) : super(key: key);
 
   @override
   State<OnboardingExplanationScreen> createState() =>
@@ -18,8 +20,6 @@ class OnboardingExplanationScreen extends StatefulWidget {
 class _OnboardingExplanationScreenState
     extends State<OnboardingExplanationScreen> {
   final PageController _controller = PageController();
-
-  int _currentPage = 0;
 
   final List<Widget> _pages = const <Widget>[
     SlideWidget(
@@ -41,17 +41,6 @@ class _OnboardingExplanationScreenState
       image: 'assets/onboarding/step-3.png',
     ),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    _currentPage = 0;
-    _controller.addListener(() {
-      setState(() {
-        _currentPage = _controller.page!.toInt();
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +70,7 @@ class _OnboardingExplanationScreenState
             ],
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: MediaQuery.of(context).size.height * 0.65,
             child: PageView.builder(
               itemCount: _pages.length,
               controller: _controller,
@@ -91,37 +80,17 @@ class _OnboardingExplanationScreenState
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...List.generate(
-                _pages.length,
-                (index) => Container(
-                  width: 10,
-                  height: 10,
-                  margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: index == _currentPage
-                        ? AlpacaColor.white100Color
-                        : AlpacaColor.darkGreyColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 3,
-              itemBuilder: (context, i) {
-                return Container(
-                  color: i % 2 == 0
-                      ? AlpacaColor.redColor
-                      : AlpacaColor.primary100,
-                  height: 10,
-                  width: 10,
-                  margin: const EdgeInsets.all(30),
-                  padding: const EdgeInsets.all(30),
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: DotsIndicator(
+              controller: _controller,
+              itemCount: _pages.length,
+              normalColor: Theme.of(context).scaffoldBackgroundColor,
+              onPageSelected: (int page) {
+                _controller.animateToPage(
+                  page,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.ease,
                 );
               },
             ),
