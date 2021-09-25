@@ -8,6 +8,7 @@ class LeftToRightScrollingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 300,
       padding: const EdgeInsets.fromLTRB(0, 18, 0, 0),
       child: Column(
         children: [
