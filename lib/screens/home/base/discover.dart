@@ -40,6 +40,22 @@ class DiscoverBody extends StatelessWidget {
   }
 }
 
+class HideNavBar extends StatefulWidget {
+  const HideNavBar({Key? key}) : super(key: key);
+
+  @override
+  _HideNavBarState createState() => _HideNavBarState();
+}
+
+class _HideNavBarState extends State<HideNavBar> {
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+    );
+  }
+}
+
 class DiscoverNavBar extends StatelessWidget {
   const DiscoverNavBar({Key? key}) : super(key: key);
 

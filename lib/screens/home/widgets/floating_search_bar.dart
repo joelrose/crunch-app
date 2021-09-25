@@ -76,7 +76,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DiscoverNavBar(),
+        const DiscoverNavBar(),
         Expanded(
           child: FloatingSearchBar(
             backgroundColor: AlpacaColor.lightGreyColor80,
