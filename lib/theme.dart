@@ -18,6 +18,7 @@ ThemeData getThemeData(BuildContext context) {
         color: AlpacaColor.white80Color,
         fontSize: 15,
         fontWeight: FontWeight.w400,
+        height: 1.5,
       ),
       bodyText1: TextStyle(
         color: AlpacaColor.blackColor,

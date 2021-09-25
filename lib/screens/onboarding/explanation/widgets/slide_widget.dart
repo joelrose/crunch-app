@@ -18,7 +18,7 @@ class SlideWidget extends StatelessWidget {
         Image.asset(
           image,
           fit: BoxFit.cover,
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.38,
         ),
         Container(
           alignment: Alignment.centerLeft,
