@@ -4,6 +4,7 @@ import 'package:alpaca/screens/home/widgets/floating_search_bar.dart';
 import 'package:alpaca/screens/home/widgets/restaurant_random_picker.dart';
 import 'package:alpaca/screens/home/widgets/scrolling_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DiscoverScreen extends StatelessWidget {
@@ -36,22 +37,6 @@ class DiscoverBody extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-class HideNavBar extends StatefulWidget {
-  const HideNavBar({Key? key}) : super(key: key);
-
-  @override
-  _HideNavBarState createState() => _HideNavBarState();
-}
-
-class _HideNavBarState extends State<HideNavBar> {
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
     );
   }
 }

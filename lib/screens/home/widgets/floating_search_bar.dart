@@ -19,6 +19,8 @@ class _SearchBarState extends State<SearchBar> {
 
   String? selectedTerm;
 
+  bool isSearchBarVisible = false;
+
   List<String> filterSearchTerms({
     @required String filter = '',
   }) {
@@ -55,7 +57,7 @@ class _SearchBarState extends State<SearchBar> {
     addSearchTerm(term);
   }
 
-  FloatingSearchBarController? controller;
+  late FloatingSearchBarController controller;
 
   @override
   void initState() {
@@ -68,7 +70,7 @@ class _SearchBarState extends State<SearchBar> {
   @override
   void dispose() {
     // TODO: implement dispose
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -76,7 +78,11 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const DiscoverNavBar(),
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          height: isSearchBarVisible ? 0 : 60,
+          child: Wrap(children: const [DiscoverNavBar()]),
+        ),
         Expanded(
           child: FloatingSearchBar(
             backgroundColor: AlpacaColor.lightGreyColor80,
@@ -97,7 +103,7 @@ class _SearchBarState extends State<SearchBar> {
               FloatingSearchBarAction.icon(
                 icon: Icons.close,
                 onTap: () {
-                  controller!.clear();
+                  controller.clear();
                 },
                 showIfClosed: false,
                 showIfOpened: true,
@@ -108,12 +114,17 @@ class _SearchBarState extends State<SearchBar> {
                 filteredSearchHistory = filterSearchTerms(filter: query);
               });
             },
+            onFocusChanged: (v) {
+              setState(() {
+                isSearchBarVisible = !isSearchBarVisible;
+              });
+            },
             onSubmitted: (query) {
               setState(() {
                 addSearchTerm(query);
                 selectedTerm = query;
               });
-              controller?.close();
+              controller.close();
             },
             builder: (context, transition) {
               return ClipRRect(
