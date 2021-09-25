@@ -12,24 +12,6 @@ class DiscoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SearchBar();
-    // return const SingleChildScrollView(
-    //   physics: AlwaysScrollableScrollPhysics(),
-    //   child: HomeHeader(),
-  }
-}
-
-class HomeHeader extends StatelessWidget {
-  const HomeHeader({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        SearchBar(),
-      ],
-    );
   }
 }
 
