@@ -137,17 +137,13 @@ class _SearchBarState extends State<SearchBar> {
                 ),
               );
             },
-            body: Column(
-              children: [
-                SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    children: const [
-                      HomeBody(),
-                    ],
-                  ),
-                )
-              ],
+            body: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: const [
+                  HomeBody(),
+                ],
+              ),
             ),
           ),
         ),
