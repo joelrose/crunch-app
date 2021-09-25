@@ -141,7 +141,7 @@ class _SearchBarState extends State<SearchBar> {
               physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: const [
-                  HomeBody(),
+                  DiscoverBody(),
                 ],
               ),
             ),

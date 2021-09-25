@@ -33,8 +33,8 @@ class HomeHeader extends StatelessWidget {
   }
 }
 
-class HomeBody extends StatelessWidget {
-  const HomeBody({Key? key}) : super(key: key);
+class DiscoverBody extends StatelessWidget {
+  const DiscoverBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
