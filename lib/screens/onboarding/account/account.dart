@@ -2,6 +2,7 @@ import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/onboarding/create/create_account.dart';
 import 'package:alpaca/services/auth_service.dart';
+import 'package:alpaca/services/database_service.dart';
 import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
@@ -138,7 +139,6 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                                     phoneNumber: _textController.text,
                                     isSocialLogin: false,
                                   ),
-                                  
                                 );
                               },
                               child: const Icon(
@@ -205,17 +205,7 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           'assets/google-logo.svg',
                           MediaQuery.of(context).size.width,
                           () async {
-                            final User? user = await auth.signInWithGoogle();
-                            if (user != null) {
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                onboardingCreateAccountRoute,
-                                (route) => false,
-                                arguments: CreateAccountData(
-                                  phoneNumber: _textController.text,
-                                  isSocialLogin: true,
-                                ),
-                              );
-                            }
+                            await socialSignUp(context, appleLogin: false);
                           },
                         ),
                         getSocialButton(
@@ -225,16 +215,7 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           'assets/apple-logo.svg',
                           MediaQuery.of(context).size.width,
                           () async {
-                            final User? user = await auth.signInWithApple();
-                            if (user != null) {
-                              Navigator.of(context).pushNamed(
-                                onboardingCreateAccountRoute,
-                                arguments: CreateAccountData(
-                                  phoneNumber: _textController.text,
-                                  isSocialLogin: true,
-                                ),
-                              );
-                            }
+                            await socialSignUp(context);
                           },
                           backgroundWhite: false,
                         ),
@@ -256,5 +237,30 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> socialSignUp(
+    BuildContext context, {
+    bool appleLogin = true,
+  }) async {
+    final User? user =
+        await (appleLogin ? auth.signInWithApple() : auth.signInWithGoogle());
+    if (user != null) {
+      final userExists =
+          await locator<DatabaseService>().reportDocumentExists(user.uid);
+
+      if (userExists) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(homeRoute, (route) => false);
+      } else {
+        Navigator.of(context).pushNamed(
+          onboardingCreateAccountRoute,
+          arguments: CreateAccountData(
+            phoneNumber: _textController.text,
+            isSocialLogin: true,
+          ),
+        );
+      }
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
+import 'package:alpaca/services/database_service.dart';
+import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
 
@@ -76,7 +77,15 @@ class _StepInsertNameState extends State<StepInsertName> {
           ),
           ActionButton(
             buttonText: 'Continue',
-            onPressed: () {
+            onPressed: () async {
+              final data = {
+                'lastActivity': DateTime.now(),
+                'firstName': _firstNameController.text,
+                'lastName': _lastNameController.text,
+              };
+
+              await locator<DatabaseService>().saveUserData(data);
+
               widget.onFinish();
             },
           ),
