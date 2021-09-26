@@ -59,6 +59,12 @@ class _StepSetPasswordState extends State<StepSetPassword> {
             textController: _passwordController,
             obscureText: true,
             textInputType: TextInputType.visiblePassword,
+            validator: (value) {
+              if (value!.isEmpty || value.length < 3) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
           ),
         ),
         Padding(
@@ -68,6 +74,13 @@ class _StepSetPasswordState extends State<StepSetPassword> {
             textController: _passwordRepeatController,
             obscureText: true,
             textInputType: TextInputType.visiblePassword,
+            textInputAction: TextInputAction.done,
+            validator: (value) {
+              if (value!.isEmpty && value.length < 8) {
+                return 'Please enter a valid password';
+              }
+              return null;
+            },
           ),
         ),
         Expanded(
