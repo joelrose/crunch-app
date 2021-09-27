@@ -94,6 +94,7 @@ class _SearchBarState extends State<SearchBar> {
             controller: controller,
             transition: CircularFloatingSearchBarTransition(),
             hint: 'Search for food, stores or tags...',
+            automaticallyImplyBackButton: false,
             leadingActions: [
               FloatingSearchBarAction.searchToClear(),
             ],
