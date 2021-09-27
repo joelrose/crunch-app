@@ -2,8 +2,7 @@ import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:alpaca/screens/home/base/discover.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:alpaca/routes.dart';
+import 'package:alpaca/screens/home/widgets/discover_nav_bar.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -83,20 +82,17 @@ class _SearchBarState extends State<SearchBar> {
         SliverAppBar(
           toolbarHeight: isSearchBarVisible ? 0 : 60,
           backgroundColor: AlpacaColor.white100Color,
-          flexibleSpace: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
-            height: isSearchBarVisible ? 0 : 60,
-            child: Wrap(children: const [DiscoverNavBar()]),
-          ),
-        )
+          flexibleSpace: Wrap(children: const [DiscoverNavBar()]),
+        ),
       ],
       body: FloatingSearchBar(
+        margins: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        borderRadius: BorderRadius.circular(8),
         backgroundColor: AlpacaColor.lightGreyColor80,
         backdropColor: AlpacaColor.white100Color,
         shadowColor: Colors.transparent,
         iconColor: AlpacaColor.darkGreyColor,
         queryStyle: const TextStyle(color: AlpacaColor.blackColor),
-        scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
         controller: controller,
         transition: CircularFloatingSearchBarTransition(),
         hint: 'Search for food, stores or tags...',
@@ -199,7 +195,7 @@ class _SearchBarState extends State<SearchBar> {
         body: Column(
           children: [
             Container(
-              height: 65,
+              height: 70,
             ),
             Expanded(
               child: SingleChildScrollView(

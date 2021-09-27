@@ -34,42 +34,6 @@ class DiscoverBody extends StatelessWidget {
   }
 }
 
-class DiscoverNavBar extends StatelessWidget {
-  const DiscoverNavBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 18.0,
-        vertical: 15.0,
-      ),
-      child: Row(
-        children: [
-          SvgPicture.asset(
-            'assets/logo/crunch-logo.svg',
-            width: 100,
-            color: AlpacaColor.primary100,
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: () => {Navigator.of(context).pushNamed(profileRoute)},
-            child: Container(
-              height: 45,
-              width: 45,
-              padding: const EdgeInsets.all(3),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(color: AlpacaColor.primary100, width: 3),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
 class DiscoverSearchBar extends StatelessWidget {
   const DiscoverSearchBar({Key? key}) : super(key: key);
 
