@@ -122,6 +122,7 @@ class AlpacaTextField extends StatelessWidget {
     Key? key,
     required this.hintText,
     required this.textController,
+    required this.validator,
     this.fillColor = AlpacaColor.lightGreyColor80,
     this.hintTextColor = AlpacaColor.lightGreyColor100,
     this.textColor = AlpacaColor.blackColor,
@@ -140,6 +141,7 @@ class AlpacaTextField extends StatelessWidget {
   final TextInputType textInputType;
   final TextEditingController textController;
   final bool obscureText;
+  final String? Function(String?) validator;
 
   @override
   Widget build(BuildContext context) {
@@ -153,6 +155,7 @@ class AlpacaTextField extends StatelessWidget {
       style: TextStyle(
         color: textColor,
       ),
+      validator: validator,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 15.0,

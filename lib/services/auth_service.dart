@@ -7,12 +7,10 @@ abstract class AuthService {
   FirebaseAuth get firebaseAuth;
 
   Future<User?> signInWithGoogle();
-  Future<User?> signInWithEmail(String email, String password);
   Future<void> verifyNumber(
     String number,
     void Function(String) verifyCallback,
   );
   Future<User?> signInWithApple();
-  Future<void> resetPassword(String email);
   Future<void> signOut();
 }
