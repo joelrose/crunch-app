@@ -22,21 +22,13 @@ class DiscoverBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        Container(
-          height: 70,
-        ),
-        Container(),
-        const Divider(
+      children: const [
+        Divider(
           height: 1,
         ),
-        const RestaurantRandomPickGenerator(),
-        Column(
-          children: const [
-            LeftToRightScrollingList(),
-            LeftToRightScrollingList(),
-          ],
-        ),
+        RestaurantRandomPickGenerator(),
+        LeftToRightScrollingList(),
+        LeftToRightScrollingList(),
       ],
     );
   }

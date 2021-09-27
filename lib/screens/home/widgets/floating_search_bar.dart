@@ -90,121 +90,128 @@ class _SearchBarState extends State<SearchBar> {
           ),
         )
       ],
-      body: Expanded(
-        child: FloatingSearchBar(
-          backgroundColor: AlpacaColor.lightGreyColor80,
-          backdropColor: AlpacaColor.white100Color,
-          shadowColor: Colors.transparent,
-          iconColor: AlpacaColor.darkGreyColor,
-          queryStyle: const TextStyle(color: AlpacaColor.blackColor),
-          scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-          controller: controller,
-          transition: CircularFloatingSearchBarTransition(),
-          hint: 'Search for food, stores or tags...',
-          automaticallyImplyBackButton: false,
-          leadingActions: [
-            FloatingSearchBarAction.searchToClear(),
-          ],
-          actions: [
-            // FloatingSearchBarAction.back(),
-            // FloatingSearchBarAction.icon(
-            //   icon: Icons.close,
-            //   onTap: () {
-            //     controller.clear();
-            //   },
-            //   showIfClosed: false,
-            //   showIfOpened: true,
-            // ),
-            FloatingSearchBarAction(
-              showIfOpened: true,
-              showIfClosed: false,
-              child: TextButton(
-                child: const Text(
-                  'Cancel',
-                  style: TextStyle(color: AlpacaColor.darkGreyColor),
-                ),
-                onPressed: () {
-                  controller.close();
+      body: FloatingSearchBar(
+        backgroundColor: AlpacaColor.lightGreyColor80,
+        backdropColor: AlpacaColor.white100Color,
+        shadowColor: Colors.transparent,
+        iconColor: AlpacaColor.darkGreyColor,
+        queryStyle: const TextStyle(color: AlpacaColor.blackColor),
+        scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+        controller: controller,
+        transition: CircularFloatingSearchBarTransition(),
+        hint: 'Search for food, stores or tags...',
+        automaticallyImplyBackButton: false,
+        leadingActions: [
+          FloatingSearchBarAction.searchToClear(),
+        ],
+        actions: [
+          // FloatingSearchBarAction.back(),
+          // FloatingSearchBarAction.icon(
+          //   icon: Icons.close,
+          //   onTap: () {
+          //     controller.clear();
+          //   },
+          //   showIfClosed: false,
+          //   showIfOpened: true,
+          // ),
+          FloatingSearchBarAction(
+            showIfOpened: true,
+            showIfClosed: false,
+            child: TextButton(
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: AlpacaColor.darkGreyColor),
+              ),
+              onPressed: () {
+                controller.close();
+              },
+            ),
+          )
+        ],
+        onQueryChanged: (query) {
+          setState(() {
+            filteredSearchHistory = filterSearchTerms(filter: query);
+          });
+        },
+        onFocusChanged: (v) {
+          setState(() {
+            isSearchBarVisible = !isSearchBarVisible;
+          });
+        },
+        onSubmitted: (query) {
+          setState(() {
+            addSearchTerm(query);
+            selectedTerm = query;
+          });
+          controller.close();
+        },
+        builder: (context, transition) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Material(
+              color: AlpacaColor.white100Color,
+              child: Builder(
+                builder: (context) {
+                  if (filteredSearchHistory!.isEmpty &&
+                      controller.query.isEmpty) {
+                    return Container(
+                      height: 56,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Start searching',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    );
+                  } else if (filteredSearchHistory!.isEmpty) {
+                    return ListTile(
+                      title: Text(controller.query),
+                      onTap: () {
+                        setState(() {
+                          addSearchTerm(controller.query);
+                          selectedTerm = controller.query;
+                        });
+                        controller.close();
+                      },
+                    );
+                  } else {
+                    return Container();
+                    // return Column(
+                    //   mainAxisSize: MainAxisSize.min,
+                    //   children: filteredSearchHistory.map(
+                    //     (term) => ListTile(
+                    //     title: Text(
+                    //       term,
+                    //       maxLines: 1,
+                    //       overflow: TextOverflow.ellipsis,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // );
+                  }
                 },
               ),
-            )
-          ],
-          onQueryChanged: (query) {
-            setState(() {
-              filteredSearchHistory = filterSearchTerms(filter: query);
-            });
-          },
-          onFocusChanged: (v) {
-            setState(() {
-              isSearchBarVisible = !isSearchBarVisible;
-            });
-          },
-          onSubmitted: (query) {
-            setState(() {
-              addSearchTerm(query);
-              selectedTerm = query;
-            });
-            controller.close();
-          },
-          builder: (context, transition) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Material(
-                color: AlpacaColor.white100Color,
-                child: Builder(
-                  builder: (context) {
-                    if (filteredSearchHistory!.isEmpty &&
-                        controller.query.isEmpty) {
-                      return Container(
-                        height: 56,
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Start searching',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      );
-                    } else if (filteredSearchHistory!.isEmpty) {
-                      return ListTile(
-                        title: Text(controller.query),
-                        onTap: () {
-                          setState(() {
-                            addSearchTerm(controller.query);
-                            selectedTerm = controller.query;
-                          });
-                          controller.close();
-                        },
-                      );
-                    } else {
-                      return Container();
-                      // return Column(
-                      //   mainAxisSize: MainAxisSize.min,
-                      //   children: filteredSearchHistory.map(
-                      //     (term) => ListTile(
-                      //     title: Text(
-                      //       term,
-                      //       maxLines: 1,
-                      //       overflow: TextOverflow.ellipsis,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // );
-                    }
-                  },
+            ),
+          );
+        },
+        body: Column(
+          children: [
+            Container(
+              height: 65,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: const [
+                    DiscoverBody(),
+                  ],
                 ),
               ),
-            );
-          },
-          body: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              children: const [
-                DiscoverBody(),
-              ],
             ),
-          ),
+          ],
         ),
       ),
     );
