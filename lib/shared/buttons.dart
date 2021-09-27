@@ -123,7 +123,7 @@ class AlpacaTextField extends StatelessWidget {
     required this.hintText,
     required this.textController,
     required this.validator,
-    this.fillColor = AlpacaColor.lightGreyColor80,
+    this.fillColor = AlpacaColor.lightGreyColor90,
     this.hintTextColor = AlpacaColor.lightGreyColor100,
     this.textColor = AlpacaColor.blackColor,
     this.cursorColor = AlpacaColor.blackColor,
@@ -145,45 +145,60 @@ class AlpacaTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: textController,
-      textInputAction: textInputAction,
-      keyboardType: textInputType,
-      autocorrect: false,
-      cursorColor: cursorColor,
-      obscureText: obscureText,
-      style: TextStyle(
-        color: textColor,
-      ),
-      validator: validator,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 15.0,
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: fillColor,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            hintText,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
           ),
         ),
-        fillColor: fillColor,
-        hintText: hintText,
-        filled: true,
-        hintStyle: TextStyle(
-          color: hintTextColor,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: fillColor,
+        TextFormField(
+          controller: textController,
+          textInputAction: textInputAction,
+          keyboardType: textInputType,
+          autocorrect: false,
+          cursorColor: cursorColor,
+          obscureText: obscureText,
+          style: TextStyle(
+            color: textColor,
           ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: fillColor,
+          validator: validator,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 15.0,
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: fillColor,
+              ),
+            ),
+            fillColor: AlpacaColor.white100Color,
+            hintText: hintText,
+            filled: true,
+            hintStyle: TextStyle(
+              color: hintTextColor,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: fillColor,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: fillColor,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
-          borderRadius: BorderRadius.circular(8),
         ),
-      ),
+      ],
     );
   }
 }
