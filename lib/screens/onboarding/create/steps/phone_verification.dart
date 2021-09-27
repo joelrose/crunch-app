@@ -36,6 +36,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
     super.initState();
 
     _errorController = StreamController<ErrorAnimationType>();
+
     _sendVerification();
   }
 
@@ -79,8 +80,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
     );
   }
 
-
-  Future<void>  _verifyNumber(String code) async {
+  Future<void> _verifyNumber(String code) async {
     final credential = PhoneAuthProvider.credential(
       verificationId: _verificationId!,
       smsCode: code,
@@ -105,133 +105,129 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
     final theme = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
 
-    return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(right: size.width * 0.2),
-            child: Text(
-              "We've sent a verification Code to",
-              style: theme.headline1!.merge(
-                const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                  color: AlpacaColor.blackColor,
-                  height: 1.4,
-                  letterSpacing: -0.24,
-                ),
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(right: size.width * 0.2),
+          child: Text(
+            "We've sent a verification Code to",
+            style: theme.headline1!.merge(
+              const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
+                color: AlpacaColor.blackColor,
+                height: 1.4,
+                letterSpacing: -0.24,
               ),
             ),
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              widget.phoneNumber,
-              style: theme.headline1!.merge(
-                const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                  color: AlpacaColor.primary100,
-                  height: 1.4,
-                  letterSpacing: -0.24,
-                ),
+        ),
+        Container(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            widget.phoneNumber,
+            style: theme.headline1!.merge(
+              const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
+                color: AlpacaColor.primary100,
+                height: 1.4,
+                letterSpacing: -0.24,
               ),
             ),
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 40, top: 10),
+          child: Text(
+            'Please check your messages and enter the code in the boxes below.',
+            style: theme.subtitle1!.merge(
+              const TextStyle(
+                color: AlpacaColor.blackColor,
+              ),
+            ),
+          ),
+        ),
+        PinCodeTextField(
+          length: 6,
+          animationType: AnimationType.scale,
+          keyboardType: TextInputType.number,
+          controller: _textController,
+          errorAnimationController: _errorController,
+          autoFocus: true,
+          pinTheme: PinTheme(
+            shape: PinCodeFieldShape.box,
+            borderRadius: BorderRadius.circular(5),
+            fieldHeight: 60,
+            fieldWidth: size.width * 0.13,
+            fieldOuterPadding: EdgeInsets.zero,
+            activeFillColor: AlpacaColor.white100Color,
+            selectedColor: const Color(0xffE8E8E8),
+            selectedFillColor: AlpacaColor.white100Color,
+            inactiveFillColor: AlpacaColor.white100Color,
+            inactiveColor: const Color(0xffE8E8E8),
+            activeColor: const Color(0xffE8E8E8),
+          ),
+          cursorColor: AlpacaColor.blackColor,
+          textStyle: const TextStyle(
+            color: Colors.black,
+            fontSize: 22,
+          ),
+          animationDuration: const Duration(milliseconds: 300),
+          enableActiveFill: true,
+          onCompleted: (v) {
+            _verifyNumber(v);
+          },
+          appContext: context,
+          onChanged: (String value) {},
+        ),
+        if (_hasError)
           Padding(
-            padding: const EdgeInsets.only(bottom: 40, top: 10),
+            padding: const EdgeInsets.only(bottom: 10, top: 10),
             child: Text(
-              'Please check your messages and enter the code in the boxes below.',
+              'The entered code is not valid, please try again!',
               style: theme.subtitle1!.merge(
                 const TextStyle(
-                  color: AlpacaColor.blackColor,
+                  color: Colors.red,
                 ),
               ),
             ),
           ),
-          PinCodeTextField(
-            length: 6,
-            animationType: AnimationType.scale,
-            keyboardType: TextInputType.number,
-            controller: _textController,
-            errorAnimationController: _errorController,
-            pinTheme: PinTheme(
-              shape: PinCodeFieldShape.box,
-              borderRadius: BorderRadius.circular(5),
-              fieldHeight: 60,
-              fieldWidth: size.width * 0.13,
-              fieldOuterPadding: EdgeInsets.zero,
-              activeFillColor: AlpacaColor.white100Color,
-              selectedColor: const Color(0xffE8E8E8),
-              selectedFillColor: AlpacaColor.white100Color,
-              inactiveFillColor: AlpacaColor.white100Color,
-              inactiveColor: const Color(0xffE8E8E8),
-              activeColor: const Color(0xffE8E8E8),
-            ),
-            cursorColor: AlpacaColor.blackColor,
-            textStyle: const TextStyle(
-              color: Colors.black,
-              fontSize: 22,
-            ),
-            animationDuration: const Duration(milliseconds: 300),
-            enableActiveFill: true,
-            onCompleted: (v) {
-              _verifyNumber(v);
-            },
-            appContext: context,
-            onChanged: (String value) {},
-          ),
-          if (_hasError)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10, top: 10),
-              child: Text(
-                'The entered code is not valid, please try again!',
-                style: theme.subtitle1!.merge(
-                  const TextStyle(
-                    color: Colors.red,
+        GestureDetector(
+          onTap: () {
+            if (_start == 0) {
+              _sendVerification();
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(
+                    Icons.swap_horiz,
+                    color: _start != 0
+                        ? AlpacaColor.darkGreyColor
+                        : AlpacaColor.primary100,
                   ),
                 ),
-              ),
-            ),
-          GestureDetector(
-            onTap: () {
-              if (_start == 0) {
-                _sendVerification();
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Icon(
-                      Icons.swap_horiz,
+                Text(
+                  _start != 0 ? 'Resend code! ($_start)' : 'Resend code!',
+                  style: theme.subtitle1!.merge(
+                    TextStyle(
                       color: _start != 0
                           ? AlpacaColor.darkGreyColor
                           : AlpacaColor.primary100,
                     ),
                   ),
-                  Text(
-                    _start != 0 ? 'Resend code! ($_start)' : 'Resend code!',
-                    style: theme.subtitle1!.merge(
-                      TextStyle(
-                        color: _start != 0
-                            ? AlpacaColor.darkGreyColor
-                            : AlpacaColor.primary100,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

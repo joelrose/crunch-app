@@ -132,9 +132,8 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           decoration: InputDecoration(
                             suffixIcon: GestureDetector(
                               onTap: () async {
-                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                Navigator.of(context).pushNamed(
                                   onboardingCreateAccountRoute,
-                                  (route) => false,
                                   arguments: CreateAccountData(
                                     phoneNumber: _textController.text,
                                     isSocialLogin: false,
@@ -253,8 +252,9 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
         Navigator.of(context)
             .pushNamedAndRemoveUntil(homeRoute, (route) => false);
       } else {
-        Navigator.of(context).pushNamed(
+        Navigator.of(context).pushNamedAndRemoveUntil(
           onboardingCreateAccountRoute,
+          (route) => false,
           arguments: CreateAccountData(
             phoneNumber: _textController.text,
             isSocialLogin: true,
