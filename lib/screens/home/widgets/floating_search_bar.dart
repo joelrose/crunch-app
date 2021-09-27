@@ -99,7 +99,7 @@ class _SearchBarState extends State<SearchBar> {
               FloatingSearchBarAction.searchToClear(),
             ],
             actions: [
-              FloatingSearchBarAction.back(),
+              // FloatingSearchBarAction.back(),
               // FloatingSearchBarAction.icon(
               //   icon: Icons.close,
               //   onTap: () {
@@ -108,19 +108,19 @@ class _SearchBarState extends State<SearchBar> {
               //   showIfClosed: false,
               //   showIfOpened: true,
               // ),
-              // FloatingSearchBarAction(
-              //   showIfOpened: true,
-              //   showIfClosed: false,
-              //   child: TextButton(
-              //     child: const Text(
-              //       'Cancel',
-              //       style: TextStyle(color: AlpacaColor.blackColor),
-              //     ),
-              //     onPressed: () {
-              //       controller.close();
-              //     },
-              //   ),
-              // )
+              FloatingSearchBarAction(
+                showIfOpened: true,
+                showIfClosed: false,
+                child: TextButton(
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: AlpacaColor.darkGreyColor),
+                  ),
+                  onPressed: () {
+                    controller.close();
+                  },
+                ),
+              )
             ],
             onQueryChanged: (query) {
               setState(() {
