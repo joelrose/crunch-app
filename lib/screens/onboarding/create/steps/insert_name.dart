@@ -68,7 +68,7 @@ class _StepInsertNameState extends State<StepInsertName> {
                 hintText: 'First name',
                 textController: _firstNameController,
                 validator: (value) {
-                  if (value!.isEmpty && value.length < 3) {
+                  if (value!.isEmpty || value.length < 3) {
                     return 'Please enter a valid name';
                   }
                   return null;
@@ -82,7 +82,7 @@ class _StepInsertNameState extends State<StepInsertName> {
                 textController: _lastNameController,
                 textInputAction: TextInputAction.done,
                 validator: (value) {
-                  if (value!.isEmpty && value.length < 3) {
+                  if (value!.isEmpty || value.length < 3) {
                     return 'Please enter a valid name';
                   }
                   return null;

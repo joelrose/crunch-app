@@ -68,7 +68,7 @@ class _StepSetPasswordState extends State<StepSetPassword> {
                 obscureText: true,
                 textInputType: TextInputType.visiblePassword,
                 validator: (value) {
-                  if (value!.isEmpty && value.length < 6) {
+                  if (value!.isEmpty || value.length < 6) {
                     return 'Please enter a valid password';
                   }
                   return null;
@@ -84,7 +84,7 @@ class _StepSetPasswordState extends State<StepSetPassword> {
                 textInputType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
                 validator: (value) {
-                  if (value!.isEmpty && _passwordController.text == value) {
+                  if (value!.isEmpty || _passwordController.text != value) {
                     return "Passwords don't match";
                   }
                   return null;
