@@ -6,9 +6,9 @@ import 'package:alpaca/shared/viewstate.dart';
 
 class StoreScreenModel extends BaseModel {
   final SanityCms cmsClient = locator<SanityCms>();
-  late RestaurantModel _restaurant;
+  late RestaurantStoreModel _restaurant;
 
-  RestaurantModel get restaurant => _restaurant;
+  RestaurantStoreModel get restaurant => _restaurant;
 
   Future fetchRestaurant(String storeId) async {
     setState(ViewState.busy);
