@@ -1,7 +1,7 @@
 import 'package:alpaca/global.dart';
+import 'package:alpaca/screens/home/base/discover.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:alpaca/screens/home/base/discover.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class _SearchBarState extends State<SearchBar> {
   bool isSearchBarVisible = false;
 
   List<String> filterSearchTerms({
-    @required String filter = '',
+    String filter = '',
   }) {
     if (filter != '' && filter.isNotEmpty) {
       return _searchHistory.reversed
@@ -64,7 +64,7 @@ class _SearchBarState extends State<SearchBar> {
     // TODO: implement initState
     super.initState();
     controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(filter: '');
+    filteredSearchHistory = filterSearchTerms();
   }
 
   @override
@@ -100,27 +100,6 @@ class _SearchBarState extends State<SearchBar> {
             ],
             actions: [
               FloatingSearchBarAction.back(),
-              // FloatingSearchBarAction.icon(
-              //   icon: Icons.close,
-              //   onTap: () {
-              //     controller.clear();
-              //   },
-              //   showIfClosed: false,
-              //   showIfOpened: true,
-              // ),
-              // FloatingSearchBarAction(
-              //   showIfOpened: true,
-              //   showIfClosed: false,
-              //   child: TextButton(
-              //     child: const Text(
-              //       'Cancel',
-              //       style: TextStyle(color: AlpacaColor.blackColor),
-              //     ),
-              //     onPressed: () {
-              //       controller.close();
-              //     },
-              //   ),
-              // )
             ],
             onQueryChanged: (query) {
               setState(() {
