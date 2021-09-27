@@ -79,7 +79,7 @@ class _SearchBarState extends State<SearchBar> {
     return Column(
       children: [
         AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 150),
           height: isSearchBarVisible ? 0 : 60,
           child: Wrap(children: const [DiscoverNavBar()]),
         ),
