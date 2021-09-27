@@ -94,33 +94,32 @@ class _SearchBarState extends State<SearchBar> {
             controller: controller,
             transition: CircularFloatingSearchBarTransition(),
             hint: 'Search for food, stores or tags...',
-            leadingActions: const [
-              Icon(
-                Icons.search,
-              ),
+            leadingActions: [
+              FloatingSearchBarAction.searchToClear(),
             ],
             actions: [
-              FloatingSearchBarAction.icon(
-                icon: Icons.close,
-                onTap: () {
-                  controller.clear();
-                },
-                showIfClosed: false,
-                showIfOpened: true,
-              ),
-              FloatingSearchBarAction(
-                showIfOpened: true,
-                showIfClosed: false,
-                child: TextButton(
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(color: AlpacaColor.blackColor),
-                  ),
-                  onPressed: () {
-                    controller.close();
-                  },
-                ),
-              )
+              FloatingSearchBarAction.back(),
+              // FloatingSearchBarAction.icon(
+              //   icon: Icons.close,
+              //   onTap: () {
+              //     controller.clear();
+              //   },
+              //   showIfClosed: false,
+              //   showIfOpened: true,
+              // ),
+              // FloatingSearchBarAction(
+              //   showIfOpened: true,
+              //   showIfClosed: false,
+              //   child: TextButton(
+              //     child: const Text(
+              //       'Cancel',
+              //       style: TextStyle(color: AlpacaColor.blackColor),
+              //     ),
+              //     onPressed: () {
+              //       controller.close();
+              //     },
+              //   ),
+              // )
             ],
             onQueryChanged: (query) {
               setState(() {
@@ -144,19 +143,48 @@ class _SearchBarState extends State<SearchBar> {
                 borderRadius: BorderRadius.circular(8),
                 child: Material(
                   color: AlpacaColor.white100Color,
-                  child: Container(
-                    height: 200,
-                    color: AlpacaColor.primary100,
-                    child: const Center(
-                      child: Text(
-                        'Work in progress...',
-                        style: TextStyle(
-                          color: AlpacaColor.white100Color,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+                  child: Builder(
+                    builder: (context) {
+                      if (filteredSearchHistory!.isEmpty &&
+                          controller.query.isEmpty) {
+                        return Container(
+                          height: 56,
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Start searching',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        );
+                      } else if (filteredSearchHistory!.isEmpty) {
+                        return ListTile(
+                          title: Text(controller.query),
+                          onTap: () {
+                            setState(() {
+                              addSearchTerm(controller.query);
+                              selectedTerm = controller.query;
+                            });
+                            controller.close();
+                          },
+                        );
+                      } else {
+                        return Container();
+                        // return Column(
+                        //   mainAxisSize: MainAxisSize.min,
+                        //   children: filteredSearchHistory.map(
+                        //     (term) => ListTile(
+                        //     title: Text(
+                        //       term,
+                        //       maxLines: 1,
+                        //       overflow: TextOverflow.ellipsis,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // );
+                      }
+                    },
                   ),
                 ),
               );
