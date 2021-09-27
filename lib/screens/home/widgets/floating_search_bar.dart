@@ -4,14 +4,14 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:alpaca/screens/home/base/discover.dart';
 import 'package:alpaca/screens/home/widgets/discover_nav_bar.dart';
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({Key? key}) : super(key: key);
+class DiscoverSearchBar extends StatefulWidget {
+  const DiscoverSearchBar({Key? key}) : super(key: key);
 
   @override
-  _SearchBarState createState() => _SearchBarState();
+  _DiscoverSearchBarState createState() => _DiscoverSearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
   static const historyLenght = 5;
 
   final List<String> _searchHistory = ['Flutter', 'Future'];
@@ -23,7 +23,7 @@ class _SearchBarState extends State<SearchBar> {
   bool isSearchBarVisible = false;
 
   List<String> filterSearchTerms({
-    @required String filter = '',
+    String filter = '',
   }) {
     if (filter != '' && filter.isNotEmpty) {
       return _searchHistory.reversed
@@ -45,12 +45,12 @@ class _SearchBarState extends State<SearchBar> {
       _searchHistory.removeRange(0, _searchHistory.length - historyLenght);
     }
 
-    filteredSearchHistory = filterSearchTerms(filter: '');
+    filteredSearchHistory = filterSearchTerms();
   }
 
   void deleteSearchTerm(String term) {
     _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms(filter: '');
+    filteredSearchHistory = filterSearchTerms();
   }
 
   void putSearchTermFirst(String term) {
@@ -62,15 +62,13 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(filter: '');
+    filteredSearchHistory = filterSearchTerms();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     controller.dispose();
     super.dispose();
   }
@@ -101,15 +99,6 @@ class _SearchBarState extends State<SearchBar> {
           FloatingSearchBarAction.searchToClear(),
         ],
         actions: [
-          // FloatingSearchBarAction.back(),
-          // FloatingSearchBarAction.icon(
-          //   icon: Icons.close,
-          //   onTap: () {
-          //     controller.clear();
-          //   },
-          //   showIfClosed: false,
-          //   showIfOpened: true,
-          // ),
           FloatingSearchBarAction(
             showIfOpened: true,
             showIfClosed: false,
@@ -192,23 +181,7 @@ class _SearchBarState extends State<SearchBar> {
             ),
           );
         },
-        body: Column(
-          children: [
-            Container(
-              height: 70,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: const [
-                    DiscoverBody(),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+        body: const DiscoverBody(),
       ),
     );
   }
