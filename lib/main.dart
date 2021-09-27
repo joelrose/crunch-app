@@ -2,6 +2,8 @@ import 'package:alpaca/routes.dart' as routes;
 import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/theme.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,9 @@ class _AlpacaAppState extends State<AlpacaApp> {
             onGenerateRoute: routes.Router.generateRoute,
             initialRoute: routes.loadingRoute,
             theme: getThemeData(context),
+            navigatorObservers: [
+              FirebaseAnalyticsObserver(analytics: FirebaseAnalytics())
+            ],
           );
         }
 
