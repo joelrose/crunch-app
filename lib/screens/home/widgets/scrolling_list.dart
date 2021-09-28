@@ -118,45 +118,44 @@ class _RestaurantOverviewListState extends State<RestaurantOverviewList> {
                                         ),
                                       ),
                                       Positioned(
-                                          top: 10,
-                                          right: 10,
-                                          child: Container(
-                                            height: 25.51,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(48),
-                                              color: AlpacaColor.primary100
-                                                  .withOpacity(0.7),
-                                            ),
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 8,
-                                              vertical: 4,
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "11 min",
-                                                  textAlign: TextAlign.right,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .subtitle1!
-                                                      .merge(
-                                                        TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 11,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
+                                        top: 10,
+                                        right: 10,
+                                        child: Container(
+                                          height: 25.51,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(48),
+                                            color: AlpacaColor.primary100
+                                                .withOpacity(0.7),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 4,
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '11 min',
+                                                textAlign: TextAlign.right,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1!
+                                                    .merge(
+                                                      const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 11,
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                       ),
-                                                ),
-                                              ],
-                                            ),
-                                          ))
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Container(
