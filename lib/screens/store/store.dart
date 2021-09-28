@@ -23,43 +23,24 @@ class StoreScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               backgroundColor: AlpacaColor.white100Color,
               statusBarStyle: SystemUiOverlayStyle.dark,
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  SliverAppBar(
-                    floating: false,
-                    pinned: true,
-                    snap: false,
-                    expandedHeight: 200,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Image.network(
-                        model.restaurant.image,
-                        fit: BoxFit.cover,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            model.restaurant.image,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                    actions: [
-                      const Padding(
-                        padding: EdgeInsets.all(10.0),
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            height: 200,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  model.restaurant.image,
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Text(model.restaurant.name)
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                    Text(model.restaurant.name)
+                  ],
+                ),
               ),
             ),
     );

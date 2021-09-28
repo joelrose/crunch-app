@@ -93,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
           type: BottomNavigationBarType.fixed,
           selectedItemColor: AlpacaColor.primary100,
           unselectedItemColor: AlpacaColor.greyColor,
+          backgroundColor: AlpacaColor.white100Color,
           unselectedFontSize: 14.0,
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,

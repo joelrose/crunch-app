@@ -14,9 +14,20 @@ ThemeData getThemeData(BuildContext context) {
         fontSize: 30,
         fontWeight: FontWeight.w600,
       ),
+      headline3: TextStyle(
+        color: AlpacaColor.blackColor,
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+      ),
       subtitle1: TextStyle(
         color: AlpacaColor.white80Color,
         fontSize: 15,
+        fontWeight: FontWeight.w400,
+        height: 1.5,
+      ),
+      subtitle2: TextStyle(
+        color: AlpacaColor.greyColor80,
+        fontSize: 13,
         fontWeight: FontWeight.w400,
         height: 1.5,
       ),

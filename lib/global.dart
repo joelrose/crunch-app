@@ -8,6 +8,7 @@ class AlpacaColor {
   static const Color white100Color = Color(0xffffffff);
   static const Color white80Color = Color(0xffF0E5FF);
   static const Color greyColor = Color(0xffCFD4D6);
+  static const Color greyColor80 = Color(0xff848484);
   static const Color lightGreyColor80 = Color(0xffF5F5F6);
   static const Color lightGreyColor90 = Color(0xffEFF1F2);
   static const Color lightGreyColor100 = Color(0xffB6B6B6);

@@ -1,3 +1,4 @@
+import 'package:alpaca/global.dart';
 import 'package:alpaca/screens/home/widgets/floating_search_bar.dart';
 import 'package:alpaca/screens/home/widgets/restaurant_random_picker.dart';
 import 'package:alpaca/screens/home/widgets/scrolling_list.dart';
@@ -23,17 +24,28 @@ class DiscoverBody extends StatelessWidget {
           height: 70,
         ),
         Expanded(
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              children: const [
-                Divider(
-                  height: 1,
-                ),
-                RestaurantRandomPickGenerator(),
-                LeftToRightScrollingList(),
-                LeftToRightScrollingList(),
-              ],
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  AlpacaColor.white100Color,
+                  AlpacaColor.lightGreyColor90,
+                ],
+              ),
+            ),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: const [
+                  Divider(
+                    height: 1,
+                  ),
+                  RestaurantRandomPickGenerator(),
+                  LeftToRightScrollingList(),
+                ],
+              ),
             ),
           ),
         ),
