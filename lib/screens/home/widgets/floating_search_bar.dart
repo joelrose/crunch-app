@@ -78,7 +78,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverAppBar(
-          toolbarHeight: isSearchBarVisible ? 0 : 60,
+          toolbarHeight: isSearchBarVisible ? 0 : 50,
           backgroundColor: AlpacaColor.white100Color,
           flexibleSpace: Wrap(children: const [DiscoverNavBar()]),
         ),
