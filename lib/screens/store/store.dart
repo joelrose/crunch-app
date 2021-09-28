@@ -38,44 +38,41 @@ class StoreScreen extends StatelessWidget {
                     ).image,
                   ),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 18),
-                child: Positioned(
-                  top: 0,
-                  child: Row(
-                    children: [
-                      Spacer(),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: SizedBox(
-                          height: 40,
-                          width: 40,
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: IconButton(
-                              onPressed: () {},
-                              color: AlpacaColor.white100Color,
-                              icon: const Icon(Icons.star_border_outlined),
-                            ),
+                padding: const EdgeInsets.symmetric(horizontal: 18),
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: IconButton(
+                            onPressed: () {},
+                            color: AlpacaColor.white100Color,
+                            icon: const Icon(Icons.star_border_outlined),
                           ),
                         ),
                       ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: SizedBox(
-                          height: 40,
-                          width: 40,
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: IconButton(
-                              onPressed: () {},
-                              color: AlpacaColor.white100Color,
-                              icon: const Icon(Icons.info_outline),
-                            ),
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: IconButton(
+                            onPressed: () {},
+                            color: AlpacaColor.white100Color,
+                            icon: const Icon(Icons.info_outline),
                           ),
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
