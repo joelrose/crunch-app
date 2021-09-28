@@ -27,7 +27,7 @@ class StoreTag extends StatelessWidget {
             style: const TextStyle(
               color: AlpacaColor.primary80,
               fontSize: 12,
-              fontFamily: "Inter",
+              fontFamily: 'Inter',
               fontWeight: FontWeight.w600,
             ),
           ),

@@ -47,6 +47,7 @@ dependencies:
   provider: ^6.0.0
   rxdart: ^0.27.2
   the_apple_sign_in: ^1.1.1
+  url_launcher: ^6.0.12
 
 dev_dependencies:
   flutter_launcher_icons: "^0.9.2"
