@@ -95,8 +95,11 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         transition: CircularFloatingSearchBarTransition(),
         hint: 'Search for food, stores or tags...',
         automaticallyImplyBackButton: false,
+        height: 132 / MediaQuery.of(context).devicePixelRatio,
         leadingActions: [
-          FloatingSearchBarAction.searchToClear(),
+          FloatingSearchBarAction.searchToClear(
+            duration: const Duration(milliseconds: 400),
+          ),
         ],
         actions: [
           FloatingSearchBarAction(
