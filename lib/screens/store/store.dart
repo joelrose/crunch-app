@@ -1,10 +1,15 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:alpaca/global.dart';
 import 'package:alpaca/screens/store/store_screen_model.dart';
 import 'package:alpaca/shared/base_screen.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:alpaca/shared/viewstate.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:alpaca/shared/buttons.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({Key? key, required this.storeId}) : super(key: key);
@@ -26,6 +31,7 @@ class StoreScreen extends StatelessWidget {
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverAppBar(
+                    toolbarHeight: 40,
                     floating: false,
                     pinned: true,
                     snap: false,
@@ -37,26 +43,36 @@ class StoreScreen extends StatelessWidget {
                       ),
                     ),
                     actions: [
-                      const Padding(
-                        padding: EdgeInsets.all(10.0),
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            height: 200,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  model.restaurant.image,
-                                ),
-                                fit: BoxFit.cover,
-                              ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: SizedBox(
+                          height: 40,
+                          width: 40,
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: IconButton(
+                              onPressed: () {},
+                              color: AlpacaColor.white100Color,
+                              icon: const Icon(Icons.star_border_outlined),
                             ),
                           ),
-                          Text(model.restaurant.name)
-                        ],
+                        ),
                       ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: SizedBox(
+                          height: 40,
+                          width: 40,
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: IconButton(
+                              onPressed: () {},
+                              color: AlpacaColor.white100Color,
+                              icon: const Icon(Icons.info_outline),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ],
