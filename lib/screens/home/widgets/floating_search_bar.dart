@@ -85,6 +85,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
       ],
       body: FloatingSearchBar(
         margins: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        insets: EdgeInsets.symmetric(horizontal: 1),
         borderRadius: BorderRadius.circular(8),
         backgroundColor: AlpacaColor.lightGreyColor80,
         backdropColor: AlpacaColor.white100Color,
@@ -94,10 +95,17 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         controller: controller,
         transition: CircularFloatingSearchBarTransition(),
         hint: 'Search for food, stores or tags...',
+        hintStyle: const TextStyle(
+          color: AlpacaColor.darkGreyColor,
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
         automaticallyImplyBackButton: false,
         height: 132 / MediaQuery.of(context).devicePixelRatio,
+        padding: const EdgeInsets.symmetric(horizontal: 6),
         leadingActions: [
           FloatingSearchBarAction.searchToClear(
+            color: AlpacaColor.darkGreyColor,
             duration: const Duration(milliseconds: 400),
           ),
         ],
