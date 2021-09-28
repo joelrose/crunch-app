@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:alpaca/global.dart';
@@ -7,12 +6,12 @@ import 'package:alpaca/screens/store/widgets/store_information_item.dart';
 import 'package:alpaca/screens/store/widgets/store_menue_list.dart';
 import 'package:alpaca/screens/store/widgets/store_overview.dart';
 import 'package:alpaca/shared/base_screen.dart';
+import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:alpaca/shared/viewstate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:alpaca/shared/buttons.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({Key? key, required this.storeId}) : super(key: key);
@@ -45,42 +44,74 @@ class StoreScreen extends StatelessWidget {
                           ).image,
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 18,
+                      ),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Spacer(),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: SizedBox(
-                              height: 40,
-                              width: 40,
-                              child: BackdropFilter(
-                                filter:
-                                    ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  color: AlpacaColor.white100Color,
-                                  icon: const Icon(Icons.star_border_outlined),
-                                ),
+                          GestureDetector(
+                            onTap: () => {
+                              Navigator.of(context).pop()
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.arrow_back_ios,
+                                size: 20,
+                                color: AlpacaColor.white100Color,
                               ),
                             ),
                           ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: SizedBox(
-                              height: 40,
-                              width: 40,
-                              child: BackdropFilter(
-                                filter:
-                                    ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  color: AlpacaColor.white100Color,
-                                  icon: const Icon(Icons.info_outline),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 10,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(
+                                        sigmaX: 10,
+                                        sigmaY: 10,
+                                      ),
+                                      child: IconButton(
+                                        onPressed: () {},
+                                        color: AlpacaColor.white100Color,
+                                        icon: const Icon(
+                                          Icons.star_border_outlined,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(
+                                      sigmaX: 10,
+                                      sigmaY: 10,
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {},
+                                      color: AlpacaColor.white100Color,
+                                      icon: const Icon(Icons.info_outline),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -103,7 +134,8 @@ class StoreScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text(
                                   'Store information',

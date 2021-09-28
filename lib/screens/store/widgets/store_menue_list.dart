@@ -1,13 +1,33 @@
 import 'package:alpaca/sanity/model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
-class StoreMenueList extends StatelessWidget {
+class StoreMenueList extends StatefulWidget {
   const StoreMenueList({
     Key? key,
     required this.menueCategories,
   }) : super(key: key);
 
   final List<RestaurantMenueCategoryModel> menueCategories;
+
+  @override
+  State<StoreMenueList> createState() => _StoreMenueListState();
+}
+
+class _StoreMenueListState extends State<StoreMenueList> {
+  late final SlidableController slidableController;
+
+  void _showSnackBar(BuildContext context, String text) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(text)));
+  }
+
+  @override
+  void initState() {
+    slidableController = SlidableController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +51,7 @@ class StoreMenueList extends StatelessWidget {
                       style: TextStyle(
                         color: Color(0xff2b2d42),
                         fontSize: 18,
-                        fontFamily: "Inter",
+                        fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -42,11 +62,11 @@ class StoreMenueList extends StatelessWidget {
           ),
         ),
         ListView.builder(
-          itemCount: menueCategories.length,
+          itemCount: widget.menueCategories.length,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, i) {
-            final category = menueCategories[i];
+            final category = widget.menueCategories[i];
             return Column(
               children: [
                 ListTile(
@@ -69,20 +89,53 @@ class StoreMenueList extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final item = category.menueItems[i];
-                    return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 25,
+                    return Slidable(
+                      key: Key(item.title.english),
+                      controller: slidableController,
+                      dismissal: SlidableDismissal(
+                        child: const SlidableBehindActionPane(),
+                        onDismissed: (actionType) {
+                          _showSnackBar(
+                            context,
+                            actionType == SlideActionType.primary
+                                ? 'Dismiss Archive'
+                                : 'Dimiss Delete',
+                          );
+                        },
                       ),
-                      title: Text(
-                        item.title.english,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
-                      ),
-                      subtitle: Text(
-                        '${item.price} €',
-                        style: Theme.of(context).textTheme.bodyText1,
+                      actions: [
+                        IconSlideAction(
+                          caption: 'Delete',
+                          color: Colors.red,
+                          icon: Icons.delete,
+                          onTap: () => _showSnackBar(context, 'Delete'),
+                        ),
+                      ],
+                      secondaryActions: [
+                        IconSlideAction(
+                          caption: 'Add',
+                          color: Colors.blue,
+                          icon: Icons.add,
+                          onTap: () => _showSnackBar(context, 'Add'),
+                        ),
+                      ],
+                      actionPane: const SlidableBehindActionPane(),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                        ),
+                        title: Text(
+                          item.title.english,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                  ),
+                        ),
+                        subtitle: Text(
+                          '${item.price} €',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                       ),
                     );
                   },

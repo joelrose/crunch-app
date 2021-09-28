@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/home/models/restaurant_overview_model.dart';
@@ -25,7 +27,7 @@ class LeftToRightScrollingList extends StatelessWidget {
                   'Favourite stores',
                   style: TextStyle(
                     fontSize: 24,
-                    fontFamily: GoogleFonts.cabin().fontFamily,
+                    fontFamily: GoogleFonts.lexendDeca().fontFamily,
                     fontWeight: FontWeight.w700,
                     color: AlpacaColor.darkNavyColor,
                   ),
@@ -120,39 +122,56 @@ class _RestaurantOverviewListState extends State<RestaurantOverviewList> {
                                       Positioned(
                                         top: 10,
                                         right: 10,
-                                        child: Container(
-                                          height: 25.51,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(48),
-                                            color: AlpacaColor.primary100
-                                                .withOpacity(0.7),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 4,
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '11 min',
-                                                textAlign: TextAlign.right,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .subtitle1!
-                                                    .merge(
-                                                      const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 11,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: BackdropFilter(
+                                            filter: ImageFilter.blur(
+                                              sigmaX: 20,
+                                              sigmaY: 20,
+                                            ),
+                                            child: Container(
+                                              height: 26,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                                vertical: 4,
                                               ),
-                                            ],
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
+                                                      right: 2,
+                                                    ),
+                                                    child: Icon(
+                                                      Icons
+                                                          .location_on_outlined,
+                                                      size: 12,
+                                                      color: AlpacaColor
+                                                          .white100Color,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '11 min',
+                                                    textAlign: TextAlign.right,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .subtitle1!
+                                                        .merge(
+                                                          const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 11,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
