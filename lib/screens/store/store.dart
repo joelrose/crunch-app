@@ -28,21 +28,22 @@ class StoreScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               backgroundColor: AlpacaColor.white100Color,
               statusBarStyle: SystemUiOverlayStyle.dark,
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  SliverAppBar(
-                    toolbarHeight: 40,
-                    floating: false,
-                    pinned: true,
-                    snap: false,
-                    expandedHeight: 200,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Image.network(
-                        model.restaurant.image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    actions: [
+              child: Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: Image.network(
+                      model.restaurant.image,
+                    ).image,
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 18),
+                child: Positioned(
+                  top: 0,
+                  child: Row(
+                    children: [
+                      Spacer(),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(30),
                         child: SizedBox(
@@ -75,7 +76,7 @@ class StoreScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                ],
+                ),
               ),
             ),
     );
