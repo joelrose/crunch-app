@@ -77,7 +77,7 @@ class _RestaurantOverviewListState extends State<RestaurantOverviewList> {
               height: 194,
             )
           : Container(
-              margin: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               height: 194,
               child: ListView.separated(
                 clipBehavior: Clip.none,
