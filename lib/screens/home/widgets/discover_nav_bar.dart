@@ -27,15 +27,19 @@ class DiscoverNavBar extends StatelessWidget {
             child: Container(
               height: 96 / MediaQuery.of(context).devicePixelRatio,
               width: 96 / MediaQuery.of(context).devicePixelRatio,
-              padding: const EdgeInsets.all(2),
+              padding: const EdgeInsets.all(1),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 border: Border.all(
-                    color: AlpacaColor.primary100,
-                    width: 6 / MediaQuery.of(context).devicePixelRatio),
+                  color: AlpacaColor.primary100,
+                  width: 6 / MediaQuery.of(context).devicePixelRatio,
+                ),
+              ),
+              child: Image.asset(
+                'assets/placeholder/profile_img_placeholder.png',
               ),
             ),
-          )
+          ),
         ],
       ),
     );
