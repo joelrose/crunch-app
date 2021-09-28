@@ -1,12 +1,14 @@
+String _string(dynamic s) => (s ?? '') as String;
+
 class RestaurantOverviewModel {
   RestaurantOverviewModel(
       {required this.name, required this.image, required this.id});
 
   factory RestaurantOverviewModel.fromMap(Map data) {
     return RestaurantOverviewModel(
-      name: data['name'] as String,
-      image: data['image'] as String,
-      id: data['_id'] as String,
+      name: _string(data['name']),
+      image: _string(data['image']),
+      id: _string(data['_id']),
     );
   }
 
@@ -25,18 +27,26 @@ class RestaurantStoreModel {
     required this.name,
     required this.image,
     required this.id,
+    required this.menueCategories,
   });
 
   factory RestaurantStoreModel.fromMap(Map data) {
     return RestaurantStoreModel(
-      id: data['_id'] as String,
-      name: data['name'] as String,
-      image: data['image'] as String,
-      address: data['address'] as String,
-      googleMapsUrl: data['googleMapsUrl'] as String,
-      phoneNumber: data['phoneNumber'] as String,
-      website: data['website'] as String,
-      description: data['description'] as String,
+      id: _string(data['_id']),
+      name: _string(data['name']),
+      image: _string(data['image']),
+      address: _string(data['address']),
+      googleMapsUrl: _string(data['googleMapsUrl']),
+      phoneNumber: _string(data['phoneNumber']),
+      website: _string(data['website']),
+      description: _string(data['description']),
+      menueCategories: (data['menuCateogries'] as List)
+          .map(
+            (v) => RestaurantMenueCategoryModel.fromMap(
+              v as Map<dynamic, dynamic>,
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -48,4 +58,62 @@ class RestaurantStoreModel {
   final String googleMapsUrl;
   final String phoneNumber;
   final String website;
+  final List<RestaurantMenueCategoryModel> menueCategories;
+}
+
+class RestaurantMenueCategoryModel {
+  RestaurantMenueCategoryModel({
+    required this.title,
+    required this.menueItems,
+  });
+
+  factory RestaurantMenueCategoryModel.fromMap(Map data) {
+    return RestaurantMenueCategoryModel(
+      title: LocaleString.fromMap(data['title'] as Map<dynamic, dynamic>),
+      menueItems: (data['menuItems'] as List)
+          .map(
+            (v) => RestaurantMenueItemModel.fromMap(
+              v as Map<dynamic, dynamic>,
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  final LocaleString title;
+  final List<RestaurantMenueItemModel> menueItems;
+}
+
+class RestaurantMenueItemModel {
+  RestaurantMenueItemModel({
+    required this.title,
+    required this.price,
+  });
+
+  factory RestaurantMenueItemModel.fromMap(Map data) {
+    return RestaurantMenueItemModel(
+      title: LocaleString.fromMap(data['title'] as Map<dynamic, dynamic>),
+      price: data['price'] as num,
+    );
+  }
+
+  final LocaleString title;
+  final num price;
+}
+
+class LocaleString {
+  LocaleString({
+    required this.german,
+    required this.english,
+  });
+
+  factory LocaleString.fromMap(Map data) {
+    return LocaleString(
+      german: _string(data['de']),
+      english: _string(data['en']),
+    );
+  }
+
+  final String german;
+  final String english;
 }

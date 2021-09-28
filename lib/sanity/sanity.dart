@@ -82,8 +82,18 @@ class SanityCms extends SanityClient {
     googleMapsUrl,
   	phoneNumber,
   	website,
+    menuCateogries[] {
+    	title,
+      menuItems[] {
+        title, 
+        price,
+        description,
+      },
+    }
   }
   ''';
+
+
 
   Future<List<RestaurantOverviewModel>> getRestaurants() async {
     final response = await _fetch(query: _restaurantsSanityQuery);
