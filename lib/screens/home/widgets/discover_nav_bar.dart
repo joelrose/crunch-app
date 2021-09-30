@@ -18,15 +18,15 @@ class DiscoverNavBar extends StatelessWidget {
         children: [
           SvgPicture.asset(
             'assets/logo/crunch-logo.svg',
-            width: 222.0 / MediaQuery.of(context).devicePixelRatio,
+            width: 75,
             color: AlpacaColor.primary100,
           ),
           const Spacer(),
           GestureDetector(
             onTap: () => {Navigator.of(context).pushNamed(profileRoute)},
             child: Container(
-              height: 96 / MediaQuery.of(context).devicePixelRatio,
-              width: 96 / MediaQuery.of(context).devicePixelRatio,
+              height: 35,
+              width: 35,
               padding: const EdgeInsets.all(1),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
