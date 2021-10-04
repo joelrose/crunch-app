@@ -1,5 +1,6 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
+import 'package:alpaca/screens/profile/profile_pages/get_support.dart';
 import 'package:alpaca/services/auth_service.dart';
 import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/buttons.dart';
@@ -18,7 +19,6 @@ class ProfileTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Divider(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Row(
@@ -87,26 +87,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   border: Border.all(color: AlpacaColor.primary100, width: 3),
                 ),
               ),
+              const Divider(),
               const ProfileTile(title: 'My orders', icon: Icons.menu),
               const Divider(),
               Container(
                 height: 20,
               ),
+              const Divider(),
               const ProfileTile(
                   title: 'My details', icon: Icons.person_outlined),
+              const Divider(),
               const ProfileTile(
                 title: 'Payment methods',
                 icon: Icons.credit_card,
               ),
+              const Divider(),
               const ProfileTile(title: 'Preferences', icon: Icons.settings),
               const Divider(),
               Container(
                 height: 20,
               ),
-              const ProfileTile(
-                title: 'Get support',
-                icon: Icons.help_outline,
-              ),
+              const Divider(),
+              TextButton(
+                  child: const ProfileTile(
+                    title: 'Get support',
+                    icon: Icons.help_outline,
+                  ),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => GetSupport()));
+                  }),
               const Divider(),
             ],
           ),
