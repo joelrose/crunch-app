@@ -1,6 +1,7 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/profile/profile_pages/get_support.dart';
+import 'package:alpaca/screens/profile/profile_pages/placeholder.dart';
 import 'package:alpaca/services/auth_service.dart';
 import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/buttons.dart';
@@ -105,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const ProfileTile(
                 title: 'My orders',
                 icon: Icons.menu,
-                link: GetSupport(),
+                link: PlaceholderSide(),
               ),
               const Divider(),
               Container(
@@ -114,17 +115,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const ProfileTile(
                 title: 'My details',
                 icon: Icons.person_outlined,
-                link: GetSupport(),
+                link: PlaceholderSide(),
               ),
               const ProfileTile(
                 title: 'Payment methods',
                 icon: Icons.credit_card,
-                link: GetSupport(),
+                link: PlaceholderSide(),
               ),
               const ProfileTile(
                 title: 'Preferences',
                 icon: Icons.settings,
-                link: GetSupport(),
+                link: PlaceholderSide(),
               ),
               const Divider(),
               Container(
