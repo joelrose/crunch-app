@@ -9,47 +9,62 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ProfileTile extends StatelessWidget {
-  const ProfileTile({Key? key, required this.title, required this.icon})
-      : super(key: key);
+  const ProfileTile({
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.link,
+  }) : super(key: key);
 
   final String title;
   final IconData icon;
+  final Widget link;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    icon,
-                    size: 30,
-                    color: AlpacaColor.darkGreyColor,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: Text(
-                      title,
-                      style: Theme.of(context).textTheme.bodyText1!.merge(
-                            const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
+        const Divider(),
+        TextButton(
+          style: TextButton.styleFrom(padding: EdgeInsets.zero),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => link),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      icon,
+                      size: 30,
+                      color: AlpacaColor.darkGreyColor,
                     ),
-                  ),
-                ],
-              ),
-              const Icon(
-                Icons.navigate_next,
-                size: 30,
-                color: AlpacaColor.darkGreyColor,
-              ),
-            ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        title,
+                        style: Theme.of(context).textTheme.bodyText1!.merge(
+                              const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+                const Icon(
+                  Icons.navigate_next,
+                  size: 30,
+                  color: AlpacaColor.darkGreyColor,
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -87,36 +102,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   border: Border.all(color: AlpacaColor.primary100, width: 3),
                 ),
               ),
-              const Divider(),
-              const ProfileTile(title: 'My orders', icon: Icons.menu),
+              const ProfileTile(
+                title: 'My orders',
+                icon: Icons.menu,
+                link: GetSupport(),
+              ),
               const Divider(),
               Container(
                 height: 20,
               ),
-              const Divider(),
               const ProfileTile(
-                  title: 'My details', icon: Icons.person_outlined),
-              const Divider(),
+                title: 'My details',
+                icon: Icons.person_outlined,
+                link: GetSupport(),
+              ),
               const ProfileTile(
                 title: 'Payment methods',
                 icon: Icons.credit_card,
+                link: GetSupport(),
               ),
-              const Divider(),
-              const ProfileTile(title: 'Preferences', icon: Icons.settings),
+              const ProfileTile(
+                title: 'Preferences',
+                icon: Icons.settings,
+                link: GetSupport(),
+              ),
               const Divider(),
               Container(
                 height: 20,
               ),
-              const Divider(),
-              TextButton(
-                  child: const ProfileTile(
-                    title: 'Get support',
-                    icon: Icons.help_outline,
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => GetSupport()));
-                  }),
+              const ProfileTile(
+                title: 'Get support',
+                icon: Icons.help_outline,
+                link: GetSupport(),
+              ),
               const Divider(),
             ],
           ),
