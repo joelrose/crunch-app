@@ -71,9 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    DiscoverScreen(),
-    VoucherScreen(),
-    FavoritesScreen(),
+    SafeArea(child: DiscoverScreen()),
+    SafeArea(child: VoucherScreen()),
+    SafeArea(child: FavoritesScreen()),
     SearchScreen(),
   ];
 
@@ -83,11 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         backgroundColor: AlpacaColor.white100Color,
-        body: SafeArea(
-          child: IndexedStack(
-            index: _selectedIndex,
-            children: _pages,
-          ),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _pages,
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

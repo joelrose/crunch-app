@@ -87,6 +87,7 @@ class SanityCms extends SanityClient {
       menuItems[] {
         title, 
         price,
+        _key,
         description,
       },
     }

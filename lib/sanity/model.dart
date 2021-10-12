@@ -86,17 +86,20 @@ class RestaurantMenueCategoryModel {
 
 class RestaurantMenueItemModel {
   RestaurantMenueItemModel({
+    required this.id,
     required this.title,
     required this.price,
   });
 
   factory RestaurantMenueItemModel.fromMap(Map data) {
     return RestaurantMenueItemModel(
+      id: _string(data['_key']),
       title: LocaleString.fromMap(data['title'] as Map<dynamic, dynamic>),
       price: data['price'] as num,
     );
   }
 
+  final String id;
   final LocaleString title;
   final num price;
 }

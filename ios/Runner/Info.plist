@@ -44,6 +44,12 @@
 		<string>mailto</string>
 		<string>tel</string>
 	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera to enhance your experience</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We use your location to enhance your experience</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

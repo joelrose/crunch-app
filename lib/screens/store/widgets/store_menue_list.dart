@@ -1,3 +1,4 @@
+import 'package:alpaca/global.dart';
 import 'package:alpaca/sanity/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -6,9 +7,11 @@ class StoreMenueList extends StatefulWidget {
   const StoreMenueList({
     Key? key,
     required this.menueCategories,
+    required this.onCheckoutChange,
   }) : super(key: key);
 
   final List<RestaurantMenueCategoryModel> menueCategories;
+  final void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
 
   @override
   State<StoreMenueList> createState() => _StoreMenueListState();
@@ -16,6 +19,7 @@ class StoreMenueList extends StatefulWidget {
 
 class _StoreMenueListState extends State<StoreMenueList> {
   late final SlidableController slidableController;
+  List<RestaurantMenueItemModel> checkoutItems = [];
 
   void _showSnackBar(BuildContext context, String text) {
     ScaffoldMessenger.of(context)
@@ -49,7 +53,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                     Text(
                       'Menu',
                       style: TextStyle(
-                        color: Color(0xff2b2d42),
+                        color: AlpacaColor.darkNavyColor,
                         fontSize: 18,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
@@ -92,23 +96,26 @@ class _StoreMenueListState extends State<StoreMenueList> {
                     return Slidable(
                       key: Key(item.title.english),
                       controller: slidableController,
-                      dismissal: SlidableDismissal(
-                        child: const SlidableBehindActionPane(),
-                        onDismissed: (actionType) {
-                          _showSnackBar(
-                            context,
-                            actionType == SlideActionType.primary
-                                ? 'Dismiss Archive'
-                                : 'Dimiss Delete',
-                          );
-                        },
-                      ),
+                      // dismissal: SlidableDismissal(
+                      //   child: const SlidableBehindActionPane(),
+                      //   onDismissed: (actionType) {
+                      //     _showSnackBar(
+                      //       context,
+                      //       actionType == SlideActionType.primary
+                      //           ? 'Dismiss Archive'
+                      //           : 'Dimiss Delete',
+                      //     );
+                      //   },
+                      // ),
                       actions: [
                         IconSlideAction(
                           caption: 'Delete',
                           color: Colors.red,
                           icon: Icons.delete,
-                          onTap: () => _showSnackBar(context, 'Delete'),
+                          onTap: () {
+                            checkoutItems.remove(item);
+                            widget.onCheckoutChange(checkoutItems);
+                          },
                         ),
                       ],
                       secondaryActions: [
@@ -116,7 +123,10 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           caption: 'Add',
                           color: Colors.blue,
                           icon: Icons.add,
-                          onTap: () => _showSnackBar(context, 'Add'),
+                          onTap: () {
+                            checkoutItems.add(item);
+                            widget.onCheckoutChange(checkoutItems);
+                          },
                         ),
                       ],
                       actionPane: const SlidableBehindActionPane(),

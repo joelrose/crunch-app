@@ -7,6 +7,7 @@ class PageWrapper extends StatelessWidget {
     required this.child,
     this.padding = const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
     this.statusBarStyle = SystemUiOverlayStyle.light,
+    this.floatingActionButtonWidget,
     required this.backgroundColor,
   }) : super(key: key);
 
@@ -14,6 +15,7 @@ class PageWrapper extends StatelessWidget {
   final EdgeInsets padding;
   final SystemUiOverlayStyle statusBarStyle;
   final Color backgroundColor;
+  final Widget? floatingActionButtonWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,10 @@ class PageWrapper extends StatelessWidget {
             child: child,
           ),
         ),
+        floatingActionButtonLocation: floatingActionButtonWidget != null
+            ? FloatingActionButtonLocation.centerFloat
+            : null,
+        floatingActionButton: floatingActionButtonWidget,
       ),
     );
   }

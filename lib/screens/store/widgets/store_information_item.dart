@@ -41,7 +41,7 @@ class StoreInformationItem extends StatelessWidget {
                 Text(
                   description,
                   style: const TextStyle(
-                    color: Color(0xff2b2d42),
+                    color: AlpacaColor.darkNavyColor,
                     fontSize: 15,
                   ),
                 )

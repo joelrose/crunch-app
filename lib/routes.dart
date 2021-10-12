@@ -1,4 +1,6 @@
+import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/screens/checkout/checkout.dart';
+import 'package:alpaca/screens/checkout/checkout_confirmation.dart';
 import 'package:alpaca/screens/home/home.dart';
 import 'package:alpaca/screens/loading/loading.dart';
 import 'package:alpaca/screens/onboarding/account/account.dart';
@@ -19,6 +21,7 @@ const String homeRoute = '/home';
 const String profileRoute = '/profile';
 const String storeRoute = '/store';
 const String storeCheckoutRoute = '/store/checkout';
+const String storeCheckoutConfirmationRoute = '/store/checkout/confirmation';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -56,7 +59,14 @@ class Router {
           builder: (_) => StoreScreen(storeId: args),
         );
       case storeCheckoutRoute:
-        return CupertinoPageRoute(builder: (_) => const CheckoutScreen());
+        final args = settings.arguments! as List<RestaurantMenueItemModel>;
+        return CupertinoPageRoute(
+          builder: (_) => CheckoutScreen(checkoutItems: args),
+        );
+      case storeCheckoutConfirmationRoute:
+        return CupertinoPageRoute(
+          builder: (_) => const CheckoutConfirmationScreen(),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

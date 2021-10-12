@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:alpaca/global.dart';
+import 'package:alpaca/routes.dart';
+import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/screens/store/store_screen_model.dart';
 import 'package:alpaca/screens/store/widgets/store_information_item.dart';
 import 'package:alpaca/screens/store/widgets/store_menue_list.dart';
@@ -13,24 +15,47 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class StoreScreen extends StatelessWidget {
+class StoreScreen extends StatefulWidget {
   const StoreScreen({Key? key, required this.storeId}) : super(key: key);
 
   final String storeId;
 
   @override
+  State<StoreScreen> createState() => _StoreScreenState();
+}
+
+class _StoreScreenState extends State<StoreScreen> {
+  bool showCheckoutButton = false;
+  List<RestaurantMenueItemModel> checkoutItems = [];
+
+  @override
   Widget build(BuildContext context) {
     return BaseScreen<StoreScreenModel>(
       onModelReady: (model) {
-        model.fetchRestaurant(storeId);
+        model.fetchRestaurant(widget.storeId);
       },
       builder: (context, model, child) => model.state == ViewState.busy
           ? Container(color: AlpacaColor.white100Color)
           : PageWrapper(
+              floatingActionButtonWidget: checkoutItems.isNotEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: ActionButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                            storeCheckoutRoute,
+                            arguments: checkoutItems,
+                          );
+                        },
+                        buttonText: 'Checkout',
+                      ),
+                    )
+                  : null,
               padding: EdgeInsets.zero,
               backgroundColor: AlpacaColor.white100Color,
               statusBarStyle: SystemUiOverlayStyle.dark,
               child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -53,9 +78,7 @@ class StoreScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
-                            onTap: () => {
-                              Navigator.of(context).pop()
-                            },
+                            onTap: () => {Navigator.of(context).pop()},
                             child: const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Icon(
@@ -134,13 +157,12 @@ class StoreScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Text(
                                   'Store information',
                                   style: TextStyle(
-                                    color: Color(0xff2b2d42),
+                                    color: AlpacaColor.darkNavyColor,
                                     fontSize: 18,
                                     fontFamily: "Inter",
                                     fontWeight: FontWeight.w600,
@@ -174,7 +196,16 @@ class StoreScreen extends StatelessWidget {
                     const Divider(),
                     StoreMenueList(
                       menueCategories: model.restaurant.menueCategories,
+                      onCheckoutChange: (list) {
+                        setState(() {
+                          checkoutItems = list;
+                        });
+                      },
                     ),
+                    if (checkoutItems.isNotEmpty)
+                      const SizedBox(
+                        height: 80,
+                      ),
                   ],
                 ),
               ),

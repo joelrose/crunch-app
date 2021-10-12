@@ -1,7 +1,8 @@
 import 'package:alpaca/global.dart';
-import 'package:alpaca/screens/store/store.dart';
+import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/store/widgets/store_tag.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StoreOverview extends StatelessWidget {
   const StoreOverview({
@@ -95,7 +96,7 @@ class StoreOverview extends StatelessWidget {
                     Text(
                       rating,
                       style: const TextStyle(
-                        color: Color(0xff2b2d42),
+                        color: AlpacaColor.darkNavyColor,
                         fontSize: 16,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
@@ -111,26 +112,31 @@ class StoreOverview extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  children: const [
-                    Text(
-                      'Get directions',
-                      style: TextStyle(
-                        color: Color(0xff6400fe),
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
+                GestureDetector(
+                  onTap: () async {
+                    await launch(googleMaps);
+                  },
+                  child: Row(
+                    children: const [
+                      Text(
+                        'Get directions',
+                        style: TextStyle(
+                          color: Color(0xff6400fe),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 4),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: AlpacaColor.primary100,
-                        size: 16,
+                      Padding(
+                        padding: EdgeInsets.only(left: 4),
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: AlpacaColor.primary100,
+                          size: 16,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
