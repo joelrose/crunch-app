@@ -3,9 +3,10 @@ import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
 
 class StepSetPassword extends StatefulWidget {
-  const StepSetPassword({Key? key, required this.onFinish}) : super(key: key);
+  const StepSetPassword({Key? key, required this.whichStepInCreateAccount})
+      : super(key: key);
 
-  final void Function() onFinish;
+  final void Function() whichStepInCreateAccount;
 
   @override
   _StepSetPasswordState createState() => _StepSetPasswordState();
@@ -94,7 +95,7 @@ class _StepSetPasswordState extends State<StepSetPassword> {
             buttonText: 'Continue',
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                widget.onFinish();
+                widget.whichStepInCreateAccount();
               }
             },
           ),
