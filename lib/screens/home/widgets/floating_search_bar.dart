@@ -78,13 +78,14 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverAppBar(
-          toolbarHeight: isSearchBarVisible ? 0 : 60,
+          toolbarHeight: isSearchBarVisible ? 0 : 50,
           backgroundColor: AlpacaColor.white100Color,
           flexibleSpace: Wrap(children: const [DiscoverNavBar()]),
         ),
       ],
       body: FloatingSearchBar(
         margins: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        insets: const EdgeInsets.symmetric(horizontal: 1),
         borderRadius: BorderRadius.circular(8),
         backgroundColor: AlpacaColor.lightGreyColor80,
         backdropColor: AlpacaColor.white100Color,
@@ -94,9 +95,18 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         controller: controller,
         transition: CircularFloatingSearchBarTransition(),
         hint: 'Search for food, stores or tags...',
+        hintStyle: const TextStyle(
+          color: AlpacaColor.darkGreyColor,
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
         automaticallyImplyBackButton: false,
+        padding: const EdgeInsets.symmetric(horizontal: 6),
         leadingActions: [
-          FloatingSearchBarAction.searchToClear(),
+          FloatingSearchBarAction.searchToClear(
+            color: AlpacaColor.darkGreyColor,
+            duration: const Duration(milliseconds: 400),
+          ),
         ],
         actions: [
           FloatingSearchBarAction(

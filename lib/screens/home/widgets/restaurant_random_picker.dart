@@ -14,7 +14,17 @@ class RestaurantRandomPickGenerator extends StatelessWidget {
       height: 123,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: AlpacaColor.primary100,
+        color: AlpacaColor.primary100.withOpacity(1),
+        image: DecorationImage(
+          colorFilter: ColorFilter.mode(
+            AlpacaColor.primary100.withOpacity(0.2),
+            BlendMode.dstATop,
+          ),
+          image: const AssetImage(
+            'assets/placeholder/women_placeholder.png',
+          ),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
