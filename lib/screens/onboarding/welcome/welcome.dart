@@ -1,23 +1,60 @@
+import 'dart:io';
+
+import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/onboarding/widgets/onboarding_wrapper.dart';
 import 'package:alpaca/shared/buttons.dart';
+import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OnboardingWelcomeScreen extends StatelessWidget {
+class OnboardingWelcomeScreen extends StatefulWidget {
   const OnboardingWelcomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<OnboardingWelcomeScreen> createState() =>
+      _OnboardingWelcomeScreenState();
+}
+
+class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> {
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+  // Future initialize() async {
+  //   if (Platform.isIOS) {
+  //     firebaseMessaging.requestPermission();
+
+  //         firebaseMessaging.requestPermission((
+  //       const IosNotificationSettings(sound: true, badge: true, alert: true));
+  //   _firebaseMessaging.onIosSettingsRegistered
+  //       .listen((IosNotificationSettings settings) {
+  //     print("Settings registered: $settings");
+  //   });
+  //   _firebaseMessaging.getToken().then((String token) {
+  //     assert(token != null);
+  //     setState(() {
+  //       _homeScreenText = "Push Messaging token: $token";
+  //     });
+  //     print(_homeScreenText);
+  //   });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    return OnboardingPageWrapper(
+    // initialize();
+    return PageWrapper(
       padding: EdgeInsets.zero,
+      backgroundColor: AlpacaColor.primary100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Placeholder(
-            fallbackHeight: MediaQuery.of(context).size.height * 0.5,
+          Image.asset(
+            'assets/onboarding/splash-graphic.png',
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.5,
+            fit: BoxFit.scaleDown,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(

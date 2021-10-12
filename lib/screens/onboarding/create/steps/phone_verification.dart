@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:alpaca/global.dart';
 import 'package:alpaca/services/auth_service.dart';
 import 'package:alpaca/services/service_locator.dart';
-import 'package:alpaca/shared/buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -22,26 +23,81 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   AuthService auth = locator<AuthService>();
   String? _verificationId;
 
+  final TextEditingController _textController = TextEditingController();
+
+  late bool _hasError = false;
+  late StreamController<ErrorAnimationType> _errorController;
+
+  late Timer _timer;
+  late int _start;
+
   @override
   void initState() {
     super.initState();
 
-    sendVerification();
+    _errorController = StreamController<ErrorAnimationType>();
+
+    _sendVerification();
   }
 
-  void sendVerification() async {
+  @override
+  void dispose() {
+    _errorController.close();
+    _timer.cancel();
+
+    super.dispose();
+  }
+
+  void startTimer() {
+    _start = 30;
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  Future<void> _sendVerification() async {
+    startTimer();
     await auth.firebaseAuth.verifyPhoneNumber(
       phoneNumber: widget.phoneNumber,
       codeSent: (String verificationId, int? resendToken) async {
         _verificationId = verificationId;
       },
-      codeAutoRetrievalTimeout: (String verificationId) {
-      },
-      verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {
-      },
-      verificationFailed: (FirebaseAuthException error) {
-      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+      verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
+      verificationFailed: (FirebaseAuthException error) {},
     );
+  }
+
+  Future<void> _verifyNumber(String code) async {
+    final credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId!,
+      smsCode: code,
+    );
+
+    try {
+      await auth.firebaseAuth.signInWithCredential(credential);
+
+      widget.onFinish();
+    } catch (exception) {
+      _errorController.add(
+        ErrorAnimationType.shake,
+      );
+      setState(() {
+        _hasError = true;
+      });
+    }
   }
 
   @override
@@ -95,6 +151,10 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
         PinCodeTextField(
           length: 6,
           animationType: AnimationType.scale,
+          keyboardType: TextInputType.number,
+          controller: _textController,
+          errorAnimationController: _errorController,
+          autoFocus: true,
           pinTheme: PinTheme(
             shape: PinCodeFieldShape.box,
             borderRadius: BorderRadius.circular(5),
@@ -121,29 +181,53 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
           appContext: context,
           onChanged: (String value) {},
         ),
-        Expanded(
-          child: Container(),
-        ),
-        ActionButton(
-          buttonText: 'Continue',
-          onPressed: () {
-            widget.onFinish();
+        if (_hasError)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10, top: 10),
+            child: Text(
+              'The entered code is not valid, please try again!',
+              style: theme.subtitle1!.merge(
+                const TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ),
+        GestureDetector(
+          onTap: () {
+            if (_start == 0) {
+              _sendVerification();
+            }
           },
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(
+                    Icons.swap_horiz,
+                    color: _start != 0
+                        ? AlpacaColor.darkGreyColor
+                        : AlpacaColor.primary100,
+                  ),
+                ),
+                Text(
+                  _start != 0 ? 'Resend code! ($_start)' : 'Resend code!',
+                  style: theme.subtitle1!.merge(
+                    TextStyle(
+                      color: _start != 0
+                          ? AlpacaColor.darkGreyColor
+                          : AlpacaColor.primary100,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
-  }
-
-  void _verifyNumber(String code) async {
-    // Create a PhoneAuthCredential with the code
-    final credential = PhoneAuthProvider.credential(
-      verificationId: _verificationId!,
-      smsCode: code,
-    );
-
-    // Sign the user in (or link) with the credential
-    await auth.firebaseAuth.signInWithCredential(credential);
-
-    widget.onFinish();
   }
 }

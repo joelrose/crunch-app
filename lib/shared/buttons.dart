@@ -93,19 +93,24 @@ class ActionButton extends StatelessWidget {
     this.isPrimaryButton = true,
     required this.buttonText,
     required this.onPressed,
+    this.textColor,
   }) : super(key: key);
 
   final bool isPrimaryButton;
   final String buttonText;
   final void Function() onPressed;
 
+  final Color? textColor;
+
   @override
   Widget build(BuildContext context) {
     return _AlpacaButton(
+      textColor: textColor ??
+          (isPrimaryButton
+              ? AlpacaColor.white100Color
+              : AlpacaColor.primary100),
       backgroundColor:
           isPrimaryButton ? AlpacaColor.primary100 : AlpacaColor.white100Color,
-      textColor:
-          isPrimaryButton ? AlpacaColor.white100Color : AlpacaColor.primary100,
       buttonText: buttonText,
       onPressed: onPressed,
     );
@@ -117,7 +122,8 @@ class AlpacaTextField extends StatelessWidget {
     Key? key,
     required this.hintText,
     required this.textController,
-    this.fillColor = AlpacaColor.lightGreyColor80,
+    required this.validator,
+    this.fillColor = AlpacaColor.lightGreyColor90,
     this.hintTextColor = AlpacaColor.lightGreyColor100,
     this.textColor = AlpacaColor.blackColor,
     this.cursorColor = AlpacaColor.blackColor,
@@ -135,47 +141,64 @@ class AlpacaTextField extends StatelessWidget {
   final TextInputType textInputType;
   final TextEditingController textController;
   final bool obscureText;
+  final String? Function(String?) validator;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: textController,
-      textInputAction: textInputAction,
-      keyboardType: textInputType,
-      autocorrect: false,
-      cursorColor: cursorColor,
-      obscureText: obscureText,
-      style: TextStyle(
-        color: textColor,
-      ),
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 15.0,
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: fillColor,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            hintText,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
           ),
         ),
-        fillColor: fillColor,
-        hintText: hintText,
-        filled: true,
-        hintStyle: TextStyle(
-          color: hintTextColor,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: fillColor,
+        TextFormField(
+          controller: textController,
+          textInputAction: textInputAction,
+          keyboardType: textInputType,
+          autocorrect: false,
+          cursorColor: cursorColor,
+          obscureText: obscureText,
+          style: TextStyle(
+            color: textColor,
           ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: fillColor,
+          validator: validator,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 15.0,
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: fillColor,
+              ),
+            ),
+            fillColor: AlpacaColor.white100Color,
+            hintText: hintText,
+            filled: true,
+            hintStyle: TextStyle(
+              color: hintTextColor,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: fillColor,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: fillColor,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
-          borderRadius: BorderRadius.circular(8),
         ),
-      ),
+      ],
     );
   }
 }

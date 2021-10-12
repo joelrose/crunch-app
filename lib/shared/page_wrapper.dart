@@ -1,21 +1,21 @@
-import 'package:alpaca/global.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class OnboardingPageWrapper extends StatelessWidget {
-  const OnboardingPageWrapper({
+class PageWrapper extends StatelessWidget {
+  const PageWrapper({
     Key? key,
     required this.child,
     this.padding = const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
     this.statusBarStyle = SystemUiOverlayStyle.light,
-    this.backgroundColor = AlpacaColor.primary100,
+    this.floatingActionButtonWidget,
+    required this.backgroundColor,
   }) : super(key: key);
 
   final Widget child;
   final EdgeInsets padding;
   final SystemUiOverlayStyle statusBarStyle;
   final Color backgroundColor;
+  final Widget? floatingActionButtonWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,10 @@ class OnboardingPageWrapper extends StatelessWidget {
             child: child,
           ),
         ),
+        floatingActionButtonLocation: floatingActionButtonWidget != null
+            ? FloatingActionButtonLocation.centerFloat
+            : null,
+        floatingActionButton: floatingActionButtonWidget,
       ),
     );
   }
