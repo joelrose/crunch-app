@@ -28,5 +28,5 @@ jobs:
       - name: Run flutter tests
         run: flutter test
 
-      -name: Run lint checks
+      - name: Run lint checks
         run: dart analyze
