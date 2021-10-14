@@ -62,6 +62,7 @@ class _StepInsertNameState extends State<StepInsertName> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: AlpacaTextField(
+              key: const Key('onboarding_firstname_textfield'),
               hintText: 'First name',
               textController: _firstNameController,
               textInputAction: TextInputAction.done,
@@ -76,6 +77,7 @@ class _StepInsertNameState extends State<StepInsertName> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: AlpacaTextField(
+              key: const Key('onboarding_lastname_textfield'),
               hintText: 'Last name',
               textController: _lastNameController,
               textInputAction: TextInputAction.done,
