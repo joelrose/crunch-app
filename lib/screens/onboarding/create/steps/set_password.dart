@@ -60,6 +60,7 @@ class _StepSetPasswordState extends State<StepSetPassword> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: AlpacaTextField(
+              key: const Key('onboarding_password_textfield'),
               hintText: 'Password',
               textController: _passwordController,
               obscureText: true,
@@ -75,6 +76,7 @@ class _StepSetPasswordState extends State<StepSetPassword> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: AlpacaTextField(
+              key: const Key('onboarding_repeat_password_textfield'),
               hintText: 'Repeat password',
               textController: _passwordRepeatController,
               obscureText: true,
