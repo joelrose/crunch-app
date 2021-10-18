@@ -16,12 +16,9 @@ class EmailSender extends StatefulWidget {
 class _EmailSenderState extends State<EmailSender> {
   bool isHTML = false;
 
-  final _recipientController = TextEditingController(
-    text: 'Lennart.Stachowiak@gmail.com',
-  );
+  final _supportEmail = 'Lennart.Stachowiak@gmail.com';
 
-  final _subjectController =
-      TextEditingController(text: 'Crunch: Contact Support');
+  final _emailSubject = 'Crunch: Contact Support';
 
   final _emailController = TextEditingController(text: '');
 
@@ -30,12 +27,12 @@ class _EmailSenderState extends State<EmailSender> {
   );
 
   Future<void> send() async {
-    final String bodyAndEmail =
+    final String contactEmailSendToSupport =
         'User Email:$_emailController \n User Message: $_bodyController';
     final Email email = Email(
-      body: bodyAndEmail,
-      subject: _subjectController.text,
-      recipients: [_recipientController.text],
+      body: contactEmailSendToSupport,
+      subject: _emailSubject,
+      recipients: [_supportEmail],
       isHTML: isHTML,
     );
 
@@ -62,14 +59,13 @@ class _EmailSenderState extends State<EmailSender> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 40),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 40,
+                ),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Contact Support',
@@ -81,7 +77,7 @@ class _EmailSenderState extends State<EmailSender> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: TextField(
                   controller: _emailController,
                   style: const TextStyle(color: AlpacaColor.blackColor),
@@ -93,7 +89,7 @@ class _EmailSenderState extends State<EmailSender> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   child: TextField(
                     controller: _bodyController,
                     maxLines: null,
@@ -109,7 +105,7 @@ class _EmailSenderState extends State<EmailSender> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton.icon(
