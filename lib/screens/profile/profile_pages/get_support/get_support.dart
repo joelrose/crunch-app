@@ -1,5 +1,6 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/screens/profile/profile.dart';
+import 'package:alpaca/screens/profile/profile_pages/get_support/get_support_pages/contact_support.dart';
 import 'package:alpaca/screens/profile/profile_pages/placeholder.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,7 @@ class GetEmailSupport extends StatelessWidget {
     return const ProfileTile(
       title: 'Contact Support',
       icon: Icons.question_answer_outlined,
-      link: PlaceholderSide(),
+      link: EmailSender(),
     );
   }
 }

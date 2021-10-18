@@ -1,6 +1,6 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/profile/profile_pages/get_support.dart';
+import 'package:alpaca/screens/profile/profile_pages/get_support/get_support.dart';
 import 'package:alpaca/screens/profile/profile_pages/placeholder.dart';
 import 'package:alpaca/services/auth_service.dart';
 import 'package:alpaca/services/service_locator.dart';
