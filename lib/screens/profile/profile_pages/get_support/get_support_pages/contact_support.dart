@@ -41,7 +41,7 @@ class _EmailSenderState extends State<EmailSender> {
     try {
       await FlutterEmailSender.send(email);
     } catch (error) {
-      platformResponse = 'E-mail currently is not available.';
+      platformResponse = 'Currently E-mail provider is not available.';
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(platformResponse),
