@@ -75,11 +75,11 @@ class _EmailSenderState extends State<EmailSender> {
                       ),
                 ),
               ),
-              TextFieldWithLabel(
+              AlpacaTextFieldWithLabel(
                 controller: _emailController,
                 labelText: 'Your Email',
               ),
-              TextFieldWithLabel(
+              AlpacaTextFieldWithLabel(
                 controller: _bodyController,
                 labelText: 'Your Message',
                 maxLines: null,

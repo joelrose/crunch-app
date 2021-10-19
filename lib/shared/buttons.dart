@@ -203,8 +203,8 @@ class AlpacaTextField extends StatelessWidget {
   }
 }
 
-class TextFieldWithLabel extends StatelessWidget {
-  const TextFieldWithLabel({
+class AlpacaTextFieldWithLabel extends StatelessWidget {
+  const AlpacaTextFieldWithLabel({
     Key? key,
     required this.controller,
     required this.labelText,
