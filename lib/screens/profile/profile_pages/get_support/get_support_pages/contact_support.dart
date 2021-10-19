@@ -85,25 +85,11 @@ class _EmailSenderState extends State<EmailSender> {
                 maxLines: null,
                 expands: true,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton.icon(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        AlpacaColor.primary100,
-                      ),
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                        AlpacaColor.white100Color,
-                      ),
-                    ),
-                    onPressed: send,
-                    icon: const Icon(Icons.send),
-                    label: const Text('Send'),
-                  ),
-                ),
-              ),
+              AlpacaIconButton(
+                onPressed: send,
+                icon: Icons.send,
+                label: 'Send',
+              )
             ],
           ),
         ),
