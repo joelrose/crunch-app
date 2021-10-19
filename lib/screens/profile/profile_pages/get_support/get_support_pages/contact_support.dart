@@ -5,6 +5,7 @@ import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EmailSender extends StatefulWidget {
   const EmailSender({Key? key}) : super(key: key);
@@ -40,18 +41,17 @@ class _EmailSenderState extends State<EmailSender> {
 
     try {
       await FlutterEmailSender.send(email);
-      platformResponse = 'success';
     } catch (error) {
-      platformResponse = error.toString();
+      platformResponse = 'E-mail currently is not available.';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(platformResponse),
+        ),
+      );
+      print(error.toString());
     }
 
     if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(platformResponse),
-      ),
-    );
   }
 
   @override
