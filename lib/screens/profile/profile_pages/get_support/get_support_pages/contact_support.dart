@@ -75,33 +75,15 @@ class _EmailSenderState extends State<EmailSender> {
                       ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: TextField(
-                  controller: _emailController,
-                  style: const TextStyle(color: AlpacaColor.blackColor),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Your Email',
-                  ),
-                ),
+              TextFieldWithLabel(
+                controller: _emailController,
+                labelText: 'Your Email',
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: TextField(
-                    controller: _bodyController,
-                    maxLines: null,
-                    expands: true,
-                    style: const TextStyle(color: AlpacaColor.blackColor),
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: const InputDecoration(
-                      labelText: 'Your Message',
-                      alignLabelWithHint: true,
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
+              TextFieldWithLabel(
+                controller: _bodyController,
+                labelText: 'Your Message',
+                maxLines: null,
+                expands: true,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),

@@ -202,3 +202,39 @@ class AlpacaTextField extends StatelessWidget {
     );
   }
 }
+
+class TextFieldWithLabel extends StatelessWidget {
+  const TextFieldWithLabel({
+    Key? key,
+    required this.controller,
+    required this.labelText,
+    this.maxLines = 1,
+    this.expands = false,
+  }) : super(key: key);
+
+  final TextEditingController controller;
+  final String labelText;
+  final int? maxLines;
+  final bool expands;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: TextField(
+          controller: controller,
+          maxLines: maxLines,
+          expands: expands,
+          style: const TextStyle(color: AlpacaColor.blackColor),
+          textAlignVertical: TextAlignVertical.top,
+          decoration: InputDecoration(
+            labelText: labelText,
+            alignLabelWithHint: true,
+            border: const OutlineInputBorder(),
+          ),
+        ),
+      ),
+    );
+  }
+}
