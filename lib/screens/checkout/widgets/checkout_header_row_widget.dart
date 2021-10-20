@@ -1,8 +1,6 @@
 import 'package:alpaca/global.dart';
-import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CheckoutHeaderRowWidget extends StatelessWidget {
   const CheckoutHeaderRowWidget({
@@ -31,8 +29,10 @@ class CheckoutHeaderRowWidget extends StatelessWidget {
         children: [
           Text(
             header,
-            style:
-                Theme.of(context).textTheme.headline2?.copyWith(fontSize: 18),
+            style: Theme.of(context)
+                .textTheme
+                .headline2
+                ?.copyWith(fontSize: 18, color: AlpacaColor.darkNavyColor),
           ),
           disableButton
               ? Container()

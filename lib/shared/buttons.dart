@@ -218,7 +218,7 @@ class AlpacaCheckoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final buttonBackground =
-        !disableButtonBackground ? Color(0xffF6F0FF) : Colors.transparent;
+        !disableButtonBackground ? const Color(0xffF6F0FF) : Colors.transparent;
     return TextButton(
       style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(
