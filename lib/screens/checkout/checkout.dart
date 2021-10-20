@@ -88,18 +88,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         children: [
           const CheckoutOrderNavbarWidget(),
           const DividerWidget(),
-          CheckoutCartItemsWidget(checkoutItems: widget.checkoutItems),
-          const DividerWidget(),
-          const DividerWidget(),
-          const CheckoutPickupWidget(),
-          const DividerWidget(),
-          const DividerWidget(),
-          const CheckoutStoreDirectionWidget(),
-          const DividerWidget(),
-          const DividerWidget(),
-          const CheckoutContactDetailsWidget(),
-          const DividerWidget(),
-          const CheckoutOrderSummaryWidget()
+          Flexible(
+            child: ListView(
+              children: [
+                CheckoutCartItemsWidget(checkoutItems: widget.checkoutItems),
+                const DividerWidget(),
+                const DividerWidget(),
+                const CheckoutPickupWidget(),
+                const DividerWidget(),
+                const DividerWidget(),
+                const CheckoutStoreDirectionWidget(),
+                const DividerWidget(),
+                const DividerWidget(),
+                const CheckoutContactDetailsWidget(),
+                const DividerWidget(),
+                const CheckoutOrderSummaryWidget()
+              ],
+            ),
+          ),
         ],
       ),
     );
