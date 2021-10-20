@@ -41,7 +41,10 @@ class cart_items_widget extends StatelessWidget {
                     ),
                     Text(
                       '${checkoutItem.price}€',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: const TextStyle(
+                          color: AlpacaColor.blackColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),

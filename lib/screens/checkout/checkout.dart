@@ -89,6 +89,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           const divider_widget(),
           const divider_widget(),
           const checkout_pickup_widget(),
+          const divider_widget(),
         ],
       ),
     );
