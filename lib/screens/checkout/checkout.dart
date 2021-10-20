@@ -1,11 +1,12 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/sanity/model.dart';
-import 'package:alpaca/screens/checkout/widgets/cart_items_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkou_cart_items_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_contact_details_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_pickup_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/divider_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/order_overview_navbar_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -84,15 +85,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       child: Column(
         children: [
-          const order_navbar_widget(),
-          const divider_widget(),
-          cart_items_widget(checkoutItems: widget.checkoutItems),
-          const divider_widget(),
-          const divider_widget(),
-          const checkout_pickup_widget(),
-          const divider_widget(),
-          const checkout_store_direction_widget(),
-          const divider_widget()
+          const OrderNavbarWidget(),
+          const DividerWidget(),
+          CartItemsWidget(checkoutItems: widget.checkoutItems),
+          const DividerWidget(),
+          const DividerWidget(),
+          const CheckoutPickupWidget(),
+          const DividerWidget(),
+          const DividerWidget(),
+          const CheckoutStoreDirectionWidget(),
+          const DividerWidget(),
+          const DividerWidget(),
+          const CheckoutContactDetailsWidget()
         ],
       ),
     );
