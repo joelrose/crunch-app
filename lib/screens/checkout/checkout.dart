@@ -102,7 +102,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const DividerWidget(),
                 const CheckoutContactDetailsWidget(),
                 const DividerWidget(),
-                const CheckoutOrderSummaryWidget()
+                CheckoutOrderSummaryWidget(checkoutItems: widget.checkoutItems),
+                Container(
+                  height: 80,
+                )
               ],
             ),
           ),

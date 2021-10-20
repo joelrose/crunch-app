@@ -1,19 +1,26 @@
 import 'package:alpaca/global.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_header_row_widget.dart';
-import 'package:alpaca/shared/buttons.dart';
+import 'package:alpaca/sanity/model.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutOrderSummaryWidget extends StatelessWidget {
-  const CheckoutOrderSummaryWidget({Key? key}) : super(key: key);
+  const CheckoutOrderSummaryWidget({Key? key, required this.checkoutItems})
+      : super(key: key);
+
+  final List<RestaurantMenueItemModel> checkoutItems;
 
   @override
   Widget build(BuildContext context) {
+    num _subtotalPrice = 0;
+    for (var i = 0; i < checkoutItems.length; i++) {
+      _subtotalPrice += checkoutItems[i].price;
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(color: AlpacaColor.lightGreyColor90),
-            borderRadius: BorderRadius.circular(8)),
+          border: Border.all(color: AlpacaColor.lightGreyColor90),
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Column(
           children: [
             Padding(
@@ -23,7 +30,9 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
                 child: Text(
                   'Order summary',
                   style: Theme.of(context).textTheme.headline2?.copyWith(
-                      fontSize: 18, color: AlpacaColor.darkNavyColor),
+                        fontSize: 18,
+                        color: AlpacaColor.darkNavyColor,
+                      ),
                 ),
               ),
             ),
@@ -31,20 +40,22 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(14, 0, 14, 7),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Subtotal',
                     style: TextStyle(
-                        color: AlpacaColor.darkGreyColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15),
+                      color: AlpacaColor.darkGreyColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
                   ),
                   Text(
-                    '12.99€',
-                    style: TextStyle(
-                        color: AlpacaColor.blackColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600),
+                    '$_subtotalPrice€',
+                    style: const TextStyle(
+                      color: AlpacaColor.blackColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
               ),
@@ -62,7 +73,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
                         fontSize: 15),
                   ),
                   Text(
-                    '-2.99€',
+                    '0.00€',
                     style: TextStyle(
                         color: AlpacaColor.blackColor,
                         fontSize: 15,
