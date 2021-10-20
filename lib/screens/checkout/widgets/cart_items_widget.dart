@@ -1,8 +1,7 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/sanity/model.dart';
-import 'package:alpaca/shared/buttons.dart';
-import 'package:flutter/material.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_header_row_widget.dart';
+import 'package:flutter/material.dart';
 
 class cart_items_widget extends StatelessWidget {
   const cart_items_widget({Key? key, required this.checkoutItems})

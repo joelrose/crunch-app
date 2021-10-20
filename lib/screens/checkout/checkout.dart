@@ -2,6 +2,7 @@ import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/screens/checkout/widgets/cart_items_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_pickup_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/divider_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/order_overview_navbar_widget.dart';
 import 'package:alpaca/shared/buttons.dart';
@@ -87,6 +88,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           cart_items_widget(checkoutItems: widget.checkoutItems),
           const divider_widget(),
           const divider_widget(),
+          const checkout_pickup_widget(),
         ],
       ),
     );
