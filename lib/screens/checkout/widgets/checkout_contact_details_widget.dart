@@ -1,5 +1,4 @@
 import 'package:alpaca/global.dart';
-import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_header_row_widget.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class _CheckoutContactDetailsWidgetState
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 15),
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 15),
                 child: AlpacaTextField(
                   textColor: AlpacaColor.darkNavyColor,
                   hintText: 'Phone number',

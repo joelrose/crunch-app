@@ -1,8 +1,8 @@
 import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
 
-class OrderNavbarWidget extends StatelessWidget {
-  const OrderNavbarWidget({Key? key}) : super(key: key);
+class CheckoutOrderNavbarWidget extends StatelessWidget {
+  const CheckoutOrderNavbarWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

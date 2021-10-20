@@ -3,8 +3,8 @@ import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_header_row_widget.dart';
 import 'package:flutter/material.dart';
 
-class CartItemsWidget extends StatelessWidget {
-  const CartItemsWidget({Key? key, required this.checkoutItems})
+class CheckoutCartItemsWidget extends StatelessWidget {
+  const CheckoutCartItemsWidget({Key? key, required this.checkoutItems})
       : super(key: key);
 
   final List<RestaurantMenueItemModel> checkoutItems;

@@ -85,9 +85,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       child: Column(
         children: [
-          const OrderNavbarWidget(),
+          const CheckoutOrderNavbarWidget(),
           const DividerWidget(),
-          CartItemsWidget(checkoutItems: widget.checkoutItems),
+          CheckoutCartItemsWidget(checkoutItems: widget.checkoutItems),
           const DividerWidget(),
           const DividerWidget(),
           const CheckoutPickupWidget(),
@@ -96,7 +96,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           const CheckoutStoreDirectionWidget(),
           const DividerWidget(),
           const DividerWidget(),
-          const CheckoutContactDetailsWidget()
+          const CheckoutContactDetailsWidget(),
+          const DividerWidget(),
         ],
       ),
     );
