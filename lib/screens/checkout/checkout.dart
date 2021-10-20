@@ -1,8 +1,8 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/sanity/model.dart';
-import 'package:alpaca/screens/checkout/checkout.dart';
 import 'package:alpaca/screens/checkout/widgets/cart_items_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/order_overview_navbar_widget.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -81,34 +81,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 30),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Order Overview',
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ),
-                Positioned(
-                  left: 0,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      size: 20,
-                      color: AlpacaColor.blackColor,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+          const order_navbar_widget(),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 10),
             child: Divider(),
