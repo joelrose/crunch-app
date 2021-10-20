@@ -15,10 +15,11 @@ class cart_items_widget extends StatelessWidget {
     return Column(
       children: [
         checkout_header_row_widget(
-            header: 'Cart items',
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
+          header: 'Cart items',
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: ListView.builder(
@@ -26,18 +27,24 @@ class cart_items_widget extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, i) {
               final checkoutItem = checkoutItems[i];
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '1x ${checkoutItem.title.english}',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Text(
-                    '${checkoutItem.price}€',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ],
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '1x ${checkoutItem.title.english}',
+                      style: const TextStyle(
+                          color: AlpacaColor.darkGreyColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15),
+                    ),
+                    Text(
+                      '${checkoutItem.price}€',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
               );
             },
           ),

@@ -85,6 +85,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           const order_navbar_widget(),
           const divider_widget(),
           cart_items_widget(checkoutItems: widget.checkoutItems),
+          const divider_widget(),
+          const divider_widget(),
         ],
       ),
     );
