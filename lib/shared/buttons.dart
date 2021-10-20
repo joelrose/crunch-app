@@ -204,25 +204,30 @@ class AlpacaTextField extends StatelessWidget {
 }
 
 class AlpacaCheckoutButton extends StatelessWidget {
-  const AlpacaCheckoutButton(
-      {Key? key, required this.onPressed, required this.buttonText})
-      : super(key: key);
+  const AlpacaCheckoutButton({
+    Key? key,
+    required this.onPressed,
+    required this.buttonText,
+    this.disableButtonBackground = false,
+  }) : super(key: key);
 
   final void Function() onPressed;
   final String buttonText;
+  final bool disableButtonBackground;
 
   @override
   Widget build(BuildContext context) {
+    final buttonBackground =
+        !disableButtonBackground ? Color(0xffF6F0FF) : Colors.transparent;
     return TextButton(
       style: TextButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18.0),
-        ),
-        minimumSize: Size.zero,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-        backgroundColor: const Color(0xffF6F0FF),
-      ),
-      onPressed: () {},
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+          minimumSize: Size.zero,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+          backgroundColor: buttonBackground),
+      onPressed: onPressed,
       child: Text(
         buttonText,
         style: const TextStyle(

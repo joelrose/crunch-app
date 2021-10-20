@@ -6,7 +6,11 @@ class checkout_store_direction_widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return checkout_header_row_widget(
-        header: 'Store', onPressed: () {}, buttonText: 'Get directions');
+    return CheckoutHeaderRowWidget(
+      header: 'Store',
+      onPressed: () {},
+      buttonText: 'Get directions ->',
+      disableButtonBackground: true,
+    );
   }
 }

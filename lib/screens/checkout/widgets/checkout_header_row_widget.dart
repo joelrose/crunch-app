@@ -4,17 +4,23 @@ import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class checkout_header_row_widget extends StatelessWidget {
-  const checkout_header_row_widget({
+class CheckoutHeaderRowWidget extends StatelessWidget {
+  const CheckoutHeaderRowWidget({
     Key? key,
     required this.header,
     required this.onPressed,
     required this.buttonText,
+    this.disableButton = false,
+    this.buttonBackground = true,
+    this.disableButtonBackground = false,
   }) : super(key: key);
 
   final String header;
   final void Function() onPressed;
   final String buttonText;
+  final bool disableButton;
+  final bool buttonBackground;
+  final bool disableButtonBackground;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +34,13 @@ class checkout_header_row_widget extends StatelessWidget {
             style:
                 Theme.of(context).textTheme.headline2?.copyWith(fontSize: 18),
           ),
-          AlpacaCheckoutButton(
-            onPressed: onPressed,
-            buttonText: buttonText,
-          )
+          disableButton
+              ? Container()
+              : AlpacaCheckoutButton(
+                  onPressed: onPressed,
+                  buttonText: buttonText,
+                  disableButtonBackground: disableButtonBackground,
+                )
         ],
       ),
     );

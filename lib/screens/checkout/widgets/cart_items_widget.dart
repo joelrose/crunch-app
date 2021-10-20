@@ -13,7 +13,7 @@ class cart_items_widget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        checkout_header_row_widget(
+        CheckoutHeaderRowWidget(
           header: 'Cart items',
           onPressed: () {
             Navigator.of(context).pop();
@@ -23,6 +23,7 @@ class cart_items_widget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: checkoutItems.length,
             shrinkWrap: true,
             itemBuilder: (context, i) {

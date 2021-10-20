@@ -6,7 +6,7 @@ class checkout_pickup_widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return checkout_header_row_widget(
+    return CheckoutHeaderRowWidget(
       header: 'Pickup',
       onPressed: () {},
       buttonText: '14:30 (20 min)',
