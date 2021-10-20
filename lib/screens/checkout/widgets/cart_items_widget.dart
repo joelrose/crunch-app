@@ -1,5 +1,8 @@
+import 'package:alpaca/global.dart';
 import 'package:alpaca/sanity/model.dart';
+import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_header_row_widget.dart';
 
 class cart_items_widget extends StatelessWidget {
   const cart_items_widget({Key? key, required this.checkoutItems})
@@ -9,28 +12,37 @@ class cart_items_widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: ListView.builder(
-        itemCount: checkoutItems.length,
-        shrinkWrap: true,
-        itemBuilder: (context, i) {
-          final checkoutItem = checkoutItems[i];
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '1x ${checkoutItem.title.english}',
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              Text(
-                '${checkoutItem.price}€',
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ],
-          );
-        },
-      ),
+    return Column(
+      children: [
+        checkout_header_row_widget(
+            header: 'Cart items',
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: ListView.builder(
+            itemCount: checkoutItems.length,
+            shrinkWrap: true,
+            itemBuilder: (context, i) {
+              final checkoutItem = checkoutItems[i];
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '1x ${checkoutItem.title.english}',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Text(
+                    '${checkoutItem.price}€',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

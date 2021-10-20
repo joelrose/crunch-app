@@ -202,3 +202,33 @@ class AlpacaTextField extends StatelessWidget {
     );
   }
 }
+
+class AlpacaCheckoutButton extends StatelessWidget {
+  const AlpacaCheckoutButton({Key? key, required this.onPressed})
+      : super(key: key);
+
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        ),
+        minimumSize: Size.zero,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+        backgroundColor: const Color(0xffF6F0FF),
+      ),
+      onPressed: () {},
+      child: const Text(
+        'Edit',
+        style: TextStyle(
+          color: AlpacaColor.primary80,
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+        ),
+      ),
+    );
+  }
+}
