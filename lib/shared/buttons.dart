@@ -149,7 +149,7 @@ class AlpacaTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
           child: Text(
             hintText,
             style: Theme.of(context).textTheme.bodyText1!.copyWith(
