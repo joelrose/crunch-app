@@ -1,6 +1,8 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/sanity/model.dart';
+import 'package:alpaca/screens/checkout/checkout.dart';
+import 'package:alpaca/screens/checkout/widgets/cart_items_widget.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -111,29 +113,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             padding: EdgeInsets.symmetric(vertical: 10),
             child: Divider(),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: ListView.builder(
-              itemCount: widget.checkoutItems.length,
-              shrinkWrap: true,
-              itemBuilder: (context, i) {
-                final checkoutItem = widget.checkoutItems[i];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '1x ${checkoutItem.title.english}',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    Text(
-                      '${checkoutItem.price}€',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                );
-              },
-            ),
-          )
+          cart_items_widget(checkoutItems: widget.checkoutItems)
         ],
       ),
     );
