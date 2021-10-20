@@ -1,7 +1,7 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/sanity/model.dart';
-import 'package:alpaca/screens/checkout/widgets/checkou_cart_items_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_cart_items_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_contact_details_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_pickup_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_store_widget.dart';
