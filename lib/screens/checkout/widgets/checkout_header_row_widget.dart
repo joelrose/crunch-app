@@ -9,10 +9,12 @@ class checkout_header_row_widget extends StatelessWidget {
     Key? key,
     required this.header,
     required this.onPressed,
+    required this.buttonText,
   }) : super(key: key);
 
   final String header;
   final void Function() onPressed;
+  final String buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class checkout_header_row_widget extends StatelessWidget {
           ),
           AlpacaCheckoutButton(
             onPressed: onPressed,
+            buttonText: buttonText,
           )
         ],
       ),

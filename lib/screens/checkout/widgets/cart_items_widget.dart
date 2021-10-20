@@ -18,6 +18,7 @@ class cart_items_widget extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
+          buttonText: 'Edit',
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),

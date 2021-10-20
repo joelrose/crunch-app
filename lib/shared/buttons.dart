@@ -204,10 +204,12 @@ class AlpacaTextField extends StatelessWidget {
 }
 
 class AlpacaCheckoutButton extends StatelessWidget {
-  const AlpacaCheckoutButton({Key? key, required this.onPressed})
+  const AlpacaCheckoutButton(
+      {Key? key, required this.onPressed, required this.buttonText})
       : super(key: key);
 
   final void Function() onPressed;
+  final String buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -221,9 +223,9 @@ class AlpacaCheckoutButton extends StatelessWidget {
         backgroundColor: const Color(0xffF6F0FF),
       ),
       onPressed: () {},
-      child: const Text(
-        'Edit',
-        style: TextStyle(
+      child: Text(
+        buttonText,
+        style: const TextStyle(
           color: AlpacaColor.primary80,
           fontWeight: FontWeight.w600,
           fontSize: 12,
