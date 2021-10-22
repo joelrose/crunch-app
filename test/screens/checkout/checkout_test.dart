@@ -36,7 +36,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Cart Items'), findsOneWidget);
+    expect(find.text('Cart items'), findsOneWidget);
   });
 
   testWidgets('Search for Pickup Widget', (tester) async {
