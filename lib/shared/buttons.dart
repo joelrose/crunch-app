@@ -239,3 +239,25 @@ class AlpacaCheckoutButton extends StatelessWidget {
     );
   }
 }
+
+class AlpacaClosePopUpWindownButton extends StatelessWidget {
+  const AlpacaClosePopUpWindownButton({Key? key, required this.onPressed})
+      : super(key: key);
+
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+      backgroundColor: AlpacaColor.lightGreyColor90,
+      radius: 16,
+      child: IconButton(
+        iconSize: 20,
+        padding: EdgeInsets.zero,
+        onPressed: onPressed,
+        icon: const Icon(Icons.close_rounded),
+        color: AlpacaColor.darkGreyColor,
+      ),
+    );
+  }
+}
