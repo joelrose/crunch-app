@@ -13,7 +13,8 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              data: CreateStoreData(checkoutItems: [], storeName: ''),
+              data: CreateStoreData(
+                  checkoutItems: [], storeName: '', googleMaps: ''),
             ),
           ),
         ),
@@ -30,7 +31,8 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              data: CreateStoreData(checkoutItems: [], storeName: ''),
+              data: CreateStoreData(
+                  checkoutItems: [], storeName: '', googleMaps: ''),
             ),
           ),
         ),
@@ -47,7 +49,8 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              data: CreateStoreData(checkoutItems: [], storeName: ''),
+              data: CreateStoreData(
+                  checkoutItems: [], storeName: '', googleMaps: ''),
             ),
           ),
         ),
@@ -64,7 +67,8 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              data: CreateStoreData(checkoutItems: [], storeName: ''),
+              data: CreateStoreData(
+                  checkoutItems: [], storeName: '', googleMaps: ''),
             ),
           ),
         ),
@@ -81,7 +85,8 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              data: CreateStoreData(checkoutItems: [], storeName: ''),
+              data: CreateStoreData(
+                  checkoutItems: [], storeName: '', googleMaps: ''),
             ),
           ),
         ),
@@ -98,7 +103,8 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              data: CreateStoreData(checkoutItems: [], storeName: ''),
+              data: CreateStoreData(
+                  checkoutItems: [], storeName: '', googleMaps: ''),
             ),
           ),
         ),
@@ -115,7 +121,8 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              data: CreateStoreData(checkoutItems: [], storeName: ''),
+              data: CreateStoreData(
+                  checkoutItems: [], storeName: '', googleMaps: ''),
             ),
           ),
         ),
@@ -132,7 +139,8 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              data: CreateStoreData(checkoutItems: [], storeName: ''),
+              data: CreateStoreData(
+                  checkoutItems: [], storeName: '', googleMaps: ''),
             ),
           ),
         ),
