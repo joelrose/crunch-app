@@ -20,7 +20,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   String pickupTimeString = DateFormat.MMMEd()
       .add_jm()
       .format(DateTime.now().add(const Duration(minutes: 20)));
-  DateTime pickupTimeDateTime = DateTime.now();
+  DateTime pickupTimeDateTime = DateTime.now().add(const Duration(minutes: 20));
+  DateTime pickupMinTime = DateTime.now().add(const Duration(minutes: 10));
 
   Future<void> _changePickupTime(DateTime time) async {
     setState(() {
@@ -42,6 +43,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       onPressed: () {
         DatePicker.showDateTimePicker(
           context,
+          maxTime: DateTime(1, 1, 1, 18),
+          minTime: pickupMinTime,
           onConfirm: (time) {
             _changePickupTime(time);
           },

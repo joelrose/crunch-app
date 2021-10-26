@@ -27,12 +27,15 @@ class CheckoutHeaderRowWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            header,
-            style: Theme.of(context)
-                .textTheme
-                .headline2
-                ?.copyWith(fontSize: 18, color: AlpacaColor.darkNavyColor),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              header,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline2
+                  ?.copyWith(fontSize: 18, color: AlpacaColor.darkNavyColor),
+            ),
           ),
           disableButton
               ? Container()

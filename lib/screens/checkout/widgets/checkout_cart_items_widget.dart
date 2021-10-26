@@ -18,7 +18,8 @@ class CheckoutCartItemsWidget extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          buttonText: 'Edit',
+          buttonText: '',
+          disableButton: true,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),

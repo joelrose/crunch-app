@@ -30,7 +30,17 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
                 color: AlpacaColor.blackColor,
               ),
             ),
-          )
+          ),
+          Positioned(
+              right: 0,
+              child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Edit',
+                    style: Theme.of(context).textTheme.headline3,
+                  )))
         ],
       ),
     );
