@@ -17,13 +17,15 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   String todayDate = DateFormat.MMMEd().format(DateTime.now());
   String pickupHourMinute =
       DateFormat.jm().format(DateTime.now().add(const Duration(minutes: 20)));
-  String pickupTime = DateFormat.MMMEd()
+  String pickupTimeString = DateFormat.MMMEd()
       .add_jm()
       .format(DateTime.now().add(const Duration(minutes: 20)));
+  DateTime pickupTimeDateTime = DateTime.now();
 
   Future<void> _changePickupTime(DateTime time) async {
     setState(() {
-      pickupTime = DateFormat.MMMEd().add_jm().format(time);
+      pickupTimeDateTime = time;
+      pickupTimeString = DateFormat.MMMEd().add_jm().format(time);
       pickupDate = DateFormat.MMMEd().format(time);
       pickupHourMinute = DateFormat.jm().format(time);
     });
@@ -32,7 +34,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   @override
   Widget build(BuildContext context) {
     if (pickupDate == todayDate) {
-      pickupTime = 'Today, $pickupHourMinute';
+      pickupTimeString = 'Today, $pickupHourMinute';
     }
 
     return CheckoutHeaderRowWidget(
@@ -43,6 +45,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
           onConfirm: (time) {
             _changePickupTime(time);
           },
+          currentTime: pickupTimeDateTime,
         );
         // showModalBottomSheet(
         //   isScrollControlled: true,
@@ -97,7 +100,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
         //   },
         // );
       },
-      buttonText: pickupTime,
+      buttonText: pickupTimeString,
     );
   }
 }
