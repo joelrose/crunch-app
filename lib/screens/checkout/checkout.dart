@@ -103,7 +103,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const CheckoutPickupWidget(),
                 const DividerWidget(),
                 const DividerWidget(),
-                const CheckoutStoreDirectionWidget(),
+                CheckoutStoreDirectionWidget(
+                  googleMaps: widget.data.googleMaps,
+                ),
                 const DividerWidget(),
                 const DividerWidget(),
                 const CheckoutContactDetailsWidget(),

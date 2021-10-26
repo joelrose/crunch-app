@@ -19,10 +19,12 @@ class CreateStoreData {
   CreateStoreData({
     required this.checkoutItems,
     required this.storeName,
+    required this.googleMaps,
   });
 
   final List<RestaurantMenueItemModel> checkoutItems;
   final String storeName;
+  final String googleMaps;
 }
 
 class StoreScreen extends StatefulWidget {
@@ -55,9 +57,9 @@ class _StoreScreenState extends State<StoreScreen> {
                           Navigator.of(context).pushNamed(
                             storeCheckoutRoute,
                             arguments: CreateStoreData(
-                              checkoutItems: checkoutItems,
-                              storeName: model.restaurant.name,
-                            ),
+                                checkoutItems: checkoutItems,
+                                storeName: model.restaurant.name,
+                                googleMaps: model.restaurant.googleMapsUrl),
                           );
                         },
                         buttonText: 'Checkout',
