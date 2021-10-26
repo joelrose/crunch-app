@@ -3,9 +3,10 @@ import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
 
 class StepSetPassword extends StatefulWidget {
-  const StepSetPassword({Key? key, required this.onFinish}) : super(key: key);
+  const StepSetPassword({Key? key, required this.whichStepInCreateAccount})
+      : super(key: key);
 
-  final void Function() onFinish;
+  final void Function() whichStepInCreateAccount;
 
   @override
   _StepSetPasswordState createState() => _StepSetPasswordState();
@@ -59,6 +60,7 @@ class _StepSetPasswordState extends State<StepSetPassword> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: AlpacaTextField(
+              key: const Key('onboarding_password_textfield'),
               hintText: 'Password',
               textController: _passwordController,
               obscureText: true,
@@ -74,6 +76,7 @@ class _StepSetPasswordState extends State<StepSetPassword> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: AlpacaTextField(
+              key: const Key('onboarding_repeat_password_textfield'),
               hintText: 'Repeat password',
               textController: _passwordRepeatController,
               obscureText: true,
@@ -94,7 +97,7 @@ class _StepSetPasswordState extends State<StepSetPassword> {
             buttonText: 'Continue',
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                widget.onFinish();
+                widget.whichStepInCreateAccount();
               }
             },
           ),
