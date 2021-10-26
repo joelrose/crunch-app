@@ -149,7 +149,7 @@ class AlpacaTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
           child: Text(
             hintText,
             style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -199,6 +199,65 @@ class AlpacaTextField extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class AlpacaCheckoutButton extends StatelessWidget {
+  const AlpacaCheckoutButton({
+    Key? key,
+    required this.onPressed,
+    required this.buttonText,
+    this.disableButtonBackground = false,
+  }) : super(key: key);
+
+  final void Function() onPressed;
+  final String buttonText;
+  final bool disableButtonBackground;
+
+  @override
+  Widget build(BuildContext context) {
+    final buttonBackground =
+        !disableButtonBackground ? const Color(0xffF6F0FF) : Colors.transparent;
+    return TextButton(
+      style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+          minimumSize: Size.zero,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+          backgroundColor: buttonBackground),
+      onPressed: onPressed,
+      child: Text(
+        buttonText,
+        style: const TextStyle(
+          color: AlpacaColor.primary80,
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+        ),
+      ),
+    );
+  }
+}
+
+class AlpacaClosePopUpWindownButton extends StatelessWidget {
+  const AlpacaClosePopUpWindownButton({Key? key, required this.onPressed})
+      : super(key: key);
+
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+      backgroundColor: AlpacaColor.lightGreyColor90,
+      radius: 16,
+      child: IconButton(
+        iconSize: 20,
+        padding: EdgeInsets.zero,
+        onPressed: onPressed,
+        icon: const Icon(Icons.close_rounded),
+        color: AlpacaColor.darkGreyColor,
+      ),
     );
   }
 }
