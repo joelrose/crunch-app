@@ -1,5 +1,6 @@
 import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/screens/checkout/checkout.dart';
+import 'package:alpaca/screens/store/store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,12 +8,12 @@ void main() {
   final List<RestaurantMenueItemModel> checkoutItems = [];
   testWidgets('Search for top bar: Order Overview ', (tester) async {
     await tester.pumpWidget(
-      const MediaQuery(
-        data: MediaQueryData(),
+      MediaQuery(
+        data: const MediaQueryData(),
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              checkoutItems: [],
+              data: CreateStoreData(checkoutItems: [], storeName: ''),
             ),
           ),
         ),
@@ -24,12 +25,12 @@ void main() {
 
   testWidgets('Search for items Widget', (tester) async {
     await tester.pumpWidget(
-      const MediaQuery(
-        data: MediaQueryData(),
+      MediaQuery(
+        data: const MediaQueryData(),
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              checkoutItems: [],
+              data: CreateStoreData(checkoutItems: [], storeName: ''),
             ),
           ),
         ),
@@ -41,12 +42,12 @@ void main() {
 
   testWidgets('Search for Pickup Widget', (tester) async {
     await tester.pumpWidget(
-      const MediaQuery(
-        data: MediaQueryData(),
+      MediaQuery(
+        data: const MediaQueryData(),
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              checkoutItems: [],
+              data: CreateStoreData(checkoutItems: [], storeName: ''),
             ),
           ),
         ),
@@ -58,12 +59,12 @@ void main() {
 
   testWidgets('Search for Store Widget', (tester) async {
     await tester.pumpWidget(
-      const MediaQuery(
-        data: MediaQueryData(),
+      MediaQuery(
+        data: const MediaQueryData(),
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              checkoutItems: [],
+              data: CreateStoreData(checkoutItems: [], storeName: ''),
             ),
           ),
         ),
@@ -75,12 +76,12 @@ void main() {
 
   testWidgets('Search for Contact Details Widget', (tester) async {
     await tester.pumpWidget(
-      const MediaQuery(
-        data: MediaQueryData(),
+      MediaQuery(
+        data: const MediaQueryData(),
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              checkoutItems: [],
+              data: CreateStoreData(checkoutItems: [], storeName: ''),
             ),
           ),
         ),
@@ -92,12 +93,12 @@ void main() {
 
   testWidgets('Search for Phone number Input', (tester) async {
     await tester.pumpWidget(
-      const MediaQuery(
-        data: MediaQueryData(),
+      MediaQuery(
+        data: const MediaQueryData(),
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              checkoutItems: [],
+              data: CreateStoreData(checkoutItems: [], storeName: ''),
             ),
           ),
         ),
@@ -109,12 +110,12 @@ void main() {
 
   testWidgets('Search for Order summary Widget', (tester) async {
     await tester.pumpWidget(
-      const MediaQuery(
-        data: MediaQueryData(),
+      MediaQuery(
+        data: const MediaQueryData(),
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              checkoutItems: [],
+              data: CreateStoreData(checkoutItems: [], storeName: ''),
             ),
           ),
         ),
@@ -126,12 +127,12 @@ void main() {
 
   testWidgets('Search for Checkout Button', (tester) async {
     await tester.pumpWidget(
-      const MediaQuery(
-        data: MediaQueryData(),
+      MediaQuery(
+        data: const MediaQueryData(),
         child: MaterialApp(
           home: Scaffold(
             body: CheckoutScreen(
-              checkoutItems: [],
+              data: CreateStoreData(checkoutItems: [], storeName: ''),
             ),
           ),
         ),
