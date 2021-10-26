@@ -91,6 +91,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         children: [
           CheckoutOrderNavbarWidget(
             storeName: widget.data.storeName,
+            pageOverviewName: 'Order Overview',
           ),
           const DividerWidget(),
           Flexible(

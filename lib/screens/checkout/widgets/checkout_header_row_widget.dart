@@ -37,13 +37,14 @@ class CheckoutHeaderRowWidget extends StatelessWidget {
                   ?.copyWith(fontSize: 18, color: AlpacaColor.darkNavyColor),
             ),
           ),
-          disableButton
-              ? Container()
-              : AlpacaCheckoutButton(
-                  onPressed: onPressed,
-                  buttonText: buttonText,
-                  disableButtonBackground: disableButtonBackground,
-                )
+          if (disableButton)
+            Container()
+          else
+            AlpacaCheckoutButton(
+              onPressed: onPressed,
+              buttonText: buttonText,
+              disableButtonBackground: disableButtonBackground,
+            )
         ],
       ),
     );

@@ -2,10 +2,16 @@ import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutOrderNavbarWidget extends StatelessWidget {
-  const CheckoutOrderNavbarWidget({Key? key, required this.storeName})
-      : super(key: key);
+  CheckoutOrderNavbarWidget({
+    Key? key,
+    this.storeName,
+    required this.pageOverviewName,
+    this.disableEditButton = false,
+  }) : super(key: key);
 
-  final String storeName;
+  final String? storeName;
+  final String pageOverviewName;
+  final bool disableEditButton;
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +25,22 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Order Overview',
+                  pageOverviewName,
                   style: Theme.of(context).textTheme.headline2,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    storeName,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          color: AlpacaColor.darkGreyColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        ),
-                  ),
-                )
+                if (storeName != null) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      storeName!,
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: AlpacaColor.darkGreyColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
+                    ),
+                  )
+                ]
               ],
             ),
           ),
@@ -49,18 +57,19 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            right: 0,
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'Edit',
-                style: Theme.of(context).textTheme.headline3,
+          if (!disableEditButton)
+            Positioned(
+              right: 0,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Edit',
+                  style: Theme.of(context).textTheme.headline3,
+                ),
               ),
-            ),
-          )
+            )
         ],
       ),
     );
