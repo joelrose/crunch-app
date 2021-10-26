@@ -5,6 +5,8 @@ import 'package:alpaca/services/auth_service.dart';
 import 'package:alpaca/services/auth_service_firebase.dart';
 import 'package:alpaca/services/database_service.dart';
 import 'package:alpaca/services/database_service_firestore.dart';
+import 'package:alpaca/swagger/swagger.swagger.dart';
+import 'package:chopper/chopper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,6 +42,23 @@ Future<void> setupServiceLocator() async {
         projectId: 'd9v945zu',
         dataset: 'production',
       ),
+    );
+  }
+
+  if (!locator.isRegistered<Swagger>()) {
+    locator.registerLazySingleton<Swagger>(
+      () => ChopperClient(
+        baseUrl: 'http://localhost:5000',
+        services: [Swagger.create()],
+        converter: const JsonConverter(),
+        interceptors: [
+          (Request request) async {
+            final user = await locator<AuthService>().getUser;
+            final idToken = await user!.getIdToken();
+            return applyHeader(request, 'Authorization', 'Bearer $idToken');
+          }
+        ],
+      ).getService<Swagger>(),
     );
   }
 

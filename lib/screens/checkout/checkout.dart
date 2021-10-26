@@ -1,8 +1,11 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/sanity/model.dart';
+import 'package:alpaca/services/auth_service.dart';
+import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
+import 'package:alpaca/swagger/swagger.swagger.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,6 +44,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   Future<void> _checkout() async {
+    final response = await locator<Swagger>().apiOrderPost(
+      body: CreateOrderRequest(
+        amount: 12,
+      ),
+    );
+
+    final response_2 = await locator<Swagger>().apiOrderOrderIdGet(
+      orderId: response.body as String,
+    );
+
+    final body = response.error;
+
     final paymentIntentSecret = await _getPaymentIntent();
 
     await Stripe.instance.initPaymentSheet(
