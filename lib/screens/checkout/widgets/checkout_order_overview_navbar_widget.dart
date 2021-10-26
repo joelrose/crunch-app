@@ -2,7 +2,10 @@ import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutOrderNavbarWidget extends StatelessWidget {
-  const CheckoutOrderNavbarWidget({Key? key}) : super(key: key);
+  const CheckoutOrderNavbarWidget({Key? key, required this.storeName})
+      : super(key: key);
+
+  final String storeName;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +16,24 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.center,
-            child: Text(
-              'Order Overview',
-              style: Theme.of(context).textTheme.headline2,
+            child: Column(
+              children: [
+                Text(
+                  'Order Overview',
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    storeName,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: AlpacaColor.darkGreyColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                  ),
+                )
+              ],
             ),
           ),
           Positioned(
@@ -32,15 +50,17 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
             ),
           ),
           Positioned(
-              right: 0,
-              child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    'Edit',
-                    style: Theme.of(context).textTheme.headline3,
-                  )))
+            right: 0,
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Edit',
+                style: Theme.of(context).textTheme.headline3,
+              ),
+            ),
+          )
         ],
       ),
     );

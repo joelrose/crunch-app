@@ -15,6 +15,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+class CreateStoreData {
+  CreateStoreData({
+    required this.checkoutItems,
+    required this.storeName,
+  });
+
+  final List<RestaurantMenueItemModel> checkoutItems;
+  final String storeName;
+}
+
 class StoreScreen extends StatefulWidget {
   const StoreScreen({Key? key, required this.storeId}) : super(key: key);
 
@@ -44,7 +54,10 @@ class _StoreScreenState extends State<StoreScreen> {
                         onPressed: () {
                           Navigator.of(context).pushNamed(
                             storeCheckoutRoute,
-                            arguments: checkoutItems,
+                            arguments: CreateStoreData(
+                              checkoutItems: checkoutItems,
+                              storeName: model.restaurant.name,
+                            ),
                           );
                         },
                         buttonText: 'Checkout',

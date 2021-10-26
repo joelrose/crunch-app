@@ -59,9 +59,9 @@ class Router {
           builder: (_) => StoreScreen(storeId: args),
         );
       case storeCheckoutRoute:
-        final args = settings.arguments! as List<RestaurantMenueItemModel>;
+        final args = settings.arguments! as CreateStoreData;
         return CupertinoPageRoute(
-          builder: (_) => CheckoutScreen(checkoutItems: args),
+          builder: (_) => CheckoutScreen(data: args),
         );
       case storeCheckoutConfirmationRoute:
         return CupertinoPageRoute(

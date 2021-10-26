@@ -8,6 +8,7 @@ import 'package:alpaca/screens/checkout/widgets/checkout_order_summary_widget.da
 import 'package:alpaca/screens/checkout/widgets/checkout_pickup_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/divider_widget.dart';
+import 'package:alpaca/screens/store/store.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -16,10 +17,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({Key? key, required this.checkoutItems})
-      : super(key: key);
+  const CheckoutScreen({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
-  final List<RestaurantMenueItemModel> checkoutItems;
+  final CreateStoreData data;
 
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
@@ -28,7 +31,7 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends State<CheckoutScreen> {
   num _getTotalPrice() {
     num sum = 0;
-    for (final RestaurantMenueItemModel item in widget.checkoutItems) {
+    for (final RestaurantMenueItemModel item in widget.data.checkoutItems) {
       sum += item.price;
     }
     return sum;
@@ -86,12 +89,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       child: Column(
         children: [
-          const CheckoutOrderNavbarWidget(),
+          CheckoutOrderNavbarWidget(
+            storeName: widget.data.storeName,
+          ),
           const DividerWidget(),
           Flexible(
             child: ListView(
               children: [
-                CheckoutCartItemsWidget(checkoutItems: widget.checkoutItems),
+                CheckoutCartItemsWidget(
+                    checkoutItems: widget.data.checkoutItems),
                 const DividerWidget(),
                 const DividerWidget(),
                 const CheckoutPickupWidget(),
@@ -102,7 +108,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const DividerWidget(),
                 const CheckoutContactDetailsWidget(),
                 const DividerWidget(),
-                CheckoutOrderSummaryWidget(checkoutItems: widget.checkoutItems),
+                CheckoutOrderSummaryWidget(
+                    checkoutItems: widget.data.checkoutItems),
                 Container(
                   height: 80,
                 )
