@@ -25,6 +25,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     setState(() {
       pickupTime = DateFormat.MMMEd().add_jm().format(time);
       pickupDate = DateFormat.MMMEd().format(time);
+      pickupHourMinute = DateFormat.jm().format(time);
     });
   }
 
