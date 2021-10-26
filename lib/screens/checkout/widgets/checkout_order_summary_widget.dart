@@ -15,7 +15,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
       _subtotalPrice += checkoutItems[i].price;
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: AlpacaColor.lightGreyColor90),
