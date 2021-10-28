@@ -1,6 +1,7 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/screens/checkout/checkout.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_confirmation_time.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
@@ -32,17 +33,6 @@ class CheckoutConfirmationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pickupTime = data.pickupTime;
-    final now = DateTime.now();
-    final totalWaitTime = pickupTime.difference(now);
-    final minutesToPickupOrder = pickupTime.difference(now).inMinutes;
-    double fullScreenWidth = MediaQuery.of(context).size.width;
-    String waitTimeText = '';
-    if (minutesToPickupOrder > 0) {
-      waitTimeText = '${minutesToPickupOrder.toString()} min';
-    } else {
-      waitTimeText = 'Ready';
-    }
     return PageWrapper(
       padding: EdgeInsets.zero,
       backgroundColor: AlpacaColor.white100Color,
@@ -83,14 +73,8 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                       color: AlpacaColor.primary100.withOpacity(0.03),
                       height: 151,
                       child: Center(
-                        child: Text(
-                          waitTimeText,
-                          style:
-                              Theme.of(context).textTheme.headline2?.copyWith(
-                                    fontSize: 51,
-                                    color: AlpacaColor.primary100,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                        child: CheckoutConfirmationTime(
+                          pickupTime: data.pickupTime,
                         ),
                       ),
                     ),
@@ -126,9 +110,10 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                                     Text(
                                       '${checkoutItem.price}€',
                                       style: const TextStyle(
-                                          color: AlpacaColor.blackColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600),
+                                        color: AlpacaColor.blackColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ],
                                 ),
