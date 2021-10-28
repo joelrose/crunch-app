@@ -1,5 +1,6 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_header_row_widget.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,25 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Container(
+                color: AlpacaColor.primary100.withOpacity(0.03),
+                height: 151,
+                child: Center(
+                  child: Text(
+                    '22 min',
+                    style: Theme.of(context).textTheme.headline2?.copyWith(
+                        fontSize: 51,
+                        color: AlpacaColor.primary100,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+              CheckoutHeaderRowWidget(
+                header: 'Order details',
+                onPressed: () {},
+                buttonText: '',
+                disableButton: true,
+              )
             ],
           )
         ],
