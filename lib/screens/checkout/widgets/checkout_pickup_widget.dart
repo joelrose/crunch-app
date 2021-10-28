@@ -6,6 +6,18 @@ import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
+String pickupDate = DateFormat.MMMEd().format(DateTime.now());
+String now = DateFormat.MMMEd().format(DateTime.now());
+String pickupHourMinute =
+    DateFormat.jm().format(DateTime.now().add(const Duration(minutes: 20)));
+String pickupTimeAsString = DateFormat.MMMEd()
+    .add_jm()
+    .format(DateTime.now().add(const Duration(minutes: 20)));
+DateTime pickupTimeAsDateTime = DateTime.now().add(
+  const Duration(minutes: 20),
+);
+DateTime pickupMinTime = DateTime.now().add(const Duration(minutes: 10));
+
 class CheckoutPickupWidget extends StatefulWidget {
   const CheckoutPickupWidget({Key? key}) : super(key: key);
 
@@ -14,18 +26,6 @@ class CheckoutPickupWidget extends StatefulWidget {
 }
 
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
-  String pickupDate = DateFormat.MMMEd().format(DateTime.now());
-  String now = DateFormat.MMMEd().format(DateTime.now());
-  String pickupHourMinute =
-      DateFormat.jm().format(DateTime.now().add(const Duration(minutes: 20)));
-  String pickupTimeAsString = DateFormat.MMMEd()
-      .add_jm()
-      .format(DateTime.now().add(const Duration(minutes: 20)));
-  DateTime pickupTimeAsDateTime = DateTime.now().add(
-    const Duration(minutes: 20),
-  );
-  DateTime pickupMinTime = DateTime.now().add(const Duration(minutes: 10));
-
   Future<void> _changePickupTime(DateTime time) async {
     setState(() {
       pickupMinTime = DateTime.now().add(const Duration(minutes: 10));

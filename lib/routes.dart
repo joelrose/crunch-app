@@ -64,8 +64,9 @@ class Router {
           builder: (_) => CheckoutScreen(data: args),
         );
       case storeCheckoutConfirmationRoute:
+        final args = settings.arguments! as CreateCheckoutData;
         return CupertinoPageRoute(
-          builder: (_) => const CheckoutConfirmationScreen(),
+          builder: (_) => CheckoutConfirmationScreen(data: args),
         );
       default:
         return MaterialPageRoute(

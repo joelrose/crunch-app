@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/sanity/model.dart';

@@ -1,5 +1,6 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
+import 'package:alpaca/screens/checkout/checkout.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
@@ -24,60 +25,126 @@ import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 class CheckoutConfirmationScreen extends StatelessWidget {
-  const CheckoutConfirmationScreen({Key? key}) : super(key: key);
+  const CheckoutConfirmationScreen({Key? key, required this.data})
+      : super(key: key);
+
+  final CreateCheckoutData data;
 
   @override
   Widget build(BuildContext context) {
+    final pickupTime = data.pickupTime;
+    final now = DateTime.now();
+    final totalWaitTime = pickupTime.difference(now);
+    final minutesToPickupOrder = pickupTime.difference(now).inMinutes;
+    double fullScreenWidth = MediaQuery.of(context).size.width;
+    String waitTimeText = '';
+    if (minutesToPickupOrder > 0) {
+      waitTimeText = '${minutesToPickupOrder.toString()} min';
+    } else {
+      waitTimeText = 'Ready';
+    }
     return PageWrapper(
       padding: EdgeInsets.zero,
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,
-      child: ListView(
+      child: Column(
         children: [
           CheckoutOrderNavbarWidget(
             pageOverviewName: 'Order status',
             disableEditButton: true,
           ),
-          Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    width: 230,
-                    child: Text(
-                      'Your order is being prepared...',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline2
-                          ?.copyWith(fontSize: 22),
+          Flexible(
+            child: ListView(
+              children: [
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 20),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          width: 230,
+                          child: Text(
+                            'Your order is being prepared...',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline2
+                                ?.copyWith(fontSize: 22),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              Container(
-                color: AlpacaColor.primary100.withOpacity(0.03),
-                height: 151,
-                child: Center(
-                  child: Text(
-                    '22 min',
-                    style: Theme.of(context).textTheme.headline2?.copyWith(
-                        fontSize: 51,
-                        color: AlpacaColor.primary100,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ),
-              CheckoutHeaderRowWidget(
-                header: 'Order details',
-                onPressed: () {},
-                buttonText: '',
-                disableButton: true,
-              )
-            ],
-          )
+                    const LinearProgressIndicator(
+                      backgroundColor: Colors.transparent,
+                      color: AlpacaColor.primary100,
+                    ),
+                    Container(
+                      color: AlpacaColor.primary100.withOpacity(0.03),
+                      height: 151,
+                      child: Center(
+                        child: Text(
+                          waitTimeText,
+                          style:
+                              Theme.of(context).textTheme.headline2?.copyWith(
+                                    fontSize: 51,
+                                    color: AlpacaColor.primary100,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                      ),
+                    ),
+                    CheckoutHeaderRowWidget(
+                      header: 'Order details',
+                      onPressed: () {},
+                      buttonText: '',
+                      disableButton: true,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: data.checkoutItems.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, i) {
+                              final checkoutItem = data.checkoutItems[i];
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 3),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '1x ${checkoutItem.title.english}',
+                                      style: const TextStyle(
+                                        color: AlpacaColor.darkGreyColor,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${checkoutItem.price}€',
+                                      style: const TextStyle(
+                                          color: AlpacaColor.blackColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        DividerWidget(),
+                      ],
+                    ),
+                    CheckoutStoreDirectionWidget(googleMaps: data.googleMaps)
+                  ],
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
