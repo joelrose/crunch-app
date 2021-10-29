@@ -143,9 +143,9 @@ class _OnboardingCreateAccountScreenState
                             phoneNumber: widget.data!.phoneNumber!,
                             onFinish: nextStep,
                           ),
-                          StepSetPassword(onFinish: nextStep),
+                          StepSetPassword(whichStepInCreateAccount: nextStep),
                         ],
-                        StepInsertName(onFinish: nextStep),
+                        StepInsertName(whichStepInCreateAccount: nextStep),
                         StepPlaceholder(
                           onFinish: () {
                             Navigator.of(context).pushNamedAndRemoveUntil(

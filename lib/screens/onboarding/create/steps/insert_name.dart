@@ -5,9 +5,10 @@ import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
 
 class StepInsertName extends StatefulWidget {
-  const StepInsertName({Key? key, required this.onFinish}) : super(key: key);
+  const StepInsertName({Key? key, required this.whichStepInCreateAccount})
+      : super(key: key);
 
-  final void Function() onFinish;
+  final void Function() whichStepInCreateAccount;
 
   @override
   _StepInsertNameState createState() => _StepInsertNameState();
@@ -61,6 +62,7 @@ class _StepInsertNameState extends State<StepInsertName> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: AlpacaTextField(
+              key: const Key('onboarding_firstname_textfield'),
               hintText: 'First name',
               textController: _firstNameController,
               textInputAction: TextInputAction.done,
@@ -75,6 +77,7 @@ class _StepInsertNameState extends State<StepInsertName> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: AlpacaTextField(
+              key: const Key('onboarding_lastname_textfield'),
               hintText: 'Last name',
               textController: _lastNameController,
               textInputAction: TextInputAction.done,
@@ -99,7 +102,7 @@ class _StepInsertNameState extends State<StepInsertName> {
 
                 await locator<DatabaseService>().saveUserData(data);
 
-                widget.onFinish();
+                widget.whichStepInCreateAccount();
               }
             },
           ),

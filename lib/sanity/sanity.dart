@@ -76,25 +76,41 @@ class SanityCms extends SanityClient {
   *[_id == ':id:'] {
     _id,
     name,
-    "image": image.asset->url
+    "image": image.asset->url,
+    "description": description[0].children[0].text,
+  	address,
+    googleMapsUrl,
+  	phoneNumber,
+  	website,
+    menuCateogries[] {
+    	title,
+      menuItems[] {
+        title, 
+        price,
+        _key,
+        description,
+      },
+    }
   }
   ''';
 
-  Future<List<RestaurantModel>> getRestaurants() async {
+
+
+  Future<List<RestaurantOverviewModel>> getRestaurants() async {
     final response = await _fetch(query: _restaurantsSanityQuery);
 
     return response
-        .map<RestaurantModel>(
-          (data) => RestaurantModel.fromMap(data as Map<dynamic, dynamic>),
+        .map<RestaurantOverviewModel>(
+          (data) => RestaurantOverviewModel.fromMap(data as Map<dynamic, dynamic>),
         )
-        .toList() as List<RestaurantModel>;
+        .toList() as List<RestaurantOverviewModel>;
   }
 
-  Future<RestaurantModel> getRestaurant(String storeId) async {
+  Future<RestaurantStoreModel> getRestaurant(String storeId) async {
     final query = _restaurantSanityQuery.replaceAll(':id:', storeId);
 
     final response = await _fetch(query: query);
 
-    return RestaurantModel.fromMap(response[0] as Map<dynamic, dynamic>);
+    return RestaurantStoreModel.fromMap(response[0] as Map<dynamic, dynamic>);
   }
 }
