@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/sanity/model.dart';
@@ -14,6 +13,18 @@ import 'package:alpaca/shared/viewstate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+class CreateStoreData {
+  CreateStoreData({
+    required this.checkoutItems,
+    required this.storeName,
+    required this.googleMaps,
+  });
+
+  final List<RestaurantMenueItemModel> checkoutItems;
+  final String storeName;
+  final String googleMaps;
+}
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({Key? key, required this.storeId}) : super(key: key);
@@ -44,7 +55,10 @@ class _StoreScreenState extends State<StoreScreen> {
                         onPressed: () {
                           Navigator.of(context).pushNamed(
                             storeCheckoutRoute,
-                            arguments: checkoutItems,
+                            arguments: CreateStoreData(
+                                checkoutItems: checkoutItems,
+                                storeName: model.restaurant.name,
+                                googleMaps: model.restaurant.googleMapsUrl),
                           );
                         },
                         buttonText: 'Checkout',

@@ -1,0 +1,32 @@
+name: Staging PR - Test
+
+on:
+  pull_request:
+    branches:
+      - 'staging'
+
+jobs:
+  flutter-test:
+    name: Run flutter test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+      
+      - name: Install flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      
+      - name: Run flutter precache
+        run: flutter precache
+      
+      - name : Install dependencies
+        run: flutter pub get
+      
+      - name: Run flutter tests
+        run: flutter test
+
+      - name: Run lint checks
+        run: dart analyze

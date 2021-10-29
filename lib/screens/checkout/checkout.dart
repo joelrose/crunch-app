@@ -1,6 +1,13 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
 import 'package:alpaca/sanity/model.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_cart_items_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_contact_details_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_order_summary_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_pickup_widget.dart';
+import 'package:alpaca/screens/checkout/widgets/checkout_store_widget.dart';
+import 'package:alpaca/screens/store/store.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -8,11 +15,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
-class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({Key? key, required this.checkoutItems})
-      : super(key: key);
+class CreateCheckoutData {
+  CreateCheckoutData({
+    required this.checkoutItems,
+    required this.googleMaps,
+    required this.pickupTime,
+    required this.creationTime,
+  });
 
   final List<RestaurantMenueItemModel> checkoutItems;
+  final String googleMaps;
+  final DateTime pickupTime;
+  final DateTime creationTime;
+}
+
+class CheckoutScreen extends StatefulWidget {
+  const CheckoutScreen({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  final CreateStoreData data;
 
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
@@ -21,7 +44,7 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends State<CheckoutScreen> {
   num _getTotalPrice() {
     num sum = 0;
-    for (final RestaurantMenueItemModel item in widget.checkoutItems) {
+    for (final RestaurantMenueItemModel item in widget.data.checkoutItems) {
       sum += item.price;
     }
     return sum;
@@ -58,7 +81,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     try {
       await Stripe.instance.presentPaymentSheet();
 
-      Navigator.of(context).pushNamed(storeCheckoutConfirmationRoute);
+      Navigator.of(context).pushNamed(
+        storeCheckoutConfirmationRoute,
+        arguments: CreateCheckoutData(
+          checkoutItems: widget.data.checkoutItems,
+          googleMaps: widget.data.googleMaps,
+          pickupTime: pickupTimeAsDateTime,
+          creationTime: DateTime.now(),
+        ),
+      );
     } catch (e) {}
   }
 
@@ -79,61 +110,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 30),
-            child: Stack(
-              alignment: Alignment.center,
+          CheckoutOrderNavbarWidget(
+            storeName: widget.data.storeName,
+            pageOverviewName: 'Order Overview',
+          ),
+          Flexible(
+            child: ListView(
               children: [
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Order Overview',
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
+                CheckoutCartItemsWidget(
+                  checkoutItems: widget.data.checkoutItems,
                 ),
-                Positioned(
-                  left: 0,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      size: 20,
-                      color: AlpacaColor.blackColor,
-                    ),
-                  ),
+                const CheckoutPickupWidget(),
+                CheckoutStoreDirectionWidget(
+                  googleMaps: widget.data.googleMaps,
+                ),
+                const CheckoutContactDetailsWidget(),
+                CheckoutOrderSummaryWidget(
+                  checkoutItems: widget.data.checkoutItems,
+                ),
+                Container(
+                  height: 65,
                 )
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Divider(),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: ListView.builder(
-              itemCount: widget.checkoutItems.length,
-              shrinkWrap: true,
-              itemBuilder: (context, i) {
-                final checkoutItem = widget.checkoutItems[i];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '1x ${checkoutItem.title.english}',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    Text(
-                      '${checkoutItem.price}€',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                );
-              },
-            ),
-          )
         ],
       ),
     );

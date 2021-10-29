@@ -59,13 +59,14 @@ class Router {
           builder: (_) => StoreScreen(storeId: args),
         );
       case storeCheckoutRoute:
-        final args = settings.arguments! as List<RestaurantMenueItemModel>;
+        final args = settings.arguments! as CreateStoreData;
         return CupertinoPageRoute(
-          builder: (_) => CheckoutScreen(checkoutItems: args),
+          builder: (_) => CheckoutScreen(data: args),
         );
       case storeCheckoutConfirmationRoute:
+        final args = settings.arguments! as CreateCheckoutData;
         return CupertinoPageRoute(
-          builder: (_) => const CheckoutConfirmationScreen(),
+          builder: (_) => CheckoutConfirmationScreen(data: args),
         );
       default:
         return MaterialPageRoute(
