@@ -225,6 +225,7 @@ class AlpacaCheckoutButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(18.0),
           ),
           minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
           backgroundColor: buttonBackground),
       onPressed: onPressed,

@@ -7,7 +7,6 @@ import 'package:alpaca/screens/checkout/widgets/checkout_order_overview_navbar_w
 import 'package:alpaca/screens/checkout/widgets/checkout_order_summary_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_pickup_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_store_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/divider_widget.dart';
 import 'package:alpaca/screens/store/store.dart';
 import 'package:alpaca/shared/buttons.dart';
 import 'package:alpaca/shared/page_wrapper.dart';
@@ -15,6 +14,20 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+
+class CreateCheckoutData {
+  CreateCheckoutData({
+    required this.checkoutItems,
+    required this.googleMaps,
+    required this.pickupTime,
+    required this.creationTime,
+  });
+
+  final List<RestaurantMenueItemModel> checkoutItems;
+  final String googleMaps;
+  final DateTime pickupTime;
+  final DateTime creationTime;
+}
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({
@@ -68,7 +81,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     try {
       await Stripe.instance.presentPaymentSheet();
 
-      Navigator.of(context).pushNamed(storeCheckoutConfirmationRoute);
+      Navigator.of(context).pushNamed(
+        storeCheckoutConfirmationRoute,
+        arguments: CreateCheckoutData(
+          checkoutItems: widget.data.checkoutItems,
+          googleMaps: widget.data.googleMaps,
+          pickupTime: pickupTimeAsDateTime,
+          creationTime: DateTime.now(),
+        ),
+      );
     } catch (e) {}
   }
 
@@ -91,8 +112,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         children: [
           CheckoutOrderNavbarWidget(
             storeName: widget.data.storeName,
+            pageOverviewName: 'Order Overview',
           ),
-          const DividerWidget(),
           Flexible(
             child: ListView(
               children: [
