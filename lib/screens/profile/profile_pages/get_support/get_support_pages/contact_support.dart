@@ -16,7 +16,7 @@ class EmailSender extends StatefulWidget {
 class _EmailSenderState extends State<EmailSender> {
   bool isHTML = false;
 
-  final _supportEmail = 'Lennart.Stachowiak@gmail.com';
+  final _supportEmail = 'crunchapp2021@gmail.com';
 
   final _emailSubject = 'Crunch: Contact Support';
 
@@ -41,13 +41,12 @@ class _EmailSenderState extends State<EmailSender> {
     try {
       await FlutterEmailSender.send(email);
     } catch (error) {
-      platformResponse = 'Currently E-mail provider is not available.';
+      platformResponse = 'E-mail provider is not available.';
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(platformResponse),
         ),
       );
-      print(error.toString());
     }
 
     if (!mounted) return;
