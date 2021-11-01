@@ -1,4 +1,3 @@
-import 'package:alpaca/sanity/sanity.dart';
 import 'package:alpaca/screens/home/models/restaurant_overview_model.dart';
 import 'package:alpaca/screens/store/store_screen_model.dart';
 import 'package:alpaca/services/auth_service.dart';
@@ -10,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sanity/sanity.dart';
 
 GetIt locator = GetIt.instance;
 

@@ -1,16 +1,14 @@
 import 'dart:convert';
 
-import 'package:alpaca/sanity/exception.dart';
-import 'package:alpaca/sanity/http_client.dart';
-import 'package:alpaca/sanity/model.dart';
-import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:sanity/src/exception.dart';
+import 'package:sanity/src/http_client.dart';
+import 'package:sanity/src/model.dart';
 
 class SanityClient {
   SanityClient({
-    @required this.projectId,
-    @required this.dataset,
+    required this.projectId,
+    required this.dataset,
     this.useCdn = true,
   });
 
@@ -59,8 +57,8 @@ class SanityClient {
 
 class SanityCms extends SanityClient {
   SanityCms({
-    @required String? projectId,
-    @required String? dataset,
+    required String? projectId,
+    required String? dataset,
     bool useCdn = true,
   }) : super(dataset: dataset, projectId: projectId, useCdn: useCdn);
 
@@ -93,8 +91,6 @@ class SanityCms extends SanityClient {
     }
   }
   ''';
-
-
 
   Future<List<RestaurantOverviewModel>> getRestaurants() async {
     final response = await _fetch(query: _restaurantsSanityQuery);

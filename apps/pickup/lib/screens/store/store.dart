@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
-import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/screens/store/store_screen_model.dart';
 import 'package:alpaca/screens/store/widgets/store_information_item.dart';
 import 'package:alpaca/screens/store/widgets/store_menue_list.dart';
@@ -13,6 +12,7 @@ import 'package:alpaca/shared/viewstate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sanity/sanity.dart';
 
 class CreateStoreData {
   CreateStoreData({

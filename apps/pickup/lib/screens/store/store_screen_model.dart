@@ -1,8 +1,7 @@
-import 'package:alpaca/sanity/model.dart';
-import 'package:alpaca/sanity/sanity.dart';
 import 'package:alpaca/services/service_locator.dart';
 import 'package:alpaca/shared/base_model.dart';
 import 'package:alpaca/shared/viewstate.dart';
+import 'package:sanity/sanity.dart';
 
 class StoreScreenModel extends BaseModel {
   final SanityCms cmsClient = locator<SanityCms>();

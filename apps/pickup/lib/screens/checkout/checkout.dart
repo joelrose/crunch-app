@@ -1,6 +1,5 @@
 import 'package:alpaca/global.dart';
 import 'package:alpaca/routes.dart';
-import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_cart_items_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_contact_details_widget.dart';
 import 'package:alpaca/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
@@ -14,6 +13,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:sanity/sanity.dart';
 
 class CreateCheckoutData {
   CreateCheckoutData({
@@ -44,7 +44,7 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends State<CheckoutScreen> {
   num _getTotalPrice() {
     num sum = 0;
-    for (final RestaurantMenueItemModel item in widget.data.checkoutItems) {
+    for (final item in widget.data.checkoutItems) {
       sum += item.price;
     }
     return sum;

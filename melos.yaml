@@ -2,7 +2,7 @@ name: crunch
 
 packages:
   - apps/**
-  - packages/**
+  - core/**
 
 scripts:
   analyze: melos exec -- dart analyze

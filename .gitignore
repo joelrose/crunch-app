@@ -1,7 +1,6 @@
 .DS_Store
 .atom/
 .idea/
-.vscode/*
 .melos_tool/*
 !.vscode/tasks.json
 !.vscode/settings.json

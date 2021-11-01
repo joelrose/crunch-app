@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Pickup",
+            "program": "apps/pickup/lib/main.dart",
+            "request": "launch",
+            "type": "dart",
+        },
+        {
+            "name": "Launch Vendor Development",
+            "request": "launch",
+            "type": "dart",
+            "program": "apps/vendor/lib/main_development.dart",
+            "args": [
+              "--flavor",
+              "development",
+              "--target",
+              "lib/main_development.dart"
+            ]
+          },
+    ]
+}

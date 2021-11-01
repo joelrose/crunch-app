@@ -1,6 +1,6 @@
 import 'package:alpaca/global.dart';
-import 'package:alpaca/sanity/model.dart';
 import 'package:flutter/material.dart';
+import 'package:sanity/sanity.dart';
 
 class CheckoutOrderSummaryWidget extends StatelessWidget {
   const CheckoutOrderSummaryWidget({Key? key, required this.checkoutItems})

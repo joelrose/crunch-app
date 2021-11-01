@@ -1,4 +1,3 @@
-import 'package:alpaca/sanity/model.dart';
 import 'package:alpaca/screens/checkout/checkout.dart';
 import 'package:alpaca/screens/checkout/checkout_confirmation.dart';
 import 'package:alpaca/screens/home/home.dart';
