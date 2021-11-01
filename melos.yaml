@@ -1,0 +1,7 @@
+name: crunch
+
+packages:
+  - packages/**
+
+scripts:
+  analyze: melos exec -- dart analyze
