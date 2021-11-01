@@ -1,14 +1,13 @@
+
+import 'package:alpaca/src/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:pickup/global.dart';
 
 Widget getSocialButton(
   String buttonText,
-  String assetPath,
   double width,
+  Widget svgPicture,
   void Function() onPressed, {
   bool backgroundWhite = true,
 }) {
@@ -28,7 +27,7 @@ Widget getSocialButton(
             width: 40,
             height: 25,
             padding: const EdgeInsets.only(right: 15),
-            child: SvgPicture.asset(assetPath),
+            child: svgPicture,
           ),
           Text(
             buttonText,

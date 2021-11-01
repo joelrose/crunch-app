@@ -1,4 +1,3 @@
-///Annotations for paddinger
 library sanity;
 
 export 'src/sanity.dart';

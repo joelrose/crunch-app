@@ -1,8 +1,7 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/global.dart';
 import 'package:pickup/services/database_service.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/shared/buttons.dart';
 
 class StepInsertName extends StatefulWidget {
   const StepInsertName({Key? key, required this.whichStepInCreateAccount})

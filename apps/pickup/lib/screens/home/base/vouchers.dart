@@ -1,5 +1,5 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/global.dart';
 
 class VoucherScreen extends StatelessWidget {
   const VoucherScreen({Key? key}) : super(key: key);

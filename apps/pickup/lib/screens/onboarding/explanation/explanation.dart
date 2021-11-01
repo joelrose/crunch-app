@@ -1,11 +1,9 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/global.dart';
 import 'package:pickup/routes.dart';
 import 'package:pickup/screens/onboarding/explanation/widgets/dots_indicator.dart';
 import 'package:pickup/screens/onboarding/explanation/widgets/slide_widget.dart';
-import 'package:pickup/shared/buttons.dart';
-import 'package:pickup/shared/page_wrapper.dart';
 
 class OnboardingExplanationScreen extends StatefulWidget {
   const OnboardingExplanationScreen({Key? key}) : super(key: key);

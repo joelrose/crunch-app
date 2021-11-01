@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/global.dart';
 
 class CheckoutConfirmationTime extends StatefulWidget {
   const CheckoutConfirmationTime({Key? key, required this.pickupTime})
@@ -36,7 +36,7 @@ class _CheckoutConfirmationTimeState extends State<CheckoutConfirmationTime> {
       waitTimeText = 'Ready';
     }
     return Text(
-      '${minutesToPickupOrder} min',
+      '$minutesToPickupOrder min',
       style: Theme.of(context).textTheme.headline2?.copyWith(
             fontSize: 51,
             color: AlpacaColor.primary100,

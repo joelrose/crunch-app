@@ -1,8 +1,7 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/global.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
-import 'package:pickup/shared/buttons.dart';
 
 class CheckoutContactDetailsWidget extends StatefulWidget {
   const CheckoutContactDetailsWidget({Key? key}) : super(key: key);

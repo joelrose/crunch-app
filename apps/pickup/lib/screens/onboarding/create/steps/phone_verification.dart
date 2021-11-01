@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:alpaca/alpaca.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/global.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';

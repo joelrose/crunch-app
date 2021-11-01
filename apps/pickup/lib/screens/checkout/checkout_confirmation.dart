@@ -1,13 +1,12 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pickup/global.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_confirmation_time.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
-import 'package:pickup/shared/page_wrapper.dart';
 
 class CheckoutConfirmationScreen extends StatelessWidget {
   const CheckoutConfirmationScreen({Key? key, required this.data})
@@ -23,7 +22,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
       statusBarStyle: SystemUiOverlayStyle.dark,
       child: Column(
         children: [
-          CheckoutOrderNavbarWidget(
+          const CheckoutOrderNavbarWidget(
             pageOverviewName: 'Order status',
             disableEditButton: true,
           ),
@@ -34,10 +33,12 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 20),
+                        horizontal: 15,
+                        vertical: 20,
+                      ),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Container(
+                        child: SizedBox(
                           width: 230,
                           child: Text(
                             'Your order is being prepared...',

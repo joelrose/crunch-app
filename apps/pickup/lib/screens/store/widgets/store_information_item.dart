@@ -1,6 +1,6 @@
 
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/global.dart';
 
 class StoreInformationItem extends StatelessWidget {
   const StoreInformationItem({

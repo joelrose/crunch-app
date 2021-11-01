@@ -7,9 +7,10 @@ class UserDataModel {
 
   factory UserDataModel.fromMap(Map data) {
     return UserDataModel(
-        uid: data['uid'] as String,
-        firstName: data['firstname'] as String,
-        lastName: data['lastname'] as String);
+      uid: data['uid'] as String,
+      firstName: data['firstname'] as String,
+      lastName: data['lastname'] as String,
+    );
   }
 
   final String uid;

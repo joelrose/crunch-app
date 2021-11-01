@@ -1,3 +1,4 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'package:pickup/routes.dart' as routes;
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,19 +31,19 @@ Future<void> main() async {
       path: 'assets/translations',
       fallbackLocale: const Locale('en', 'US'),
       useOnlyLangCode: true,
-      child: const AlpacaApp(),
+      child: const MainApp(),
     ),
   );
 }
 
-class AlpacaApp extends StatefulWidget {
-  const AlpacaApp({Key? key}) : super(key: key);
+class MainApp extends StatefulWidget {
+  const MainApp({Key? key}) : super(key: key);
 
   @override
-  State<AlpacaApp> createState() => _AlpacaAppState();
+  State<MainApp> createState() => _MainAppState();
 }
 
-class _AlpacaAppState extends State<AlpacaApp> {
+class _MainAppState extends State<MainApp> {
   final Future<FirebaseApp> _initalization = Firebase.initializeApp();
 
   @override

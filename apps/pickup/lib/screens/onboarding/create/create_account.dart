@@ -1,13 +1,12 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pickup/global.dart';
 import 'package:pickup/routes.dart';
 import 'package:pickup/screens/onboarding/create/steps/insert_name.dart';
 import 'package:pickup/screens/onboarding/create/steps/phone_verification.dart';
 import 'package:pickup/screens/onboarding/create/steps/placeholder.dart';
 import 'package:pickup/screens/onboarding/create/steps/set_password.dart';
-import 'package:pickup/shared/page_wrapper.dart';
 
 class CreateAccountData {
   CreateAccountData({this.phoneNumber, required this.isSocialLogin});

@@ -1,5 +1,5 @@
 name: pickup
-description: A new Flutter project.
+description: Crunch customer app
 
 publish_to: 'none'
 
@@ -9,6 +9,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  alpaca: ^1.0.0
   cloud_firestore: ^2.4.0
   cloud_functions: ^3.0.3
   cupertino_icons: ^1.0.2

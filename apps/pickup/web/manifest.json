@@ -1,6 +1,6 @@
 {
-    "name": "alpaca",
-    "short_name": "alpaca",
+    "name": "pickup",
+    "short_name": "pickup",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,8 +1,8 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pickup/global.dart';
 import 'package:pickup/screens/home/base/discover.dart';
 import 'package:pickup/screens/home/base/favorites.dart';
 import 'package:pickup/screens/home/base/search.dart';

@@ -1,6 +1,5 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/global.dart';
-import 'package:pickup/shared/buttons.dart';
 
 class CheckoutHeaderRowWidget extends StatelessWidget {
   CheckoutHeaderRowWidget({

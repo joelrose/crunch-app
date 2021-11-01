@@ -1,8 +1,8 @@
 import 'dart:ui';
 
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pickup/global.dart';
 import 'package:pickup/routes.dart';
 import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
 import 'package:pickup/shared/base_screen.dart';

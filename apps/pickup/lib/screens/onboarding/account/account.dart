@@ -1,15 +1,14 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pickup/global.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/routes.dart';
 import 'package:pickup/screens/onboarding/create/create_account.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/database_service.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/shared/buttons.dart';
-import 'package:pickup/shared/page_wrapper.dart';
 
 class OnboardingAccountScreen extends StatefulWidget {
   const OnboardingAccountScreen({Key? key, required this.isSignUp})
@@ -201,8 +200,10 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           widget.isSignUp
                               ? 'Sign up with Google'
                               : 'Sign in with Google',
-                          'assets/google-logo.svg',
                           MediaQuery.of(context).size.width,
+                          SvgPicture.asset(
+                            'assets/google-logo.svg',
+                          ),
                           () async {
                             await socialSignUp(context, appleLogin: false);
                           },
@@ -211,8 +212,10 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           widget.isSignUp
                               ? 'Sign up with Apple'
                               : 'Sign in with Apple',
-                          'assets/apple-logo.svg',
                           MediaQuery.of(context).size.width,
+                          SvgPicture.asset(
+                            'assets/apple-logo.svg',
+                          ),
                           () async {
                             await socialSignUp(context);
                           },
