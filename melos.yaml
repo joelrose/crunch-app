@@ -1,6 +1,7 @@
 name: crunch
 
 packages:
+  - apps/**
   - packages/**
 
 scripts:
