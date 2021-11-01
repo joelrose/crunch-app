@@ -1,13 +1,12 @@
-import 'dart:io';
 
-import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
-import 'package:alpaca/shared/buttons.dart';
-import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/routes.dart';
+import 'package:pickup/shared/buttons.dart';
+import 'package:pickup/shared/page_wrapper.dart';
 
 class OnboardingWelcomeScreen extends StatefulWidget {
   const OnboardingWelcomeScreen({Key? key}) : super(key: key);

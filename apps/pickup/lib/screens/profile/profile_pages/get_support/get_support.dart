@@ -1,10 +1,10 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/screens/profile/profile.dart';
-import 'package:alpaca/screens/profile/profile_pages/get_support/get_support_pages/contact_support.dart';
-import 'package:alpaca/screens/profile/profile_pages/placeholder.dart';
-import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/screens/profile/profile.dart';
+import 'package:pickup/screens/profile/profile_pages/get_support/get_support_pages/contact_support.dart';
+import 'package:pickup/screens/profile/profile_pages/placeholder.dart';
+import 'package:pickup/shared/page_wrapper.dart';
 
 class GetSupport extends StatelessWidget {
   const GetSupport({Key? key}) : super(key: key);

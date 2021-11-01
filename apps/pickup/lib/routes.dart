@@ -1,15 +1,15 @@
-import 'package:alpaca/screens/checkout/checkout.dart';
-import 'package:alpaca/screens/checkout/checkout_confirmation.dart';
-import 'package:alpaca/screens/home/home.dart';
-import 'package:alpaca/screens/loading/loading.dart';
-import 'package:alpaca/screens/onboarding/account/account.dart';
-import 'package:alpaca/screens/onboarding/create/create_account.dart';
-import 'package:alpaca/screens/onboarding/explanation/explanation.dart';
-import 'package:alpaca/screens/onboarding/welcome/welcome.dart';
-import 'package:alpaca/screens/profile/profile.dart';
-import 'package:alpaca/screens/store/store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/screens/checkout/checkout.dart';
+import 'package:pickup/screens/checkout/checkout_confirmation.dart';
+import 'package:pickup/screens/home/home.dart';
+import 'package:pickup/screens/loading/loading.dart';
+import 'package:pickup/screens/onboarding/account/account.dart';
+import 'package:pickup/screens/onboarding/create/create_account.dart';
+import 'package:pickup/screens/onboarding/explanation/explanation.dart';
+import 'package:pickup/screens/onboarding/welcome/welcome.dart';
+import 'package:pickup/screens/profile/profile.dart';
+import 'package:pickup/screens/store/store.dart';
 
 const String loadingRoute = '/';
 const String onboardingWelcomeRoute = '/onboarding/welcome';

@@ -1,13 +1,13 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/screens/checkout/checkout.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_confirmation_time.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_main_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_store_widget.dart';
-import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:alpaca/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/screens/checkout/checkout.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_confirmation_time.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
+import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/shared/page_wrapper.dart';
 
 class CheckoutConfirmationScreen extends StatelessWidget {
   const CheckoutConfirmationScreen({Key? key, required this.data})

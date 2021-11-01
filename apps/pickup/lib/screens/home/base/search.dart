@@ -1,4 +1,3 @@
-import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/global.dart';
 
 class DotsIndicator extends AnimatedWidget {
   const DotsIndicator({

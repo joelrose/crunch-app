@@ -1,10 +1,6 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
-import 'package:alpaca/services/auth_service.dart';
-import 'package:alpaca/services/service_locator.dart';
-import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:pickup/global.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({Key? key}) : super(key: key);

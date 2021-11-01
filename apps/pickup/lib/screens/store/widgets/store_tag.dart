@@ -1,6 +1,6 @@
 
-import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/global.dart';
 
 class StoreTag extends StatelessWidget {
   const StoreTag({Key? key, required this.name}) : super(key: key);

@@ -1,9 +1,9 @@
-import 'package:alpaca/services/auth_service.dart';
-import 'package:alpaca/services/database_service.dart';
-import 'package:alpaca/services/service_locator.dart';
-import 'package:alpaca/shared/userdata_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pickup/services/auth_service.dart';
+import 'package:pickup/services/database_service.dart';
+import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/userdata_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DatabaseServiceFirestore implements DatabaseService {

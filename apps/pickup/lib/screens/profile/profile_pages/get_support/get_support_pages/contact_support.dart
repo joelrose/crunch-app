@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:alpaca/screens/profile/profile_pages/get_support/get_support.dart';
-import 'package:alpaca/shared/buttons.dart';
-import 'package:alpaca/global.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/shared/buttons.dart';
 
 class EmailSender extends StatefulWidget {
   const EmailSender({Key? key}) : super(key: key);

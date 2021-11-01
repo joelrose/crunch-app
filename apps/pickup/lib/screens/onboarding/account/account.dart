@@ -1,15 +1,15 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/onboarding/create/create_account.dart';
-import 'package:alpaca/services/auth_service.dart';
-import 'package:alpaca/services/database_service.dart';
-import 'package:alpaca/services/service_locator.dart';
-import 'package:alpaca/shared/buttons.dart';
-import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/routes.dart';
+import 'package:pickup/screens/onboarding/create/create_account.dart';
+import 'package:pickup/services/auth_service.dart';
+import 'package:pickup/services/database_service.dart';
+import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/buttons.dart';
+import 'package:pickup/shared/page_wrapper.dart';
 
 class OnboardingAccountScreen extends StatefulWidget {
   const OnboardingAccountScreen({Key? key, required this.isSignUp})

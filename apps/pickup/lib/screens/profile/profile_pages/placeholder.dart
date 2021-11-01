@@ -1,5 +1,5 @@
-import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/global.dart';
 
 class PlaceholderSide extends StatelessWidget {
   const PlaceholderSide({Key? key}) : super(key: key);

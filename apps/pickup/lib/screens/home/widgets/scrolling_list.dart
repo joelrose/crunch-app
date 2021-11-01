@@ -1,12 +1,12 @@
 import 'dart:ui';
 
-import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/home/models/restaurant_overview_model.dart';
-import 'package:alpaca/shared/base_screen.dart';
-import 'package:alpaca/shared/viewstate.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/routes.dart';
+import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
+import 'package:pickup/shared/base_screen.dart';
+import 'package:pickup/shared/viewstate.dart';
 
 class LeftToRightScrollingList extends StatelessWidget {
   const LeftToRightScrollingList({Key? key}) : super(key: key);

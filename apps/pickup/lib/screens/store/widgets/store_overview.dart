@@ -1,7 +1,6 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/store/widgets/store_tag.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/screens/store/widgets/store_tag.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StoreOverview extends StatelessWidget {

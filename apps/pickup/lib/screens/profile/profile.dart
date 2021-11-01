@@ -1,13 +1,13 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/profile/profile_pages/get_support/get_support.dart';
-import 'package:alpaca/screens/profile/profile_pages/placeholder.dart';
-import 'package:alpaca/services/auth_service.dart';
-import 'package:alpaca/services/service_locator.dart';
-import 'package:alpaca/shared/buttons.dart';
-import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/routes.dart';
+import 'package:pickup/screens/profile/profile_pages/get_support/get_support.dart';
+import 'package:pickup/screens/profile/profile_pages/placeholder.dart';
+import 'package:pickup/services/auth_service.dart';
+import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/buttons.dart';
+import 'package:pickup/shared/page_wrapper.dart';
 
 class ProfileTile extends StatelessWidget {
   const ProfileTile({

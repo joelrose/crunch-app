@@ -1,8 +1,8 @@
-import 'package:alpaca/screens/onboarding/create/steps/set_password.dart';
-import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pickup/screens/onboarding/create/steps/set_password.dart';
+import 'package:pickup/shared/buttons.dart';
 
 void main() {
   // Widget tests

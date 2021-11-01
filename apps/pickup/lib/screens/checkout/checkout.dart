@@ -1,18 +1,18 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/routes.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_cart_items_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_contact_details_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_order_summary_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_pickup_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_store_widget.dart';
-import 'package:alpaca/screens/store/store.dart';
-import 'package:alpaca/shared/buttons.dart';
-import 'package:alpaca/shared/page_wrapper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/routes.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_cart_items_widget.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_contact_details_widget.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_order_summary_widget.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_pickup_widget.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
+import 'package:pickup/screens/store/store.dart';
+import 'package:pickup/shared/buttons.dart';
+import 'package:pickup/shared/page_wrapper.dart';
 import 'package:sanity/sanity.dart';
 
 class CreateCheckoutData {

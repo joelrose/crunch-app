@@ -1,6 +1,6 @@
-import 'package:alpaca/services/service_locator.dart';
-import 'package:alpaca/shared/base_model.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/base_model.dart';
 import 'package:provider/provider.dart';
 
 class BaseScreen<T extends BaseModel> extends StatefulWidget {

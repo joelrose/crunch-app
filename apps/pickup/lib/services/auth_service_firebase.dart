@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:alpaca/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pickup/services/auth_service.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class AuthServiceFirebase implements AuthService {

@@ -1,7 +1,3 @@
-import 'package:alpaca/routes.dart' as routes;
-import 'package:alpaca/services/service_locator.dart';
-import 'package:alpaca/theme.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -9,6 +5,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+
+import 'package:pickup/routes.dart' as routes;
+import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

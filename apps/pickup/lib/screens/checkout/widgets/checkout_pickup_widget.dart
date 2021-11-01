@@ -1,10 +1,8 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/screens/checkout/widgets/checkout_main_widget.dart';
-import 'package:alpaca/screens/checkout/widgets/divider_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:alpaca/shared/buttons.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
+import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 
 String pickupDate = DateFormat.MMMEd().format(DateTime.now());
 String now = DateFormat.MMMEd().format(DateTime.now());

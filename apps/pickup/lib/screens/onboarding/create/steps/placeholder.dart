@@ -1,8 +1,6 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/shared/buttons.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/shared/buttons.dart';
 
 class StepPlaceholder extends StatefulWidget {
   const StepPlaceholder(

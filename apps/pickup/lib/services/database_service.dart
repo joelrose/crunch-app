@@ -1,4 +1,4 @@
-import 'package:alpaca/shared/userdata_model.dart';
+import 'package:pickup/shared/userdata_model.dart';
 
 abstract class DatabaseService {
   Stream<UserDataModel> get getUserDataStreamData;

@@ -1,8 +1,8 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/screens/home/base/discover.dart';
-import 'package:alpaca/screens/home/widgets/discover_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/screens/home/base/discover.dart';
+import 'package:pickup/screens/home/widgets/discover_nav_bar.dart';
 
 class DiscoverSearchBar extends StatefulWidget {
   const DiscoverSearchBar({Key? key}) : super(key: key);

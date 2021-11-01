@@ -1,5 +1,5 @@
-import 'package:alpaca/global.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/global.dart';
 
 class RestaurantRandomPickGenerator extends StatelessWidget {
   const RestaurantRandomPickGenerator({

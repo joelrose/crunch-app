@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:alpaca/global.dart';
+
 import 'package:flutter/material.dart';
+import 'package:pickup/global.dart';
 
 class CheckoutConfirmationTime extends StatefulWidget {
-  CheckoutConfirmationTime({Key? key, required this.pickupTime})
+  const CheckoutConfirmationTime({Key? key, required this.pickupTime})
       : super(key: key);
 
   final DateTime pickupTime;

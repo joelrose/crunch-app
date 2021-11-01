@@ -1,6 +1,6 @@
-import 'package:alpaca/services/service_locator.dart';
-import 'package:alpaca/shared/base_model.dart';
-import 'package:alpaca/shared/viewstate.dart';
+import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/base_model.dart';
+import 'package:pickup/shared/viewstate.dart';
 import 'package:sanity/sanity.dart';
 
 class StoreScreenModel extends BaseModel {

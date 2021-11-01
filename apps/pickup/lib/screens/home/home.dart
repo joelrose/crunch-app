@@ -1,12 +1,12 @@
-import 'package:alpaca/global.dart';
-import 'package:alpaca/screens/home/base/discover.dart';
-import 'package:alpaca/screens/home/base/favorites.dart';
-import 'package:alpaca/screens/home/base/search.dart';
-import 'package:alpaca/screens/home/base/vouchers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pickup/global.dart';
+import 'package:pickup/screens/home/base/discover.dart';
+import 'package:pickup/screens/home/base/favorites.dart';
+import 'package:pickup/screens/home/base/search.dart';
+import 'package:pickup/screens/home/base/vouchers.dart';
 
 final bottonNavItems = <BottomNavigationBarItem>[
   BottomNavigationBarItem(

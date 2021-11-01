@@ -1,5 +1,5 @@
-import 'package:alpaca/shared/viewstate.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pickup/shared/viewstate.dart';
 
 class BaseModel extends ChangeNotifier {
   ViewState _state = ViewState.idle;
