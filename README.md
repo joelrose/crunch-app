@@ -8,7 +8,9 @@
 
 ## General info
 This project contains our two flutter apps:
+
 Pickup (B2C) is the App for Consumers to discover places nearby and order takeout
+
 Vendor (B2B) is the App for Business Customer to accept and manage their takeout orders
 
 ## Technologies
