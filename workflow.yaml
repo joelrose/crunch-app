@@ -1,0 +1,119 @@
+# Automatically generated on 2021-11-03 UTC from https://codemagic.io/app/617bb913a05d5e5b137a3c49/settings
+# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
+
+workflows:
+  pickup-workflow:
+    name: Pickup Staging Workflow
+    max_build_duration: 30
+    environment:
+      vars:
+        APP_STORE_CONNECT_ISSUER_ID: de4a206c-7100-496e-83a5-73e673af6c85
+        APP_STORE_CONNECT_KEY_IDENTIFIER: 647N3684PB
+        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(Z0FBQUFBQmhncVNUTWhiOWgxRnRZSUhWXzRFb250TVpjSEFzTVVqdko0eFpMVTVJZy1QMXdvcXl2bF96bWNoc2ZIMEZUb2ptbG5zUVNuYU9saVdjcjBRVUJ3WW01RUhXN0RjS0hmcWN0Q0ZjWGJieW9yT05rS0ctNFBnTjRuRkJrN2IyLWdSRE5qYlQ3N1lzLVBpdS00Q0NiSnhGOVBlRUZUTnZTZUFhRzhkLUFMRVR4MTQ3U2NfZk5ST2ZYS3RuV3AwVHFiVm5MMjhYd0JrNVRUOFp6VlNycnRkRXJjY3l3bEpldUJrWWdKdDNOWHpEd1pkNTBxcnVzQTNGajBuXy1wdnRZWHlFSUlKSHJ2QTljMFl6ZHlVSkg2Ui1ENVRtd2NPVFkzUVRCby1BM0twMWxjRFF0ZVNZVEVvNEJoWXJpVnJYWTI2YVFLMDlhNFVaNFJGb3FydUozbEloZ0o1VWYxUENRUC1Ra2ZqMFhSVm1pQmNXeURMbkU2RGV0WS1pQzRHaDdOYzhwSHJINXFQUXRfRXphZVlZenFPMnRQUjFvMm1YeTVqLTVyM0R4cTJmRVFQalA1OD0=)
+        CERTIFICATE_PRIVATE_KEY: Encrypted(Z0FBQUFBQmhncVNTZjJ3T2FJZHZVUWw0ZDg5c0hPSGl0VDd4Q3hUcDc1ZW1oaVdlQmpMZlBiV0lzeVdwMG5wdkltVUN2MGRvV1ZSQ1IzSEQ4ZGVnc0ppYVdFS3diTW1WS09hOXktX01IYXF0R1JJNXRTQ1JTNmVENE8zMlFkNFhnRFVWckZCRWVmTWthZ05LT1hzckxaWm4xYTJWbmRXSkhSMjVfUDU4VXU5YTRLOEFrS292N2pLdDRHWUtZbGJVd3ZPUDIyNkp2Ymo3UU9kVWVtSmFLYVE2YjNDdmI1NnJqM05uakpuRWdOWm02bzl1eVhOc3cwT29CTzRLVjYtMkE3RDl0d1pJRUlRRWhJZnV5NzhfRVdBUEV0LVBkMzJqaEUwRGZXZW02U3JMeHlfaEc3MEpFd0lvS2RUR1k5QTVJTEtRMXUxaUR0d1M0UHRxTzZfemZTaTRWTE41TmVJaWJvcHdERWJ5WE0tY2NnLTNJM3BoUEdtUUxYc0JjaU5Razc3am54bTFLTHUxVUZMaDV1S0FXdWZyVE5JMDgxR2o1U0M2NDl4c0FNQUpEZXhNODd5SThqQkxHVFRNVGpkVTBIZ0lJY3h5cm5IVWRRWkxqUXh0WjBDbGNzUFlXWnlZNVA3NmsyMHRyZUl4ZG5BUWlpZUFhWnpIclQzLW5ER3ZXekZDM3hDNW94SWduakpWdTZpNncxMHFPM0VZUTgwWVBDVE5aeUZWZGhhLW96a0c3TjdrZTVINnNtaFBwdHppempDbHRGS1VRVzAyaE9XaDhJaDhZRWJmdkVWZWRfdTM1UXV3aDhUdVl1NDZucThJZlN6WVJxLTlFZkotMHVPWS1oMmt2QVc4TFBpR2UtaXlFVFA3OG5JWEJzNzNnOHhDUG1YTFNJN3ljWm9sVHNYVDhtODNlbnJSaVhLVjhBTGFjQjlfSHZvNGd4U0lhZG1fdzB4Y1BQVTJWLWY5RjNZTFFmRE56UlhHOXBfV1E0cnNGbkkxMzZ2dmVXN0lsX0F1ZG9meG1WajlZazh1OWdVRGNVY0M2UXRsNThzei12eUtzc3Z2OGd5ZThibjhRZG9peVJWWHRhOXlFTkZ6TkphS0hXaGZwRDlYNDhubHNhV05DRXZpR29SR3Q0dHFiU2U5cHFqVmk4enNFTEZiTi1QNmRIelQzNUk5MzRoSzRUX2FfYjVNRzVpMnpFaDZOcU9kRkxkdjdGU3NTd3JYdzc2YU8zZ1RzOTBhU1FocEkzWGlMSFNFQkVMUjFFX3RHVmhhYndva19iQ1BfTTNzbnVFMnRFVnRVaGI2U0hkV2c4RW16ZFZlOXJqa0ZLMVM3ZDlHQ1VoWE1KVC0xeDhreEN6SU80X0xWaC1seHJ5bzhTYUNVVGk3bm14VmtFRTdCbVpCMm81bXNqQzdpbVVmSHVEMVJyZ1lTZy1GNUNZemplakpyWmJGUE1BRFRGVFhKUkdmRWk0dW5YdUlfTm1IYTdpc0pZenFNTzEzempiN1VOVXYyMkVJMXJWengyMEcyRlh4Qjc2NzBNYzVUdXViS2FkMUJCMURlT1I2U3k5TFFmYmlkbFpNNEd2c05WOHgxMnNGeHppTElHWUZNbzJ2VTV4UmRwVktvT1pPOWZneDhQYUFsUGV4VHVFa3JKdkZXNmJ0a29kWm9OUDlQcm1sV3lmQ0V0dkpuWnhwX0NadV8ta29aMlV0MDFSRkJJNVEzR2hJaERzSm5qb3NqNmFsSzZ0OHNRcnl3UFNQY1hUZWpVNXJkSHh6MXFqQllXN2tvNk5NN2VldW1iTHU2aEU1akdiWFdud0Zzb2VGTTRzbFFQMU5BSzRVbUhlWVBIdWxLdTR2Q09kdmFmVzJJY0gtbHBBWkhDNmFCb3g5dlBkTUJwVVhpYjMwYktPdFF3RHRnRDZmYjA3eWFDN3RRVnRBZld6TElKakM2ajlMTXBaRlQ1TGduWWlGa0kwUGRSX0xMTHE5OXFVb3pLMTllcnhJU3R4b3JhWmhtV1F0T20wTUpuVDRqWDhqQ2dkLXFQTmVSM1lqUFMwUkJDM3ZNeWhCck5RbnF5Q1hKbDBjSWYxQ1poSnAwamVhQ3liQXluTUphUEQ5bHVIbHdPQWw5bWxQQlNXallfR2d4SkwxQmRjY094V3ViT3Y2RDVTR0FHOC1IOXFGaVpwQjF3bVgzWWZkOFFOcGhJQ1piNmxfX3JNUlpjNS0zVmtHTEswSXZxMzVpUVB3NXdORnYzOHUxMzhFSUtWbGFrVmRkMnU3aC03TUtVVUs2Z0J0bURtdG1jdVhmNURLU3VKYXUzc1IydDFJbm81bm9zZElTajNrcHNYbUZnUzFBMVFPa3pqb0ZWbFZIY05od0c1Y2R3QmVCTmIxMUlYZlVaWGNTdnI2YnJKMG9Id291LTI1VDh0aUoyOWVjMDN3a1pJRkpTYWlSeWE0WEE0bVcycWdXdmtjYUJzUTNELWdNR3pfMEVFZkx6dFVYWU5reFJYeWkxNVJXa205NXUxY3JUYWcxMk1kMHFWSTdmdjBQakhIV2FSWC11RTJDbVhwc1Jjc3FHb0ZCbk52MV9ZRWkzVXVKc1hEa3djYldudnZPbG1aUGJmRkxnVllyYUJFZFlZcWl4bXpHbHIyczFkcmdpVnZmT05LM0NZVFU1NHktUEMwTW92c1FXbnE3VmRPLWlneFZGM2xWeHA2bTBrNnllTHZldjR0cnl0Z3BKSVpsQmp0WkI1LXVYeGJHR2NyN3lNX0J3TzlYb2dNSUhQNkt6LXUwaUxITlBmWmExbmlMLWI2SDdVbDdLQW5BMjNFNTZTWS03RDJwLTBta2I4RGV1Mk45d29IVHVDbldFOThLclEyR1JzWExGSUxkSVlFYklGWllBN1QyTTA1REY4R3ZEV3Q3elgwWGg5QjIzYjM0M1JOMUhzZ1RQeFBMNGZySG5YVHIteDVESHZURTlmODZRSWtEelNaenhNbEpDYmZldG4ySG5mbkVCNHpia1lYbWdTT3BQTjdZRTFjTVV1OEN0QVk0NlJxN3BuNmNQTzZ1TklMMWlxdHRlNm0yMEFoclVNWEc4Z1k1VUtS)
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: staging
+          include: true
+          source: true
+      tag_patterns:
+        - pattern: '*'
+          include: true
+    scripts:
+      - |
+        # set up debug keystore
+        rm -f ~/.android/debug.keystore
+        keytool -genkeypair \
+          -alias androiddebugkey \
+          -keypass android \
+          -keystore ~/.android/debug.keystore \
+          -storepass android \
+          -dname 'CN=Android Debug,O=Android,C=US' \
+          -keyalg 'RSA' \
+          -keysize 2048 \
+          -validity 10000
+      - |
+        # set up local properties
+        echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/apps/pickup/android/local.properties"
+      - |
+        #!/usr/bin/env sh
+        set -e
+        set -x
+        cd /Users/builder/clone
+        brew tap dart-lang/dart
+        brew install dart
+        dart pub global activate melos
+        export PATH="$PATH":"$HOME/.pub-cache/bin"
+        melos bs
+      # - cd apps/pickup && flutter packages pub get
+      - 'cd apps/pickup && flutter '
+      - cd apps/pickup && flutter pub global run dart_code_metrics:metrics analyze
+        lib
+      - cd apps/pickup && flutter build appbundle --release
+      - find . -name "Podfile" -execdir pod install \;
+      - keychain initialize
+      - app-store-connect fetch-signing-files "tech.getcrunch.crunch" --type IOS_APP_DEVELOPMENT
+        --create
+      - keychain add-certificates
+      - xcode-project use-profiles
+      - cd apps/pickup && flutter build ipa --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - apps/pickup/build/**/outputs/apk/**/*.apk
+      - apps/pickup/build/**/outputs/bundle/**/*.aab
+      - apps/pickup/build/**/outputs/**/mapping.txt
+      - apps/pickup/build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - apps/pickup/flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - joel.rose@code.berlin
+          - crunchapp2021@gmail.com
+      app_store_connect:
+        api_key: Encrypted(Z0FBQUFBQmhncVNUaF9JSnRlNXVtTmFWWjJfaEpzNDg0amxYY1NXbnBGY2RUWl9Gb0hzX0t3LUYxZHV6T25aLUxIQjUyb1FVai1HN1VpeVFaYUxtM05yRzVyT1k5Y2VSalNTYi14MDl4aTRYU29iNHlzN0VlblhsOHJtb01yWmg2U29HLXRmVEl6NHVUMW05QnRfeV9QWkF6d0x0WGxMeUhvOTNPNWxhYmNnYU9qX0ZreG5XblF2Z3V3RVZxQlNzWXlUeXhrN1BSdGR4cGtJUFM0Z2VKakZZV05nTzNXUnljdFg3YnV2OXpIZVNZS3Nxa0JJSHNycjhXbXViblRfbURrVlIyd21pc2xDNlNJQVAxejBLdWxSNFJJb2hqTkRUeU1pSVY5WUVyZmQxTkpLUlBVckxCalVjOXQtaml0bjZScXdRbUM2cDNPUTB3UGUzMUNiQzluUDRFeFB5MFNrMHpYSjNtQzN2X2s0NTRxOGNFR0ZrUTE0NmROZThUa2J1azYwc3pHdDhfNEI4em9PZDV2OWlBdVJ4eHAxS0ZpeDUwUGpBdUxubTZGcUQ4YTBwNW1Qa0Y1bz0=)
+        key_id: 647N3684PB
+        issuer_id: de4a206c-7100-496e-83a5-73e673af6c85
+        submit_to_testflight: true
+  vendor-workflow:
+    name: Vendor Workflow
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - |
+        # set up debug keystore
+        rm -f ~/.android/debug.keystore
+        keytool -genkeypair \
+          -alias androiddebugkey \
+          -keypass android \
+          -keystore ~/.android/debug.keystore \
+          -storepass android \
+          -dname 'CN=Android Debug,O=Android,C=US' \
+          -keyalg 'RSA' \
+          -keysize 2048 \
+          -validity 10000
+      - |
+        # set up local properties
+        echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+      - flutter packages pub get
+      - flutter build appbundle --debug
+      - find . -name "Podfile" -execdir pod install \;
+      - flutter build ios --debug --no-codesign
+    artifacts:
+      - build/**/outputs/apk/**/*.apk
+      - build/**/outputs/bundle/**/*.aab
+      - build/**/outputs/**/mapping.txt
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - mail@joel-rose.de

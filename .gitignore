@@ -9,9 +9,7 @@
 .pub/
 .dart_tool/
 
-Podfile.lock
 Pods/
-Podfile
 .symlinks/
 **/Flutter/ephemeral/
 **/Flutter/Flutter.podspec
