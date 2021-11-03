@@ -1,16 +1,39 @@
-# alpaca
+# Crunch Flutter Apps
 
-A new Flutter project.
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Prerequisites](#prerequisites)
+* [Setup](#setup)
 
-## Getting Started
+## General info
+This project contains our two flutter apps:
 
-This project is a starting point for a Flutter application.
+Pickup (B2C) is the App for Consumers to discover places nearby and order takeout
 
-A few resources to get you started if this is your first Flutter project:
+Vendor (B2B) is the App for Business Customer to accept and manage their takeout orders
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Technologies
+Our apps are inside of a monorepo, which can be managed with melos (https://pub.dev/packages/melos).
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Prerequisites
+
+You need to install the following tools:
+ - VS Code (https://code.visualstudio.com/)
+ - Git (https://git-scm.com/downloads)
+ - Xcode (https://apps.apple.com/us/app/xcode/id497799835?mt=12)
+ - Android Studio (https://developer.android.com/studio)
+ - Flutter (https://flutter.dev/docs/get-started/install)
+ - Melos (https://pub.dev/packages/melos/install)
+
+## Setup
+
+ 1. Clone the repository:
+    
+        git clone https://github.com/joelrose/crunch-alpaca.git 
+       
+     
+ 2. Open the folder with VS Code
+ 3. Open an Android or iOS Simulator
+ 4. Select the app you want to run with the selected Flavor in the Run and Debug tab in VS Code
+ 5.  Have fun!
