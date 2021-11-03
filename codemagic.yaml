@@ -52,8 +52,8 @@ workflows:
         melos bs
       # - cd apps/pickup && flutter packages pub get
       - 'cd apps/pickup && flutter '
-      - cd apps/pickup && flutter pub global run dart_code_metrics:metrics analyze
-        lib
+      # - cd apps/pickup && flutter pub global run dart_code_metrics:metrics analyze
+      #   lib
       - cd apps/pickup && flutter build appbundle --release
       - find . -name "Podfile" -execdir pod install \;
       - keychain initialize
