@@ -6,7 +6,6 @@ definitions:
         set -e
         set -x
         cd /Users/builder/clone
-        brew tap dart-lang/dart
         brew install dart
         dart pub global activate melos
         export PATH="$PATH":"$HOME/.pub-cache/bin"
@@ -39,7 +38,6 @@ workflows:
       cache_paths:
         - $HOME/Library/Caches/CocoaPods
         - $FLUTTER_ROOT/.pub-cache
-        - /usr/local/opt/dart/libexec
     scripts:
       - *melos-setup
       - keychain initialize
