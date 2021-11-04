@@ -35,6 +35,11 @@ workflows:
       changeset:
         includes:
           - 'apps/pickup'
+    cache:
+      cache_paths:
+        - $HOME/Library/Caches/CocoaPods
+        - $FLUTTER_ROOT/.pub-cache
+        - /usr/local/opt/dart/libexec
     scripts:
       - *melos-setup
       - keychain initialize
