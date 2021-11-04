@@ -74,5 +74,7 @@
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>	
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used for the Stripe Credit Card Scanner</string>
 </dict>
 </plist>

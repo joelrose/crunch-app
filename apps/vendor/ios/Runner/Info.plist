@@ -50,7 +50,5 @@
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>	
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Wir verbessern hiermit dein Nutzererlebnis</string>
 </dict>
 </plist>
