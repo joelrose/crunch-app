@@ -37,9 +37,8 @@ workflows:
           - 'apps/pickup'
     scripts:
       - *melos-setup
-      - find . -name "Podfile" -execdir pod install \;
       - keychain initialize
-      - app-store-connect fetch-signing-files "tech.getcrunch.crunch" --type IOS_APP_DEVELOPMENT
+      - app-store-connect fetch-signing-files "tech.getcrunch.crunch" --type IOS_APP_STORE
         --create
       - keychain add-certificates
       - xcode-project use-profiles
