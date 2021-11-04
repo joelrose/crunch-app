@@ -6,7 +6,7 @@ definitions:
         set -e
         set -x
         cd /Users/builder/clone
-        brew install dart
+        HOMEBREW_NO_AUTO_UPDATE=1 brew install dart
         dart pub global activate melos
         export PATH="$PATH":"$HOME/.pub-cache/bin"
         melos bs
