@@ -33,7 +33,7 @@ workflows:
     when:
       changeset:
         includes:
-          - 'apps/pickup/'
+          - 'apps/pickup/pubspec.yaml'
     cache:
       cache_paths:
         - $HOME/Library/Caches/CocoaPods
@@ -79,7 +79,7 @@ workflows:
     when:
       changeset:
         includes:
-          - 'apps/vendor/'
+          - 'apps/vendor/pubspec.yaml'
     cache:
       cache_paths:
         - $HOME/Library/Caches/CocoaPods
@@ -91,7 +91,7 @@ workflows:
         --create
       - keychain add-certificates
       - xcode-project use-profiles
-      - cd apps/vendor && flutter build ipa --export-options-plist=/Users/builder/export_options.plist
+      - cd apps/vendor && flutter build ipa --flavor staging --target lib/main_staging.dart --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - apps/pickup/build/ios/ipa/*.ipa
     publishing:
