@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/screens/home/base/discover.dart';
 import 'package:pickup/screens/home/widgets/discover_nav_bar.dart';
+import 'package:pickup/screens/home/widgets/restaurant_card.dart';
 
 class DiscoverSearchBar extends StatefulWidget {
   const DiscoverSearchBar({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class DiscoverSearchBar extends StatefulWidget {
 }
 
 class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
-  static const historyLenght = 5;
+  static const historyLenght = 10;
 
   final List<String> _searchHistory = ['Flutter', 'Future'];
 
@@ -154,11 +155,11 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                       height: 56,
                       width: double.infinity,
                       alignment: Alignment.center,
-                      child: Text(
+                      child: const Text(
                         'Start searching',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: TextStyle(color: AlpacaColor.darkNavyColor),
                       ),
                     );
                   } else if (filteredSearchHistory!.isEmpty) {
@@ -198,15 +199,18 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                     ),
                                   ),
                                   trailing: IconButton(
-                                    icon: const Icon(Icons.close_rounded),
+                                    icon: const Icon(Icons.clear),
                                     onPressed: () {
-                                      deleteSearchTerm(term);
+                                      setState(() {
+                                        deleteSearchTerm(term);
+                                      });
                                     },
                                   ),
                                 ),
                               )
                               .toList(),
                         ),
+                        
                       ],
                     );
                   }
