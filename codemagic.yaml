@@ -93,7 +93,7 @@ workflows:
       - xcode-project use-profiles
       - cd apps/vendor && flutter build ipa --flavor staging --target lib/main_staging.dart --export-options-plist=/Users/builder/export_options.plist
     artifacts:
-      - apps/pickup/build/ios/ipa/*.ipa
+      - apps/vendor/build/ios/ipa/*.ipa
     publishing:
       email:
         recipients:
