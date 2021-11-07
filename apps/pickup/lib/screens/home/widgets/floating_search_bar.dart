@@ -49,7 +49,8 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
   }
 
   void deleteSearchTerm(String term) {
-    _searchHistory.removeWhere((t) => t == term);
+    _searchHistory
+        .removeWhere((recentSearchedTerms) => recentSearchedTerms == term);
     filteredSearchHistory = filterSearchTerms();
   }
 
@@ -177,21 +178,36 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                     );
                   } else {
                     return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: filteredSearchHistory!
-                          .map(
-                            (term) => ListTile(
-                              title: Text(
-                                term,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  color: AlpacaColor.darkNavyColor,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Recent searches',
+                          style: TextStyle(color: AlpacaColor.darkGreyColor),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: filteredSearchHistory!
+                              .map(
+                                (term) => ListTile(
+                                  title: Text(
+                                    term,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: AlpacaColor.darkNavyColor,
+                                    ),
+                                  ),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.close_rounded),
+                                    onPressed: () {
+                                      deleteSearchTerm(term);
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ),
-                          )
-                          .toList(),
+                              )
+                              .toList(),
+                        ),
+                      ],
                     );
                   }
                 },
