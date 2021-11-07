@@ -162,7 +162,11 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                     );
                   } else if (filteredSearchHistory!.isEmpty) {
                     return ListTile(
-                      title: Text(controller.query),
+                      title: Text(
+                        controller.query,
+                        style:
+                            const TextStyle(color: AlpacaColor.darkNavyColor),
+                      ),
                       onTap: () {
                         setState(() {
                           addSearchTerm(controller.query);
@@ -181,6 +185,9 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                 term,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: AlpacaColor.darkNavyColor,
+                                ),
                               ),
                             ),
                           )
