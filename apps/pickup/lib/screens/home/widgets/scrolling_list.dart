@@ -78,7 +78,20 @@ class _RestaurantOverviewListState extends State<RestaurantOverviewList> {
           ? Container(
               height: 194,
             )
-          : RestaurantCard(model: model),
+          : Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              height: 194,
+              child: ListView.separated(
+                clipBehavior: Clip.none,
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (context, index) => const SizedBox(width: 16),
+                itemCount: model.restaurants.length,
+                itemBuilder: (context, index) {
+                  final restaurant = model.restaurants[index];
+                  return RestaurantCard(restaurant: restaurant);
+                },
+              ),
+            ),
     );
   }
 }

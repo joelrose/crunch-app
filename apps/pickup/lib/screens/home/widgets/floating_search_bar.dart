@@ -2,8 +2,11 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/screens/home/base/discover.dart';
+import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
 import 'package:pickup/screens/home/widgets/discover_nav_bar.dart';
 import 'package:pickup/screens/home/widgets/restaurant_card.dart';
+import 'package:pickup/shared/base_screen.dart';
+import 'package:pickup/shared/viewstate.dart';
 
 class DiscoverSearchBar extends StatefulWidget {
   const DiscoverSearchBar({Key? key}) : super(key: key);
@@ -210,7 +213,34 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                               )
                               .toList(),
                         ),
-                        
+                        BaseScreen<RestaurantScreenModel>(
+                          onModelReady: (model) {
+                            model.fetchRestaurants();
+                          },
+                          builder: (context, model, child) => model.state ==
+                                  ViewState.busy
+                              ? Container()
+                              : Container(
+                                  child: ListView.separated(
+                                    clipBehavior: Clip.none,
+                                    shrinkWrap: true,
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(width: 16),
+                                    itemCount: model.restaurants.length,
+                                    itemBuilder: (context, index) {
+                                      final restaurant =
+                                          model.restaurants[index];
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 20),
+                                        child: RestaurantCard(
+                                          restaurant: restaurant,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                        )
                       ],
                     );
                   }
