@@ -172,19 +172,20 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                       },
                     );
                   } else {
-                    return Container();
-                    // return Column(
-                    //   mainAxisSize: MainAxisSize.min,
-                    //   children: filteredSearchHistory.map(
-                    //     (term) => ListTile(
-                    //     title: Text(
-                    //       term,
-                    //       maxLines: 1,
-                    //       overflow: TextOverflow.ellipsis,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // );
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: filteredSearchHistory!
+                          .map(
+                            (term) => ListTile(
+                              title: Text(
+                                term,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    );
                   }
                 },
               ),
