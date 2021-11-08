@@ -30,12 +30,12 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
 
   bool isQueryEmpty = true;
 
-  String filter = '';
-
   List<String> filterSearchTerms({
     String filter = '',
   }) {
-    updateRecentSearchVisibilty();
+    if (filteredSearchHistory != null) {
+      updateRecentSearchVisibilty();
+    }
     if (filter != '' && filter.isNotEmpty) {
       isQueryEmpty = false;
       return _searchHistory.reversed
@@ -84,7 +84,9 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     }
   }
 
-  void filterRestaurants() {}
+  void filterRestaurants(model) {
+    print(model);
+  }
 
   late FloatingSearchBarController controller;
 
@@ -251,29 +253,37 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                 onModelReady: (model) {
                                   model.fetchRestaurants();
                                 },
-                                builder: (context, model, child) =>
-                                    model.state == ViewState.busy
-                                        ? Container()
-                                        : ListView.separated(
-                                            clipBehavior: Clip.none,
-                                            shrinkWrap: true,
-                                            separatorBuilder:
-                                                (context, index) =>
-                                                    const SizedBox(width: 16),
-                                            itemCount: model.restaurants.length,
-                                            itemBuilder: (context, index) {
-                                              final restaurant =
-                                                  model.restaurants[index];
-                                              return Padding(
-                                                padding: const EdgeInsets.only(
-                                                  bottom: 20,
-                                                ),
-                                                child: RestaurantCard(
-                                                  restaurant: restaurant,
-                                                ),
-                                              );
-                                            },
+                                builder: (context, model, child) {
+                                  if (model.state == ViewState.busy) {
+                                    return Container();
+                                  } else {
+                                    var restaurants = model.restaurants;
+                                    filterRestaurants(restaurants);
+                                    restaurants = restaurants
+                                        .where((restaurant) => restaurant.name
+                                            .startsWith(controller.query))
+                                        .toList();
+                                    print(restaurants.map((e) => e.name));
+                                    return ListView.separated(
+                                      clipBehavior: Clip.none,
+                                      shrinkWrap: true,
+                                      separatorBuilder: (context, index) =>
+                                          const SizedBox(width: 16),
+                                      itemCount: restaurants.length,
+                                      itemBuilder: (context, index) {
+                                        final restaurant = restaurants[index];
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 20,
                                           ),
+                                          child: RestaurantCard(
+                                            restaurant: restaurant,
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                },
                               ),
                             ],
                           ),
