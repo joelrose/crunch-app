@@ -33,9 +33,6 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
   List<String> filterSearchTerms({
     String filter = '',
   }) {
-    if (filteredSearchHistory != null) {
-      updateRecentSearchVisibilty();
-    }
     if (filter != '' && filter.isNotEmpty) {
       isQueryEmpty = false;
       return _searchHistory.reversed
@@ -84,9 +81,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     }
   }
 
-  void filterRestaurants(model) {
-    print(model);
-  }
+  void filterRestaurants(model) {}
 
   late FloatingSearchBarController controller;
 
@@ -156,6 +151,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         onQueryChanged: (query) {
           setState(() {
             filteredSearchHistory = filterSearchTerms(filter: query);
+            updateRecentSearchVisibilty();
           });
         },
         onFocusChanged: (v) {
@@ -236,35 +232,34 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                               )
                             ],
                           ),
-                        if (!isQueryEmpty)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 20),
-                                child: Text(
-                                  'Matching restaurants',
-                                  style: TextStyle(
-                                    color: AlpacaColor.darkGreyColor,
-                                  ),
-                                ),
-                              ),
-                              BaseScreen<RestaurantScreenModel>(
-                                onModelReady: (model) {
-                                  model.fetchRestaurants();
-                                },
-                                builder: (context, model, child) {
-                                  if (model.state == ViewState.busy) {
-                                    return Container();
-                                  } else {
-                                    var restaurants = model.restaurants;
-                                    filterRestaurants(restaurants);
-                                    restaurants = restaurants
-                                        .where((restaurant) => restaurant.name
-                                            .startsWith(controller.query))
-                                        .toList();
-                                    print(restaurants.map((e) => e.name));
-                                    return ListView.separated(
+                        BaseScreen<RestaurantScreenModel>(
+                          onModelReady: (model) {
+                            model.fetchRestaurants();
+                          },
+                          builder: (context, model, child) {
+                            if (model.state == ViewState.busy) {
+                              return Container();
+                            } else {
+                              var restaurants = model.restaurants;
+                              filterRestaurants(restaurants);
+                              restaurants = restaurants
+                                  .where((restaurant) => restaurant.name
+                                      .startsWith(controller.query))
+                                  .toList();
+                              if (!isQueryEmpty && restaurants.isNotEmpty) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(bottom: 20),
+                                      child: Text(
+                                        'Matching restaurants',
+                                        style: TextStyle(
+                                          color: AlpacaColor.darkGreyColor,
+                                        ),
+                                      ),
+                                    ),
+                                    ListView.separated(
                                       clipBehavior: Clip.none,
                                       shrinkWrap: true,
                                       separatorBuilder: (context, index) =>
@@ -281,12 +276,15 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                           ),
                                         );
                                       },
-                                    );
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return Container();
+                              }
+                            }
+                          },
+                        ),
                       ],
                     );
                   }
