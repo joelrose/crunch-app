@@ -24,16 +24,25 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
 
   String? selectedTerm;
 
-  bool isSearchBarVisible = false;
+  bool isAppBarVisible = false;
+
+  bool isRecentSearchVisible = true;
+
+  bool isQueryEmpty = true;
+
+  String filter = '';
 
   List<String> filterSearchTerms({
     String filter = '',
   }) {
+    updateRecentSearchVisibilty();
     if (filter != '' && filter.isNotEmpty) {
+      isQueryEmpty = false;
       return _searchHistory.reversed
           .where((term) => term.startsWith(filter))
           .toList();
     } else {
+      isQueryEmpty = true;
       return _searchHistory.reversed.toList();
     }
   }
@@ -63,6 +72,20 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     addSearchTerm(term);
   }
 
+  void updateRecentSearchVisibilty() {
+    if (filteredSearchHistory!.isNotEmpty &&
+        _searchHistory
+            .where((term) => term == controller.query)
+            .toList()
+            .isEmpty) {
+      isRecentSearchVisible = true;
+    } else {
+      isRecentSearchVisible = false;
+    }
+  }
+
+  void filterRestaurants() {}
+
   late FloatingSearchBarController controller;
 
   @override
@@ -83,7 +106,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverAppBar(
-          toolbarHeight: isSearchBarVisible ? 0 : 50,
+          toolbarHeight: isAppBarVisible ? 0 : 50,
           backgroundColor: AlpacaColor.white100Color,
           flexibleSpace: Wrap(children: const [DiscoverNavBar()]),
         ),
@@ -135,7 +158,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         },
         onFocusChanged: (v) {
           setState(() {
-            isSearchBarVisible = !isSearchBarVisible;
+            isAppBarVisible = !isAppBarVisible;
           });
         },
         onSubmitted: (query) {
@@ -165,82 +188,95 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                         style: TextStyle(color: AlpacaColor.darkNavyColor),
                       ),
                     );
-                  } else if (filteredSearchHistory!.isEmpty) {
-                    return ListTile(
-                      title: Text(
-                        controller.query,
-                        style:
-                            const TextStyle(color: AlpacaColor.darkNavyColor),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          addSearchTerm(controller.query);
-                          selectedTerm = controller.query;
-                        });
-                        controller.close();
-                      },
-                    );
                   } else {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Recent searches',
-                          style: TextStyle(color: AlpacaColor.darkGreyColor),
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: filteredSearchHistory!
-                              .map(
-                                (term) => ListTile(
-                                  title: Text(
-                                    term,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: AlpacaColor.darkNavyColor,
-                                    ),
-                                  ),
-                                  trailing: IconButton(
-                                    icon: const Icon(Icons.clear),
-                                    onPressed: () {
-                                      setState(() {
-                                        deleteSearchTerm(term);
-                                      });
-                                    },
-                                  ),
+                        if (isRecentSearchVisible)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Recent searches',
+                                style:
+                                    TextStyle(color: AlpacaColor.darkGreyColor),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: filteredSearchHistory!
+                                      .map(
+                                        (term) => ListTile(
+                                          onTap: () {
+                                            controller.query = term;
+                                          },
+                                          title: Text(
+                                            term,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              color: AlpacaColor.darkNavyColor,
+                                            ),
+                                          ),
+                                          trailing: IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: () {
+                                              setState(() {
+                                                deleteSearchTerm(term);
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
                                 ),
                               )
-                              .toList(),
-                        ),
-                        BaseScreen<RestaurantScreenModel>(
-                          onModelReady: (model) {
-                            model.fetchRestaurants();
-                          },
-                          builder: (context, model, child) => model.state ==
-                                  ViewState.busy
-                              ? Container()
-                              : Container(
-                                  child: ListView.separated(
-                                    clipBehavior: Clip.none,
-                                    shrinkWrap: true,
-                                    separatorBuilder: (context, index) =>
-                                        const SizedBox(width: 16),
-                                    itemCount: model.restaurants.length,
-                                    itemBuilder: (context, index) {
-                                      final restaurant =
-                                          model.restaurants[index];
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 20),
-                                        child: RestaurantCard(
-                                          restaurant: restaurant,
-                                        ),
-                                      );
-                                    },
+                            ],
+                          ),
+                        if (!isQueryEmpty)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: Text(
+                                  'Matching restaurants',
+                                  style: TextStyle(
+                                    color: AlpacaColor.darkGreyColor,
                                   ),
                                 ),
-                        )
+                              ),
+                              BaseScreen<RestaurantScreenModel>(
+                                onModelReady: (model) {
+                                  model.fetchRestaurants();
+                                },
+                                builder: (context, model, child) =>
+                                    model.state == ViewState.busy
+                                        ? Container()
+                                        : ListView.separated(
+                                            clipBehavior: Clip.none,
+                                            shrinkWrap: true,
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const SizedBox(width: 16),
+                                            itemCount: model.restaurants.length,
+                                            itemBuilder: (context, index) {
+                                              final restaurant =
+                                                  model.restaurants[index];
+                                              return Padding(
+                                                padding: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                child: RestaurantCard(
+                                                  restaurant: restaurant,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                              ),
+                            ],
+                          ),
                       ],
                     );
                   }
