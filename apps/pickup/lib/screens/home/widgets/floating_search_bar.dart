@@ -81,7 +81,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     }
   }
 
-  void filterRestaurants(model) {}
+  void filterRestaurants(restaurants) {}
 
   late FloatingSearchBarController controller;
 
@@ -243,8 +243,13 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                               var restaurants = model.restaurants;
                               filterRestaurants(restaurants);
                               restaurants = restaurants
-                                  .where((restaurant) => restaurant.name
-                                      .startsWith(controller.query))
+                                  .where(
+                                    (restaurant) => restaurant.name
+                                        .toLowerCase()
+                                        .startsWith(
+                                          controller.query.toLowerCase(),
+                                        ),
+                                  )
                                   .toList();
                               if (!isQueryEmpty && restaurants.isNotEmpty) {
                                 return Column(
@@ -278,6 +283,13 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                       },
                                     ),
                                   ],
+                                );
+                              } else if (!isQueryEmpty) {
+                                return const Text(
+                                  'No matching restaurant found...',
+                                  style: TextStyle(
+                                    color: AlpacaColor.darkGreyColor,
+                                  ),
                                 );
                               } else {
                                 return Container();
