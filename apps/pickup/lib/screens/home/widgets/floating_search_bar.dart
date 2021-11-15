@@ -5,8 +5,10 @@ import 'package:pickup/screens/home/base/discover.dart';
 import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
 import 'package:pickup/screens/home/widgets/discover_nav_bar.dart';
 import 'package:pickup/screens/home/widgets/restaurant_card.dart';
+import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/viewstate.dart';
+import 'package:sanity/sanity.dart';
 
 class DiscoverSearchBar extends StatefulWidget {
   const DiscoverSearchBar({Key? key}) : super(key: key);
@@ -22,6 +24,12 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
 
   List<String>? filteredSearchHistory;
 
+  late final List<RestaurantOverviewModel> _restaurants = model.restaurants;
+
+  final SanityCms cmsClient = locator<SanityCms>();
+
+  RestaurantScreenModel model = locator<RestaurantScreenModel>();
+
   String? selectedTerm;
 
   bool isAppBarVisible = false;
@@ -29,6 +37,8 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
   bool isRecentSearchVisible = true;
 
   bool isQueryEmpty = true;
+
+  List<RestaurantOverviewModel>? filteredRestaurants;
 
   List<String> filterSearchTerms({
     String filter = '',
@@ -41,6 +51,23 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     } else {
       isQueryEmpty = true;
       return _searchHistory.reversed.toList();
+    }
+  }
+
+  List<RestaurantOverviewModel> filterRestaurants({
+    List<RestaurantOverviewModel> restaurants = const [],
+    String filter = '',
+  }) {
+    if (filter != '' && filter.isNotEmpty) {
+      return restaurants
+          .where(
+            (restaurant) => restaurant.name.toLowerCase().startsWith(
+                  controller.query.toLowerCase(),
+                ),
+          )
+          .toList();
+    } else {
+      return restaurants;
     }
   }
 
@@ -81,12 +108,11 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     }
   }
 
-  void filterRestaurants(restaurants) {}
-
   late FloatingSearchBarController controller;
 
   @override
   void initState() {
+    model.fetchRestaurants();
     super.initState();
     controller = FloatingSearchBarController();
     filteredSearchHistory = filterSearchTerms();
@@ -151,6 +177,8 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         onQueryChanged: (query) {
           setState(() {
             filteredSearchHistory = filterSearchTerms(filter: query);
+            filteredRestaurants =
+                filterRestaurants(restaurants: _restaurants, filter: query);
             updateRecentSearchVisibilty();
           });
         },
@@ -232,71 +260,46 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                               )
                             ],
                           ),
-                        BaseScreen<RestaurantScreenModel>(
-                          onModelReady: (model) {
-                            model.fetchRestaurants();
-                          },
-                          builder: (context, model, child) {
-                            if (model.state == ViewState.busy) {
-                              return Container();
-                            } else {
-                              var restaurants = model.restaurants;
-                              filterRestaurants(restaurants);
-                              restaurants = restaurants
-                                  .where(
-                                    (restaurant) => restaurant.name
-                                        .toLowerCase()
-                                        .startsWith(
-                                          controller.query.toLowerCase(),
-                                        ),
-                                  )
-                                  .toList();
-                              if (!isQueryEmpty && restaurants.isNotEmpty) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(bottom: 20),
-                                      child: Text(
-                                        'Matching restaurants',
-                                        style: TextStyle(
-                                          color: AlpacaColor.darkGreyColor,
-                                        ),
-                                      ),
-                                    ),
-                                    ListView.separated(
-                                      clipBehavior: Clip.none,
-                                      shrinkWrap: true,
-                                      separatorBuilder: (context, index) =>
-                                          const SizedBox(width: 16),
-                                      itemCount: restaurants.length,
-                                      itemBuilder: (context, index) {
-                                        final restaurant = restaurants[index];
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                            bottom: 20,
-                                          ),
-                                          child: RestaurantCard(
-                                            restaurant: restaurant,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                );
-                              } else if (!isQueryEmpty) {
-                                return const Text(
-                                  'No matching restaurant found...',
+                        if (!isQueryEmpty && filteredRestaurants!.isNotEmpty)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: Text(
+                                  'Matching restaurants',
                                   style: TextStyle(
                                     color: AlpacaColor.darkGreyColor,
                                   ),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            }
-                          },
-                        ),
+                                ),
+                              ),
+                              ListView.separated(
+                                shrinkWrap: true,
+                                clipBehavior: Clip.none,
+                                scrollDirection: Axis.vertical,
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(width: 16),
+                                itemCount: filteredRestaurants!.length,
+                                itemBuilder: (context, index) {
+                                  final restaurant =
+                                      filteredRestaurants![index];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: RestaurantCard(
+                                      restaurant: restaurant,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        if (!isQueryEmpty && filteredRestaurants!.isEmpty)
+                          const Text(
+                            'No matching restaurant found...',
+                            style: TextStyle(
+                              color: AlpacaColor.darkGreyColor,
+                            ),
+                          )
                       ],
                     );
                   }
