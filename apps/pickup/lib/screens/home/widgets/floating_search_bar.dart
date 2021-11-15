@@ -61,7 +61,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     if (filter != '' && filter.isNotEmpty) {
       return restaurants
           .where(
-            (restaurant) => restaurant.name.toLowerCase().startsWith(
+            (restaurant) => restaurant.name.toLowerCase().contains(
                   controller.query.toLowerCase(),
                 ),
           )
