@@ -30,13 +30,9 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
 
   RestaurantScreenModel model = locator<RestaurantScreenModel>();
 
-  String? selectedTerm;
-
   bool isAppBarVisible = false;
 
   bool isRecentSearchVisible = true;
-
-  bool isQueryEmpty = true;
 
   List<RestaurantOverviewModel>? filteredRestaurants;
 
@@ -46,7 +42,6 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     String filter = '',
   }) {
     if (filter != '' && filter.isNotEmpty) {
-      isQueryEmpty = false;
       return _searchHistory.reversed
           .where(
             (recentSearch) =>
@@ -55,7 +50,6 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
           )
           .toList();
     } else {
-      isQueryEmpty = true;
       return _searchHistory.reversed.toList();
     }
   }
@@ -190,9 +184,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         onSubmitted: (query) {
           setState(() {
             addSearchTerm(query);
-            selectedTerm = query;
           });
-          controller.close();
         },
         builder: (context, transition) {
           return ClipRRect(
@@ -264,7 +256,8 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                               )
                             ],
                           ),
-                        if (!isQueryEmpty && filteredRestaurants!.isNotEmpty)
+                        if (controller.query.isNotEmpty &&
+                            filteredRestaurants!.isNotEmpty)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -289,15 +282,21 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                       filteredRestaurants![index];
                                   return Padding(
                                     padding: const EdgeInsets.only(bottom: 20),
-                                    child: RestaurantCard(
-                                      restaurant: restaurant,
+                                    child: GestureDetector(
+                                      onTap: () => addSearchTerm(
+                                        controller.query,
+                                      ),
+                                      child: RestaurantCard(
+                                        restaurant: restaurant,
+                                      ),
                                     ),
                                   );
                                 },
                               ),
                             ],
                           ),
-                        if (!isQueryEmpty && filteredRestaurants!.isEmpty)
+                        if (controller.query.isNotEmpty &&
+                            filteredRestaurants!.isEmpty)
                           const Text(
                             'No matching restaurant found...',
                             style: TextStyle(
