@@ -18,7 +18,7 @@ class DiscoverSearchBar extends StatefulWidget {
 }
 
 class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
-  static const historyLenght = 10;
+  static const historyLenght = 5;
 
   final List<String> _searchHistory = ['Flutter', 'Future'];
 
@@ -40,13 +40,19 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
 
   List<RestaurantOverviewModel>? filteredRestaurants;
 
+  late FloatingSearchBarController controller;
+
   List<String> filterSearchTerms({
     String filter = '',
   }) {
     if (filter != '' && filter.isNotEmpty) {
       isQueryEmpty = false;
       return _searchHistory.reversed
-          .where((term) => term.startsWith(filter))
+          .where(
+            (recentSearch) =>
+                recentSearch.startsWith(filter) &&
+                recentSearch != controller.query,
+          )
           .toList();
     } else {
       isQueryEmpty = true;
@@ -97,18 +103,12 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
   }
 
   void updateRecentSearchVisibilty() {
-    if (filteredSearchHistory!.isNotEmpty &&
-        _searchHistory
-            .where((term) => term == controller.query)
-            .toList()
-            .isEmpty) {
+    if (filteredSearchHistory!.isNotEmpty) {
       isRecentSearchVisible = true;
     } else {
       isRecentSearchVisible = false;
     }
   }
-
-  late FloatingSearchBarController controller;
 
   @override
   void initState() {
@@ -232,13 +232,17 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: filteredSearchHistory!
+                                      .where(
+                                        (recentSearch) =>
+                                            recentSearch != controller.query,
+                                      )
                                       .map(
-                                        (term) => ListTile(
+                                        (recentSearch) => ListTile(
                                           onTap: () {
-                                            controller.query = term;
+                                            controller.query = recentSearch;
                                           },
                                           title: Text(
-                                            term,
+                                            recentSearch,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
@@ -249,7 +253,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                             icon: const Icon(Icons.clear),
                                             onPressed: () {
                                               setState(() {
-                                                deleteSearchTerm(term);
+                                                deleteSearchTerm(recentSearch);
                                               });
                                             },
                                           ),
