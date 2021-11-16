@@ -81,14 +81,11 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     if (_searchHistory.length > historyLenght) {
       _searchHistory.removeRange(0, _searchHistory.length - historyLenght);
     }
-
-    filteredSearchHistory = filterSearchTerms();
   }
 
   void deleteSearchTerm(String term) {
     _searchHistory
         .removeWhere((recentSearchedTerms) => recentSearchedTerms == term);
-    filteredSearchHistory = filterSearchTerms();
   }
 
   void putSearchTermFirst(String term) {
@@ -109,7 +106,6 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     model.fetchRestaurants();
     super.initState();
     controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms();
   }
 
   @override
@@ -182,15 +178,16 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
           });
         },
         onSubmitted: (query) {
-          setState(() {
-            addSearchTerm(query);
-          });
+          if (query != '') {
+            setState(() {
+              addSearchTerm(query);
+            });
+          }
         },
         builder: (context, transition) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Container(
-              color: AlpacaColor.white100Color,
+            child: SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Material(
                 color: AlpacaColor.white100Color,
@@ -220,7 +217,8 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                 const Text(
                                   'Recent searches',
                                   style: TextStyle(
-                                      color: AlpacaColor.darkGreyColor),
+                                    color: AlpacaColor.darkGreyColor,
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 20),
@@ -250,7 +248,8 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                               onPressed: () {
                                                 setState(() {
                                                   deleteSearchTerm(
-                                                      recentSearch);
+                                                    recentSearch,
+                                                  );
                                                 });
                                               },
                                             ),
@@ -278,7 +277,6 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                 ListView.separated(
                                   shrinkWrap: true,
                                   clipBehavior: Clip.none,
-                                  scrollDirection: Axis.vertical,
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(width: 16),
                                   itemCount: filteredRestaurants!.length,
