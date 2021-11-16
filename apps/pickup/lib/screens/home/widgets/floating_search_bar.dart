@@ -6,9 +6,99 @@ import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
 import 'package:pickup/screens/home/widgets/discover_nav_bar.dart';
 import 'package:pickup/screens/home/widgets/restaurant_card.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/shared/base_screen.dart';
-import 'package:pickup/shared/viewstate.dart';
 import 'package:sanity/sanity.dart';
+
+const historyLenght = 5;
+
+final List<String> _searchHistory = ['Flutter', 'Future'];
+
+List<String>? filteredSearchHistory;
+
+final SanityCms cmsClient = locator<SanityCms>();
+
+RestaurantScreenModel model = locator<RestaurantScreenModel>();
+
+late final List<RestaurantOverviewModel> _restaurants = model.restaurants;
+
+bool isAppBarVisible = false;
+
+bool isRecentSearchVisible = true;
+
+List<RestaurantOverviewModel>? filteredRestaurants;
+
+List<String> filterSearchTerms({
+  String filter = '',
+  List<String>? searchHistory,
+}) {
+  if (filter != '' && filter.isNotEmpty) {
+    return _searchHistory.reversed
+        .where(
+          (recentSearch) =>
+              recentSearch.startsWith(filter) && recentSearch != filter,
+        )
+        .toList();
+  } else {
+    return _searchHistory.reversed.toList();
+  }
+}
+
+List<RestaurantOverviewModel> filterRestaurants({
+  List<RestaurantOverviewModel> restaurants = const [],
+  String filter = '',
+}) {
+  if (filter != '' && filter.isNotEmpty) {
+    print(restaurants
+        .where(
+          (restaurant) => restaurant.name.toLowerCase().contains(
+                filter.toLowerCase(),
+              ),
+        )
+        .toList());
+    return restaurants
+        .where(
+          (restaurant) => restaurant.name.toLowerCase().contains(
+                filter.toLowerCase(),
+              ),
+        )
+        .toList();
+  } else {
+    return restaurants;
+  }
+}
+
+void addSearchTerm({String term = '', String filter = ''}) {
+  if (_searchHistory.contains(term)) {
+    putSearchTermFirst(term: term, filter: filter);
+    return;
+  }
+
+  _searchHistory.add(term);
+  if (_searchHistory.length > historyLenght) {
+    _searchHistory.removeRange(0, _searchHistory.length - historyLenght);
+  }
+  filteredSearchHistory =
+      filterSearchTerms(filter: filter, searchHistory: _searchHistory);
+}
+
+void deleteSearchTerm({String term = '', String filter = ''}) {
+  _searchHistory
+      .removeWhere((recentSearchedTerms) => recentSearchedTerms == term);
+  filteredSearchHistory =
+      filterSearchTerms(filter: filter, searchHistory: _searchHistory);
+}
+
+void putSearchTermFirst({String term = '', String filter = ''}) {
+  deleteSearchTerm(term: term, filter: filter);
+  addSearchTerm(term: term, filter: filter);
+}
+
+void updateRecentSearchVisibilty() {
+  if (filteredSearchHistory!.isNotEmpty) {
+    isRecentSearchVisible = true;
+  } else {
+    isRecentSearchVisible = false;
+  }
+}
 
 class DiscoverSearchBar extends StatefulWidget {
   const DiscoverSearchBar({Key? key}) : super(key: key);
@@ -18,91 +108,10 @@ class DiscoverSearchBar extends StatefulWidget {
 }
 
 class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
-  static const historyLenght = 5;
-
-  final List<String> _searchHistory = ['Flutter', 'Future'];
-
-  List<String>? filteredSearchHistory;
-
-  late final List<RestaurantOverviewModel> _restaurants = model.restaurants;
-
-  final SanityCms cmsClient = locator<SanityCms>();
-
-  RestaurantScreenModel model = locator<RestaurantScreenModel>();
-
-  bool isAppBarVisible = false;
-
-  bool isRecentSearchVisible = true;
-
-  List<RestaurantOverviewModel>? filteredRestaurants;
-
   late FloatingSearchBarController controller;
-
-  List<String> filterSearchTerms({
-    String filter = '',
-  }) {
-    if (filter != '' && filter.isNotEmpty) {
-      return _searchHistory.reversed
-          .where(
-            (recentSearch) =>
-                recentSearch.startsWith(filter) &&
-                recentSearch != controller.query,
-          )
-          .toList();
-    } else {
-      return _searchHistory.reversed.toList();
-    }
-  }
-
-  List<RestaurantOverviewModel> filterRestaurants({
-    List<RestaurantOverviewModel> restaurants = const [],
-    String filter = '',
-  }) {
-    if (filter != '' && filter.isNotEmpty) {
-      return restaurants
-          .where(
-            (restaurant) => restaurant.name.toLowerCase().contains(
-                  controller.query.toLowerCase(),
-                ),
-          )
-          .toList();
-    } else {
-      return restaurants;
-    }
-  }
-
-  void addSearchTerm(String term) {
-    if (_searchHistory.contains(term)) {
-      putSearchTermFirst(term);
-      return;
-    }
-
-    _searchHistory.add(term);
-    if (_searchHistory.length > historyLenght) {
-      _searchHistory.removeRange(0, _searchHistory.length - historyLenght);
-    }
-  }
-
-  void deleteSearchTerm(String term) {
-    _searchHistory
-        .removeWhere((recentSearchedTerms) => recentSearchedTerms == term);
-  }
-
-  void putSearchTermFirst(String term) {
-    deleteSearchTerm(term);
-    addSearchTerm(term);
-  }
-
-  void updateRecentSearchVisibilty() {
-    if (filteredSearchHistory!.isNotEmpty) {
-      isRecentSearchVisible = true;
-    } else {
-      isRecentSearchVisible = false;
-    }
-  }
-
   @override
   void initState() {
+    filteredSearchHistory = filterSearchTerms(searchHistory: _searchHistory);
     model.fetchRestaurants();
     super.initState();
     controller = FloatingSearchBarController();
@@ -166,7 +175,8 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         ],
         onQueryChanged: (query) {
           setState(() {
-            filteredSearchHistory = filterSearchTerms(filter: query);
+            filteredSearchHistory =
+                filterSearchTerms(filter: query, searchHistory: _searchHistory);
             filteredRestaurants =
                 filterRestaurants(restaurants: _restaurants, filter: query);
             updateRecentSearchVisibilty();
@@ -180,7 +190,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         onSubmitted: (query) {
           if (query != '') {
             setState(() {
-              addSearchTerm(query);
+              addSearchTerm(term: query, filter: query);
             });
           }
         },
@@ -248,7 +258,8 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                               onPressed: () {
                                                 setState(() {
                                                   deleteSearchTerm(
-                                                    recentSearch,
+                                                    term: recentSearch,
+                                                    filter: controller.query,
                                                   );
                                                 });
                                               },
@@ -288,7 +299,8 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
                                           const EdgeInsets.only(bottom: 20),
                                       child: GestureDetector(
                                         onTap: () => addSearchTerm(
-                                          controller.query,
+                                          term: controller.query,
+                                          filter: controller.query,
                                         ),
                                         child: RestaurantCard(
                                           restaurant: restaurant,
