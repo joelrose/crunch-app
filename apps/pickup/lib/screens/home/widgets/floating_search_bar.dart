@@ -189,124 +189,131 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
         builder: (context, transition) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Material(
+            child: Container(
               color: AlpacaColor.white100Color,
-              child: Builder(
-                builder: (context) {
-                  if (filteredSearchHistory!.isEmpty &&
-                      controller.query.isEmpty) {
-                    return Container(
-                      height: 56,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Start searching',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: AlpacaColor.darkNavyColor),
-                      ),
-                    );
-                  } else {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (isRecentSearchVisible)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Recent searches',
-                                style:
-                                    TextStyle(color: AlpacaColor.darkGreyColor),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: filteredSearchHistory!
-                                      .where(
-                                        (recentSearch) =>
-                                            recentSearch != controller.query,
-                                      )
-                                      .map(
-                                        (recentSearch) => ListTile(
-                                          onTap: () {
-                                            controller.query = recentSearch;
-                                          },
-                                          title: Text(
-                                            recentSearch,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              color: AlpacaColor.darkNavyColor,
+              height: MediaQuery.of(context).size.height,
+              child: Material(
+                color: AlpacaColor.white100Color,
+                child: Builder(
+                  builder: (context) {
+                    if (filteredSearchHistory!.isEmpty &&
+                        controller.query.isEmpty) {
+                      return Container(
+                        height: 56,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Start searching',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: AlpacaColor.darkNavyColor),
+                        ),
+                      );
+                    } else {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (isRecentSearchVisible)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Recent searches',
+                                  style: TextStyle(
+                                      color: AlpacaColor.darkGreyColor),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: filteredSearchHistory!
+                                        .where(
+                                          (recentSearch) =>
+                                              recentSearch != controller.query,
+                                        )
+                                        .map(
+                                          (recentSearch) => ListTile(
+                                            onTap: () {
+                                              controller.query = recentSearch;
+                                            },
+                                            title: Text(
+                                              recentSearch,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                color:
+                                                    AlpacaColor.darkNavyColor,
+                                              ),
+                                            ),
+                                            trailing: IconButton(
+                                              icon: const Icon(Icons.clear),
+                                              onPressed: () {
+                                                setState(() {
+                                                  deleteSearchTerm(
+                                                      recentSearch);
+                                                });
+                                              },
                                             ),
                                           ),
-                                          trailing: IconButton(
-                                            icon: const Icon(Icons.clear),
-                                            onPressed: () {
-                                              setState(() {
-                                                deleteSearchTerm(recentSearch);
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              )
-                            ],
-                          ),
-                        if (controller.query.isNotEmpty &&
-                            filteredRestaurants!.isNotEmpty)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 20),
-                                child: Text(
-                                  'Matching restaurants',
-                                  style: TextStyle(
-                                    color: AlpacaColor.darkGreyColor,
+                                        )
+                                        .toList(),
+                                  ),
+                                )
+                              ],
+                            ),
+                          if (controller.query.isNotEmpty &&
+                              filteredRestaurants!.isNotEmpty)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(bottom: 20),
+                                  child: Text(
+                                    'Matching restaurants',
+                                    style: TextStyle(
+                                      color: AlpacaColor.darkGreyColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              ListView.separated(
-                                shrinkWrap: true,
-                                clipBehavior: Clip.none,
-                                scrollDirection: Axis.vertical,
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(width: 16),
-                                itemCount: filteredRestaurants!.length,
-                                itemBuilder: (context, index) {
-                                  final restaurant =
-                                      filteredRestaurants![index];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 20),
-                                    child: GestureDetector(
-                                      onTap: () => addSearchTerm(
-                                        controller.query,
+                                ListView.separated(
+                                  shrinkWrap: true,
+                                  clipBehavior: Clip.none,
+                                  scrollDirection: Axis.vertical,
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(width: 16),
+                                  itemCount: filteredRestaurants!.length,
+                                  itemBuilder: (context, index) {
+                                    final restaurant =
+                                        filteredRestaurants![index];
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: GestureDetector(
+                                        onTap: () => addSearchTerm(
+                                          controller.query,
+                                        ),
+                                        child: RestaurantCard(
+                                          restaurant: restaurant,
+                                        ),
                                       ),
-                                      child: RestaurantCard(
-                                        restaurant: restaurant,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        if (controller.query.isNotEmpty &&
-                            filteredRestaurants!.isEmpty)
-                          const Text(
-                            'No matching restaurant found...',
-                            style: TextStyle(
-                              color: AlpacaColor.darkGreyColor,
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                          )
-                      ],
-                    );
-                  }
-                },
+                          if (controller.query.isNotEmpty &&
+                              filteredRestaurants!.isEmpty)
+                            const Text(
+                              'No matching restaurant found...',
+                              style: TextStyle(
+                                color: AlpacaColor.darkGreyColor,
+                              ),
+                            )
+                        ],
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           );
