@@ -8,12 +8,8 @@ import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 class AlpacaPicker extends CommonPickerModel {}
 
 String pickupDate = DateFormat.MMMEd().format(DateTime.now());
-String now = DateFormat.MMMEd().format(DateTime.now());
 String pickupHourMinute =
-    DateFormat.jm().format(DateTime.now().add(const Duration(minutes: 20)));
-String pickupTimeAsString = DateFormat.MMMEd()
-    .add_jm()
-    .format(DateTime.now().add(const Duration(minutes: 20)));
+    DateFormat.Hm().format(DateTime.now().add(const Duration(minutes: 20)));
 DateTime pickupTimeAsDateTime = DateTime.now().add(
   const Duration(minutes: 20),
 );
@@ -27,19 +23,11 @@ class CheckoutPickupWidget extends StatefulWidget {
 }
 
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
-  Future<void> _changePickupTime(DateTime time) async {
-    setState(() {
-      pickupMinTime = DateTime.now().add(const Duration(minutes: 10));
-      now = DateFormat.MMMEd().format(DateTime.now());
-      pickupTimeAsDateTime = time.add(const Duration(minutes: 1));
-      pickupTimeAsString = DateFormat.MMMEd().add_jm().format(time);
-      pickupDate = DateFormat.MMMEd().format(time);
-      pickupHourMinute = DateFormat.jm().format(time);
-    });
-  }
-
-  String pickupHour = DateFormat.j().format(DateTime.now());
+  String now = DateFormat.Hm().format(DateTime.now());
+  String pickupHour = DateFormat.H().format(DateTime.now());
   String pickupMinute = DateFormat.m().format(DateTime.now());
+  String pickupHourPlaceholder = '';
+  String pickupMinutePlaceholder = '';
 
   List<String> hourList = [
     for (var i = 00; i < 24; i++) i.toString().padLeft(2, '0'),
@@ -49,38 +37,45 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     for (var i = 00; i < 60; i += 5) i.toString().padLeft(2, '0')
   ];
 
+  void removePastTime () {
+    
+  }
+
   void reorderList(List<String> list, String item) {
-    final List<String> removedItemsList = [];
-    int listLenght = list.length;
-    int itemIndex = 0;
+    int itemIndex = list.indexWhere((listItem) => listItem == item);
     for (var i = 0; i < list.length; i++) {
-      if (list[i] == item) {
-        itemIndex = i;
-      }
-    }
-    for (var i = 0; i < listLenght; i++) {
       if (i < itemIndex) {
         final item = list[i];
         list.removeAt(i);
-        removedItemsList.add(item);
-        itemIndex--;
+        list.add(item);
         i--;
-        listLenght--;
+        itemIndex--;
       }
     }
-    list.addAll(removedItemsList);
+  }
+
+  void setPickUpTime(
+    String hour,
+    String minute,
+  ) {
+    reorderList(hourList, hour);
+    reorderList(minuteList, minute);
+    setState(() {
+      pickupHour = pickupHourPlaceholder;
+      pickupMinute = pickupMinutePlaceholder;
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    List<String> hourList = [
-      for (var i = 00; i < 24; i++) i.toString().padLeft(2, '0'),
-    ];
+    reorderList(hourList, pickupHour);
+    reorderList(minuteList, pickupMinute);
+  }
 
-    List<String> minuteList = [
-      for (var i = 00; i < 60; i += 5) i.toString().padLeft(2, '0')
-    ];
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -93,31 +88,12 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
           ),
         );
 
-    if (pickupDate == now) {
-      pickupTimeAsString = 'Today, $pickupHourMinute';
-    }
-
     return Column(
       children: [
         const DividerWidget(),
         CheckoutHeaderRowWidget(
           header: 'Pickup',
-          onPressed: () {
-            DatePicker.showDateTimePicker(
-              context,
-              maxTime: DateTime(1, 1, 1, 18),
-              minTime: pickupMinTime,
-              onConfirm: (time) {
-                _changePickupTime(time);
-              },
-              currentTime: pickupTimeAsDateTime,
-            );
-          },
-          buttonText: pickupTimeAsString,
-        ),
-        CheckoutHeaderRowWidget(
-          header: 'Pickup',
-          buttonText: pickupTimeAsString,
+          buttonText: '${pickupHour}:${pickupMinute} (20 min)',
           onPressed: () {
             showModalBottomSheet(
               isScrollControlled: true,
@@ -170,9 +146,10 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                               children: [
                                 Flexible(
                                   child: ListWheelScrollView.useDelegate(
-                                    onSelectedItemChanged: (index) {
+                                    onSelectedItemChanged: (itemIndex) {
                                       setState(() {
-                                        pickupHour = hourList[index];
+                                        pickupHourPlaceholder =
+                                            hourList[itemIndex];
                                       });
                                     },
                                     overAndUnderCenterOpacity: 0.2,
@@ -196,9 +173,10 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                 ),
                                 Flexible(
                                   child: ListWheelScrollView.useDelegate(
-                                    onSelectedItemChanged: (index) {
+                                    onSelectedItemChanged: (itemIndex) {
                                       setState(() {
-                                        pickupMinute = minuteList[index];
+                                        pickupMinutePlaceholder =
+                                            minuteList[itemIndex];
                                       });
                                     },
                                     overAndUnderCenterOpacity: 0.2,
@@ -224,8 +202,10 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                             child: ActionButton(
                               buttonText: 'Done',
                               onPressed: () {
-                                reorderList(hourList, pickupHour);
-                                reorderList(minuteList, pickupMinute);
+                                setPickUpTime(
+                                  pickupHourPlaceholder,
+                                  pickupMinutePlaceholder,
+                                );
                                 Navigator.pop(context);
                               },
                             ),
