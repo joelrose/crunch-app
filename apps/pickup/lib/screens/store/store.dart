@@ -40,6 +40,7 @@ class _StoreScreenState extends State<StoreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return BaseScreen<StoreScreenModel>(
       onModelReady: (model) {
         model.fetchRestaurant(widget.storeId);
@@ -55,9 +56,10 @@ class _StoreScreenState extends State<StoreScreen> {
                           Navigator.of(context).pushNamed(
                             storeCheckoutRoute,
                             arguments: CreateStoreData(
-                                checkoutItems: checkoutItems,
-                                storeName: model.restaurant.name,
-                                googleMaps: model.restaurant.googleMapsUrl),
+                              checkoutItems: checkoutItems,
+                              storeName: model.restaurant.name,
+                              googleMaps: model.restaurant.googleMapsUrl,
+                            ),
                           );
                         },
                         buttonText: 'Checkout',

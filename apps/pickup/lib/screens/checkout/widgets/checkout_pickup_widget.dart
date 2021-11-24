@@ -56,58 +56,6 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
               },
               currentTime: pickupTimeAsDateTime,
             );
-            // showModalBottomSheet(
-            //   isScrollControlled: true,
-            //   shape:
-            //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            //   context: context,
-            //   builder: (context) {
-            //     return ListView(
-            //       shrinkWrap: true,
-            //       children: [
-            //         Container(
-            //           padding: const EdgeInsets.symmetric(horizontal: 18),
-            //           child: Column(
-            //             children: [
-            //               Padding(
-            //                 padding: const EdgeInsets.symmetric(vertical: 24),
-            //                 child: Row(
-            //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                   children: [
-            //                     Text(
-            //                       'Pickup time',
-            //                       style: Theme.of(context)
-            //                           .textTheme
-            //                           .headline2
-            //                           ?.copyWith(
-            //                             fontSize: 22,
-            //                             color: AlpacaColor.darkNavyColor,
-            //                           ),
-            //                     ),
-            //                     AlpacaClosePopUpWindownButton(
-            //                       onPressed: () {
-            //                         Navigator.pop(context);
-            //                       },
-            //                     )
-            //                   ],
-            //                 ),
-            //               ),
-            //               const Placeholder(
-            //                 fallbackHeight: 151,
-            //                 fallbackWidth: double.infinity,
-            //               ),
-            //               Padding(
-            //                 padding: const EdgeInsets.symmetric(vertical: 20),
-            //                 child:
-            //                     ActionButton(buttonText: 'Done', onPressed: () {}),
-            //               )
-            //             ],
-            //           ),
-            //         ),
-            //       ],
-            //     );
-            //   },
-            // );
           },
           buttonText: pickupTimeAsString,
         ),
