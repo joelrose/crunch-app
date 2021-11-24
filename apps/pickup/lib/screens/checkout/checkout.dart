@@ -118,7 +118,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 CheckoutCartItemsWidget(
                   checkoutItems: widget.data.checkoutItems,
                 ),
-                const CheckoutPickupWidget(),
+                CheckoutPickupWidget(),
                 CheckoutStoreDirectionWidget(
                   googleMaps: widget.data.googleMaps,
                 ),
