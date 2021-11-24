@@ -23,7 +23,7 @@ class CheckoutPickupWidget extends StatefulWidget {
 }
 
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
-  String now = DateFormat.Hm().format(DateTime.now());
+  String currentHour = DateFormat.H().format(DateTime.now());
   String pickupHour = DateFormat.H().format(DateTime.now());
   String pickupMinute = DateFormat.m().format(DateTime.now());
   String pickupHourPlaceholder = '';
@@ -37,19 +37,23 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     for (var i = 00; i < 60; i += 5) i.toString().padLeft(2, '0')
   ];
 
-  void removePastTime () {
-    
+  void removePastTime(List<String> timeList) {
+    for (final time in List<String>.from(timeList)) {
+      if (int.parse(time) < int.parse(currentHour)) {
+        timeList.remove(time);
+      }
+    }
   }
 
-  void reorderList(List<String> list, String item) {
-    int itemIndex = list.indexWhere((listItem) => listItem == item);
-    for (var i = 0; i < list.length; i++) {
-      if (i < itemIndex) {
-        final item = list[i];
-        list.removeAt(i);
-        list.add(item);
+  void reorderTimePicker(List<String> timeList, String time) {
+    int timeItemIndex = timeList.indexWhere((listItem) => listItem == time);
+    for (var i = 0; i < timeList.length; i++) {
+      if (i < timeItemIndex) {
+        final timeItem = timeList[i];
+        timeList.removeAt(i);
+        timeList.add(timeItem);
         i--;
-        itemIndex--;
+        timeItemIndex--;
       }
     }
   }
@@ -58,8 +62,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     String hour,
     String minute,
   ) {
-    reorderList(hourList, hour);
-    reorderList(minuteList, minute);
+    reorderTimePicker(hourList, hour);
+    reorderTimePicker(minuteList, minute);
     setState(() {
       pickupHour = pickupHourPlaceholder;
       pickupMinute = pickupMinutePlaceholder;
@@ -69,8 +73,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   @override
   void initState() {
     super.initState();
-    reorderList(hourList, pickupHour);
-    reorderList(minuteList, pickupMinute);
+    reorderTimePicker(hourList, pickupHour);
+    reorderTimePicker(minuteList, pickupMinute);
   }
 
   @override
