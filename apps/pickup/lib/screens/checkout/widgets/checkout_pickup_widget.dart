@@ -6,8 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 
-class AlpacaPicker extends CommonPickerModel {}
-
 String pickupDate = DateFormat.MMMEd().format(DateTime.now());
 String pickupHourMinute =
     DateFormat.Hm().format(DateTime.now().add(const Duration(minutes: 20)));
@@ -30,8 +28,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   DateTime initialDateTime = DateTime.now();
 
   String currentHour = DateFormat.H().format(DateTime.now());
-  String pickupHour = DateFormat.H().format(DateTime.now());
-  String pickupMinute = DateFormat.m().format(DateTime.now());
+  String pickupHour = DateFormat.H().format(DateTime.now()).padLeft(2, '0');
+  String pickupMinute = DateFormat.m().format(DateTime.now()).padLeft(2, '0');
   late int hourSelectedIndex;
   late int minuteSelectedIndex;
 
@@ -42,7 +40,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     for (var i = 00; i < 60; i += 5) i.toString().padLeft(2, '0')
   ];
 
-  int removePastTime(List<String> timeList) {
+  int removePastHour(List<String> timeList) {
     const int setIndexToFirst = 0;
     for (final time in List<String>.from(timeList)) {
       if (int.parse(time) < int.parse(currentHour)) {
@@ -57,8 +55,6 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     int minuteIndex,
   ) {
     setState(() {
-      print(hourIndex);
-      print(minuteIndex);
       pickupHour = hourList[hourIndex];
       pickupMinute = minuteList[minuteIndex];
       hourController = FixedExtentScrollController(
@@ -100,10 +96,10 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   @override
   void initState() {
     super.initState();
-    removePastTime(hourList);
+    removePastHour(hourList);
     initialDateTime = DateTime.now();
-    hourSelectedIndex = initialDateTime.hour;
-    minuteSelectedIndex = initialDateTime.minute;
+    hourSelectedIndex = 0;
+    minuteSelectedIndex = getIndexOfMinute(initialDateTime.minute);
     minuteController = FixedExtentScrollController(
       initialItem: getIndexOfMinute(initialDateTime.minute),
     );
