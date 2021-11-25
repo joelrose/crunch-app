@@ -1,4 +1,5 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -23,58 +24,81 @@ class CheckoutPickupWidget extends StatefulWidget {
 }
 
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
+  late FixedExtentScrollController hourController;
+  late FixedExtentScrollController minuteController;
+
+  DateTime initialDateTime = DateTime.now();
+
   String currentHour = DateFormat.H().format(DateTime.now());
   String pickupHour = DateFormat.H().format(DateTime.now());
   String pickupMinute = DateFormat.m().format(DateTime.now());
-  String pickupHourPlaceholder = '';
+  String selectedHourPlaceholderIndex = '';
   String pickupMinutePlaceholder = '';
 
   List<String> hourList = [
     for (var i = 00; i < 24; i++) i.toString().padLeft(2, '0'),
   ];
-
   List<String> minuteList = [
     for (var i = 00; i < 60; i += 5) i.toString().padLeft(2, '0')
   ];
 
-  void removePastTime(List<String> timeList) {
+  int removePastTime(List<String> timeList) {
+    int setIndexToFirst = 0;
     for (final time in List<String>.from(timeList)) {
       if (int.parse(time) < int.parse(currentHour)) {
+        print('${time} removed');
         timeList.remove(time);
       }
     }
-  }
-
-  void reorderTimePicker(List<String> timeList, String time) {
-    int timeItemIndex = timeList.indexWhere((listItem) => listItem == time);
-    for (var i = 0; i < timeList.length; i++) {
-      if (i < timeItemIndex) {
-        final timeItem = timeList[i];
-        timeList.removeAt(i);
-        timeList.add(timeItem);
-        i--;
-        timeItemIndex--;
-      }
-    }
+    return setIndexToFirst;
   }
 
   void setPickUpTime(
     String hour,
     String minute,
   ) {
-    reorderTimePicker(hourList, hour);
-    reorderTimePicker(minuteList, minute);
     setState(() {
-      pickupHour = pickupHourPlaceholder;
+      pickupHour = selectedHourPlaceholderIndex;
       pickupMinute = pickupMinutePlaceholder;
     });
+  }
+
+  int jumpToNextHour(int minute) {
+    if (minute >= 55) {
+      setState(() {
+        initialDateTime = initialDateTime.add(const Duration(hours: 1));
+      });
+      const int newMinute = 0;
+      return newMinute;
+    } else {
+      return minute;
+    }
+  }
+
+  int roundUp5MinInterval(int minute) {
+    final int lastDigit = minute % 10;
+    if (lastDigit != 0 || lastDigit != 5) {
+      int roundedMinuteSolution = minute + 5 - (lastDigit % 5);
+      return roundedMinuteSolution = jumpToNextHour(roundedMinuteSolution);
+    } else {
+      return minute;
+    }
+  }
+
+  int getIndexOfMinute(int minute) {
+    final double index = roundUp5MinInterval(minute) / 5;
+    return index.toInt();
   }
 
   @override
   void initState() {
     super.initState();
-    reorderTimePicker(hourList, pickupHour);
-    reorderTimePicker(minuteList, pickupMinute);
+    removePastTime(hourList);
+    initialDateTime = DateTime.now();
+    minuteController = FixedExtentScrollController(
+      initialItem: getIndexOfMinute(initialDateTime.minute),
+    );
+    hourController = FixedExtentScrollController();
   }
 
   @override
@@ -150,17 +174,17 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                               children: [
                                 Flexible(
                                   child: ListWheelScrollView.useDelegate(
+                                    controller: hourController,
                                     onSelectedItemChanged: (itemIndex) {
                                       setState(() {
-                                        pickupHourPlaceholder =
+                                        selectedHourPlaceholderIndex =
                                             hourList[itemIndex];
                                       });
                                     },
                                     overAndUnderCenterOpacity: 0.2,
                                     physics: const FixedExtentScrollPhysics(),
                                     itemExtent: 50,
-                                    childDelegate:
-                                        ListWheelChildLoopingListDelegate(
+                                    childDelegate: ListWheelChildListDelegate(
                                       children: <Widget>[
                                         for (var hour in hourList)
                                           Text(
@@ -177,6 +201,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                 ),
                                 Flexible(
                                   child: ListWheelScrollView.useDelegate(
+                                    controller: minuteController,
                                     onSelectedItemChanged: (itemIndex) {
                                       setState(() {
                                         pickupMinutePlaceholder =
@@ -186,8 +211,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                     overAndUnderCenterOpacity: 0.2,
                                     physics: const FixedExtentScrollPhysics(),
                                     itemExtent: 50,
-                                    childDelegate:
-                                        ListWheelChildLoopingListDelegate(
+                                    childDelegate: ListWheelChildListDelegate(
                                       children: <Widget>[
                                         for (var minute in minuteList)
                                           Text(
@@ -207,7 +231,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                               buttonText: 'Done',
                               onPressed: () {
                                 setPickUpTime(
-                                  pickupHourPlaceholder,
+                                  selectedHourPlaceholderIndex,
                                   pickupMinutePlaceholder,
                                 );
                                 Navigator.pop(context);
