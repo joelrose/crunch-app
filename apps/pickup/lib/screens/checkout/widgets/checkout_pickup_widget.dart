@@ -32,8 +32,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   String currentHour = DateFormat.H().format(DateTime.now());
   String pickupHour = DateFormat.H().format(DateTime.now());
   String pickupMinute = DateFormat.m().format(DateTime.now());
-  String selectedHourPlaceholderIndex = '';
-  String pickupMinutePlaceholder = '';
+  late int hourSelectedIndex;
+  late int minuteSelectedIndex;
 
   List<String> hourList = [
     for (var i = 00; i < 24; i++) i.toString().padLeft(2, '0'),
@@ -43,10 +43,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   ];
 
   int removePastTime(List<String> timeList) {
-    int setIndexToFirst = 0;
+    const int setIndexToFirst = 0;
     for (final time in List<String>.from(timeList)) {
       if (int.parse(time) < int.parse(currentHour)) {
-        print('${time} removed');
         timeList.remove(time);
       }
     }
@@ -54,12 +53,20 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   }
 
   void setPickUpTime(
-    String hour,
-    String minute,
+    int hourIndex,
+    int minuteIndex,
   ) {
     setState(() {
-      pickupHour = selectedHourPlaceholderIndex;
-      pickupMinute = pickupMinutePlaceholder;
+      print(hourIndex);
+      print(minuteIndex);
+      pickupHour = hourList[hourIndex];
+      pickupMinute = minuteList[minuteIndex];
+      hourController = FixedExtentScrollController(
+        initialItem: hourIndex,
+      );
+      minuteController = FixedExtentScrollController(
+        initialItem: minuteIndex,
+      );
     });
   }
 
@@ -95,6 +102,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     super.initState();
     removePastTime(hourList);
     initialDateTime = DateTime.now();
+    hourSelectedIndex = initialDateTime.hour;
+    minuteSelectedIndex = initialDateTime.minute;
     minuteController = FixedExtentScrollController(
       initialItem: getIndexOfMinute(initialDateTime.minute),
     );
@@ -177,8 +186,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                     controller: hourController,
                                     onSelectedItemChanged: (itemIndex) {
                                       setState(() {
-                                        selectedHourPlaceholderIndex =
-                                            hourList[itemIndex];
+                                        hourSelectedIndex = itemIndex;
                                       });
                                     },
                                     overAndUnderCenterOpacity: 0.2,
@@ -204,8 +212,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                     controller: minuteController,
                                     onSelectedItemChanged: (itemIndex) {
                                       setState(() {
-                                        pickupMinutePlaceholder =
-                                            minuteList[itemIndex];
+                                        minuteSelectedIndex = itemIndex;
                                       });
                                     },
                                     overAndUnderCenterOpacity: 0.2,
@@ -231,8 +238,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                               buttonText: 'Done',
                               onPressed: () {
                                 setPickUpTime(
-                                  selectedHourPlaceholderIndex,
-                                  pickupMinutePlaceholder,
+                                  hourSelectedIndex,
+                                  minuteSelectedIndex,
                                 );
                                 Navigator.pop(context);
                               },
