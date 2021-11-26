@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,8 @@ class CheckoutPickupWidget extends StatefulWidget {
 }
 
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
+  late var i;
+  late Timer every30Seconds;
   late FixedExtentScrollController hourController;
   late FixedExtentScrollController minuteController;
 
@@ -86,9 +90,13 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   }
 
   void jumpToNextHour(int minute) {
-    if (minute >= 55) {
+    if (minute > 55 && initialDateTime.hour.toString() == hourList[0]) {
       hourList.removeAt(0);
     }
+  }
+
+  void updateHourAndMinute(int minute) {
+    jumpToNextHour(minute);
     updateMinuteList(hourSelectedIndex, minute);
   }
 
@@ -118,8 +126,18 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     minuteController = FixedExtentScrollController(
       initialItem: getIndexOfMinute(initialDateTime.minute),
     );
-    jumpToNextHour(initialDateTime.minute);
+    updateHourAndMinute(initialDateTime.minute);
     hourController = FixedExtentScrollController();
+    i = 0;
+
+    every30Seconds = Timer.periodic(const Duration(seconds: 30), (timer) {
+      if (!mounted) return;
+      setState(() {
+        initialDateTime = DateTime.now();
+        updateHourAndMinute(initialDateTime.minute);
+        i++;
+      });
+    });
   }
 
   @override
@@ -142,7 +160,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
         const DividerWidget(),
         CheckoutHeaderRowWidget(
           header: 'Pickup',
-          buttonText: '$pickupHour:$pickupMinute (20 min)',
+          buttonText: '$pickupHour:$pickupMinute',
           onPressed: () {
             showModalBottomSheet(
               isScrollControlled: true,
