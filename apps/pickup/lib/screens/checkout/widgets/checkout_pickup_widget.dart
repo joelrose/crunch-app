@@ -48,10 +48,10 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     }
   }
 
-  void updateMinuteList(int hourIndex) {
+  void updateMinuteList(int hourIndex, int minute) {
     final String currentMinute = DateFormat.m().format(DateTime.now());
     final List<String> copyMinuteList = List.from(updatedMinuteList);
-    if (hourIndex == 0) {
+    if (hourIndex == 0 && minute <= 55) {
       for (final time in List<String>.from(copyMinuteList)) {
         if (int.parse(time) < int.parse(currentMinute)) {
           copyMinuteList.remove(time);
@@ -87,8 +87,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
   void jumpToNextHour(int minute) {
     if (minute >= 55) {
-      hourList.remove(DateFormat.H().format(DateTime.now()));
+      hourList.removeAt(0);
     }
+    updateMinuteList(hourSelectedIndex, minute);
   }
 
   int roundUp5MinInterval(int minute) {
@@ -117,7 +118,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     minuteController = FixedExtentScrollController(
       initialItem: getIndexOfMinute(initialDateTime.minute),
     );
-    updateMinuteList(hourSelectedIndex);
+    jumpToNextHour(initialDateTime.minute);
     hourController = FixedExtentScrollController();
   }
 
@@ -203,7 +204,10 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                           setState(() {
                                             hourSelectedIndex = itemIndex;
                                           });
-                                          updateMinuteList(hourSelectedIndex);
+                                          updateMinuteList(
+                                            hourSelectedIndex,
+                                            initialDateTime.minute,
+                                          );
                                         },
                                         overAndUnderCenterOpacity: 0.2,
                                         physics:
