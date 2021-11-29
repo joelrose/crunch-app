@@ -122,7 +122,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     updatedMinuteList = List.from(minuteList);
     initialDateTime = DateTime.now();
     hourSelectedIndex = 0;
-    minuteSelectedIndex = getIndexOfMinute(initialDateTime.minute);
+    minuteSelectedIndex = 0;
     minuteController = FixedExtentScrollController();
     hourController = FixedExtentScrollController();
 
