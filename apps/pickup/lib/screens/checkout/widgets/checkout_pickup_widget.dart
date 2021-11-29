@@ -45,7 +45,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   }
 
   void updateMinuteList(int hourIndex, int minute) {
-    final String currentMinute = DateFormat.m().format(DateTime.now());
+    final String currentMinute =
+        DateFormat.m().format(DateTime.now().add(const Duration(minutes: 20)));
     final List<String> copyMinuteList = List.from(updatedMinuteList);
     if (hourIndex == 0 && minute <= 55) {
       for (final time in List<String>.from(copyMinuteList)) {
@@ -120,7 +121,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   void initState() {
     super.initState();
     updatedMinuteList = List.from(minuteList);
-    initialDateTime = DateTime.now();
+    initialDateTime = DateTime.now().add(const Duration(minutes: 20));
     hourSelectedIndex = 0;
     minuteSelectedIndex = 0;
     minuteController = FixedExtentScrollController();
