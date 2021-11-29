@@ -119,16 +119,15 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   @override
   void initState() {
     super.initState();
-    removePastHours(hourList);
     updatedMinuteList = List.from(minuteList);
     initialDateTime = DateTime.now();
     hourSelectedIndex = 0;
     minuteSelectedIndex = getIndexOfMinute(initialDateTime.minute);
-    minuteController = FixedExtentScrollController(
-      initialItem: getIndexOfMinute(initialDateTime.minute),
-    );
-    updateHourAndMinute(initialDateTime.minute);
+    minuteController = FixedExtentScrollController();
     hourController = FixedExtentScrollController();
+
+    removePastHours(hourList);
+    updateHourAndMinute(initialDateTime.minute);
 
     updateEvery30Seconds = Timer.periodic(const Duration(seconds: 30), (timer) {
       if (!mounted) return;
