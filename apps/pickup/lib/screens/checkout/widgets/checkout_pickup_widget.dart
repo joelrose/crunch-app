@@ -7,24 +7,16 @@ import 'package:intl/intl.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 
-String pickupDate = DateFormat.MMMEd().format(DateTime.now());
-String pickupHourMinute =
-    DateFormat.Hm().format(DateTime.now().add(const Duration(minutes: 20)));
-DateTime pickupTimeAsDateTime = DateTime.now().add(
-  const Duration(minutes: 20),
-);
-DateTime pickupMinTime = DateTime.now().add(const Duration(minutes: 10));
-
 class CheckoutPickupWidget extends StatefulWidget {
-  const CheckoutPickupWidget({Key? key}) : super(key: key);
+  const CheckoutPickupWidget({Key? key, this.getPickupTime}) : super(key: key);
+  final getPickupTime;
 
   @override
   State<CheckoutPickupWidget> createState() => _CheckoutPickupWidgetState();
 }
 
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
-  late var i;
-  late Timer every30Seconds;
+  late Timer updateEvery30Seconds;
   late FixedExtentScrollController hourController;
   late FixedExtentScrollController minuteController;
 
@@ -74,19 +66,28 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   }
 
   void setPickUpTime(
-    int hourIndex,
-    int minuteIndex,
+    int newHourIndex,
+    int newMinuteIndex,
   ) {
     setState(() {
-      pickupHour = hourList[hourIndex];
-      pickupMinute = updatedMinuteList[minuteIndex];
+      pickupHour = hourList[newHourIndex];
+      pickupMinute = updatedMinuteList[newMinuteIndex];
       hourController = FixedExtentScrollController(
-        initialItem: hourIndex,
+        initialItem: newHourIndex,
       );
       minuteController = FixedExtentScrollController(
-        initialItem: minuteIndex,
+        initialItem: newMinuteIndex,
       );
     });
+    final now = DateTime.now();
+    final DateTime pickupTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      int.parse(pickupHour),
+      int.parse(pickupMinute),
+    );
+    widget.getPickupTime(pickupTime);
   }
 
   void jumpToNextHour(int minute) {
@@ -128,14 +129,12 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     );
     updateHourAndMinute(initialDateTime.minute);
     hourController = FixedExtentScrollController();
-    i = 0;
 
-    every30Seconds = Timer.periodic(const Duration(seconds: 30), (timer) {
+    updateEvery30Seconds = Timer.periodic(const Duration(seconds: 30), (timer) {
       if (!mounted) return;
       setState(() {
         initialDateTime = DateTime.now();
         updateHourAndMinute(initialDateTime.minute);
-        i++;
       });
     });
   }
