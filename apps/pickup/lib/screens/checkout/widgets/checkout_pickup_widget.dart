@@ -94,7 +94,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       );
       waitTime = getWaitTime(
         DateTime.now().minute,
-        pickupTime.minute,
+        DateTime.now().hour,
+        pickupTime,
       );
     });
     widget.getPickupTime(pickupTime);
@@ -149,12 +150,12 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     return 0;
   }
 
-  String getWaitTime(int currentMinute, int pickupMinute) {
-    if (currentMinute > pickupMinute) {
-      final int multipleHour = pickupTime.hour - DateTime.now().hour;
-      return (60 * multipleHour - currentMinute + pickupMinute).toString();
+  String getWaitTime(int currentMinute, int currentHour, DateTime pickupTime) {
+    if (currentHour < pickupTime.hour) {
+      final int multipleHour = pickupTime.hour - currentHour;
+      return (60 * multipleHour - currentMinute + pickupTime.minute).toString();
     } else {
-      return (pickupMinute - currentMinute).toString();
+      return (pickupTime.minute - currentMinute).toString();
     }
   }
 
@@ -169,7 +170,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     pickupMinute = pickupTime.minute.toString().padLeft(2, '0');
     waitTime = getWaitTime(
       DateTime.now().minute,
-      pickupTime.minute,
+      DateTime.now().hour,
+      pickupTime,
     );
     hourSelectedIndex = 0;
     minuteSelectedIndex = 0;
