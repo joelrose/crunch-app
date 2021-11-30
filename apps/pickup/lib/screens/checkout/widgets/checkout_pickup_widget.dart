@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
@@ -25,8 +26,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   late DateTime pickupTime;
   late String waitTime;
 
-  String pickupHour = DateFormat.H().format(DateTime.now()).padLeft(2, '0');
-  String pickupMinute = DateFormat.m().format(DateTime.now()).padLeft(2, '0');
+  late String pickupHour;
+  late String pickupMinute;
   late int hourSelectedIndex;
   late int minuteSelectedIndex;
 
@@ -92,7 +93,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       );
       waitTime = getWaitTime(
         DateTime.now().minute,
-        roundUp5MinInterval(pickupTime.minute),
+        pickupTime.minute,
       );
     });
     widget.getPickupTime(pickupTime);
@@ -110,24 +111,29 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     updateMinuteList(hourSelectedIndex, minute);
   }
 
-  int roundUp5MinInterval(int minute) {
-    final int lastDigit = minute % 10;
+  DateTime roundUp5MinInterval(DateTime dateTime) {
+    final int lastDigit = dateTime.minute % 10;
+    final int minute = dateTime.minute;
     if (lastDigit != 0 || lastDigit != 5) {
       final int roundedMinuteSolution = minute + 5 - (lastDigit % 5);
-      return roundedMinuteSolution;
+      final now = DateTime.now();
+      final DateTime roundedPickupTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        dateTime.hour,
+        roundedMinuteSolution,
+      );
+      return roundedPickupTime;
     } else {
-      return minute;
+      return dateTime;
     }
-  }
-
-  int getIndexOfMinute(int minute) {
-    final double index = roundUp5MinInterval(minute) / 5;
-    return index.toInt();
   }
 
   String getWaitTime(int currentMinute, int pickupMinute) {
     if (currentMinute > pickupMinute) {
-      return (60 - currentMinute + pickupMinute).toString();
+      final int multipleHour = int.parse(pickupHour) - DateTime.now().hour;
+      return (60 * multipleHour - currentMinute + pickupMinute).toString();
     } else {
       return (pickupMinute - currentMinute).toString();
     }
@@ -137,10 +143,14 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   void initState() {
     super.initState();
     updatedMinuteList = List.from(minuteList);
-    pickupTime = DateTime.now().add(Duration(minutes: minuteWaitTime));
+    pickupTime = roundUp5MinInterval(
+      DateTime.now().add(Duration(minutes: minuteWaitTime)),
+    );
+    pickupHour = pickupTime.hour.toString().padLeft(2, '0');
+    pickupMinute = pickupTime.minute.toString().padLeft(2, '0');
     waitTime = getWaitTime(
       DateTime.now().minute,
-      roundUp5MinInterval(pickupTime.minute),
+      pickupTime.minute,
     );
     hourSelectedIndex = 0;
     minuteSelectedIndex = 0;
@@ -181,6 +191,12 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
         CheckoutHeaderRowWidget(
           header: 'Pickup',
           buttonText: '$pickupHour:$pickupMinute ($waitTime min)',
+          icon: SvgPicture.asset(
+            'assets/icons/editPen.svg',
+            color: AlpacaColor.primary100,
+            height: 14,
+            width: 14,
+          ),
           onPressed: () {
             showModalBottomSheet(
               isScrollControlled: true,
