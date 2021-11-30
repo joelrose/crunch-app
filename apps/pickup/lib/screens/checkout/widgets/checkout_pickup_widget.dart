@@ -61,7 +61,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       }
       setState(() {
         updatedMinuteList = List.from(copyMinuteList);
-        minuteController = FixedExtentScrollController();
+        minuteController =
+            FixedExtentScrollController(initialItem: getIndexOfMinute(minute));
       });
     } else {
       setState(() {
@@ -100,8 +101,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   }
 
   void jumpToNextHour(int minute) {
-    if (minute > 55 && pickupTime.hour.toString() == hourList[0] ||
-        minute < DateTime.now().minute) {
+    if (minute > 55 && DateTime.now().hour.toString() == hourList[0] ||
+        minute < DateTime.now().minute &&
+            DateTime.now().hour.toString() == hourList[0]) {
       hourList.removeAt(0);
     }
   }
@@ -111,23 +113,40 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     updateMinuteList(hourSelectedIndex, minute);
   }
 
-  DateTime roundUp5MinInterval(DateTime dateTime) {
-    final int lastDigit = dateTime.minute % 10;
-    final int minute = dateTime.minute;
+  DateTime getRoundedPickupTime(DateTime dateTime) {
+    final int minute = roundUp5MinInterval(dateTime.minute);
+    final now = DateTime.now();
+    final DateTime roundedPickupTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      dateTime.hour,
+      minute,
+    );
+    return roundedPickupTime;
+  }
+
+  int roundUp5MinInterval(int minute) {
+    final int lastDigit = minute % 10;
     if (lastDigit != 0 || lastDigit != 5) {
       final int roundedMinuteSolution = minute + 5 - (lastDigit % 5);
-      final now = DateTime.now();
-      final DateTime roundedPickupTime = DateTime(
-        now.year,
-        now.month,
-        now.day,
-        dateTime.hour,
-        roundedMinuteSolution,
-      );
-      return roundedPickupTime;
+      return roundedMinuteSolution;
     } else {
-      return dateTime;
+      return minute;
     }
+  }
+
+  int getIndexOfMinute(int minute) {
+    final String roundedMinute = (roundUp5MinInterval(minute) / 5).toString();
+    int index = 0;
+    for (final minute in minuteList) {
+      if (minute == roundedMinute) {
+        return index;
+      } else {
+        index++;
+      }
+    }
+    return 0;
   }
 
   String getWaitTime(int currentMinute, int pickupMinute) {
@@ -143,7 +162,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   void initState() {
     super.initState();
     updatedMinuteList = List.from(minuteList);
-    pickupTime = roundUp5MinInterval(
+    pickupTime = getRoundedPickupTime(
       DateTime.now().add(Duration(minutes: minuteWaitTime)),
     );
     pickupHour = pickupTime.hour.toString().padLeft(2, '0');
@@ -158,7 +177,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     hourController = FixedExtentScrollController();
 
     removePastHours(hourList);
-    updateHourAndMinute(pickupTime.minute);
+    updateHourAndMinute(
+      DateTime.now().add(Duration(minutes: minuteWaitTime)).minute,
+    );
 
     updateEvery30Seconds = Timer.periodic(const Duration(seconds: 30), (timer) {
       if (!mounted) return;
