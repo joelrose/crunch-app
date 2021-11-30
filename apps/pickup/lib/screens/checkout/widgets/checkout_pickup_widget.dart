@@ -52,9 +52,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     final String minimalMinuteForPickup = DateFormat.m()
         .format(DateTime.now().add(Duration(minutes: minuteWaitTime)));
     final List<String> copyMinuteList = List.from(updatedMinuteList);
-    if (hourIndex == 0 &&
-        minute <= 55 &&
-        DateTime.now().hour == int.parse(hourList[0])) {
+    if (hourIndex == 0 && minute <= 55 && minute != 0) {
       for (final time in List<String>.from(copyMinuteList)) {
         if (int.parse(time) < int.parse(minimalMinuteForPickup)) {
           copyMinuteList.remove(time);
