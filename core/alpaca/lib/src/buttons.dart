@@ -1,4 +1,3 @@
-
 import 'package:alpaca/src/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -244,11 +243,13 @@ class AlpacaCheckoutButton extends StatelessWidget {
     Key? key,
     required this.onPressed,
     required this.buttonText,
+    this.svgPicture,
     this.disableButtonBackground = false,
   }) : super(key: key);
 
   final void Function() onPressed;
   final String buttonText;
+  final svgPicture;
   final bool disableButtonBackground;
 
   @override
@@ -265,13 +266,22 @@ class AlpacaCheckoutButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
           backgroundColor: buttonBackground),
       onPressed: onPressed,
-      child: Text(
-        buttonText,
-        style: const TextStyle(
-          color: AlpacaColor.primary80,
-          fontWeight: FontWeight.w600,
-          fontSize: 12,
-        ),
+      child: Row(
+        children: [
+          Text(
+            buttonText,
+            style: const TextStyle(
+              color: AlpacaColor.primary80,
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+            ),
+          ),
+          if (svgPicture != null)
+            Padding(
+              padding: EdgeInsets.only(left: 4),
+              child: svgPicture,
+            )
+        ],
       ),
     );
   }
