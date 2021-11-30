@@ -52,7 +52,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     final String minimalMinuteForPickup = DateFormat.m()
         .format(DateTime.now().add(Duration(minutes: minuteWaitTime)));
     final List<String> copyMinuteList = List.from(updatedMinuteList);
-    if (hourIndex == 0 && minute <= 55) {
+    if (hourIndex == 0 &&
+        minute <= 55 &&
+        DateTime.now().hour == int.parse(hourList[0])) {
       for (final time in List<String>.from(copyMinuteList)) {
         if (int.parse(time) < int.parse(minimalMinuteForPickup)) {
           copyMinuteList.remove(time);
@@ -128,7 +130,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
   int roundUp5MinInterval(int minute) {
     final int lastDigit = minute % 10;
-    if (lastDigit != 0 || lastDigit != 5) {
+    if (lastDigit != 0 && lastDigit != 5) {
       final int roundedMinuteSolution = minute + 5 - (lastDigit % 5);
       return roundedMinuteSolution;
     } else {
@@ -137,9 +139,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   }
 
   int getIndexOfMinute(int minute) {
-    final String roundedMinute = (roundUp5MinInterval(minute) / 5).toString();
+    final String roundedMinute = roundUp5MinInterval(minute).toString();
     int index = 0;
-    for (final minute in minuteList) {
+    for (final minute in updatedMinuteList) {
       if (minute == roundedMinute) {
         return index;
       } else {
@@ -185,7 +187,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       if (!mounted) return;
       setState(() {
         updateHourAndMinute(
-          DateTime.now().add(Duration(minutes: minuteWaitTime)).minute,
+          pickupTime.minute,
         );
       });
     });
