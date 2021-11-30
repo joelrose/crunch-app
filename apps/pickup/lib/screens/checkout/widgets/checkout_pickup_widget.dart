@@ -151,7 +151,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
   String getWaitTime(int currentMinute, int pickupMinute) {
     if (currentMinute > pickupMinute) {
-      final int multipleHour = int.parse(pickupHour) - DateTime.now().hour;
+      final int multipleHour = pickupTime.hour - DateTime.now().hour;
       return (60 * multipleHour - currentMinute + pickupMinute).toString();
     } else {
       return (pickupMinute - currentMinute).toString();
