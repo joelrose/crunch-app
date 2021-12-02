@@ -1,8 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/screens/home/widgets/floating_search_bar.dart';
 import 'package:pickup/screens/home/widgets/restaurant_random_picker.dart';
 import 'package:pickup/screens/home/widgets/scrolling_list.dart';
+import 'package:pickup/screens/home/widgets/search_bar/main_search_bar.dart';
 
 class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({Key? key}) : super(key: key);
