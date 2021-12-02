@@ -7,13 +7,15 @@ import 'package:pickup/screens/home/widgets/search_bar/search_bar_logic.dart';
 import 'search_results_widget.dart';
 
 class DiscoverSearchBar extends StatefulWidget {
-  const DiscoverSearchBar({Key? key}) : super(key: key);
+  const DiscoverSearchBar({Key? key, required this.child}) : super(key: key);
 
+  final Widget child;
   @override
   _DiscoverSearchBarState createState() => _DiscoverSearchBarState();
 }
 
 class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
+  late Widget child = widget.child;
   SearchUseCase searchVM = SearchUseCase();
 
   late FloatingSearchBarController controller;
@@ -126,8 +128,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
             addSearchTerm: searchVM.addSearchTerm,
           );
         },
-        // DiscoverBody is child of this widget
-        body: const DiscoverBody(),
+        body: child,
       ),
     );
   }
