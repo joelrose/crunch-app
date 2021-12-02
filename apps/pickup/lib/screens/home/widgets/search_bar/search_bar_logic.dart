@@ -26,7 +26,7 @@ class SearchUseCase {
         .where(
           (recentSearch) =>
               recentSearch.toLowerCase().startsWith(filter.toLowerCase()) &&
-              recentSearch != filter,
+              recentSearch.toLowerCase() != filter.toLowerCase(),
         )
         .toList();
 

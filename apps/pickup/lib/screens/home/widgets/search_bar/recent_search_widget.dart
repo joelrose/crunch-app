@@ -32,7 +32,9 @@ class RecentSearchWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: filteredSearchHistory
                 .where(
-                  (recentSearch) => recentSearch != controller.query,
+                  (recentSearch) =>
+                      recentSearch.toLowerCase() !=
+                      controller.query.toLowerCase(),
                 )
                 .map(
                   (recentSearch) => ListTile(
