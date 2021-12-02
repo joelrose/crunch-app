@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
-import 'package:pickup/screens/home/widgets/floating_search_bar.dart';
+import 'package:pickup/screens/home/widgets/search_bar/search_bar_logic.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:sanity/sanity.dart';
 
 void main() {
   final List<String> _searchHistory = ['Flutter', 'Future'];
-  SearchUseCase useCase = SearchUseCase();
+  final SearchUseCase useCase = SearchUseCase();
   test('filterSearchTerms function', () {
     final List<String> _searchHistory = ['Flutter', 'Future'];
     final input = ['Flu', 'Java', 'F'];
@@ -17,7 +17,9 @@ void main() {
     ];
     for (var i = 0; i < 3; i++) {
       useCase.filteredSearchHistory = useCase.filterSearchTerms(
-          filter: input[i], searchHistory: _searchHistory);
+        filter: input[i],
+        searchHistory: _searchHistory,
+      );
       expect(useCase.filteredSearchHistory, expectedOutput[i]);
     }
   });
