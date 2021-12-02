@@ -126,6 +126,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
             addSearchTerm: searchVM.addSearchTerm,
           );
         },
+        // DiscoverBody is child of this widget
         body: const DiscoverBody(),
       ),
     );
