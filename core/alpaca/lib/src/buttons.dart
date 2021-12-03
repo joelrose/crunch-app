@@ -249,7 +249,7 @@ class AlpacaCheckoutButton extends StatelessWidget {
 
   final void Function() onPressed;
   final String buttonText;
-  final svgPicture;
+  final Widget? svgPicture;
   final bool disableButtonBackground;
 
   @override

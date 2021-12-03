@@ -18,7 +18,7 @@ class CheckoutHeaderRowWidget extends StatelessWidget {
   final String header;
   final void Function() onPressed;
   final String buttonText;
-  final icon;
+  final Widget? icon;
   final bool disableButton;
   final bool buttonBackground;
   final bool disableButtonBackground;

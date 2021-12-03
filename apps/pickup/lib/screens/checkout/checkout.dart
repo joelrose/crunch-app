@@ -41,16 +41,17 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   late DateTime pickupTime;
-  void getPickupTime(DateTime newPickupTime) {
-    setState(() {
-      pickupTime = newPickupTime;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
     pickupTime = DateTime.now().add(const Duration(minutes: 20));
+  }
+
+  void getPickupTime(DateTime newPickupTime) {
+    setState(() {
+      pickupTime = newPickupTime;
+    });
   }
 
   num _getTotalPrice() {
