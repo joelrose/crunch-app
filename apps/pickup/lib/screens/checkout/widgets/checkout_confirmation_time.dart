@@ -15,20 +15,29 @@ class CheckoutConfirmationTime extends StatefulWidget {
 }
 
 class _CheckoutConfirmationTimeState extends State<CheckoutConfirmationTime> {
+  late DateTime pickupTime;
+  late DateTime now;
+  late int minutesToPickupOrder;
   @override
   void initState() {
-    Timer.periodic(const Duration(minutes: 1), (timer) {
-      setState(() {});
-    });
+    now = DateTime.now();
+    pickupTime = widget.pickupTime;
+    minutesToPickupOrder = pickupTime.difference(now).inMinutes;
+    if (minutesToPickupOrder >= 0) {
+      Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (!mounted) return;
+        setState(() {
+          now = DateTime.now();
+          minutesToPickupOrder = pickupTime.difference(now).inMinutes;
+        });
+      });
+    }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final pickupTime = widget.pickupTime;
-    final now = DateTime.now();
-    final minutesToPickupOrder = pickupTime.difference(now).inMinutes;
-    double fullScreenWidth = MediaQuery.of(context).size.width;
     String waitTimeText = '';
     if (minutesToPickupOrder > 0) {
       waitTimeText = '${minutesToPickupOrder.toString()} min';
@@ -36,7 +45,7 @@ class _CheckoutConfirmationTimeState extends State<CheckoutConfirmationTime> {
       waitTimeText = 'Ready';
     }
     return Text(
-      '$minutesToPickupOrder min',
+      waitTimeText,
       style: Theme.of(context).textTheme.headline2?.copyWith(
             fontSize: 51,
             color: AlpacaColor.primary100,

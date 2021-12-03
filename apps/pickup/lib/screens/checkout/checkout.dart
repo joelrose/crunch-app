@@ -40,6 +40,20 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
+  late DateTime pickupTime;
+
+  @override
+  void initState() {
+    super.initState();
+    pickupTime = DateTime.now().add(const Duration(minutes: 20));
+  }
+
+  void getPickupTime(DateTime newPickupTime) {
+    setState(() {
+      pickupTime = newPickupTime;
+    });
+  }
+
   num _getTotalPrice() {
     num sum = 0;
     for (final item in widget.data.checkoutItems) {
@@ -84,7 +98,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         arguments: CreateCheckoutData(
           checkoutItems: widget.data.checkoutItems,
           googleMaps: widget.data.googleMaps,
-          pickupTime: pickupTimeAsDateTime,
+          pickupTime: pickupTime,
           creationTime: DateTime.now(),
         ),
       );
@@ -118,7 +132,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 CheckoutCartItemsWidget(
                   checkoutItems: widget.data.checkoutItems,
                 ),
-                const CheckoutPickupWidget(),
+                CheckoutPickupWidget(
+                  getPickupTime: getPickupTime,
+                ),
                 CheckoutStoreDirectionWidget(
                   googleMaps: widget.data.googleMaps,
                 ),
