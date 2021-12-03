@@ -2,7 +2,7 @@ import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:sanity/sanity.dart';
 
-class SearchUseCase {
+class SearchBarLogic {
   static const historyLenght = 5;
   final List<String> searchHistory = ['Flutter', 'Future'];
   List<String>? filteredSearchHistory;

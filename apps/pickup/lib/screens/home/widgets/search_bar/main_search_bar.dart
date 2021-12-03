@@ -13,7 +13,7 @@ class DiscoverSearchBar extends StatefulWidget {
 
 class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
   late Widget child = widget.child;
-  SearchUseCase searchVM = SearchUseCase();
+  SearchBarLogic searchVM = SearchBarLogic();
 
   late FloatingSearchBarController controller;
   @override
