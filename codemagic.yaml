@@ -49,9 +49,9 @@ workflows:
     artifacts:
       - apps/pickup/build/ios/ipa/*.ipa
     publishing:
-      email:
-        recipients:
-          - joel.rose@code.berlin
+      slack:
+        channel: '#codemagic-pipeline'
+        notify_on_build_start: false
       app_store_connect:
         api_key: Encrypted(Z0FBQUFBQmhnNThFd2U0Z2kxZnhuQ08yMUNmbEM4LVJmcTY2TUhLNU04NThTdWg0bzJMcnVrWGdCX2tyVWxSOWVaOERaVURNYk5ER0VyZ0otSVZKczNleHFYWEZXSjREU3N0Q2xycXNlWTNIR0o3bFo3NTMtLXQtal9HU0NNekdQQXpyRTNJWkpEQXYtRXJva3hpcnc2WEJlU3RJRG5mdjk2NW5hZWJvWjRXSmlGSGxkMkFiZmhNeGtUZlJpUHI2TnBqQmIzU0FEZkctZ0RqMjRsdXVUUkdWQ0VUV0tJQjdxYURpZ0dFNUE2MDhLRm1VOWRfTFRjSk5iV2kwalhBTGVsdGQ1TFBRcEhEZ0NFRGxrYVFMU0x0TEdvS1BDQ1RJNTJkdzJiSGY5dWxvLTVicXd0dFgwM0ZEeUFiS05FdWpNTnExMi1aV3Z4UjVjd2p4X1AzWktCOVZaR3NGVXJIb3owMDdSSjk1ckp3RmRkZEJIU0V2QWtDTjZycTdaajRSMVMxOEZXeTZrYW9DTXJDZzVtc3BCVTYtYThsUWJmRHVBaFZwaEZ4UF94UGFCTGxGcTZkZzItND0=)
         key_id: 647N3684PB
@@ -95,9 +95,9 @@ workflows:
     artifacts:
       - apps/vendor/build/ios/ipa/*.ipa
     publishing:
-      email:
-        recipients:
-          - joel.rose@code.berlin
+      slack:
+        channel: '#codemagic-pipeline'
+        notify_on_build_start: false
       app_store_connect:
         api_key: Encrypted(Z0FBQUFBQmhnX01MNUJYM2Z0TWdDeU82alNLTUhEdXNSTHpsRWl0N1hVS3AwbTBNSlg2bUNocktsYUp0WnRpTkRyUUc5NDVwN25pWDdKMzhhRkthVGVVU3VZaVR4LWcwQUUwMUZHVFVlQ1BQWlU0NFJpSzA2ZFNHN0Npa0t6Z254WDZIeE5BZ09FdFJxcnh0WTczV0NqdlZPcUFXNkF4YVU5OTVyWlk1enNVaWlaQWNZRkwxS09iZEJtSWk2WV9PYXRubWxpSGhKeGNiellZc2FFOHllM244aU54Y3IxM3plSktSNkg3SVBvWlh5bEowSWd5OVJfeEthSUV1QWRMVklWRk0wOVhvMHpXVkxwT2FIV0lpUUY2WlVMQk1uMHJEenQyTzlQVmNCNHlGOW9WZ3Q1RXU1NW95bTRtRWQxd0pEQ0ZodjNheDh4X3h5TUl5aDhHclAxb05iOEZLOHpvWUkyVkFfOUJzeThCSXNqV1c4MDM0ckhYZzNoM2taM0FCVzFFbnZPNTZGTjlLUXYwV2t4YjBuamFfN3ZoaGpfWUhmZDZaMDVzOUVJbnJZTklxaENIelZlVT0=)
         key_id: 647N3684PB
