@@ -13,13 +13,13 @@ class DiscoverSearchBar extends StatefulWidget {
 
 class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
   late Widget child = widget.child;
-  SearchBarLogic searchVM = SearchBarLogic();
+  DiscoverySearchBarViewModel searchVM = DiscoverySearchBarViewModel();
 
   late FloatingSearchBarController controller;
   @override
   void initState() {
     super.initState();
-    searchVM.model.fetchRestaurants();
+    searchVM.fetchRestaurants();
     searchVM.filteredSearchHistory = searchVM.filterSearchTerms(
       filter: '',
       searchHistory: searchVM.searchHistory,
@@ -36,7 +36,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
       );
       searchVM.filteredRestaurants = searchVM.filterRestaurants(
         filter: query,
-        restaurants: searchVM.restaurants,
+        restaurants: searchVM.getRestaurants(),
       );
       searchVM.updateRecentSearchVisibilty();
     });
