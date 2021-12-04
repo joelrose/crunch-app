@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
-import 'package:pickup/screens/home/widgets/search_bar/search_bar_logic.dart';
+import 'package:pickup/screens/home/widgets/search_bar/search_viewmodel.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:sanity/sanity.dart';
 
