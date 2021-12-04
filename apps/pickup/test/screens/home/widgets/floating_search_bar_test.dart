@@ -6,7 +6,7 @@ import 'package:sanity/sanity.dart';
 
 void main() {
   final List<String> _searchHistory = ['Flutter', 'Future'];
-  final SearchBarLogic useCase = SearchBarLogic();
+  final DiscoverySearchBarViewModel useCase = DiscoverySearchBarViewModel();
   test('filterSearchTerms function', () {
     final List<String> _searchHistory = ['Flutter', 'Future'];
     final input = ['Flu', 'Java', 'F'];

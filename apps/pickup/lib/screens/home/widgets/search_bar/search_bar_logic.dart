@@ -2,15 +2,20 @@ import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:sanity/sanity.dart';
 
-class SearchBarLogic {
+class DiscoverySearchBarViewModel {
+  RestaurantScreenModel restaurantModel = locator<RestaurantScreenModel>();
+
+  Future<dynamic> fetchRestaurants() {
+    return restaurantModel.fetchRestaurants();
+  }
+  
+  List<RestaurantOverviewModel> getRestaurants() {
+    return restaurantModel.restaurants;
+  }
+
   static const historyLenght = 5;
   final List<String> searchHistory = ['Flutter', 'Future'];
   List<String>? filteredSearchHistory;
-
-  final SanityCms cmsClient = locator<SanityCms>();
-  RestaurantScreenModel model = locator<RestaurantScreenModel>();
-
-  late final List<RestaurantOverviewModel> restaurants = model.restaurants;
 
   bool isAppBarVisible = false;
   bool isRecentSearchVisible = true;
@@ -41,14 +46,15 @@ class SearchBarLogic {
     List<RestaurantOverviewModel> restaurants = const [],
     String filter = '',
   }) {
+    final List<RestaurantOverviewModel> listOfFilteredRestaurants = restaurants
+        .where(
+          (restaurant) => restaurant.name.toLowerCase().contains(
+                filter.toLowerCase(),
+              ),
+        )
+        .toList();
     if (filter != '' && filter.isNotEmpty) {
-      return restaurants
-          .where(
-            (restaurant) => restaurant.name.toLowerCase().contains(
-                  filter.toLowerCase(),
-                ),
-          )
-          .toList();
+      return listOfFilteredRestaurants;
     } else {
       return restaurants;
     }
