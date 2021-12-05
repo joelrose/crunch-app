@@ -18,14 +18,14 @@ void main() {
     for (var i = 0; i < 3; i++) {
       useCase.filteredSearchHistory = useCase.filterSearchTerms(
         filter: input[i],
-        searchHistory: _searchHistory,
+        list: _searchHistory,
       );
       expect(useCase.filteredSearchHistory, expectedOutput[i]);
     }
   });
   void filterInput(String input, expectedOutput) {
     useCase.filteredSearchHistory =
-        useCase.filterSearchTerms(filter: input, searchHistory: _searchHistory);
+        useCase.filterSearchTerms(filter: input, list: _searchHistory);
 
     expect(useCase.filteredSearchHistory, expectedOutput);
   }
