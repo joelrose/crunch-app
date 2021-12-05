@@ -21,8 +21,8 @@ class SearchResultsWidget extends StatelessWidget {
   final List<String> filteredSearchHistory;
   final List<RestaurantOverviewModel> filteredRestaurants;
   final bool isRecentSearchVisible;
-  final deleteSearchTerm;
-  final addSearchTerm;
+  final Function deleteSearchTerm;
+  final Function addSearchTerm;
 
   @override
   Widget build(BuildContext context) {
