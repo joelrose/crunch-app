@@ -22,17 +22,18 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
     searchVM.fetchRestaurants();
     searchVM.filteredSearchHistory = searchVM.filterSearchTerms(
       filter: '',
-      searchHistory: searchVM.searchHistory,
+      list: searchVM.searchHistory,
     );
     searchVM.filteredRestaurants = [];
     controller = FloatingSearchBarController();
   }
 
   void onQueryChanged(String query) {
+    searchVM.query = query;
     setState(() {
       searchVM.filteredSearchHistory = searchVM.filterSearchTerms(
         filter: query,
-        searchHistory: searchVM.searchHistory,
+        list: searchVM.searchHistory,
       );
       searchVM.filteredRestaurants = searchVM.filterRestaurants(
         filter: query,
@@ -51,14 +52,22 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
   void onSubmitted(String query) {
     if (query != '') {
       setState(() {
-        searchVM.addSearchTerm(term: query, filter: query);
+        searchVM.addSearchTerm(
+          term: query,
+          list: searchVM.searchHistory,
+        );
       });
     }
   }
 
-  void deleteSearchTerm({String term = '', String filter = ''}) {
+  void deleteSearchTerm({
+    String term = '',
+  }) {
     setState(() {
-      searchVM.deleteSearchTerm(term: term, filter: filter);
+      searchVM.deleteSearchTerm(
+        term: term,
+        list: searchVM.searchHistory,
+      );
     });
   }
 
