@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/screens/home/widgets/search_bar/matching_restaurants_widget.dart';
 import 'package:pickup/screens/home/widgets/search_bar/recent_search_widget.dart';
-import 'package:pickup/screens/home/widgets/search_bar/search_viewmodel.dart';
 import 'package:sanity/sanity.dart';
 
 class ActiveSearchWidget extends StatelessWidget {
@@ -21,8 +20,8 @@ class ActiveSearchWidget extends StatelessWidget {
   final List<String> filteredSearchHistory;
   final List<RestaurantOverviewModel> filteredRestaurants;
   final bool isRecentSearchVisible;
-  final deleteSearchTerm;
-  final addSearchTerm;
+  final Function deleteSearchTerm;
+  final Function addSearchTerm;
   @override
   Widget build(BuildContext context) {
     return Column(
