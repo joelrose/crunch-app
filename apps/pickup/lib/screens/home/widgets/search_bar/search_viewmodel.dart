@@ -3,14 +3,12 @@ import 'package:pickup/services/service_locator.dart';
 import 'package:sanity/sanity.dart';
 
 class DiscoverySearchBarViewModel {
-  RestaurantScreenModel restaurantModel = locator<RestaurantScreenModel>();
-
   Future<dynamic> fetchRestaurants() {
-    return restaurantModel.fetchRestaurants();
+    return locator<RestaurantScreenModel>().fetchRestaurants();
   }
-  
+
   List<RestaurantOverviewModel> getRestaurants() {
-    return restaurantModel.restaurants;
+    return locator<RestaurantScreenModel>().restaurants;
   }
 
   static const historyLenght = 5;
