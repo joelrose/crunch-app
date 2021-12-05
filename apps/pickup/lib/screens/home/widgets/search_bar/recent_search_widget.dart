@@ -13,7 +13,7 @@ class RecentSearchWidget extends StatelessWidget {
 
   final FloatingSearchBarController controller;
   final List<String> filteredSearchHistory;
-  final deleteSearchTerm;
+  final Function deleteSearchTerm;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,6 @@ class RecentSearchWidget extends StatelessWidget {
                       onPressed: () {
                         deleteSearchTerm(
                           term: recentSearch,
-                          filter: controller.query,
                         );
                       },
                     ),
