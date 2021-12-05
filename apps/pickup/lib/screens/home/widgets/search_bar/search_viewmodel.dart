@@ -3,12 +3,14 @@ import 'package:pickup/services/service_locator.dart';
 import 'package:sanity/sanity.dart';
 
 class DiscoverySearchBarViewModel {
+  late RestaurantScreenModel restaurantModel = locator<RestaurantScreenModel>();
+
   Future<dynamic> fetchRestaurants() {
-    return locator<RestaurantScreenModel>().fetchRestaurants();
+    return restaurantModel.fetchRestaurants();
   }
 
   List<RestaurantOverviewModel> getRestaurants() {
-    return locator<RestaurantScreenModel>().restaurants;
+    return restaurantModel.restaurants;
   }
 
   static const historyLenght = 5;
@@ -20,12 +22,14 @@ class DiscoverySearchBarViewModel {
 
   late List<RestaurantOverviewModel>? filteredRestaurants;
 
+  String query = '';
+
   List<String> filterSearchTerms({
     required String filter,
-    required List<String> searchHistory,
+    required List<String> list,
   }) {
-    final List<String> searchHistoryReversed = searchHistory.reversed.toList();
-    final List<String> listOfFilteredRecentSearch = searchHistoryReversed
+    final List<String> listReversed = list.reversed.toList();
+    final List<String> listOfFilteredRecentSearch = listReversed
         .where(
           (recentSearch) =>
               recentSearch.toLowerCase().startsWith(filter.toLowerCase()) &&
@@ -36,7 +40,7 @@ class DiscoverySearchBarViewModel {
     if (filter != '' && filter.isNotEmpty) {
       return listOfFilteredRecentSearch;
     } else {
-      return searchHistoryReversed;
+      return listReversed;
     }
   }
 
@@ -58,30 +62,41 @@ class DiscoverySearchBarViewModel {
     }
   }
 
-  void addSearchTerm({String term = '', String filter = ''}) {
-    if (searchHistory.contains(term)) {
-      putSearchTermFirst(term: term, filter: filter);
+  void addSearchTerm({required String term, required List<String> list,}) {
+    if (list.contains(term)) {
+      putSearchTermFirst(
+        term: term,
+        list: list,
+      );
       return;
     }
-
-    searchHistory.add(term);
-    if (searchHistory.length > historyLenght) {
-      searchHistory.removeRange(0, searchHistory.length - historyLenght);
+    list.add(term);
+    if (list.length > historyLenght) {
+      list.removeRange(0, list.length - historyLenght);
     }
-    filteredSearchHistory =
-        filterSearchTerms(filter: filter, searchHistory: searchHistory);
+    filteredSearchHistory = filterSearchTerms(filter: query, list: list);
   }
 
-  void deleteSearchTerm({String term = '', String filter = ''}) {
-    searchHistory
-        .removeWhere((recentSearchedTerms) => recentSearchedTerms == term);
-    filteredSearchHistory =
-        filterSearchTerms(filter: filter, searchHistory: searchHistory);
+  void deleteSearchTerm({
+    required String term,
+    required List<String> list,
+  }) {
+    list.removeWhere((recentSearchedTerms) => recentSearchedTerms == term);
+    filteredSearchHistory = filterSearchTerms(filter: query, list: list);
   }
 
-  void putSearchTermFirst({String term = '', String filter = ''}) {
-    deleteSearchTerm(term: term, filter: filter);
-    addSearchTerm(term: term, filter: filter);
+  void putSearchTermFirst({
+    required String term,
+    required List<String> list,
+  }) {
+    deleteSearchTerm(
+      term: term,
+      list: list,
+    );
+    addSearchTerm(
+      term: term,
+      list: list,
+    );
   }
 
   void updateRecentSearchVisibilty() {
