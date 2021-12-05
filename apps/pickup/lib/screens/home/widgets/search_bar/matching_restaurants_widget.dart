@@ -14,7 +14,7 @@ class MatchingRestaurantsWidget extends StatelessWidget {
 
   final FloatingSearchBarController controller;
   final List<RestaurantOverviewModel> filteredRestaurants;
-  final addSearchTerm;
+  final Function addSearchTerm;
 
   @override
   Widget build(BuildContext context) {
