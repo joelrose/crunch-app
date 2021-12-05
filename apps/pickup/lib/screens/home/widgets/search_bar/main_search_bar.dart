@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'search_viewmodel.dart';
 import 'search_ui_widget.dart';
+import 'search_viewmodel.dart';
 
 class DiscoverSearchBar extends StatefulWidget {
   const DiscoverSearchBar({Key? key, required this.child}) : super(key: key);
