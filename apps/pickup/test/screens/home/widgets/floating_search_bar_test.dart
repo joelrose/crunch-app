@@ -1,11 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
-import 'package:pickup/screens/home/widgets/floating_search_bar.dart';
+import 'package:pickup/screens/home/widgets/search_bar/search_viewmodel.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:sanity/sanity.dart';
 
 void main() {
   final List<String> _searchHistory = ['Flutter', 'Future'];
+  final DiscoverySearchBarViewModel useCase = DiscoverySearchBarViewModel();
   test('filterSearchTerms function', () {
     final List<String> _searchHistory = ['Flutter', 'Future'];
     final input = ['Flu', 'Java', 'F'];
@@ -15,17 +16,20 @@ void main() {
       ['Future', 'Flutter']
     ];
     for (var i = 0; i < 3; i++) {
-      filteredSearchHistory =
-          filterSearchTerms(filter: input[i], searchHistory: _searchHistory);
-      expect(filteredSearchHistory, expectedOutput[i]);
+      useCase.filteredSearchHistory = useCase.filterSearchTerms(
+        filter: input[i],
+        list: _searchHistory,
+      );
+      expect(useCase.filteredSearchHistory, expectedOutput[i]);
     }
   });
   void filterInput(String input, expectedOutput) {
-    filteredSearchHistory =
-        filterSearchTerms(filter: input, searchHistory: _searchHistory);
+    useCase.filteredSearchHistory =
+        useCase.filterSearchTerms(filter: input, list: _searchHistory);
 
-    expect(filteredSearchHistory, expectedOutput);
+    expect(useCase.filteredSearchHistory, expectedOutput);
   }
+
   test('filter with matches one term', () {
     filterInput('Flu', ['Flutter']);
   });
@@ -41,9 +45,9 @@ void main() {
     RestaurantScreenModel model = locator<RestaurantScreenModel>();
     late final List<RestaurantOverviewModel> _restaurants = model.restaurants;
     test('description', () {
-      filteredRestaurants =
-          filterRestaurants(filter: 'n', restaurants: _restaurants);
-      expect(filteredRestaurants, '');
+      useCase.filteredRestaurants =
+          useCase.filterRestaurants(filter: 'n', restaurants: _restaurants);
+      expect(useCase.filteredRestaurants, '');
     });
   });
 }
