@@ -1,17 +1,29 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:pickup/routes.dart';
 import 'package:sanity/sanity.dart';
+
+class ProductDetailsData {
+  ProductDetailsData({
+    required this.item,
+    required this.restaurantImage,
+  });
+  final RestaurantMenueItemModel item;
+  final String restaurantImage;
+}
 
 class StoreMenueList extends StatefulWidget {
   const StoreMenueList({
     Key? key,
     required this.menueCategories,
     required this.onCheckoutChange,
+    required this.restaurantImage,
   }) : super(key: key);
 
   final List<RestaurantMenueCategoryModel> menueCategories;
   final void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
+  final String restaurantImage;
 
   @override
   State<StoreMenueList> createState() => _StoreMenueListState();
@@ -124,8 +136,15 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           color: Colors.blue,
                           icon: Icons.add,
                           onTap: () {
-                            checkoutItems.add(item);
-                            widget.onCheckoutChange(checkoutItems);
+                            Navigator.of(context).pushNamed(
+                              productDetailOverview,
+                              arguments: ProductDetailsData(
+                                item: item,
+                                restaurantImage: widget.restaurantImage,
+                              ),
+                            );
+                            // checkoutItems.add(item);
+                            // widget.onCheckoutChange(checkoutItems);
                           },
                         ),
                       ],
@@ -138,11 +157,13 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           children: [
                             Text(
                               item.title.english,
-                              style:
-                                  Theme.of(context).textTheme.bodyText1!.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                  ),
                             ),
                             if (checkoutItems.contains(item))
                               Padding(
