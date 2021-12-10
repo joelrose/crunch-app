@@ -134,13 +134,27 @@ class _StoreMenueListState extends State<StoreMenueList> {
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 25,
                         ),
-                        title: Text(
-                          item.title.english,
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                  ),
+                        title: Row(
+                          children: [
+                            Text(
+                              item.title.english,
+                              style:
+                                  Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                      ),
+                            ),
+                            if (checkoutItems.contains(item))
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Text(
+                                  '${checkoutItems.where(
+                                        (listItem) => item == listItem,
+                                      ).length}x',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              )
+                          ],
                         ),
                         subtitle: Text(
                           '${item.price} €',
