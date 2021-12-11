@@ -15,22 +15,81 @@ class StoreProductOverview extends StatefulWidget {
 class _StoreProductOverviewState extends State<StoreProductOverview> {
   @override
   Widget build(BuildContext context) {
+    String price =
+        '${widget.data.item.price.toString().split('.')[0]}.${widget.data.item.price.toString().split('.')[0].padRight(2, '0')}€';
     return PageWrapper(
       padding: EdgeInsets.zero,
       backgroundColor: AlpacaColor.white100Color,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            StoreImageNavbar(
-              image: widget.data.restaurantImage,
-              showButtons: false,
+      child: CustomScrollView(
+        shrinkWrap: true,
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                StoreImageNavbar(
+                  image: widget.data.restaurantImage,
+                  showButtons: false,
+                ),
+                ProductBasicDetails(
+                  title: widget.data.item.title.english,
+                ),
+                ProductRadioCheckbox()
+              ],
             ),
-            ProductBasicDetails(
-              title: widget.data.item.title.english,
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                children: [
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '1x',
+                              style: Theme.of(context).textTheme.headline2!.merge(
+                                    const TextStyle(
+                                      color: AlpacaColor.darkNavyColor,
+                                    ),
+                                  ),
+                            ),
+                            Text(
+                              price,
+                              style: Theme.of(context).textTheme.headline2!.merge(
+                                    const TextStyle(
+                                      color: AlpacaColor.primary100,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: ActionButton(
+                            onPressed: () {
+                              widget.data.checkoutItems.add(widget.data.item);
+                              widget.data.onCheckoutChange(widget.data.checkoutItems);
+                              Navigator.pop(context);
+                            },
+                            buttonText: 'Add to order',
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            ProductRadioCheckbox()
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

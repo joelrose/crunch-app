@@ -8,9 +8,13 @@ class ProductDetailsData {
   ProductDetailsData({
     required this.item,
     required this.restaurantImage,
+    required this.checkoutItems,
+    required this.onCheckoutChange,
   });
   final RestaurantMenueItemModel item;
   final String restaurantImage;
+  List<RestaurantMenueItemModel> checkoutItems;
+  void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
 }
 
 class StoreMenueList extends StatefulWidget {
@@ -141,6 +145,8 @@ class _StoreMenueListState extends State<StoreMenueList> {
                               arguments: ProductDetailsData(
                                 item: item,
                                 restaurantImage: widget.restaurantImage,
+                                checkoutItems: checkoutItems,
+                                onCheckoutChange: widget.onCheckoutChange,
                               ),
                             );
                             // checkoutItems.add(item);
