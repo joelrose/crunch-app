@@ -33,7 +33,10 @@ void main() {
           home: Scaffold(
             body: CheckoutScreen(
               data: CreateStoreData(
-                  checkoutItems: [], storeName: '', googleMaps: ''),
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
             ),
           ),
         ),
@@ -51,7 +54,10 @@ void main() {
           home: Scaffold(
             body: CheckoutScreen(
               data: CreateStoreData(
-                  checkoutItems: [], storeName: '', googleMaps: ''),
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
             ),
           ),
         ),
@@ -69,7 +75,10 @@ void main() {
           home: Scaffold(
             body: CheckoutScreen(
               data: CreateStoreData(
-                  checkoutItems: [], storeName: '', googleMaps: ''),
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
             ),
           ),
         ),
@@ -87,7 +96,10 @@ void main() {
           home: Scaffold(
             body: CheckoutScreen(
               data: CreateStoreData(
-                  checkoutItems: [], storeName: '', googleMaps: ''),
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
             ),
           ),
         ),
@@ -141,7 +153,10 @@ void main() {
           home: Scaffold(
             body: CheckoutScreen(
               data: CreateStoreData(
-                  checkoutItems: [], storeName: '', googleMaps: ''),
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
             ),
           ),
         ),

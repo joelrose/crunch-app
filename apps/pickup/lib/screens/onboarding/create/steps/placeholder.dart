@@ -25,7 +25,7 @@ class _StepPhoneVerificationState extends State<StepPlaceholder> {
         Padding(
           padding: EdgeInsets.only(right: size.width * 0.2),
           child: Text(
-            "Placeholder",
+            'Placeholder',
             style: theme.headline1!.merge(
               const TextStyle(
                 fontWeight: FontWeight.bold,

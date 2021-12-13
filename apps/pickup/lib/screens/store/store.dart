@@ -179,7 +179,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                   style: TextStyle(
                                     color: AlpacaColor.darkNavyColor,
                                     fontSize: 18,
-                                    fontFamily: "Inter",
+                                    fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),

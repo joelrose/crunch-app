@@ -2,7 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutHeaderRowWidget extends StatelessWidget {
-  CheckoutHeaderRowWidget({
+  const CheckoutHeaderRowWidget({
     Key? key,
     required this.header,
     required this.onPressed,
@@ -14,7 +14,7 @@ class CheckoutHeaderRowWidget extends StatelessWidget {
     this.disableButtonBackground = false,
   }) : super(key: key);
 
-  List<Widget>? children;
+  final List<Widget>? children;
   final String header;
   final void Function() onPressed;
   final String buttonText;

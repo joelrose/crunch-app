@@ -49,9 +49,10 @@ class _CheckoutContactDetailsWidgetState
                   Text(
                     '''Providing a phone number allows the restaurant to contact you easily in case there is an issue with your order.''',
                     style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        color: AlpacaColor.darkGreyColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600),
+                          color: AlpacaColor.darkGreyColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
                   )
                 ],
               ),
