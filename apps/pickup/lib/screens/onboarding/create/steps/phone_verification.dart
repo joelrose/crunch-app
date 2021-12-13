@@ -8,9 +8,11 @@ import 'package:pickup/services/service_locator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class StepPhoneVerification extends StatefulWidget {
-  const StepPhoneVerification(
-      {Key? key, required this.onFinish, required this.phoneNumber})
-      : super(key: key);
+  const StepPhoneVerification({
+    Key? key,
+    required this.onFinish,
+    required this.phoneNumber,
+  }) : super(key: key);
 
   final void Function() onFinish;
   final String phoneNumber;

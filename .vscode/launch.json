@@ -6,9 +6,39 @@
   "configurations": [
     {
       "name": "Pickup Development",
-      "program": "apps/pickup/lib/main.dart",
       "request": "launch",
       "type": "dart",
+      "program": "apps/pickup/lib/main_development.dart",
+      "args": [
+        "--flavor",
+        "development",
+        "--target",
+        "lib/main_development.dart"
+      ]
+    },
+    {
+      "name": "Pickup Staging",
+      "request": "launch",
+      "type": "dart",
+      "program": "apps/pickup/lib/main_development.dart",
+      "args": [
+        "--flavor",
+        "staging",
+        "--target",
+        "lib/main_staging.dart"
+      ]
+    },
+    {
+      "name": "Pickup Production",
+      "request": "launch",
+      "type": "dart",
+      "program": "apps/pickup/lib/main_development.dart",
+      "args": [
+        "--flavor",
+        "production",
+        "--target",
+        "lib/main_production.dart"
+      ]
     },
     {
       "name": "Vendor Development",

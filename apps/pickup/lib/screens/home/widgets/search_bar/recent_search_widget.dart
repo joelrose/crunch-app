@@ -1,7 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:pickup/screens/home/widgets/search_bar/search_viewmodel.dart';
 
 class RecentSearchWidget extends StatelessWidget {
   const RecentSearchWidget({

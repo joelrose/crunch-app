@@ -10,14 +10,14 @@ environment:
 
 dependencies:
   alpaca: ^1.0.0
-  cloud_firestore: ^2.4.0
-  cloud_functions: ^3.0.3
+  cloud_firestore: ^3.1.4
+  cloud_functions: ^3.2.3
   cupertino_icons: ^1.0.2
   easy_localization: ^3.0.0
-  firebase_analytics: ^8.3.2
-  firebase_auth: ^3.0.1
-  firebase_core: ^1.4.0
-  firebase_messaging: ^10.0.7
+  firebase_analytics: ^9.0.3
+  firebase_auth: ^3.3.3
+  firebase_core: ^1.10.5
+  firebase_messaging: ^11.2.3
   flutter:
     sdk: flutter
   flutter_datetime_picker: ^1.5.1
@@ -46,12 +46,6 @@ dev_dependencies:
   lint: ^1.7.2
   mockito: ^5.0.16
   test: any
-
-flutter_icons:
-  android: true
-  ios: true
-  remove_alpha_ios: true
-  image_path: "assets/logo/crunch.png"
 
 flutter:
   uses-material-design: true

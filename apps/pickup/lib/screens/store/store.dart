@@ -4,13 +4,13 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pickup/routes.dart';
 import 'package:pickup/screens/store/store_screen_model.dart';
 import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
 import 'package:pickup/screens/store/widgets/store_information_item.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
 import 'package:pickup/shared/base_screen.dart';
+import 'package:pickup/shared/routes.dart';
 import 'package:pickup/shared/viewstate.dart';
 import 'package:sanity/sanity.dart';
 
@@ -101,7 +101,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                   style: TextStyle(
                                     color: AlpacaColor.darkNavyColor,
                                     fontSize: 18,
-                                    fontFamily: "Inter",
+                                    fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),

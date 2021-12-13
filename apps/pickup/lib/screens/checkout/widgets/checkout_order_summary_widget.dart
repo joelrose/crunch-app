@@ -68,16 +68,18 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
                   Text(
                     'Discount',
                     style: TextStyle(
-                        color: AlpacaColor.darkGreyColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15),
+                      color: AlpacaColor.darkGreyColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
                   ),
                   Text(
                     '0.00€',
                     style: TextStyle(
-                        color: AlpacaColor.blackColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600),
+                      color: AlpacaColor.blackColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
               ),

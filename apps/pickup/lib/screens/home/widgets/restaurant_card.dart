@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/routes.dart';
-import 'package:sanity/src/model.dart';
+import 'package:pickup/shared/routes.dart';
+import 'package:sanity/sanity.dart';
 
 class RestaurantCard extends StatelessWidget {
   const RestaurantCard({
