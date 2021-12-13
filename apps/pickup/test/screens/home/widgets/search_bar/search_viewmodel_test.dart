@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/screens/home/widgets/search_bar/active_search_widget.dart';
-import 'package:pickup/screens/home/widgets/search_bar/matching_restaurants_widget.dart';
 import 'package:pickup/screens/home/widgets/search_bar/recent_search_widget.dart';
 import 'package:pickup/screens/home/widgets/search_bar/search_viewmodel.dart';
 import 'package:sanity/sanity.dart';

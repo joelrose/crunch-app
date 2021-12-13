@@ -46,9 +46,10 @@ class CheckoutCartItemsWidget extends StatelessWidget {
                         Text(
                           '${checkoutItem.price}€',
                           style: const TextStyle(
-                              color: AlpacaColor.blackColor,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600),
+                            color: AlpacaColor.blackColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ],
                     ),
