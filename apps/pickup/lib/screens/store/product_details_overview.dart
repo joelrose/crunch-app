@@ -2,12 +2,13 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
+import 'package:sanity/sanity.dart';
 
 import 'widgets/store_menue_list.dart';
 
 class StoreProductOverview extends StatefulWidget {
-  StoreProductOverview({Key? key, required this.data}) : super(key: key);
-  ProductDetailsData data;
+  const StoreProductOverview({Key? key, required this.data}) : super(key: key);
+  final ProductDetailsData data;
 
   @override
   _StoreProductOverviewState createState() => _StoreProductOverviewState();
@@ -35,14 +36,18 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
                       ProductBasicDetails(
                         title: widget.data.item.title.english,
                       ),
-                      ProductRadioCheckbox()
+                      ProductRadioCheckbox(
+                        itemCategories: widget.data.itemOptions,
+                      )
                     ],
                   ),
                 ),
               ],
             ),
           ),
-          ProductAmountAndAddToOrder(data: widget.data,)
+          ProductAmountAndAddToOrder(
+            data: widget.data,
+          )
         ],
       ),
     );
@@ -50,8 +55,8 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
 }
 
 class ProductBasicDetails extends StatelessWidget {
-  ProductBasicDetails({Key? key, required this.title}) : super(key: key);
-  String title;
+  const ProductBasicDetails({Key? key, required this.title}) : super(key: key);
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -81,30 +86,9 @@ class ProductBasicDetails extends StatelessWidget {
 }
 
 class ProductRadioCheckbox extends StatefulWidget {
-  ProductRadioCheckbox({Key? key}) : super(key: key);
-  List<Map<String, Object>> itemData = [
-    {
-      'Topic': 'Size',
-      'Choices': [
-        ['Medium', ''],
-        ['Large', '+1.10€'],
-      ]
-    },
-    {
-      'Topic': 'Hot sauce',
-      'Choices': [
-        ['No', ''],
-        ['Yes', ''],
-      ]
-    },
-    {
-      'Topic': 'Hot sauce',
-      'Choices': [
-        ['No', ''],
-        ['Yes', ''],
-      ]
-    },
-  ];
+  const ProductRadioCheckbox({Key? key, required this.itemCategories})
+      : super(key: key);
+  final List<RestaurantMenueItemOptions>? itemCategories;
 
   @override
   _ProductRadioCheckboxState createState() => _ProductRadioCheckboxState();
@@ -113,89 +97,85 @@ class ProductRadioCheckbox extends StatefulWidget {
 class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: widget.itemData.length,
-        itemBuilder: (context, i) {
-          final Map<dynamic, dynamic> item = widget.itemData[i];
-          final String itemTopic = item['Topic'] as String;
-          final List<dynamic> itemChoices = item['Choices'] as List;
-          String initialChoice = itemChoices[0].toString();
-          return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      itemTopic,
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 20),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 0.5,
-                          color: AlpacaColor.greyColor,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: widget.itemCategories?.length ?? 0,
+      itemBuilder: (context, i) {
+        final item = widget.itemCategories![i];
+        var choice = item.options[0].id;
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.title.english,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 20),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 0.5,
+                        color: AlpacaColor.greyColor,
                       ),
-                      child: ListView.separated(
-                        itemCount: itemChoices.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) {
-                          return const Divider(
-                            height: 0,
-                          );
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: ListView.separated(
+                      itemCount: item.options.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          height: 0,
+                        );
+                      },
+                      itemBuilder: (context, index) => GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          setState(() {
+                            choice = item.options[index].id;
+                          });
                         },
-                        itemBuilder: (context, index) => GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () {
-                            final value = itemChoices[index];
-                            setState(() {
-                              initialChoice = value.toString();
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Radio(
-                                value: itemChoices[index].toString(),
-                                groupValue: initialChoice,
-                                onChanged: (value) {
-                                  setState(() {
-                                    initialChoice = value.toString();
-                                  });
-                                },
-                                activeColor: AlpacaColor.primary100,
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 17),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        itemChoices[index][0].toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .merge(
-                                              const TextStyle(
-                                                color:
-                                                    AlpacaColor.darkNavyColor,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 13,
-                                              ),
+                        child: Row(
+                          children: [
+                            Radio(
+                              value: item.options[index].id,
+                              groupValue: choice,
+                              onChanged: (value) {
+                                setState(() {
+                                  choice = value.toString();
+                                });
+                              },
+                              activeColor: AlpacaColor.primary100,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 17),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      item.options[index].title.english,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1!
+                                          .merge(
+                                            const TextStyle(
+                                              color: AlpacaColor.darkNavyColor,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13,
                                             ),
-                                      ),
+                                          ),
+                                    ),
+                                    if (item.options[index].price != 0)
                                       Text(
-                                        itemChoices[index][1].toString(),
+                                        '+ ${item.options[index].price.toString()}€',
                                         style: Theme.of(context)
                                             .textTheme
                                             .subtitle1!
@@ -207,29 +187,29 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                                               ),
                                             ),
                                       ),
-                                    ],
-                                  ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
-      ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
 
 class ProductAmountAndAddToOrder extends StatefulWidget {
-  ProductAmountAndAddToOrder({Key? key, required this.data}) : super(key: key);
-  ProductDetailsData data;
+  const ProductAmountAndAddToOrder({Key? key, required this.data})
+      : super(key: key);
+  final ProductDetailsData data;
 
   @override
   _ProductAmountAndAddToOrderState createState() =>
@@ -264,7 +244,7 @@ class _ProductAmountAndAddToOrderState
 
   @override
   Widget build(BuildContext context) {
-    double productPrice = widget.data.item.price.toDouble();
+    final productPrice = widget.data.item.price.toDouble();
 
     void updatePriceAsString(newTotalPrice) {
       setState(() {

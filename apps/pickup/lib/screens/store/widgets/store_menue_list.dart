@@ -10,10 +10,12 @@ class ProductDetailsData {
     required this.restaurantImage,
     required this.checkoutItems,
     required this.onCheckoutChange,
+    this.itemOptions,
   });
   final RestaurantMenueItemModel item;
   final String restaurantImage;
   List<RestaurantMenueItemModel> checkoutItems;
+  List<RestaurantMenueItemOptions>? itemOptions;
   void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
 }
 
@@ -85,8 +87,8 @@ class _StoreMenueListState extends State<StoreMenueList> {
           itemCount: widget.menueCategories.length,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemBuilder: (context, i) {
-            final category = widget.menueCategories[i];
+          itemBuilder: (context, j) {
+            final category = widget.menueCategories[j];
             return Column(
               children: [
                 ListTile(
@@ -118,6 +120,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                 restaurantImage: widget.restaurantImage,
                                 checkoutItems: checkoutItems,
                                 onCheckoutChange: widget.onCheckoutChange,
+                                itemOptions: category.menueItems[i].itemOptions,
                               ),
                             );
                       },
