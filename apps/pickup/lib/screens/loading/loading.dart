@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pickup/routes.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/routes.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);

@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pickup/routes.dart';
 import 'package:pickup/screens/onboarding/create/create_account.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/database_service.dart';
 import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/routes.dart';
 
 class OnboardingAccountScreen extends StatefulWidget {
   const OnboardingAccountScreen({Key? key, required this.isSignUp})
