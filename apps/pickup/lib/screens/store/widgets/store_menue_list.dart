@@ -109,38 +109,9 @@ class _StoreMenueListState extends State<StoreMenueList> {
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final item = category.menueItems[i];
-                    return Slidable(
-                      key: Key(item.title.english),
-                      controller: slidableController,
-                      // dismissal: SlidableDismissal(
-                      //   child: const SlidableBehindActionPane(),
-                      //   onDismissed: (actionType) {
-                      //     _showSnackBar(
-                      //       context,
-                      //       actionType == SlideActionType.primary
-                      //           ? 'Dismiss Archive'
-                      //           : 'Dimiss Delete',
-                      //     );
-                      //   },
-                      // ),
-                      actions: [
-                        IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () {
-                            checkoutItems.remove(item);
-                            widget.onCheckoutChange(checkoutItems);
-                          },
-                        ),
-                      ],
-                      secondaryActions: [
-                        IconSlideAction(
-                          caption: 'Add',
-                          color: Colors.blue,
-                          icon: Icons.add,
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
+                    return  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
                               productDetailOverview,
                               arguments: ProductDetailsData(
                                 item: item,
@@ -149,46 +120,42 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                 onCheckoutChange: widget.onCheckoutChange,
                               ),
                             );
-                            // checkoutItems.add(item);
-                            // widget.onCheckoutChange(checkoutItems);
-                          },
-                        ),
-                      ],
-                      actionPane: const SlidableBehindActionPane(),
+                      },
                       child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 25,
-                        ),
-                        title: Row(
-                          children: [
-                            Text(
-                              item.title.english,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 25,
+                          ),
+                          title: Row(
+                            children: [
+                              Text(
+                                item.title.english,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                    ),
+                              ),
+                              if (checkoutItems.contains(item))
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Text(
+                                    '${checkoutItems.where(
+                                          (listItem) => item == listItem,
+                                        ).length}x',
+                                    style: Theme.of(context).textTheme.bodyText1,
                                   ),
-                            ),
-                            if (checkoutItems.contains(item))
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: Text(
-                                  '${checkoutItems.where(
-                                        (listItem) => item == listItem,
-                                      ).length}x',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              )
-                          ],
+                                )
+                            ],
+                          ),
+                          subtitle: Text(
+                            '${item.price} €',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
                         ),
-                        subtitle: Text(
-                          '${item.price} €',
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
                     );
+                    
                   },
                   separatorBuilder: (context, index) {
                     return const Divider();
