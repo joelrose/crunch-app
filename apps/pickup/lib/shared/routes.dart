@@ -9,11 +9,9 @@ import 'package:pickup/screens/onboarding/create/create_account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile.dart';
-import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/screens/store/product_details_overview.dart';
-import 'package:sanity/sanity.dart';
-
-import 'screens/store/widgets/store_menue_list.dart';
+import 'package:pickup/screens/store/store.dart';
+import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 
 const String loadingRoute = '/';
 const String onboardingWelcomeRoute = '/onboarding/welcome';
