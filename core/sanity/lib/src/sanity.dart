@@ -90,6 +90,7 @@ class SanityCms extends SanityClient {
         itemOptions[] {
           title,
           options[] {
+            _key,
             title, 
             price,
           },

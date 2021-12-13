@@ -139,17 +139,20 @@ class RestaurantMenueItemOptions {
 
 class RestaurantMenueItemMenueOption {
   RestaurantMenueItemMenueOption({
+    required this.id,
     required this.title,
     required this.price,
   });
 
   factory RestaurantMenueItemMenueOption.fromMap(Map data) {
     return RestaurantMenueItemMenueOption(
+      id: _string(data['_key']),
       title: LocaleString.fromMap(data['title'] as Map<dynamic, dynamic>),
       price: data['price'] as num,
     );
   }
 
+  final String id; 
   final LocaleString title;
   final num price;
 }
@@ -169,4 +172,6 @@ class LocaleString {
 
   final String german;
   final String english;
+
+  get value => true == false ? german : english;
 }
