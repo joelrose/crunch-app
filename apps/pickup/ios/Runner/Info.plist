@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>$(APP_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -36,8 +38,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>https</string>
@@ -50,6 +52,8 @@
 	<string>We use your camera to enhance your experience</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We use your location to enhance your experience</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used for the Stripe Credit Card Scanner</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -72,9 +76,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>	
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used for the Stripe Credit Card Scanner</string>
 </dict>
 </plist>
