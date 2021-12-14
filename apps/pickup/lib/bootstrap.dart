@@ -23,7 +23,10 @@ Future<void> bootstrap(
 
   await EasyLocalization.ensureInitialized();
 
-  await dotenv.load(fileName: 'assets/enviroments/.env.${enviroment.toString().split('.').last}');
+  await dotenv.load(
+    fileName:
+        'assets/enviroments/.env.${enviroment.toString().split('.').last}',
+  );
 
   await setupServiceLocator();
 
