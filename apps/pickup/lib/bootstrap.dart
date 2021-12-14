@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:pickup/services/service_locator.dart';
 
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+Future<void> bootstrap(
+  FutureOr<Widget> Function() builder,
+  Enviroment enviroment,
+) async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
