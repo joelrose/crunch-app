@@ -7,8 +7,8 @@ class StoreImageNavbar extends StatelessWidget {
   StoreImageNavbar({Key? key, required this.image, this.showButtons = true})
       : super(key: key);
 
-  bool showButtons;
-  String image;
+  final bool showButtons;
+  final String image;
 
   @override
   Widget build(BuildContext context) {

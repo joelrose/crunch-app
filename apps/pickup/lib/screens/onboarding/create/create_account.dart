@@ -1,4 +1,5 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -58,7 +59,7 @@ class _OnboardingCreateAccountScreenState
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Step ${step + 1}/${widget.maxSteps}',
+                        '${'step'.tr()} ${step + 1}/${widget.maxSteps}',
                         style: Theme.of(context).textTheme.bodyText1!.merge(
                               const TextStyle(
                                 fontWeight: FontWeight.w600,

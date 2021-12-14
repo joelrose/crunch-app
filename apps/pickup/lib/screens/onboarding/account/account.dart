@@ -1,4 +1,5 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +106,9 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          widget.isSignUp ? 'Create account' : 'Welcome back!',
+                          widget.isSignUp
+                              ? 'onboarding.createAccount'.tr()
+                              : 'onboarding.welcomeBack'.tr(),
                           style: theme.headline1,
                         ),
                         Padding(
@@ -116,8 +119,8 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           ),
                           child: Text(
                             widget.isSignUp
-                                ? 'Let’s get started by choosing one of the ways to sign up below.'
-                                : 'Please enter you phone number to log in again!',
+                                ? 'onboarding.signUpCTA'.tr()
+                                : 'onboarding.signInCTA'.tr(),
                             style: theme.subtitle1,
                           ),
                         ),
@@ -184,7 +187,7 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20),
                               child: Text(
-                                'or',
+                                'or'.tr(),
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                             ),
@@ -198,8 +201,8 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                         ),
                         getSocialButton(
                           widget.isSignUp
-                              ? 'Sign up with Google'
-                              : 'Sign in with Google',
+                              ? 'onboarding.signUpWithGoogle'.tr()
+                              : 'onboarding.signInWithGoogle'.tr(),
                           MediaQuery.of(context).size.width,
                           SvgPicture.asset(
                             'assets/google-logo.svg',
@@ -210,8 +213,8 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                         ),
                         getSocialButton(
                           widget.isSignUp
-                              ? 'Sign up with Apple'
-                              : 'Sign in with Apple',
+                              ? 'onboarding.signUpWithApple'.tr()
+                              : 'onboarding.signInWithApple'.tr(),
                           MediaQuery.of(context).size.width,
                           SvgPicture.asset(
                             'assets/apple-logo.svg',
@@ -221,11 +224,14 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
                           },
                           backgroundWhite: false,
                         ),
-                        const Padding(
-                          padding:
-                              EdgeInsets.only(left: 20, right: 20, top: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            top: 10,
+                          ),
                           child: Text(
-                            'By continuing, I agree to Crunch’s Terms of service and Privacy Policy.',
+                            'onboarding.agreeToTerms'.tr(),
                             textAlign: TextAlign.center,
                           ),
                         )
