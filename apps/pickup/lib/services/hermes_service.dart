@@ -24,17 +24,11 @@ class HermesService {
         Map<String, String>.of(request.headers);
 
     final token = await _authService.firebaseAuth.currentUser!.getIdToken();
-    final bearerToken = 'Bearer $token';
     updatedHeaders.putIfAbsent(
       'Authorization',
-      () => bearerToken,
+      () => 'Bearer $token',
     );
 
     return request.copyWith(headers: updatedHeaders);
-  }
-
-  Future<String> getBearerToken() async {
-    final token = await _authService.firebaseAuth.currentUser!.getIdToken();
-    return 'Bearer $token';
   }
 }
