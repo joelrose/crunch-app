@@ -10,8 +10,6 @@ environment:
 
 dependencies:
   alpaca: ^1.0.0
-  cloud_firestore: ^3.1.4
-  cloud_functions: ^3.2.3
   cupertino_icons: ^1.0.2
   easy_localization: ^3.0.0
   firebase_analytics: ^9.0.3
