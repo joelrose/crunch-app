@@ -7,6 +7,7 @@ import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
 import 'package:pickup/screens/home/widgets/restaurant_card.dart';
 import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/viewstate.dart';
+import 'package:skeleton_loader/skeleton_loader.dart';
 
 class LeftToRightScrollingList extends StatelessWidget {
   const LeftToRightScrollingList({Key? key}) : super(key: key);
@@ -75,8 +76,29 @@ class _RestaurantOverviewListState extends State<RestaurantOverviewList> {
         model.fetchRestaurants();
       },
       builder: (context, model, child) => model.state == ViewState.busy
-          ? Container(
-              height: 194,
+          ? SkeletonLoader(
+              builder: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                height: 194,
+                child: ListView.separated(
+                  clipBehavior: Clip.none,
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 16),
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    return Material(
+                      elevation: 2,
+                      borderRadius: BorderRadius.circular(10),
+                      child: const SizedBox(
+                        height: 200,
+                        width: 250,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              highlightColor: AlpacaColor.primary100,
             )
           : Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),

@@ -52,7 +52,7 @@ class Router {
           builder: (_) => OnboardingCreateAccountScreen(data: args),
         );
       case homeRoute:
-        return CupertinoPageRoute(builder: (_) => const HomeScreen());
+        return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomeScreen());
       case profileRoute:
         return CupertinoPageRoute(builder: (_) => const ProfileScreen());
       case storeRoute:
