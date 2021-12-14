@@ -33,7 +33,7 @@ workflows:
     when:
       changeset:
         includes:
-          - 'apps/pickup/pubspec.yaml'
+          - 'apps/pickup/'
     cache:
       cache_paths:
         - $HOME/Library/Caches/CocoaPods
@@ -41,11 +41,11 @@ workflows:
     scripts:
       - *melos-setup
       - keychain initialize
-      - app-store-connect fetch-signing-files "tech.getcrunch.crunch" --type IOS_APP_STORE
+      - app-store-connect fetch-signing-files "tech.getcrunch.crunch.stg" --type IOS_APP_STORE
         --create
       - keychain add-certificates
       - xcode-project use-profiles
-      - cd apps/pickup && flutter build ipa --export-options-plist=/Users/builder/export_options.plist
+      - cd apps/pickup && flutter build ipa --flavor staging --target lib/main_staging.dart --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - apps/pickup/build/ios/ipa/*.ipa
     publishing:
@@ -79,7 +79,7 @@ workflows:
     when:
       changeset:
         includes:
-          - 'apps/vendor/pubspec.yaml'
+          - 'apps/vendor/'
     cache:
       cache_paths:
         - $HOME/Library/Caches/CocoaPods
