@@ -89,6 +89,7 @@ class RestaurantMenueItemModel {
     required this.id,
     required this.title,
     required this.price,
+    required this.itemOptions,
   });
 
   factory RestaurantMenueItemModel.fromMap(Map data) {
@@ -96,10 +97,62 @@ class RestaurantMenueItemModel {
       id: _string(data['_key']),
       title: LocaleString.fromMap(data['title'] as Map<dynamic, dynamic>),
       price: data['price'] as num,
+      itemOptions: data['itemOptions'] == null
+          ? null
+          : (data['itemOptions'] as List)
+              .map(
+                (v) => RestaurantMenueItemOptions.fromMap(
+                  v as Map<dynamic, dynamic>,
+                ),
+              )
+              .toList(),
     );
   }
 
   final String id;
+  final LocaleString title;
+  final num price;
+  final List<RestaurantMenueItemOptions>? itemOptions;
+}
+
+class RestaurantMenueItemOptions {
+  RestaurantMenueItemOptions({
+    required this.title,
+    required this.options,
+  });
+
+  factory RestaurantMenueItemOptions.fromMap(Map data) {
+    return RestaurantMenueItemOptions(
+        title: LocaleString.fromMap(data['title'] as Map<dynamic, dynamic>),
+        options: (data['options'] as List)
+            .map(
+              (v) => RestaurantMenueItemMenueOption.fromMap(
+                v as Map<dynamic, dynamic>,
+              ),
+            )
+            .toList());
+  }
+
+  final LocaleString title;
+  final List<RestaurantMenueItemMenueOption> options;
+}
+
+class RestaurantMenueItemMenueOption {
+  RestaurantMenueItemMenueOption({
+    required this.id,
+    required this.title,
+    required this.price,
+  });
+
+  factory RestaurantMenueItemMenueOption.fromMap(Map data) {
+    return RestaurantMenueItemMenueOption(
+      id: _string(data['_key']),
+      title: LocaleString.fromMap(data['title'] as Map<dynamic, dynamic>),
+      price: data['price'] as num,
+    );
+  }
+
+  final String id; 
   final LocaleString title;
   final num price;
 }
@@ -119,4 +172,6 @@ class LocaleString {
 
   final String german;
   final String english;
+
+  get value => true == false ? german : english;
 }

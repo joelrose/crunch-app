@@ -1,17 +1,35 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:pickup/shared/routes.dart';
 import 'package:sanity/sanity.dart';
+
+class ProductDetailsData {
+  ProductDetailsData({
+    required this.item,
+    required this.restaurantImage,
+    required this.checkoutItems,
+    required this.onCheckoutChange,
+    this.itemOptions,
+  });
+  final RestaurantMenueItemModel item;
+  final String restaurantImage;
+  List<RestaurantMenueItemModel> checkoutItems;
+  List<RestaurantMenueItemOptions>? itemOptions;
+  void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
+}
 
 class StoreMenueList extends StatefulWidget {
   const StoreMenueList({
     Key? key,
     required this.menueCategories,
     required this.onCheckoutChange,
+    required this.restaurantImage,
   }) : super(key: key);
 
   final List<RestaurantMenueCategoryModel> menueCategories;
   final void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
+  final String restaurantImage;
 
   @override
   State<StoreMenueList> createState() => _StoreMenueListState();
@@ -69,8 +87,8 @@ class _StoreMenueListState extends State<StoreMenueList> {
           itemCount: widget.menueCategories.length,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemBuilder: (context, i) {
-            final category = widget.menueCategories[i];
+          itemBuilder: (context, j) {
+            final category = widget.menueCategories[j];
             return Column(
               children: [
                 ListTile(
@@ -93,61 +111,54 @@ class _StoreMenueListState extends State<StoreMenueList> {
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final item = category.menueItems[i];
-                    return Slidable(
-                      key: Key(item.title.english),
-                      controller: slidableController,
-                      // dismissal: SlidableDismissal(
-                      //   child: const SlidableBehindActionPane(),
-                      //   onDismissed: (actionType) {
-                      //     _showSnackBar(
-                      //       context,
-                      //       actionType == SlideActionType.primary
-                      //           ? 'Dismiss Archive'
-                      //           : 'Dimiss Delete',
-                      //     );
-                      //   },
-                      // ),
-                      actions: [
-                        IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () {
-                            checkoutItems.remove(item);
-                            widget.onCheckoutChange(checkoutItems);
-                          },
-                        ),
-                      ],
-                      secondaryActions: [
-                        IconSlideAction(
-                          caption: 'Add',
-                          color: Colors.blue,
-                          icon: Icons.add,
-                          onTap: () {
-                            checkoutItems.add(item);
-                            widget.onCheckoutChange(checkoutItems);
-                          },
-                        ),
-                      ],
-                      actionPane: const SlidableBehindActionPane(),
+                    return  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                              productDetailOverview,
+                              arguments: ProductDetailsData(
+                                item: item,
+                                restaurantImage: widget.restaurantImage,
+                                checkoutItems: checkoutItems,
+                                onCheckoutChange: widget.onCheckoutChange,
+                                itemOptions: category.menueItems[i].itemOptions,
+                              ),
+                            );
+                      },
                       child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 25,
-                        ),
-                        title: Text(
-                          item.title.english,
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 25,
+                          ),
+                          title: Row(
+                            children: [
+                              Text(
+                                item.title.english,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                    ),
+                              ),
+                              if (checkoutItems.contains(item))
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Text(
+                                    '${checkoutItems.where(
+                                          (listItem) => item == listItem,
+                                        ).length}x',
+                                    style: Theme.of(context).textTheme.bodyText1,
                                   ),
+                                )
+                            ],
+                          ),
+                          subtitle: Text(
+                            '${item.price} €',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
                         ),
-                        subtitle: Text(
-                          '${item.price} €',
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
                     );
+                    
                   },
                   separatorBuilder: (context, index) {
                     return const Divider();

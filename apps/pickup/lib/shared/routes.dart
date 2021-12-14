@@ -9,7 +9,9 @@ import 'package:pickup/screens/onboarding/create/create_account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile.dart';
+import 'package:pickup/screens/store/product_details_overview.dart';
 import 'package:pickup/screens/store/store.dart';
+import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 
 const String loadingRoute = '/';
 const String onboardingWelcomeRoute = '/onboarding/welcome';
@@ -21,6 +23,7 @@ const String profileRoute = '/profile';
 const String storeRoute = '/store';
 const String storeCheckoutRoute = '/store/checkout';
 const String storeCheckoutConfirmationRoute = '/store/checkout/confirmation';
+const String productDetailOverview = '/store/product';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -66,6 +69,13 @@ class Router {
         final args = settings.arguments! as CreateCheckoutData;
         return CupertinoPageRoute(
           builder: (_) => CheckoutConfirmationScreen(data: args),
+        );
+      case productDetailOverview:
+        final args = settings.arguments! as ProductDetailsData;
+        return CupertinoPageRoute(
+          builder: (_) => StoreProductOverview(
+            data: args,
+          ),
         );
       default:
         return MaterialPageRoute(
