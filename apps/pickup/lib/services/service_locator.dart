@@ -9,6 +9,7 @@ import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/auth_service_firebase.dart';
 import 'package:pickup/services/database_service.dart';
 import 'package:pickup/services/database_service_firestore.dart';
+import 'package:pickup/services/hermes_service.dart';
 import 'package:sanity/sanity.dart';
 
 GetIt locator = GetIt.instance;
@@ -40,6 +41,12 @@ Future<void> setupServiceLocator() async {
         projectId: 'd9v945zu',
         dataset: 'production',
       ),
+    );
+  }
+
+  if (!locator.isRegistered<HermesService>()) {
+    locator.registerLazySingleton<HermesService>(
+      () => HermesService(),
     );
   }
 
