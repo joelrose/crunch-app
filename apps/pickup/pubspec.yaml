@@ -28,6 +28,7 @@ dependencies:
   get_it: ^7.2.0
   google_fonts: ^2.1.0
   google_sign_in: ^5.1.0
+  hermes_api: ^1.0.0
   image_picker: ^0.8.4+2
   intl: ^0.17.0
   material_floating_search_bar: ^0.3.4
