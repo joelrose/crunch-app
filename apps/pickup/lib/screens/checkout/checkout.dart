@@ -1,5 +1,4 @@
 import 'package:alpaca/alpaca.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -63,16 +62,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   Future<String> _getPaymentIntent() async {
-    final HttpsCallable callable =
-        FirebaseFunctions.instance.httpsCallable('createPaymentIntent');
+    // final HttpsCallable callable =
+    //     FirebaseFunctions.instance.httpsCallable('createPaymentIntent');
 
-    final results = await callable.call(<String, dynamic>{
-      'price': _getTotalPrice(),
-    });
+    // final results = await callable.call(<String, dynamic>{
+    //   'price': _getTotalPrice(),
+    // });
 
-    final responseJson = results.data['secret'];
+    // final responseJson = results.data['secret'];
 
-    return responseJson as String;
+    // return responseJson as String;
+    return '';
   }
 
   Future<void> _checkout() async {

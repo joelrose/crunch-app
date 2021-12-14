@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/onboarding/create/create_account.dart';
+import 'package:pickup/services/account_status.dart';
 import 'package:pickup/services/auth_service.dart';
-import 'package:pickup/services/database_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingAccountScreen extends StatefulWidget {
   const OnboardingAccountScreen({Key? key, required this.isSignUp})
@@ -248,10 +249,13 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
     final User? user =
         await (appleLogin ? auth.signInWithApple() : auth.signInWithGoogle());
     if (user != null) {
-      final userExists =
-          await locator<DatabaseService>().reportDocumentExists(user.uid);
+      final prefs = await SharedPreferences.getInstance();
 
-      if (userExists) {
+      final accountStatus = prefs.getInt(
+        'ONBOARDING_STEP',
+      );
+
+      if (accountStatus == AccountStatus.onboarded.index) {
         Navigator.of(context)
             .pushNamedAndRemoveUntil(homeRoute, (route) => false);
       } else {
