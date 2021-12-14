@@ -3,23 +3,31 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/enviroment.dart';
+
+Future setupStripe() async {
+  Stripe.publishableKey = dotenv.env['STRIPE_KEY']!;
+  Stripe.merchantIdentifier = dotenv.env['STRIPE_MERCHANT_IDENTIFIER'];
+
+  await Stripe.instance.applySettings();
+}
 
 Future<void> bootstrap(
   FutureOr<Widget> Function() builder,
   Enviroment enviroment,
 ) async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await EasyLocalization.ensureInitialized();
+
+  await dotenv.load(fileName: 'assets/enviroments/.env.${enviroment.toString().split('.').last}');
 
   await setupServiceLocator();
 
-  Stripe.publishableKey =
-      'pk_test_51JeoF7K5PYFPbUlONYtwknoqrDB1HsFqettfdPeMNex5vmtVagqUP0TEZrl1HGetRsdRfk3T9RdCG7AdGTE1hH5900uSMF0fYk';
-  Stripe.merchantIdentifier = 'Crunch';
-
-  await Stripe.instance.applySettings();
+  await setupStripe();
 
   runZonedGuarded(
     () async => runApp(
