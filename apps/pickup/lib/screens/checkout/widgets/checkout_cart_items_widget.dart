@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 
 class CheckoutCartItemsWidget extends StatelessWidget {
@@ -44,7 +45,7 @@ class CheckoutCartItemsWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${checkoutItem.price}€',
+                          Utilities.currencyFormat(checkoutItem.price),
                           style: const TextStyle(
                             color: AlpacaColor.blackColor,
                             fontSize: 15,
