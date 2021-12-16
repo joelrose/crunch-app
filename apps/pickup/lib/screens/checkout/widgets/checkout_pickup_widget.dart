@@ -41,9 +41,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   late List<String> updatedMinuteList;
 
   void removePastHours(List<String> timeList) {
-    final String currentHour = DateFormat.H().format(DateTime.now());
+    final hour = DateTime.now().hour;
     for (final time in List<String>.from(timeList)) {
-      if (int.parse(time) < int.parse(currentHour)) {
+      if (int.parse(time) < int.parse(hour.toString())) {
         timeList.remove(time);
       }
     }
