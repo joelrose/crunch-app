@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
 import 'package:sanity/sanity.dart';
@@ -18,6 +19,7 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
   @override
   Widget build(BuildContext context) {
     return PageWrapper(
+      statusBarStyle: SystemUiOverlayStyle.dark,
       padding: EdgeInsets.zero,
       backgroundColor: AlpacaColor.white100Color,
       child: Column(
