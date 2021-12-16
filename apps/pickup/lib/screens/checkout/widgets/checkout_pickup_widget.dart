@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 
@@ -92,6 +90,17 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       return 0;
     }
     return initialMinute;
+  }
+
+  // Not in use right now
+  bool checkIfPickUpTimeValid(DateTime pickUpTime) {
+    final DateTime earliestMinutePickup =
+        DateTime.now().add(Duration(minutes: minuteWaitTime));
+    if (pickupTime.isAfter(earliestMinutePickup)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void removePastHours(List<int> timeList) {
@@ -389,4 +398,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       ],
     );
   }
+}
+
+class PickUpPickerVM {
+  
 }
