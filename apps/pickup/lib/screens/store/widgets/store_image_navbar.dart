@@ -30,16 +30,14 @@ class StoreImageNavbar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () => {Navigator.of(context).pop()},
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.arrow_back_ios,
-                size: 20,
-                color: AlpacaColor.white100Color,
-              ),
+          IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            color: AlpacaColor.white100Color,
+            icon: const Icon(
+              Icons.arrow_back_ios,
             ),
+            padding: const EdgeInsets.all(10),
+            alignment: Alignment.topLeft,
           ),
           if (showButtons)
             Row(
