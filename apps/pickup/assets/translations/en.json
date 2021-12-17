@@ -4,5 +4,24 @@
    
    "get_started":{
        "welcome": "Welcome aboard!"
+    },
+
+    "or": "or",
+    "step": "Step",
+    "continue": "Continue",
+
+    "onboarding": {
+      "createAccount": "Create Account",
+      "welcomeBack": "Welcome back!",
+
+      "signUpWithGoogle": "Sign up with Google",
+      "signInWithGoogle": "Sign in with Google",
+      "signUpWithApple": "Sign up with Apple",
+      "signInWithApple": "Sign in with Apple",
+
+      "agreeToTerms": "By continuing, I agree to Crunch’s Terms of service and Privacy Policy.",
+
+      "signUpCTA": "Let’s get started by choosing one of the ways to sign up below.",
+      "signInCTA": "Please enter your phone number to log in again!"
     }
  }
