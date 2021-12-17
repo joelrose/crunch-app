@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
@@ -125,8 +126,12 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       }
       setState(() {
         updatedMinuteList = List.from(copyMinuteList);
-        minuteController =
-            FixedExtentScrollController(initialItem: getIndexOfMinute(minute));
+        minuteController = FixedExtentScrollController(
+          initialItem: getIndexOfMinute(
+            updatedMinuteList,
+            pickupTime,
+          ),
+        );
       });
     } else {
       setState(() {
@@ -178,6 +183,22 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     updateMinuteList(hourSelectedIndex, minute);
   }
 
+  void onHourChange(int itemIndex) {
+    setState(() {
+      hourSelectedIndex = itemIndex;
+    });
+    updateMinuteList(
+      hourSelectedIndex,
+      pickupTime.minute,
+    );
+  }
+
+  void onMinuteChange(int itemIndex) {
+    setState(() {
+      minuteSelectedIndex = itemIndex;
+    });
+  }
+
   DateTime getRoundedPickupTime(DateTime dateTime) {
     final int minute = roundUp5MinInterval(dateTime.minute);
     final now = DateTime.now();
@@ -201,17 +222,28 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     }
   }
 
-  int getIndexOfMinute(int minute) {
-    final int roundedMinute = roundUp5MinInterval(minute);
-    int index = 0;
-    for (final minute in updatedMinuteList) {
-      if (minute == roundedMinute) {
-        return index;
-      } else {
-        index++;
-      }
+  int getIndexOfMinute(List<int> updatedMinuteList, DateTime pickupTime) {
+    final int minuteIndex =
+        updatedMinuteList.indexWhere((minute) => minute == pickupTime.minute);
+    return minuteIndex;
+  }
+
+  int getIndexOfHour(DateTime pickupTime) {
+    final int hourIndex =
+        hourList.indexWhere((hour) => hour == pickupTime.hour);
+    return hourIndex;
+  }
+
+  void setIndexesRight() {
+    if (pickupTime.hour >= hourList[0]) {
+      setState(() {
+        hourSelectedIndex = getIndexOfHour(pickupTime);
+        minuteSelectedIndex = getIndexOfMinute(updatedMinuteList, pickupTime);
+      });
+    } else {
+      hourSelectedIndex = 0;
+      minuteSelectedIndex = 0;
     }
-    return 0;
   }
 
   String getWaitTime(int currentMinute, int currentHour, DateTime pickupTime) {
@@ -254,6 +286,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
             width: 14,
           ),
           onPressed: () {
+            setIndexesRight();
             showModalBottomSheet(
               isScrollControlled: true,
               shape: RoundedRectangleBorder(
@@ -312,12 +345,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                         controller: hourController,
                                         onSelectedItemChanged: (itemIndex) {
                                           setState(() {
-                                            hourSelectedIndex = itemIndex;
+                                            onHourChange(itemIndex);
                                           });
-                                          updateMinuteList(
-                                            hourSelectedIndex,
-                                            pickupTime.minute,
-                                          );
                                         },
                                         overAndUnderCenterOpacity: 0.2,
                                         physics:
@@ -343,9 +372,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                       child: ListWheelScrollView.useDelegate(
                                         controller: minuteController,
                                         onSelectedItemChanged: (itemIndex) {
-                                          setState(() {
-                                            minuteSelectedIndex = itemIndex;
-                                          });
+                                          onMinuteChange(itemIndex);
                                         },
                                         overAndUnderCenterOpacity: 0.2,
                                         physics:
@@ -398,8 +425,4 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       ],
     );
   }
-}
-
-class PickUpPickerVM {
-  
 }
