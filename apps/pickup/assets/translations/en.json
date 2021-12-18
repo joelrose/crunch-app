@@ -1,9 +1,9 @@
-{
-   "iAlreadyHaveAnAccount": "I already have an account",
-   "getStarted": "Get started",
-   
-   "get_started":{
-       "welcome": "Welcome aboard!"
+{  
+   "onboarding_welcome":{
+       "title": "Welcome aboard!",
+       "subtitle": "We are very excited to have you with us, let’s get started.",
+       "primaryButtonText": "Get started",
+       "secondaryButtonText": "I already have an account"
     },
 
     "or": "or",
