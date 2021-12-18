@@ -7,6 +7,7 @@ import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/shared/utilities.dart';
 
 class CheckoutConfirmationScreen extends StatelessWidget {
   const CheckoutConfirmationScreen({Key? key, required this.data})
@@ -93,7 +94,9 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      '${checkoutItem.price}€',
+                                      Utilities.currencyFormat(
+                                        checkoutItem.price,
+                                      ),
                                       style: const TextStyle(
                                         color: AlpacaColor.blackColor,
                                         fontSize: 15,

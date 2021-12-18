@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
+import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 
 import 'widgets/store_menue_list.dart';
@@ -175,7 +176,7 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                                     ),
                                     if (item.options[index].price != 0)
                                       Text(
-                                        '+ ${item.options[index].price.toString()}€',
+                                        '+ ${Utilities.currencyFormat(item.options[index].price)}',
                                         style: Theme.of(context)
                                             .textTheme
                                             .subtitle1!
@@ -239,16 +240,16 @@ class _ProductAmountAndAddToOrderState
       productAmountInBasket = 0;
       totalPrice = widget.data.item.price.toDouble();
     }
-    priceAsString = '${totalPrice.toStringAsFixed(2)}€';
+    priceAsString = Utilities.currencyFormat(totalPrice);
   }
 
   @override
   Widget build(BuildContext context) {
     final productPrice = widget.data.item.price.toDouble();
 
-    void updatePriceAsString(newTotalPrice) {
+    void updatePriceAsString(double newTotalPrice) {
       setState(() {
-        priceAsString = '$newTotalPrice€';
+        priceAsString = Utilities.currencyFormat(newTotalPrice);
       });
     }
 
@@ -257,7 +258,7 @@ class _ProductAmountAndAddToOrderState
       setState(() {
         totalPrice = newTotalPrice;
       });
-      updatePriceAsString(newTotalPrice.toStringAsFixed(2));
+      updatePriceAsString(newTotalPrice);
     }
 
     return Column(
