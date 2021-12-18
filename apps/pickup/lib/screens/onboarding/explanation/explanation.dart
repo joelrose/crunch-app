@@ -6,37 +6,16 @@ import 'package:pickup/screens/onboarding/explanation/widgets/dots_indicator.dar
 import 'package:pickup/screens/onboarding/explanation/widgets/slide_widget.dart';
 import 'package:pickup/shared/routes.dart';
 
-class OnboardingExplanationScreen extends StatefulWidget {
-  const OnboardingExplanationScreen({Key? key}) : super(key: key);
-
-  @override
-  State<OnboardingExplanationScreen> createState() =>
-      _OnboardingExplanationScreenState();
-}
-
-class _OnboardingExplanationScreenState
-    extends State<OnboardingExplanationScreen> {
+class OnboardingExplanationScreen extends StatelessWidget {
   final PageController _controller = PageController();
 
   final List<Widget> _pages = [
-    SlideWidget(
-      title: 'onboarding_explanation.title_1'.tr(),
-      description:
-          'onboarding_explanation.description_1'.tr(),
-      image: 'assets/onboarding/step-1.png',
-    ),
-    SlideWidget(
-      title: 'onboarding_explanation.title_2'.tr(),
-      description:
-           'onboarding_explanation.description_2'.tr(),
-      image: 'assets/onboarding/step-2.png',
-    ),
-    SlideWidget(
-      title: 'onboarding_explanation.title_3'.tr(),
-      description:
-           'onboarding_explanation.description_3'.tr(),
-      image: 'assets/onboarding/step-3.png',
-    ),
+    for (int i = 1; i <= 3; i++)
+      SlideWidget(
+        title: 'onboarding_explanation.title_$i'.tr(),
+        description: 'onboarding_explanation.description_$i'.tr(),
+        image: 'assets/onboarding/step-$i.png',
+      )
   ];
 
   @override
