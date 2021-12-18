@@ -1,4 +1,8 @@
 {  
+   "or": "or",
+   "step": "Step",
+   "continue": "Continue",
+
    "onboarding_welcome":{
        "title": "Welcome aboard!",
        "subtitle": "We are very excited to have you with us, let’s get started.",
@@ -6,9 +10,14 @@
        "secondaryButtonText": "I already have an account"
     },
 
-    "or": "or",
-    "step": "Step",
-    "continue": "Continue",
+    "onboarding_explanation": {
+       "title_1": "Takeout reinvented",
+       "description_1": "With Crunch you can order pickup cooler than ever. And faster.",
+       "title_2": "Personalized for you",
+       "description_2": "Discover new places, collect stamps and benefit from special discounts from your favourite stores.",
+       "title_3": "Food goes social",
+       "description_3": "See where others are eating, send gifts to your friends and enjoy food together."
+    },
 
     "onboarding": {
       "createAccount": "Create Account",
