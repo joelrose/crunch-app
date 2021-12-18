@@ -9,41 +9,44 @@ ThemeData getThemeData(BuildContext context) {
     brightness: Brightness.light,
     fontFamily: GoogleFonts.inter().fontFamily,
     textTheme: TextTheme(
-      headline1: const TextStyle(
-        color: AlpacaColor.white100Color,
-        fontSize: 30,
-        fontWeight: FontWeight.w600,
-      ),
-      headline2: TextStyle(
-        color: AlpacaColor.darkNavyColor,
-        fontSize: 18,
-        fontWeight: FontWeight.w600,
-        fontFamily: GoogleFonts.lexendDeca().fontFamily,
-      ),
-      headline3: const TextStyle(
-        color: AlpacaColor.blackColor,
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-      ),
-      subtitle1: const TextStyle(
-        color: AlpacaColor.white80Color,
-        fontSize: 15,
-        fontWeight: FontWeight.w400,
-        height: 1.5,
-      ),
-      subtitle2: const TextStyle(
-        color: AlpacaColor.greyColor80,
-        fontSize: 13,
-        fontWeight: FontWeight.w400,
-        height: 1.5,
-      ),
-      
-      bodyText1: const TextStyle(
-        color: AlpacaColor.blackColor,
-      ),
-      bodyText2: const TextStyle(
-        color: AlpacaColor.white80Color,
-      ),
-    ),
+        headline1: TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+          color: AlpacaColor.darkNavyColor,
+        ),
+        headline2: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+          color: AlpacaColor.darkNavyColor,
+        ),
+        headline3: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+        ),
+        subtitle1: const TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w400,
+          height: 1.5,
+          color: AlpacaColor.white100Color
+        ),
+        bodyText1: const TextStyle(
+          fontWeight: FontWeight.normal,
+          fontSize: 14,
+          height: 1.4,
+        ),
+        bodyText2: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 12,
+        ),
+        button: TextStyle(
+          color: AlpacaColor.blackColor,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0,
+          height: 1,
+        )),
   );
 }
