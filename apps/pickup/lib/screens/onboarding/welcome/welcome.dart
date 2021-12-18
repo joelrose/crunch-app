@@ -4,15 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/shared/routes.dart';
 
-class OnboardingWelcomeScreen extends StatefulWidget {
+class OnboardingWelcomeScreen extends StatelessWidget {
   const OnboardingWelcomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<OnboardingWelcomeScreen> createState() =>
-      _OnboardingWelcomeScreenState();
-}
-
-class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
