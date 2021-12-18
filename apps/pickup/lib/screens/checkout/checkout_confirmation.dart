@@ -43,10 +43,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                           width: 230,
                           child: Text(
                             'Your order is being prepared...',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2
-                                ?.copyWith(fontSize: 22),
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                         ),
                       ),

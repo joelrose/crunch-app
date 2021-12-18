@@ -145,10 +145,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               textColor: AlpacaColor.redColor,
               onPressed: () async {
                 await auth.signOut();
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  onboardingWelcomeRoute,
-                  (route) => false,
-                );
+
+                if (mounted) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    onboardingWelcomeRoute,
+                    (route) => false,
+                  );
+                }
               },
             ),
           ),

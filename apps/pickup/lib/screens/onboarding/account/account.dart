@@ -262,17 +262,21 @@ class _OnboardingAccountScreenState extends State<OnboardingAccountScreen> {
       );
 
       if (accountStatus == AccountStatus.onboarded.index) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(homeRoute, (route) => false);
+        if (mounted) {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(homeRoute, (route) => false);
+        }
       } else {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          onboardingCreateAccountRoute,
-          (route) => false,
-          arguments: CreateAccountData(
-            phoneNumber: _textController.text,
-            isSocialLogin: true,
-          ),
-        );
+        if (mounted) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            onboardingCreateAccountRoute,
+            (route) => false,
+            arguments: CreateAccountData(
+              phoneNumber: _textController.text,
+              isSocialLogin: true,
+            ),
+          );
+        }
       }
     }
   }

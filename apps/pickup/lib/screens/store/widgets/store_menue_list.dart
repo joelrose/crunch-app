@@ -40,12 +40,6 @@ class _StoreMenueListState extends State<StoreMenueList> {
   late final SlidableController slidableController;
   List<RestaurantMenueItemModel> checkoutItems = [];
 
-  void _showSnackBar(BuildContext context, String text) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(text)));
-  }
-
   @override
   void initState() {
     slidableController = SlidableController();
@@ -112,54 +106,53 @@ class _StoreMenueListState extends State<StoreMenueList> {
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final item = category.menueItems[i];
-                    return  GestureDetector(
+                    return GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed(
-                              productDetailOverview,
-                              arguments: ProductDetailsData(
-                                item: item,
-                                restaurantImage: widget.restaurantImage,
-                                checkoutItems: checkoutItems,
-                                onCheckoutChange: widget.onCheckoutChange,
-                                itemOptions: category.menueItems[i].itemOptions,
-                              ),
-                            );
+                          productDetailOverview,
+                          arguments: ProductDetailsData(
+                            item: item,
+                            restaurantImage: widget.restaurantImage,
+                            checkoutItems: checkoutItems,
+                            onCheckoutChange: widget.onCheckoutChange,
+                            itemOptions: category.menueItems[i].itemOptions,
+                          ),
+                        );
                       },
                       child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 25,
-                          ),
-                          title: Row(
-                            children: [
-                              Text(
-                                item.title.english,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                    ),
-                              ),
-                              if (checkoutItems.contains(item))
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    '${checkoutItems.where(
-                                          (listItem) => item == listItem,
-                                        ).length}x',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                )
-                            ],
-                          ),
-                          subtitle: Text(
-                            Utilities.currencyFormat(item.price),
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 25,
                         ),
+                        title: Row(
+                          children: [
+                            Text(
+                              item.title.english,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                  ),
+                            ),
+                            if (checkoutItems.contains(item))
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Text(
+                                  '${checkoutItems.where(
+                                        (listItem) => item == listItem,
+                                      ).length}x',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              )
+                          ],
+                        ),
+                        subtitle: Text(
+                          Utilities.currencyFormat(item.price),
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
                     );
-                    
                   },
                   separatorBuilder: (context, index) {
                     return const Divider();

@@ -17,13 +17,11 @@ class CreateAccountData {
 }
 
 class OnboardingCreateAccountScreen extends StatefulWidget {
-  OnboardingCreateAccountScreen({Key? key, required this.data})
-      : super(key: key) {
-    maxSteps = data!.isSocialLogin ? 2 : 4;
-  }
+  const OnboardingCreateAccountScreen({Key? key, required this.data})
+      : super(key: key);
 
-  final CreateAccountData? data;
-  late int maxSteps;
+  final CreateAccountData data;
+  int get maxSteps => data.isSocialLogin ? 2 : 4;
 
   @override
   _OnboardingCreateAccountScreenState createState() =>
@@ -68,8 +66,8 @@ class _OnboardingCreateAccountScreenState
                             ),
                       ),
                     ),
-                    if (!(step == 0 && !widget.data!.isSocialLogin) &&
-                        (step != 1 && !widget.data!.isSocialLogin))
+                    if (!(step == 0 && !widget.data.isSocialLogin) &&
+                        (step != 1 && !widget.data.isSocialLogin))
                       Positioned(
                         left: 0,
                         child: GestureDetector(
@@ -110,7 +108,7 @@ class _OnboardingCreateAccountScreenState
                               ),
                               margin: EdgeInsets.zero,
                               width: MediaQuery.of(context).size.width *
-                                  (widget.data!.isSocialLogin ? 0.445 : 0.21),
+                                  (widget.data.isSocialLogin ? 0.445 : 0.21),
                               height: 8,
                             );
                           },
@@ -138,9 +136,9 @@ class _OnboardingCreateAccountScreenState
                     child: IndexedStack(
                       index: step,
                       children: [
-                        if (!widget.data!.isSocialLogin) ...[
+                        if (!widget.data.isSocialLogin) ...[
                           StepPhoneVerification(
-                            phoneNumber: widget.data!.phoneNumber!,
+                            phoneNumber: widget.data.phoneNumber!,
                             onFinish: nextStep,
                           ),
                           StepSetPassword(whichStepInCreateAccount: nextStep),

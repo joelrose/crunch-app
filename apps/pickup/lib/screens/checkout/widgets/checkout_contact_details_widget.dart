@@ -41,18 +41,14 @@ class _CheckoutContactDetailsWidgetState
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 15),
                     child: AlpacaTextField(
                       textColor: AlpacaColor.darkNavyColor,
-                      hintText: 'Phone number',
+                      hintText: 'Phone Number',
                       textController: _phoneNumberController,
                       validator: (value) {},
                     ),
                   ),
                   Text(
-                    '''Providing a phone number allows the restaurant to contact you easily in case there is an issue with your order.''',
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          color: AlpacaColor.darkGreyColor,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    'Providing a phone number allows the restaurant to contact you easily in case there is an issue with your order.',
+                    style: Theme.of(context).textTheme.bodyText2,
                   )
                 ],
               ),
