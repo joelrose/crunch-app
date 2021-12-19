@@ -7,14 +7,8 @@ import 'package:pickup/screens/onboarding/create/steps/insert_name.dart';
 import 'package:pickup/screens/onboarding/create/steps/phone_verification.dart';
 import 'package:pickup/screens/onboarding/create/steps/placeholder.dart';
 import 'package:pickup/screens/onboarding/create/steps/set_password.dart';
+import 'package:pickup/shared/models.dart';
 import 'package:pickup/shared/routes.dart';
-
-class CreateAccountData {
-  CreateAccountData({this.phoneNumber, required this.isSocialLogin});
-
-  final String? phoneNumber;
-  final bool isSocialLogin;
-}
 
 class OnboardingCreateAccountScreen extends StatefulWidget {
   const OnboardingCreateAccountScreen({Key? key, required this.data})
@@ -31,11 +25,6 @@ class OnboardingCreateAccountScreen extends StatefulWidget {
 class _OnboardingCreateAccountScreenState
     extends State<OnboardingCreateAccountScreen> {
   int step = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
