@@ -1,9 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
-import 'package:sanity/sanity.dart';
 
 import '../widgets/store_menue_list.dart';
 import 'product_amount_and_add_to_order.dart';
@@ -19,6 +17,14 @@ class StoreProductOverview extends StatefulWidget {
 }
 
 class _StoreProductOverviewState extends State<StoreProductOverview> {
+  late double totalPrice;
+
+  @override
+  void initState() {
+    super.initState();
+    totalPrice = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageWrapper(
@@ -52,11 +58,10 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
           ),
           ProductAmountAndAddToOrder(
             data: widget.data,
+            totalPrice: totalPrice,
           )
         ],
       ),
     );
   }
 }
-
-

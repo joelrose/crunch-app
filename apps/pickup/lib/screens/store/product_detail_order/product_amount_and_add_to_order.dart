@@ -4,9 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 
 class ProductAmountAndAddToOrder extends StatefulWidget {
-  const ProductAmountAndAddToOrder({Key? key, required this.data})
+  ProductAmountAndAddToOrder(
+      {Key? key, required this.data, required this.totalPrice})
       : super(key: key);
   final ProductDetailsData data;
+  double totalPrice;
 
   @override
   _ProductAmountAndAddToOrderState createState() =>
@@ -15,28 +17,28 @@ class ProductAmountAndAddToOrder extends StatefulWidget {
 
 class _ProductAmountAndAddToOrderState
     extends State<ProductAmountAndAddToOrder> {
-  late int productAmount;
+  late int amountOfProductsToAdd;
   late int productAmountInBasket;
-  late double totalPrice;
   late String priceAsString;
 
   @override
   void initState() {
     super.initState();
     if (widget.data.checkoutItems.contains(widget.data.item)) {
-      productAmount = widget.data.checkoutItems
+      productAmountInBasket = widget.data.checkoutItems
           .where(
             (listItem) => widget.data.item == listItem,
           )
           .length;
-      productAmountInBasket = productAmount;
-      totalPrice = widget.data.item.price.toDouble() * productAmount;
+      amountOfProductsToAdd = productAmountInBasket;
+      widget.totalPrice =
+          widget.data.item.price.toDouble() * productAmountInBasket;
     } else {
-      productAmount = 1;
+      amountOfProductsToAdd = 1;
       productAmountInBasket = 0;
-      totalPrice = widget.data.item.price.toDouble();
+      widget.totalPrice = widget.data.item.price.toDouble();
     }
-    priceAsString = '${totalPrice.toStringAsFixed(2)}€';
+    priceAsString = '${widget.totalPrice.toStringAsFixed(2)}€';
   }
 
   @override
@@ -52,7 +54,7 @@ class _ProductAmountAndAddToOrderState
     void calculateNewPrice(int amount, double price) {
       final double newTotalPrice = productPrice * amount;
       setState(() {
-        totalPrice = newTotalPrice;
+        widget.totalPrice = newTotalPrice;
       });
       updatePriceAsString(newTotalPrice.toStringAsFixed(2));
     }
@@ -88,11 +90,12 @@ class _ProductAmountAndAddToOrderState
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                if (productAmount != 0) {
+                                if (amountOfProductsToAdd != 0) {
                                   setState(() {
-                                    productAmount -= 1;
+                                    amountOfProductsToAdd -= 1;
                                   });
-                                  calculateNewPrice(productAmount, totalPrice);
+                                  calculateNewPrice(
+                                      amountOfProductsToAdd, widget.totalPrice);
                                 }
                               },
                               child: Container(
@@ -120,7 +123,7 @@ class _ProductAmountAndAddToOrderState
                             child: SizedBox(
                               width: 35,
                               child: Text(
-                                productAmount.toString(),
+                                amountOfProductsToAdd.toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
@@ -141,11 +144,11 @@ class _ProductAmountAndAddToOrderState
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  productAmount += 1;
+                                  amountOfProductsToAdd += 1;
                                 });
                                 calculateNewPrice(
-                                  productAmount,
-                                  totalPrice,
+                                  amountOfProductsToAdd,
+                                  widget.totalPrice,
                                 );
                               },
                               child: Container(
@@ -186,16 +189,16 @@ class _ProductAmountAndAddToOrderState
                 padding: const EdgeInsets.only(top: 15),
                 child: ActionButton(
                   onPressed: () {
-                    if (productAmount > productAmountInBasket) {
+                    if (amountOfProductsToAdd > productAmountInBasket) {
                       for (var i = productAmountInBasket;
-                          i < productAmount;
+                          i < amountOfProductsToAdd;
                           i++) {
                         widget.data.checkoutItems.add(widget.data.item);
                       }
                     }
-                    if (productAmount < productAmountInBasket) {
+                    if (amountOfProductsToAdd < productAmountInBasket) {
                       for (var i = productAmountInBasket;
-                          i > productAmount;
+                          i > amountOfProductsToAdd;
                           i--) {
                         widget.data.checkoutItems.remove(widget.data.item);
                       }
