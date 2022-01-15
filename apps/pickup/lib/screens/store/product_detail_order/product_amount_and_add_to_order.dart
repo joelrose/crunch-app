@@ -70,12 +70,12 @@ class _ProductAmountAndAddToOrderState
     widget.data.onCheckoutChange(widget.data.checkoutItems);
     Navigator.pop(context);
   }
-
-  void changeProductPrice(double newProductPrice) {
-    setState(() {
-      productPrice = newProductPrice;
-    });
-  }
+  
+  // void changeProductPrice(double newProductPrice) {
+  //   setState(() {
+  //     productPrice = newProductPrice;
+  //   });
+  // }
 
   void increaseItemAmount() {
     setState(() {
