@@ -8,6 +8,19 @@ import 'product_amount_and_add_to_order.dart';
 import 'product_detail_text.dart';
 import 'product_radio_checkbox.dart';
 
+class ProductAmountAndPricesData {
+  ProductAmountAndPricesData({
+    required this.amountOfProductsToAddToBasket,
+    required this.productAmountInBasket,
+    required this.newTotalPrice,
+    required this.itemPrice,
+  });
+  int amountOfProductsToAddToBasket;
+  int productAmountInBasket;
+  double newTotalPrice;
+  double itemPrice;
+}
+
 class StoreProductOverview extends StatefulWidget {
   const StoreProductOverview({Key? key, required this.data}) : super(key: key);
   final ProductDetailsData data;
@@ -17,12 +30,46 @@ class StoreProductOverview extends StatefulWidget {
 }
 
 class _StoreProductOverviewState extends State<StoreProductOverview> {
-  late double totalPrice;
+  late int amountOfProductsToAddToBasket;
+  late int productAmountInBasket;
+  late double newTotalPrice;
+  late double defaultItemPrice;
+  late double totalItemPrice;
 
   @override
   void initState() {
     super.initState();
-    totalPrice = 0;
+
+    defaultItemPrice = widget.data.item.price.toDouble();
+    totalItemPrice = defaultItemPrice;
+
+    final bool ifItemInBasket =
+        widget.data.checkoutItems.contains(widget.data.item);
+
+    productAmountInBasket = widget.data.checkoutItems
+        .where(
+          (listItem) => widget.data.item == listItem,
+        )
+        .length;
+
+    if (ifItemInBasket) {
+      amountOfProductsToAddToBasket = productAmountInBasket;
+    } else {
+      amountOfProductsToAddToBasket = 1;
+      productAmountInBasket = 0;
+    }
+    newTotalPrice = totalItemPrice * amountOfProductsToAddToBasket;
+  }
+
+  void changeItemPrice(
+    double singleProductPrice,
+    double addOnPrice,
+  ) {
+    final double newItemPrice = singleProductPrice + addOnPrice;
+    // wenn ich hier setState mache baut er alle childs neu
+    // setState(() {
+      totalItemPrice = newItemPrice;
+    // });
   }
 
   @override
@@ -49,6 +96,8 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
                       ),
                       ProductRadioCheckbox(
                         itemCategories: widget.data.itemOptions,
+                        itemPrice: widget.data.item.price.toDouble(),
+                        changeItemPrice: changeItemPrice,
                       )
                     ],
                   ),
@@ -58,7 +107,12 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
           ),
           ProductAmountAndAddToOrder(
             data: widget.data,
-            totalPrice: totalPrice,
+            amountAndPriceData: ProductAmountAndPricesData(
+              amountOfProductsToAddToBasket: amountOfProductsToAddToBasket,
+              productAmountInBasket: productAmountInBasket,
+              newTotalPrice: newTotalPrice,
+              itemPrice: totalItemPrice,
+            ),
           )
         ],
       ),

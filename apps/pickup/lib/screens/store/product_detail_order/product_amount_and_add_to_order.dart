@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 
+import 'product_details_main.dart';
+
 class ProductAmountAndAddToOrder extends StatefulWidget {
-  ProductAmountAndAddToOrder(
-      {Key? key, required this.data, required this.totalPrice})
-      : super(key: key);
+  const ProductAmountAndAddToOrder({
+    Key? key,
+    required this.data,
+    required this.amountAndPriceData,
+  }) : super(key: key);
   final ProductDetailsData data;
-  double totalPrice;
+  final ProductAmountAndPricesData amountAndPriceData;
 
   @override
   _ProductAmountAndAddToOrderState createState() =>
@@ -17,48 +21,86 @@ class ProductAmountAndAddToOrder extends StatefulWidget {
 
 class _ProductAmountAndAddToOrderState
     extends State<ProductAmountAndAddToOrder> {
-  late int amountOfProductsToAdd;
-  late int productAmountInBasket;
   late String priceAsString;
+  late double productPrice;
 
   @override
   void initState() {
     super.initState();
-    if (widget.data.checkoutItems.contains(widget.data.item)) {
-      productAmountInBasket = widget.data.checkoutItems
-          .where(
-            (listItem) => widget.data.item == listItem,
-          )
-          .length;
-      amountOfProductsToAdd = productAmountInBasket;
-      widget.totalPrice =
-          widget.data.item.price.toDouble() * productAmountInBasket;
-    } else {
-      amountOfProductsToAdd = 1;
-      productAmountInBasket = 0;
-      widget.totalPrice = widget.data.item.price.toDouble();
+    priceAsString =
+        '${widget.amountAndPriceData.newTotalPrice.toStringAsFixed(2)}€';
+
+    productPrice = widget.amountAndPriceData.itemPrice;
+  }
+
+  void updatePriceAsString(newTotalPrice) {
+    setState(() {
+      priceAsString = '$newTotalPrice€';
+    });
+  }
+
+  void calculateNewPrice(int amount, double price) {
+    print(productPrice);
+    setState(() {
+      widget.amountAndPriceData.newTotalPrice = productPrice * amount;
+    });
+    updatePriceAsString(
+      widget.amountAndPriceData.newTotalPrice.toStringAsFixed(2),
+    );
+  }
+
+  void addToOrderOnClick() {
+    if (widget.amountAndPriceData.amountOfProductsToAddToBasket >
+        widget.amountAndPriceData.productAmountInBasket) {
+      for (var i = widget.amountAndPriceData.productAmountInBasket;
+          i < widget.amountAndPriceData.amountOfProductsToAddToBasket;
+          i++) {
+        widget.data.checkoutItems.add(widget.data.item);
+      }
     }
-    priceAsString = '${widget.totalPrice.toStringAsFixed(2)}€';
+    if (widget.amountAndPriceData.amountOfProductsToAddToBasket <
+        widget.amountAndPriceData.productAmountInBasket) {
+      for (var i = widget.amountAndPriceData.productAmountInBasket;
+          i > widget.amountAndPriceData.amountOfProductsToAddToBasket;
+          i--) {
+        widget.data.checkoutItems.remove(widget.data.item);
+      }
+    }
+
+    widget.data.onCheckoutChange(widget.data.checkoutItems);
+    Navigator.pop(context);
+  }
+
+  void changeProductPrice(double newProductPrice) {
+    setState(() {
+      productPrice = newProductPrice;
+    });
+  }
+
+  void increaseItemAmount() {
+    setState(() {
+      widget.amountAndPriceData.amountOfProductsToAddToBasket += 1;
+    });
+    calculateNewPrice(
+      widget.amountAndPriceData.amountOfProductsToAddToBasket,
+      widget.amountAndPriceData.newTotalPrice,
+    );
+  }
+
+  void decreaseItemAmount() {
+    if (widget.amountAndPriceData.amountOfProductsToAddToBasket != 0) {
+      setState(() {
+        widget.amountAndPriceData.amountOfProductsToAddToBasket -= 1;
+      });
+      calculateNewPrice(
+        widget.amountAndPriceData.amountOfProductsToAddToBasket,
+        widget.amountAndPriceData.newTotalPrice,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final productPrice = widget.data.item.price.toDouble();
-
-    void updatePriceAsString(newTotalPrice) {
-      setState(() {
-        priceAsString = '$newTotalPrice€';
-      });
-    }
-
-    void calculateNewPrice(int amount, double price) {
-      final double newTotalPrice = productPrice * amount;
-      setState(() {
-        widget.totalPrice = newTotalPrice;
-      });
-      updatePriceAsString(newTotalPrice.toStringAsFixed(2));
-    }
-
     return Column(
       children: [
         const Divider(
@@ -90,13 +132,7 @@ class _ProductAmountAndAddToOrderState
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                if (amountOfProductsToAdd != 0) {
-                                  setState(() {
-                                    amountOfProductsToAdd -= 1;
-                                  });
-                                  calculateNewPrice(
-                                      amountOfProductsToAdd, widget.totalPrice);
-                                }
+                                decreaseItemAmount();
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -121,9 +157,11 @@ class _ProductAmountAndAddToOrderState
                               horizontal: 5,
                             ),
                             child: SizedBox(
-                              width: 35,
+                              width: 40,
                               child: Text(
-                                amountOfProductsToAdd.toString(),
+                                widget.amountAndPriceData
+                                    .amountOfProductsToAddToBasket
+                                    .toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
@@ -143,13 +181,7 @@ class _ProductAmountAndAddToOrderState
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  amountOfProductsToAdd += 1;
-                                });
-                                calculateNewPrice(
-                                  amountOfProductsToAdd,
-                                  widget.totalPrice,
-                                );
+                                increaseItemAmount();
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -189,23 +221,7 @@ class _ProductAmountAndAddToOrderState
                 padding: const EdgeInsets.only(top: 15),
                 child: ActionButton(
                   onPressed: () {
-                    if (amountOfProductsToAdd > productAmountInBasket) {
-                      for (var i = productAmountInBasket;
-                          i < amountOfProductsToAdd;
-                          i++) {
-                        widget.data.checkoutItems.add(widget.data.item);
-                      }
-                    }
-                    if (amountOfProductsToAdd < productAmountInBasket) {
-                      for (var i = productAmountInBasket;
-                          i > amountOfProductsToAdd;
-                          i--) {
-                        widget.data.checkoutItems.remove(widget.data.item);
-                      }
-                    }
-
-                    widget.data.onCheckoutChange(widget.data.checkoutItems);
-                    Navigator.pop(context);
+                    addToOrderOnClick();
                   },
                   buttonText: 'Add to order',
                 ),

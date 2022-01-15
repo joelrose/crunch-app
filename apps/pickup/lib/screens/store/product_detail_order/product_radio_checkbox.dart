@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:sanity/sanity.dart';
 
 class ProductRadioCheckbox extends StatefulWidget {
-  const ProductRadioCheckbox({Key? key, required this.itemCategories})
-      : super(key: key);
+  const ProductRadioCheckbox({
+    Key? key,
+    required this.itemCategories,
+    required this.itemPrice,
+    required this.changeItemPrice,
+  }) : super(key: key);
   final List<RestaurantMenueItemOptions>? itemCategories;
+  final double itemPrice;
+  final Function changeItemPrice;
 
   @override
   _ProductRadioCheckboxState createState() => _ProductRadioCheckboxState();
@@ -14,6 +20,7 @@ class ProductRadioCheckbox extends StatefulWidget {
 class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
   @override
   Widget build(BuildContext context) {
+    print('reload');
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -21,6 +28,7 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
       itemBuilder: (context, i) {
         final item = widget.itemCategories![i];
         var choice = item.options[0].id;
+
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -51,66 +59,77 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                           height: 0,
                         );
                       },
-                      itemBuilder: (context, index) => GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () {
-                          setState(() {
-                            choice = item.options[index].id;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Radio(
-                              value: item.options[index].id,
-                              groupValue: choice,
-                              onChanged: (value) {
-                                setState(() {
-                                  choice = value.toString();
-                                });
-                              },
-                              activeColor: AlpacaColor.primary100,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 17),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      item.options[index].title.english,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1!
-                                          .merge(
-                                            const TextStyle(
-                                              color: AlpacaColor.darkNavyColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                    ),
-                                    if (item.options[index].price != 0)
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            widget.changeItemPrice(
+                              widget.itemPrice,
+                              item.options[index].price.toDouble(),
+                            );
+                            setState(() {
+                              choice = item.options[index].id;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: item.options[index].id,
+                                groupValue: choice,
+                                onChanged: (value) {
+                                  widget.changeItemPrice(
+                                    widget.itemPrice,
+                                    item.options[index].price.toDouble(),
+                                  );
+                                  setState(() {
+                                    choice = value.toString();
+                                  });
+                                },
+                                activeColor: AlpacaColor.primary100,
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 17),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
                                       Text(
-                                        '+ ${item.options[index].price.toString()}€',
+                                        item.options[index].title.english,
                                         style: Theme.of(context)
                                             .textTheme
                                             .subtitle1!
                                             .merge(
                                               const TextStyle(
-                                                color: AlpacaColor.primary100,
+                                                color:
+                                                    AlpacaColor.darkNavyColor,
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 12,
+                                                fontSize: 13,
                                               ),
                                             ),
                                       ),
-                                  ],
+                                      if (item.options[index].price != 0)
+                                        Text(
+                                          '+ ${item.options[index].price.toString()}€',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1!
+                                              .merge(
+                                                const TextStyle(
+                                                  color: AlpacaColor.primary100,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                        ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
