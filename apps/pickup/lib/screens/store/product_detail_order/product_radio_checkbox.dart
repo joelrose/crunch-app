@@ -1,6 +1,9 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sanity/sanity.dart';
+
+import 'PriceModel.dart';
 
 class ProductRadioCheckbox extends StatefulWidget {
   const ProductRadioCheckbox({
@@ -20,17 +23,20 @@ class ProductRadioCheckbox extends StatefulWidget {
 class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
   @override
   Widget build(BuildContext context) {
-    print('reload');
+    print("rebuild");
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: widget.itemCategories?.length ?? 0,
       itemBuilder: (context, i) {
         final item = widget.itemCategories![i];
-        var choice = item.options[0].id;
+        var choice = item.options[i].id;
 
         return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
+          builder: (
+            BuildContext context,
+            StateSetter setState,
+          ) {
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(

@@ -2,17 +2,19 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
+import 'package:provider/provider.dart';
 
+import 'PriceModel.dart';
 import 'product_details_main.dart';
 
 class ProductAmountAndAddToOrder extends StatefulWidget {
   const ProductAmountAndAddToOrder({
     Key? key,
     required this.data,
-    required this.amountAndPriceData,
+    required this.priceData,
   }) : super(key: key);
   final ProductDetailsData data;
-  final ProductAmountAndPricesData amountAndPriceData;
+  final ProductAmountAndPricesData priceData;
 
   @override
   _ProductAmountAndAddToOrderState createState() =>
@@ -21,84 +23,6 @@ class ProductAmountAndAddToOrder extends StatefulWidget {
 
 class _ProductAmountAndAddToOrderState
     extends State<ProductAmountAndAddToOrder> {
-  late String priceAsString;
-  late double productPrice;
-
-  @override
-  void initState() {
-    super.initState();
-    priceAsString =
-        '${widget.amountAndPriceData.newTotalPrice.toStringAsFixed(2)}€';
-
-    productPrice = widget.amountAndPriceData.itemPrice;
-  }
-
-  void updatePriceAsString(newTotalPrice) {
-    setState(() {
-      priceAsString = '$newTotalPrice€';
-    });
-  }
-
-  void calculateNewPrice(int amount, double price) {
-    print(productPrice);
-    setState(() {
-      widget.amountAndPriceData.newTotalPrice = productPrice * amount;
-    });
-    updatePriceAsString(
-      widget.amountAndPriceData.newTotalPrice.toStringAsFixed(2),
-    );
-  }
-
-  void addToOrderOnClick() {
-    if (widget.amountAndPriceData.amountOfProductsToAddToBasket >
-        widget.amountAndPriceData.productAmountInBasket) {
-      for (var i = widget.amountAndPriceData.productAmountInBasket;
-          i < widget.amountAndPriceData.amountOfProductsToAddToBasket;
-          i++) {
-        widget.data.checkoutItems.add(widget.data.item);
-      }
-    }
-    if (widget.amountAndPriceData.amountOfProductsToAddToBasket <
-        widget.amountAndPriceData.productAmountInBasket) {
-      for (var i = widget.amountAndPriceData.productAmountInBasket;
-          i > widget.amountAndPriceData.amountOfProductsToAddToBasket;
-          i--) {
-        widget.data.checkoutItems.remove(widget.data.item);
-      }
-    }
-
-    widget.data.onCheckoutChange(widget.data.checkoutItems);
-    Navigator.pop(context);
-  }
-  
-  // void changeProductPrice(double newProductPrice) {
-  //   setState(() {
-  //     productPrice = newProductPrice;
-  //   });
-  // }
-
-  void increaseItemAmount() {
-    setState(() {
-      widget.amountAndPriceData.amountOfProductsToAddToBasket += 1;
-    });
-    calculateNewPrice(
-      widget.amountAndPriceData.amountOfProductsToAddToBasket,
-      widget.amountAndPriceData.newTotalPrice,
-    );
-  }
-
-  void decreaseItemAmount() {
-    if (widget.amountAndPriceData.amountOfProductsToAddToBasket != 0) {
-      setState(() {
-        widget.amountAndPriceData.amountOfProductsToAddToBasket -= 1;
-      });
-      calculateNewPrice(
-        widget.amountAndPriceData.amountOfProductsToAddToBasket,
-        widget.amountAndPriceData.newTotalPrice,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -132,7 +56,7 @@ class _ProductAmountAndAddToOrderState
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                decreaseItemAmount();
+                                widget.priceData.decreaseItemAmount();
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -159,7 +83,8 @@ class _ProductAmountAndAddToOrderState
                             child: SizedBox(
                               width: 40,
                               child: Text(
-                                widget.amountAndPriceData
+                                Provider.of<PriceModel>(context)
+                                    .priceData
                                     .amountOfProductsToAddToBasket
                                     .toString(),
                                 style: Theme.of(context)
@@ -181,7 +106,7 @@ class _ProductAmountAndAddToOrderState
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                increaseItemAmount();
+                                widget.priceData.increaseItemAmount();
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -205,7 +130,7 @@ class _ProductAmountAndAddToOrderState
                       ),
                     ),
                     Text(
-                      priceAsString,
+                      '${Provider.of<PriceModel>(context).priceData.newTotalPrice.toStringAsFixed(2)} €',
                       style: Theme.of(context).textTheme.headline2!.merge(
                             const TextStyle(
                               color: AlpacaColor.primary100,
@@ -221,7 +146,7 @@ class _ProductAmountAndAddToOrderState
                 padding: const EdgeInsets.only(top: 15),
                 child: ActionButton(
                   onPressed: () {
-                    addToOrderOnClick();
+                    widget.priceData.addToOrderOnClick();
                   },
                   buttonText: 'Add to order',
                 ),

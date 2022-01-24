@@ -1,24 +1,39 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pickup/screens/store/product_detail_order/PriceModel.dart';
 import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/store_menue_list.dart';
 import 'product_amount_and_add_to_order.dart';
 import 'product_detail_text.dart';
 import 'product_radio_checkbox.dart';
 
+class PriceData {
+  PriceData({
+    required this.totalItemPrice,
+    required this.amountOfProductsToAddToBasket,
+    required this.newTotalPrice,
+  });
+  double totalItemPrice;
+  int amountOfProductsToAddToBasket;
+  double newTotalPrice;
+}
+
 class ProductAmountAndPricesData {
   ProductAmountAndPricesData({
     required this.amountOfProductsToAddToBasket,
-    required this.productAmountInBasket,
     required this.newTotalPrice,
-    required this.itemPrice,
+    required this.increaseItemAmount,
+    required this.decreaseItemAmount,
+    required this.addToOrderOnClick,
   });
   int amountOfProductsToAddToBasket;
-  int productAmountInBasket;
   double newTotalPrice;
-  double itemPrice;
+  Function increaseItemAmount;
+  Function decreaseItemAmount;
+  Function addToOrderOnClick;
 }
 
 class StoreProductOverview extends StatefulWidget {
@@ -35,6 +50,7 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
   late double newTotalPrice;
   late double defaultItemPrice;
   late double totalItemPrice;
+  late String priceAsString;
 
   @override
   void initState() {
@@ -61,60 +77,86 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
     newTotalPrice = totalItemPrice * amountOfProductsToAddToBasket;
   }
 
-  void changeItemPrice(
-    double singleProductPrice,
-    double addOnPrice,
-  ) {
-    final double newItemPrice = singleProductPrice + addOnPrice;
-    // wenn ich hier setState mache baut er alle childs neu
-    // setState(() {
-      totalItemPrice = newItemPrice;
-    // });
+  void addToOrderOnClick() {
+    if (amountOfProductsToAddToBasket > productAmountInBasket) {
+      for (var i = productAmountInBasket;
+          i < amountOfProductsToAddToBasket;
+          i++) {
+        widget.data.checkoutItems.add(widget.data.item);
+      }
+    }
+    if (amountOfProductsToAddToBasket < productAmountInBasket) {
+      for (var i = productAmountInBasket;
+          i > amountOfProductsToAddToBasket;
+          i--) {
+        widget.data.checkoutItems.remove(widget.data.item);
+      }
+    }
+
+    widget.data.onCheckoutChange(widget.data.checkoutItems);
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return PageWrapper(
-      statusBarStyle: SystemUiOverlayStyle.dark,
-      padding: EdgeInsets.zero,
-      backgroundColor: AlpacaColor.white100Color,
-      child: Column(
-        children: [
-          Expanded(
-            child: CustomScrollView(
-              shrinkWrap: true,
-              slivers: [
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      StoreImageNavbar(
-                        image: widget.data.restaurantImage,
-                        showButtons: false,
-                      ),
-                      ProductBasicDetails(
-                        title: widget.data.item.title.english,
-                      ),
-                      ProductRadioCheckbox(
-                        itemCategories: widget.data.itemOptions,
-                        itemPrice: widget.data.item.price.toDouble(),
-                        changeItemPrice: changeItemPrice,
-                      )
-                    ],
+    return ChangeNotifierProvider(
+      create: (context) => PriceModel(
+        data: widget.data,
+        priceData: PriceData(
+          totalItemPrice: totalItemPrice,
+          amountOfProductsToAddToBasket: amountOfProductsToAddToBasket,
+          newTotalPrice: newTotalPrice,
+        ),
+      ),
+      builder: (context, child) => PageWrapper(
+        statusBarStyle: SystemUiOverlayStyle.dark,
+        padding: EdgeInsets.zero,
+        backgroundColor: AlpacaColor.white100Color,
+        child: Column(
+          children: [
+            Expanded(
+              child: CustomScrollView(
+                shrinkWrap: true,
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        StoreImageNavbar(
+                          image: widget.data.restaurantImage,
+                          showButtons: false,
+                        ),
+                        ProductBasicDetails(
+                          title: widget.data.item.title.english,
+                        ),
+                        ProductRadioCheckbox(
+                          itemCategories: widget.data.itemOptions,
+                          itemPrice: widget.data.item.price.toDouble(),
+                          changeItemPrice:
+                              Provider.of<PriceModel>(context, listen: false)
+                                  .changeItemPrice,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          ProductAmountAndAddToOrder(
-            data: widget.data,
-            amountAndPriceData: ProductAmountAndPricesData(
-              amountOfProductsToAddToBasket: amountOfProductsToAddToBasket,
-              productAmountInBasket: productAmountInBasket,
-              newTotalPrice: newTotalPrice,
-              itemPrice: totalItemPrice,
-            ),
-          )
-        ],
+            ProductAmountAndAddToOrder(
+              data: widget.data,
+              priceData: ProductAmountAndPricesData(
+                amountOfProductsToAddToBasket: amountOfProductsToAddToBasket,
+                newTotalPrice: newTotalPrice,
+                increaseItemAmount:
+                    Provider.of<PriceModel>(context, listen: false)
+                        .increaseItemAmount,
+                decreaseItemAmount:
+                    Provider.of<PriceModel>(context, listen: false)
+                        .decreaseItemAmount,
+                addToOrderOnClick: addToOrderOnClick,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
