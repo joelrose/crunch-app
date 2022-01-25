@@ -2,9 +2,6 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
-import 'package:provider/provider.dart';
-
-import 'PriceModel.dart';
 import 'product_details_main.dart';
 
 class ProductAmountAndAddToOrder extends StatefulWidget {
@@ -83,9 +80,7 @@ class _ProductAmountAndAddToOrderState
                             child: SizedBox(
                               width: 40,
                               child: Text(
-                                Provider.of<PriceModel>(context)
-                                    .priceData
-                                    .amountOfProductsToAddToBasket
+                                widget.priceData.amountOfProductsToAddToBasket
                                     .toString(),
                                 style: Theme.of(context)
                                     .textTheme
@@ -130,7 +125,7 @@ class _ProductAmountAndAddToOrderState
                       ),
                     ),
                     Text(
-                      '${Provider.of<PriceModel>(context).priceData.newTotalPrice.toStringAsFixed(2)} €',
+                      '${widget.priceData.newTotalPrice.toStringAsFixed(2)} €',
                       style: Theme.of(context).textTheme.headline2!.merge(
                             const TextStyle(
                               color: AlpacaColor.primary100,
