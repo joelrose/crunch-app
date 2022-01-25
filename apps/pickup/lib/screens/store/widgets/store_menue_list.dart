@@ -137,12 +137,15 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                     fontSize: 16,
                                   ),
                             ),
-                            if (checkoutItems.contains(item))
+                            if (checkoutItems.indexWhere(
+                                  (checkoutItem) => checkoutItem.id == item.id,
+                                ) !=
+                                -1)
                               Padding(
                                 padding: const EdgeInsets.only(left: 8),
                                 child: Text(
                                   '${checkoutItems.where(
-                                        (listItem) => item == listItem,
+                                        (listItem) => item.id == listItem.id,
                                       ).length}x',
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
