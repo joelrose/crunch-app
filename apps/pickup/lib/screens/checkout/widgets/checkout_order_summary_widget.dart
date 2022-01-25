@@ -6,7 +6,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
   const CheckoutOrderSummaryWidget({Key? key, required this.checkoutItems})
       : super(key: key);
 
-  final List<RestaurantMenueItemModel> checkoutItems;
+  final List<CheckoutItemModel> checkoutItems;
 
   @override
   Widget build(BuildContext context) {

@@ -21,7 +21,7 @@ class CreateStoreData {
     required this.googleMaps,
   });
 
-  final List<RestaurantMenueItemModel> checkoutItems;
+  final List<CheckoutItemModel> checkoutItems;
   final String storeName;
   final String googleMaps;
 }
@@ -37,7 +37,7 @@ class StoreScreen extends StatefulWidget {
 
 class _StoreScreenState extends State<StoreScreen> {
   bool showCheckoutButton = false;
-  List<RestaurantMenueItemModel> checkoutItems = [];
+  List<CheckoutItemModel> checkoutItems = [];
 
   @override
   Widget build(BuildContext context) {
