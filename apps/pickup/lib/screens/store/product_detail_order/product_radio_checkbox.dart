@@ -1,9 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'dart:convert';
 import 'package:sanity/sanity.dart';
-
-import 'PriceModel.dart';
 
 class ProductRadioCheckbox extends StatefulWidget {
   const ProductRadioCheckbox({
@@ -11,10 +9,12 @@ class ProductRadioCheckbox extends StatefulWidget {
     required this.itemCategories,
     required this.itemPrice,
     required this.changeItemPrice,
+    required this.itemAndOptionsList,
   }) : super(key: key);
   final List<RestaurantMenueItemOptions>? itemCategories;
   final double itemPrice;
   final Function changeItemPrice;
+  final List itemAndOptionsList;
 
   @override
   _ProductRadioCheckboxState createState() => _ProductRadioCheckboxState();
@@ -23,14 +23,12 @@ class ProductRadioCheckbox extends StatefulWidget {
 class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
   @override
   Widget build(BuildContext context) {
-    print("rebuild");
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: widget.itemCategories?.length ?? 0,
       itemBuilder: (context, i) {
         final item = widget.itemCategories![i];
-        var choice = item.options[i].id;
 
         return StatefulBuilder(
           builder: (
@@ -74,21 +72,27 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                               item.options[index].price.toDouble(),
                             );
                             setState(() {
-                              choice = item.options[index].id;
+                              widget.itemAndOptionsList[i].id =
+                                  item.options[index].id;
+                              widget.itemAndOptionsList[i].title =
+                                item.options[index].title;
+                              widget.itemAndOptionsList[i].price =
+                                item.options[index].price;
                             });
                           },
                           child: Row(
                             children: [
                               Radio(
                                 value: item.options[index].id,
-                                groupValue: choice,
+                                groupValue: widget.itemAndOptionsList[i].id,
                                 onChanged: (value) {
                                   widget.changeItemPrice(
                                     widget.itemPrice,
                                     item.options[index].price.toDouble(),
                                   );
                                   setState(() {
-                                    choice = value.toString();
+                                    widget.itemAndOptionsList[i].id =
+                                        value.toString();
                                   });
                                 },
                                 activeColor: AlpacaColor.primary100,
