@@ -1,9 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pickup/screens/store/product_detail_order/PriceModel.dart';
 import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
-import 'package:provider/provider.dart';
+import 'package:sanity/sanity.dart';
 
 import '../widgets/store_menue_list.dart';
 import 'product_amount_and_add_to_order.dart';
@@ -51,6 +50,7 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
   late double defaultItemPrice;
   late double totalItemPrice;
   late String priceAsString;
+  late List itemAndOptionsList;
 
   @override
   void initState() {
@@ -59,37 +59,117 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
     defaultItemPrice = widget.data.item.price.toDouble();
     totalItemPrice = defaultItemPrice;
 
-    final bool ifItemInBasket =
-        widget.data.checkoutItems.contains(widget.data.item);
+    bool ifItemInBasket() {
+      if (widget.data.checkoutItems.indexWhere(
+            (checkoutItem) => checkoutItem.id == widget.data.item.id,
+          ) !=
+          -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
     productAmountInBasket = widget.data.checkoutItems
         .where(
-          (listItem) => widget.data.item == listItem,
+          (listItem) => widget.data.item.id == listItem.id,
         )
         .length;
 
-    if (ifItemInBasket) {
+    if (ifItemInBasket()) {
       amountOfProductsToAddToBasket = productAmountInBasket;
     } else {
       amountOfProductsToAddToBasket = 1;
       productAmountInBasket = 0;
     }
     newTotalPrice = totalItemPrice * amountOfProductsToAddToBasket;
+
+    final item = widget.data.item;
+    itemAndOptionsList = [];
+    if (item.itemOptions != null) {
+      for (final itemOptions in item.itemOptions!) {
+        final defaultOptionId = itemOptions.options[0].id;
+        final itemAndValue = CheckoutOptionForItemOptionsModel(
+          id: defaultOptionId,
+          price: itemOptions.options[0].price,
+          title: itemOptions.options[0].title,
+        );
+        itemAndOptionsList.add(itemAndValue);
+      }
+    }
+  }
+
+  void changeItemPrice(
+    double singleProductPrice,
+    double addOnPrice,
+  ) {
+    final double newItemPrice = singleProductPrice + addOnPrice;
+    totalItemPrice = newItemPrice;
+    calculateNewPrice(
+      amountOfProductsToAddToBasket,
+      newTotalPrice,
+    );
+  }
+
+  void increaseItemAmount() {
+    setState(() {
+      amountOfProductsToAddToBasket += 1;
+    });
+    calculateNewPrice(
+      amountOfProductsToAddToBasket,
+      newTotalPrice,
+    );
+  }
+
+  void decreaseItemAmount() {
+    if (amountOfProductsToAddToBasket != 0) {
+      setState(() {
+        amountOfProductsToAddToBasket -= 1;
+      });
+      calculateNewPrice(
+        amountOfProductsToAddToBasket,
+        newTotalPrice,
+      );
+    }
+  }
+
+  void calculateNewPrice(int amount, double price) {
+    setState(() {
+      newTotalPrice = totalItemPrice * amount;
+    });
   }
 
   void addToOrderOnClick() {
+    final item = widget.data.item;
     if (amountOfProductsToAddToBasket > productAmountInBasket) {
       for (var i = productAmountInBasket;
           i < amountOfProductsToAddToBasket;
           i++) {
-        widget.data.checkoutItems.add(widget.data.item);
+        widget.data.checkoutItems.add(
+          CheckoutItemModel(
+            id: item.id,
+            itemOptions: CheckoutItemOptionsModel(
+              options: CheckoutOptionForItemOptionsModel(
+                id: item.itemOptions![0].options[0].id,
+                price: item.itemOptions![0].options[0].price,
+                title: item.itemOptions![0].options[0].title,
+              ),
+              title: item.itemOptions![0].title,
+            ),
+            price: item.price,
+            title: item.title,
+          ),
+        );
       }
     }
     if (amountOfProductsToAddToBasket < productAmountInBasket) {
+      print(productAmountInBasket);
       for (var i = productAmountInBasket;
           i > amountOfProductsToAddToBasket;
           i--) {
-        widget.data.checkoutItems.remove(widget.data.item);
+        widget.data.checkoutItems.removeWhere(
+          (checkoutItem) => checkoutItem.id == widget.data.item.id,
+        );
       }
     }
 
@@ -99,64 +179,49 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => PriceModel(
-        data: widget.data,
-        priceData: PriceData(
-          totalItemPrice: totalItemPrice,
-          amountOfProductsToAddToBasket: amountOfProductsToAddToBasket,
-          newTotalPrice: newTotalPrice,
-        ),
-      ),
-      builder: (context, child) => PageWrapper(
-        statusBarStyle: SystemUiOverlayStyle.dark,
-        padding: EdgeInsets.zero,
-        backgroundColor: AlpacaColor.white100Color,
-        child: Column(
-          children: [
-            Expanded(
-              child: CustomScrollView(
-                shrinkWrap: true,
-                slivers: [
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        StoreImageNavbar(
-                          image: widget.data.restaurantImage,
-                          showButtons: false,
-                        ),
-                        ProductBasicDetails(
-                          title: widget.data.item.title.english,
-                        ),
-                        ProductRadioCheckbox(
-                          itemCategories: widget.data.itemOptions,
-                          itemPrice: widget.data.item.price.toDouble(),
-                          changeItemPrice:
-                              Provider.of<PriceModel>(context, listen: false)
-                                  .changeItemPrice,
-                        )
-                      ],
-                    ),
+    return PageWrapper(
+      statusBarStyle: SystemUiOverlayStyle.dark,
+      padding: EdgeInsets.zero,
+      backgroundColor: AlpacaColor.white100Color,
+      child: Column(
+        children: [
+          Expanded(
+            child: CustomScrollView(
+              shrinkWrap: true,
+              slivers: [
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      StoreImageNavbar(
+                        image: widget.data.restaurantImage,
+                        showButtons: false,
+                      ),
+                      ProductBasicDetails(
+                        title: widget.data.item.title.english,
+                      ),
+                      ProductRadioCheckbox(
+                        itemCategories: widget.data.item.itemOptions,
+                        itemPrice: widget.data.item.price.toDouble(),
+                        changeItemPrice: changeItemPrice,
+                        itemAndOptionsList: itemAndOptionsList,
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            ProductAmountAndAddToOrder(
-              data: widget.data,
-              priceData: ProductAmountAndPricesData(
-                amountOfProductsToAddToBasket: amountOfProductsToAddToBasket,
-                newTotalPrice: newTotalPrice,
-                increaseItemAmount:
-                    Provider.of<PriceModel>(context, listen: false)
-                        .increaseItemAmount,
-                decreaseItemAmount:
-                    Provider.of<PriceModel>(context, listen: false)
-                        .decreaseItemAmount,
-                addToOrderOnClick: addToOrderOnClick,
-              ),
-            )
-          ],
-        ),
+          ),
+          ProductAmountAndAddToOrder(
+            data: widget.data,
+            priceData: ProductAmountAndPricesData(
+              amountOfProductsToAddToBasket: amountOfProductsToAddToBasket,
+              newTotalPrice: newTotalPrice,
+              increaseItemAmount: increaseItemAmount,
+              decreaseItemAmount: decreaseItemAmount,
+              addToOrderOnClick: addToOrderOnClick,
+            ),
+          )
+        ],
       ),
     );
   }
