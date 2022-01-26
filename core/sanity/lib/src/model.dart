@@ -184,17 +184,17 @@ class CheckoutItemModel {
     required this.title,
   });
   String id;
-  CheckoutItemOptionsModel itemOptions;
+  List<CheckoutItemOptionsModel> itemOptions;
   num price;
   LocaleString title;
 }
 
 class CheckoutItemOptionsModel {
   CheckoutItemOptionsModel({
-    required this.options,
+    required this.option,
     required this.title,
   });
-  CheckoutOptionForItemOptionsModel options;
+  CheckoutOptionForItemOptionsModel option;
   LocaleString title;
 }
 
