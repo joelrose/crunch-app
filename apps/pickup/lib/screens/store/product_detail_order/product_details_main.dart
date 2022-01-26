@@ -50,16 +50,15 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
   late double defaultItemPrice;
   late double totalItemPrice;
   late String priceAsString;
-  late List itemAndOptionsList;
+  late List<CheckoutItemOptionsModel> itemTitleAndOptionsList;
+  late CheckoutItemOptionsModel itemTitleAndOptions;
+  late CheckoutOptionForItemOptionsModel itemOption;
 
   @override
   void initState() {
     super.initState();
 
-    defaultItemPrice = widget.data.item.price.toDouble();
-    totalItemPrice = defaultItemPrice;
-
-    bool ifItemInBasket() {
+    bool isItemInBasket() {
       if (widget.data.checkoutItems.indexWhere(
             (checkoutItem) => checkoutItem.id == widget.data.item.id,
           ) !=
@@ -76,27 +75,49 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
         )
         .length;
 
-    if (ifItemInBasket()) {
+    if (isItemInBasket()) {
       amountOfProductsToAddToBasket = productAmountInBasket;
     } else {
       amountOfProductsToAddToBasket = 1;
       productAmountInBasket = 0;
     }
-    newTotalPrice = totalItemPrice * amountOfProductsToAddToBasket;
+
+    defaultItemPrice = widget.data.item.price.toDouble();
+    totalItemPrice = defaultItemPrice;
 
     final item = widget.data.item;
-    itemAndOptionsList = [];
-    if (item.itemOptions != null) {
-      for (final itemOptions in item.itemOptions!) {
-        final defaultOptionId = itemOptions.options[0].id;
-        final itemAndValue = CheckoutOptionForItemOptionsModel(
-          id: defaultOptionId,
-          price: itemOptions.options[0].price,
-          title: itemOptions.options[0].title,
+    if (widget.data.item.itemOptions != null) {
+      if (!isItemInBasket()) {
+        itemTitleAndOptionsList = [];
+        for (final itemOptions in item.itemOptions!) {
+          itemOption = CheckoutOptionForItemOptionsModel(
+            id: itemOptions.options[0].id,
+            price: itemOptions.options[0].price,
+            title: itemOptions.options[0].title,
+          );
+          itemTitleAndOptions = CheckoutItemOptionsModel(
+            option: itemOption,
+            title: itemOptions.title,
+          );
+          itemTitleAndOptionsList.add(itemTitleAndOptions);
+        }
+      } else {
+        final int itemIndexInBasket = widget.data.checkoutItems.indexWhere(
+          (checkoutItem) => checkoutItem.id == widget.data.item.id,
         );
-        itemAndOptionsList.add(itemAndValue);
+        itemTitleAndOptionsList =
+            widget.data.checkoutItems[itemIndexInBasket].itemOptions;
+
+        double addOnPrice = 0;
+        for (var item in itemTitleAndOptionsList) {
+          double itemOptionPrice = item.option.price.toDouble();
+          addOnPrice += itemOptionPrice;
+        }
+        totalItemPrice = defaultItemPrice + addOnPrice;
       }
     }
+
+    newTotalPrice = totalItemPrice * amountOfProductsToAddToBasket;
   }
 
   void changeItemPrice(
@@ -141,6 +162,16 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
 
   void addToOrderOnClick() {
     final item = widget.data.item;
+    if (amountOfProductsToAddToBasket < productAmountInBasket) {
+      for (var i = productAmountInBasket;
+          i > amountOfProductsToAddToBasket;
+          i--) {
+        widget.data.checkoutItems.removeWhere(
+          (checkoutItem) => checkoutItem.id == widget.data.item.id,
+        );
+        productAmountInBasket = 0;
+      }
+    }
     if (amountOfProductsToAddToBasket > productAmountInBasket) {
       for (var i = productAmountInBasket;
           i < amountOfProductsToAddToBasket;
@@ -148,27 +179,10 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
         widget.data.checkoutItems.add(
           CheckoutItemModel(
             id: item.id,
-            itemOptions: CheckoutItemOptionsModel(
-              options: CheckoutOptionForItemOptionsModel(
-                id: item.itemOptions![0].options[0].id,
-                price: item.itemOptions![0].options[0].price,
-                title: item.itemOptions![0].options[0].title,
-              ),
-              title: item.itemOptions![0].title,
-            ),
+            itemOptions: itemTitleAndOptionsList,
             price: item.price,
             title: item.title,
           ),
-        );
-      }
-    }
-    if (amountOfProductsToAddToBasket < productAmountInBasket) {
-      print(productAmountInBasket);
-      for (var i = productAmountInBasket;
-          i > amountOfProductsToAddToBasket;
-          i--) {
-        widget.data.checkoutItems.removeWhere(
-          (checkoutItem) => checkoutItem.id == widget.data.item.id,
         );
       }
     }
@@ -203,7 +217,7 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
                         itemCategories: widget.data.item.itemOptions,
                         itemPrice: widget.data.item.price.toDouble(),
                         changeItemPrice: changeItemPrice,
-                        itemAndOptionsList: itemAndOptionsList,
+                        itemTitleAndOptionsList: itemTitleAndOptionsList,
                       )
                     ],
                   ),
