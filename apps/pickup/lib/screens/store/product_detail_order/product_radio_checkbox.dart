@@ -1,6 +1,5 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:sanity/sanity.dart';
 
 class ProductRadioCheckbox extends StatefulWidget {
@@ -9,12 +8,12 @@ class ProductRadioCheckbox extends StatefulWidget {
     required this.itemCategories,
     required this.itemPrice,
     required this.changeItemPrice,
-    required this.itemAndOptionsList,
+    required this.itemTitleAndOptionsList,
   }) : super(key: key);
   final List<RestaurantMenueItemOptions>? itemCategories;
   final double itemPrice;
   final Function changeItemPrice;
-  final List itemAndOptionsList;
+  final List<CheckoutItemOptionsModel> itemTitleAndOptionsList;
 
   @override
   _ProductRadioCheckboxState createState() => _ProductRadioCheckboxState();
@@ -27,8 +26,8 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: widget.itemCategories?.length ?? 0,
-      itemBuilder: (context, i) {
-        final item = widget.itemCategories![i];
+      itemBuilder: (context, itemCategoryIndex) {
+        final item = widget.itemCategories![itemCategoryIndex];
 
         return StatefulBuilder(
           builder: (
@@ -63,36 +62,47 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                           height: 0,
                         );
                       },
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, optionChoiceIndex) {
                         return GestureDetector(
                           behavior: HitTestBehavior.translucent,
                           onTap: () {
                             widget.changeItemPrice(
                               widget.itemPrice,
-                              item.options[index].price.toDouble(),
+                              item.options[optionChoiceIndex].price.toDouble(),
                             );
                             setState(() {
-                              widget.itemAndOptionsList[i].id =
-                                  item.options[index].id;
-                              widget.itemAndOptionsList[i].title =
-                                item.options[index].title;
-                              widget.itemAndOptionsList[i].price =
-                                item.options[index].price;
+                              widget
+                                  .itemTitleAndOptionsList[itemCategoryIndex]
+                                  .option
+                                  .id = item.options[optionChoiceIndex].id;
+                              widget.itemTitleAndOptionsList[itemCategoryIndex]
+                                      .option.title =
+                                  item.options[optionChoiceIndex].title;
+                              widget.itemTitleAndOptionsList[itemCategoryIndex]
+                                      .option.price =
+                                  item.options[optionChoiceIndex].price;
                             });
                           },
                           child: Row(
                             children: [
                               Radio(
-                                value: item.options[index].id,
-                                groupValue: widget.itemAndOptionsList[i].id,
+                                value: item.options[optionChoiceIndex].id,
+                                groupValue: widget
+                                    .itemTitleAndOptionsList[itemCategoryIndex]
+                                    .option
+                                    .id,
                                 onChanged: (value) {
                                   widget.changeItemPrice(
                                     widget.itemPrice,
-                                    item.options[index].price.toDouble(),
+                                    item.options[optionChoiceIndex].price
+                                        .toDouble(),
                                   );
                                   setState(() {
-                                    widget.itemAndOptionsList[i].id =
-                                        value.toString();
+                                    widget
+                                        .itemTitleAndOptionsList[
+                                            optionChoiceIndex]
+                                        .option
+                                        .id = value.toString();
                                   });
                                 },
                                 activeColor: AlpacaColor.primary100,
@@ -105,7 +115,8 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        item.options[index].title.english,
+                                        item.options[optionChoiceIndex].title
+                                            .english,
                                         style: Theme.of(context)
                                             .textTheme
                                             .subtitle1!
@@ -118,9 +129,11 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                                               ),
                                             ),
                                       ),
-                                      if (item.options[index].price != 0)
+                                      if (item.options[optionChoiceIndex]
+                                              .price !=
+                                          0)
                                         Text(
-                                          '+ ${item.options[index].price.toString()}€',
+                                          '+ ${item.options[optionChoiceIndex].price.toString()}€',
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle1!
