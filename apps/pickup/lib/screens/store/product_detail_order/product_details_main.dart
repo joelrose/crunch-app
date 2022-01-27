@@ -86,9 +86,10 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
     totalItemPrice = defaultItemPrice;
 
     final item = widget.data.item;
+
+    itemTitleAndOptionsList = [];
     if (widget.data.item.itemOptions != null) {
       if (!isItemInBasket()) {
-        itemTitleAndOptionsList = [];
         for (final itemOptions in item.itemOptions!) {
           itemOption = CheckoutOptionForItemOptionsModel(
             id: itemOptions.options[0].id,
