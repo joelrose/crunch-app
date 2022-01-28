@@ -4,6 +4,19 @@ import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 import 'package:sanity/sanity.dart';
 
+class CheckoutItemAmount {
+  CheckoutItemAmount({
+    required this.id,
+    required this.title,
+    required this.amount,
+    required this.totalPrice,
+  });
+  String id;
+  LocaleString title;
+  int amount;
+  double totalPrice;
+}
+
 class CheckoutCartItemsWidget extends StatelessWidget {
   const CheckoutCartItemsWidget({Key? key, required this.checkoutItems})
       : super(key: key);
@@ -12,6 +25,52 @@ class CheckoutCartItemsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<CheckoutItemAmount> checkoutSummaryList = [];
+    for (var itemIndex = 0; itemIndex < checkoutItems.length; itemIndex++) {
+      final item = checkoutItems[itemIndex];
+      int itemAmount = 0;
+      for (final checkoutItem in checkoutItems) {
+        if (checkoutItem.id == item.id) {
+          itemAmount++;
+        }
+      }
+      final double checkoutItemPrice = item.price.toDouble();
+      double itemAddOnPrice = 0;
+      for (final itemOption in item.itemOptions) {
+        itemAddOnPrice += itemOption.option.price;
+      }
+
+      final double itemTotalPrice = checkoutItemPrice + itemAddOnPrice;
+      if (checkoutSummaryList.isNotEmpty) {
+        bool isInList = false;
+        for (var i = 0; i < checkoutSummaryList.length; i++) {
+          final checkoutItem = checkoutSummaryList[i];
+          if (checkoutItem.id == item.id) {
+            isInList = true;
+            break;
+          }
+        }
+        if (!isInList) {
+          checkoutSummaryList.add(
+            CheckoutItemAmount(
+              id: item.id,
+              title: item.title,
+              amount: itemAmount,
+              totalPrice: itemTotalPrice * itemAmount,
+            ),
+          );
+        }
+      } else {
+        checkoutSummaryList.add(
+          CheckoutItemAmount(
+            id: item.id,
+            title: item.title,
+            amount: itemAmount,
+            totalPrice: itemTotalPrice * itemAmount,
+          ),
+        );
+      }
+    }
     return Column(
       children: [
         CheckoutHeaderRowWidget(
@@ -26,17 +85,18 @@ class CheckoutCartItemsWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: checkoutItems.length,
+                itemCount: checkoutSummaryList.length,
                 shrinkWrap: true,
-                itemBuilder: (context, i) {
-                  final checkoutItem = checkoutItems[i];
+                itemBuilder: (context, itemIndex) {
+                  final checkoutItem = checkoutSummaryList[itemIndex];
+
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 3),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '1x ${checkoutItem.title.english}',
+                          '${checkoutItem.amount}x ${checkoutItem.title.english}',
                           style: const TextStyle(
                             color: AlpacaColor.darkGreyColor,
                             fontWeight: FontWeight.w600,
@@ -44,7 +104,7 @@ class CheckoutCartItemsWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${checkoutItem.price}€',
+                          '${checkoutItem.totalPrice.toStringAsFixed(2)} €',
                           style: const TextStyle(
                             color: AlpacaColor.blackColor,
                             fontSize: 15,
