@@ -50,7 +50,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '$_subtotalPrice€',
+                    '${_subtotalPrice.toStringAsFixed(2)} €',
                     style: const TextStyle(
                       color: AlpacaColor.blackColor,
                       fontSize: 15,
@@ -74,7 +74,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '0.00€',
+                    '0.00 €',
                     style: TextStyle(
                       color: AlpacaColor.blackColor,
                       fontSize: 15,
