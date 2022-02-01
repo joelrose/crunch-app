@@ -134,26 +134,33 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: Text(item.title.english,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 2,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2),
+                                        child: Text(
+                                          item.title.english,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2,
+                                        ),
                                       ),
-                                      if (checkoutItems.contains(item))
+                                      if ((checkoutItems.indexWhere(
+                                            (checkouItem) =>
+                                                checkouItem.id == item.id,
+                                          )) !=
+                                          -1)
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 8),
                                           child: Text(
-                                              '${checkoutItems.where(
-                                                    (listItem) =>
-                                                        item == listItem,
-                                                  ).length}x',
-                                              overflow: TextOverflow.clip,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline2),
+                                            '${checkoutItems.where(
+                                                  (listItem) =>
+                                                      item.id == listItem.id,
+                                                ).length}x',
+                                            overflow: TextOverflow.clip,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2,
+                                          ),
                                         ),
                                     ],
                                   ),
