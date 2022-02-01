@@ -119,7 +119,6 @@ class _StoreMenueListState extends State<StoreMenueList> {
                             restaurantImage: widget.restaurantImage,
                             checkoutItems: checkoutItems,
                             onCheckoutChange: widget.onCheckoutChange,
-                            itemOptions: category.menueItems[i].itemOptions,
                           ),
                         );
                       },
