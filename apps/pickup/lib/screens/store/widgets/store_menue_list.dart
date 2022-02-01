@@ -134,38 +134,35 @@ class _StoreMenueListState extends State<StoreMenueList> {
                               child: Wrap(
                                 runSpacing: 10,
                                 children: [
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(item.title.english,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2,
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(item.title.english,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2),
+                                      ),
+                                      if (checkoutItems.contains(item))
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8),
+                                          child: Text(
+                                              '${checkoutItems.where(
+                                                    (listItem) =>
+                                                        item == listItem,
+                                                  ).length}x',
+                                              overflow: TextOverflow.clip,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline2),
                                         ),
-                                        if (checkoutItems.contains(item))
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 8),
-                                            child: Text(
-                                                '${checkoutItems.where(
-                                                      (listItem) =>
-                                                          item == listItem,
-                                                    ).length}x',
-                                                overflow: TextOverflow.clip,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline2),
-                                          ),
-                                      ],
-                                    ),
+                                    ],
                                   ),
                                   Text(
                                     'Grilled sandwich with fillet, cheese, tomatoes an d salad',
                                     style:
-                                    
                                         Theme.of(context).textTheme.bodyText1,
                                   ),
                                   Text(
