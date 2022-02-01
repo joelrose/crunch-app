@@ -23,7 +23,7 @@ class StepPhoneVerification extends StatefulWidget {
 
 class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   AuthService auth = locator<AuthService>();
-  String? _verificationId;
+  late String? _verificationId;
 
   final TextEditingController _textController = TextEditingController();
 

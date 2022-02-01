@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 
 class CheckoutOrderSummaryWidget extends StatelessWidget {
@@ -50,7 +51,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${_subtotalPrice.toStringAsFixed(2)} €',
+                    Utilities.currencyFormat(_subtotalPrice),
                     style: const TextStyle(
                       color: AlpacaColor.blackColor,
                       fontSize: 15,
