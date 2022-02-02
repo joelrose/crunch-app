@@ -75,9 +75,11 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                                   .itemTitleAndOptionsList[itemCategoryIndex]
                                   .option
                                   .id = item.options[optionChoiceIndex].id;
+
                               widget.itemTitleAndOptionsList[itemCategoryIndex]
                                       .option.title =
                                   item.options[optionChoiceIndex].title;
+
                               widget.itemTitleAndOptionsList[itemCategoryIndex]
                                       .option.price =
                                   item.options[optionChoiceIndex].price;
@@ -100,7 +102,7 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                                   setState(() {
                                     widget
                                         .itemTitleAndOptionsList[
-                                            optionChoiceIndex]
+                                            itemCategoryIndex]
                                         .option
                                         .id = value.toString();
                                   });
