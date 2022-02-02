@@ -7,13 +7,11 @@ import 'package:sanity/sanity.dart';
 
 class CheckoutItemAmount {
   CheckoutItemAmount({
-    required this.id,
-    required this.title,
+    required this.checkoutItem,
     required this.amount,
     required this.totalPrice,
   });
-  String id;
-  LocaleString title;
+  CheckoutItemModel checkoutItem;
   int amount;
   double totalPrice;
 }
@@ -38,8 +36,7 @@ class CheckOutVM {
         // add
         checkoutSummaryList.add(
           CheckoutItemAmount(
-            id: item.id,
-            title: item.title,
+            checkoutItem: item,
             amount: amount,
             totalPrice: totalPrice,
           ),
@@ -50,9 +47,9 @@ class CheckOutVM {
 
   double calculateItemPrice(CheckoutItemModel item) {
     double itemAddOnPrice = 0;
-      for (final itemOption in item.itemOptions) {
-        itemAddOnPrice += itemOption.option.price;
-      }
+    for (final itemOption in item.itemOptions) {
+      itemAddOnPrice += itemOption.option.price;
+    }
     return item.price.toDouble() + itemAddOnPrice;
   }
 
@@ -61,12 +58,17 @@ class CheckOutVM {
     if (summaryList.isEmpty) {
       return false;
     }
-    for (final itemInList in summaryList) {
-      if (itemInList.id == item.id) {
+    for (final summaryItem in summaryList) {
+      if (sameItem(summaryItem.checkoutItem, item)) {
+        // if (identical(summaryItem.checkoutItem, item)) {
         return true;
       }
     }
     return false;
+  }
+
+  bool sameItem(CheckoutItemModel item1, CheckoutItemModel item2) {
+    return item1.id == item2.id && item1.itemOptions == item2.itemOptions;
   }
 
   int countInList(
@@ -109,7 +111,7 @@ class CheckoutCartItemsWidget extends StatelessWidget {
                 itemCount: checkoutSummaryList.length,
                 shrinkWrap: true,
                 itemBuilder: (context, itemIndex) {
-                  final checkoutItem = checkoutSummaryList[itemIndex];
+                  final checkoutSummaryItem = checkoutSummaryList[itemIndex];
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 3),
@@ -117,7 +119,7 @@ class CheckoutCartItemsWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${checkoutItem.amount}x ${checkoutItem.title.english}',
+                          '${checkoutSummaryItem.amount}x ${checkoutSummaryItem.checkoutItem.title.english}',
                           style: const TextStyle(
                             color: AlpacaColor.darkGreyColor,
                             fontWeight: FontWeight.w600,
@@ -125,7 +127,8 @@ class CheckoutCartItemsWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          Utilities.currencyFormat(checkoutItem.totalPrice),
+                          Utilities.currencyFormat(
+                              checkoutSummaryItem.totalPrice),
                           style: const TextStyle(
                             color: AlpacaColor.blackColor,
                             fontSize: 15,
