@@ -18,6 +18,60 @@ class CheckoutItemAmount {
   double totalPrice;
 }
 
+class CheckOutVM {
+  // TASK: Sumarise the checkout items by grouping same items and counting them
+
+  CheckOutVM(List<CheckoutItemModel> checkoutItems) {
+    groupItems(checkoutItems);
+  }
+
+  //each induvidual item with count
+  List<CheckoutItemAmount> checkoutSummaryList = [];
+
+  void groupItems(List<CheckoutItemModel> checkoutItems) {
+    for (final item in checkoutItems) {
+      if (!alreadyInList(checkoutSummaryList, item)) {
+        // calculate
+        final int amount = countInList(checkoutItems, item);
+        final double totalPrice = (item.price * amount).toDouble();
+        // add
+        checkoutSummaryList.add(
+          CheckoutItemAmount(
+            id: item.id,
+            title: item.title,
+            amount: amount,
+            totalPrice: totalPrice,
+          ),
+        );
+      }
+    }
+  }
+
+  bool alreadyInList(
+      List<CheckoutItemAmount> summaryList, CheckoutItemModel item) {
+    if (summaryList.isEmpty) {
+      return false;
+    }
+    for (final itemInList in summaryList) {
+      if (itemInList.id == item.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  int countInList(
+      List<CheckoutItemModel> checkoutList, CheckoutItemModel item) {
+    int count = 0;
+    for (final itemInList in checkoutList) {
+      if (itemInList.id == item.id) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+}
+
 class CheckoutCartItemsWidget extends StatelessWidget {
   const CheckoutCartItemsWidget({Key? key, required this.checkoutItems})
       : super(key: key);
@@ -26,52 +80,9 @@ class CheckoutCartItemsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<CheckoutItemAmount> checkoutSummaryList = [];
-    for (var itemIndex = 0; itemIndex < checkoutItems.length; itemIndex++) {
-      final item = checkoutItems[itemIndex];
-      int itemAmount = 0;
-      for (final checkoutItem in checkoutItems) {
-        if (checkoutItem.id == item.id) {
-          itemAmount++;
-        }
-      }
-      final double checkoutItemPrice = item.price.toDouble();
-      double itemAddOnPrice = 0;
-      for (final itemOption in item.itemOptions) {
-        itemAddOnPrice += itemOption.option.price;
-      }
+    final CheckOutVM vm = CheckOutVM(checkoutItems);
+    final List<CheckoutItemAmount> checkoutSummaryList = vm.checkoutSummaryList;
 
-      final double itemTotalPrice = checkoutItemPrice + itemAddOnPrice;
-      if (checkoutSummaryList.isNotEmpty) {
-        bool isInList = false;
-        for (var i = 0; i < checkoutSummaryList.length; i++) {
-          final checkoutItem = checkoutSummaryList[i];
-          if (checkoutItem.id == item.id) {
-            isInList = true;
-            break;
-          }
-        }
-        if (!isInList) {
-          checkoutSummaryList.add(
-            CheckoutItemAmount(
-              id: item.id,
-              title: item.title,
-              amount: itemAmount,
-              totalPrice: itemTotalPrice * itemAmount,
-            ),
-          );
-        }
-      } else {
-        checkoutSummaryList.add(
-          CheckoutItemAmount(
-            id: item.id,
-            title: item.title,
-            amount: itemAmount,
-            totalPrice: itemTotalPrice * itemAmount,
-          ),
-        );
-      }
-    }
     return Column(
       children: [
         CheckoutHeaderRowWidget(
