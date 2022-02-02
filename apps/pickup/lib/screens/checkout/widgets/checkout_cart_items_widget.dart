@@ -33,7 +33,8 @@ class CheckOutVM {
       if (!alreadyInList(checkoutSummaryList, item)) {
         // calculate
         final int amount = countInList(checkoutItems, item);
-        final double totalPrice = (item.price * amount).toDouble();
+        final double itemPrice = calculateItemPrice(item);
+        final double totalPrice = itemPrice * amount;
         // add
         checkoutSummaryList.add(
           CheckoutItemAmount(
@@ -45,6 +46,14 @@ class CheckOutVM {
         );
       }
     }
+  }
+
+  double calculateItemPrice(CheckoutItemModel item) {
+    double itemAddOnPrice = 0;
+      for (final itemOption in item.itemOptions) {
+        itemAddOnPrice += itemOption.option.price;
+      }
+    return item.price.toDouble() + itemAddOnPrice;
   }
 
   bool alreadyInList(
