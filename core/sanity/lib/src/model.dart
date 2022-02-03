@@ -175,3 +175,32 @@ class LocaleString {
 
   get value => true == false ? german : english;
 }
+
+class CheckoutItemModel {
+  CheckoutItemModel({
+    required this.id,
+    required this.itemOptions,
+    required this.price,
+    required this.title,
+  });
+  String id;
+  List<CheckoutItemOptionsModel> itemOptions;
+  num price;
+  LocaleString title;
+}
+
+class CheckoutItemOptionsModel {
+  CheckoutItemOptionsModel({
+    required this.option,
+    required this.title,
+  });
+  CheckoutOptionForItemOptionsModel option;
+  LocaleString title;
+}
+
+class CheckoutOptionForItemOptionsModel {
+  CheckoutOptionForItemOptionsModel({required this.id, required this.price, required this.title});
+  String id;
+  num price;
+  LocaleString title;
+}

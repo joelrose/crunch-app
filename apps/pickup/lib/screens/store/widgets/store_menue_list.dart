@@ -11,13 +11,11 @@ class ProductDetailsData {
     required this.restaurantImage,
     required this.checkoutItems,
     required this.onCheckoutChange,
-    this.itemOptions,
   });
   final RestaurantMenueItemModel item;
   final String restaurantImage;
-  List<RestaurantMenueItemModel> checkoutItems;
-  List<RestaurantMenueItemOptions>? itemOptions;
-  void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
+  List<CheckoutItemModel> checkoutItems;
+  void Function(List<CheckoutItemModel>) onCheckoutChange;
 }
 
 class StoreMenueList extends StatefulWidget {
@@ -29,7 +27,7 @@ class StoreMenueList extends StatefulWidget {
   }) : super(key: key);
 
   final List<RestaurantMenueCategoryModel> menueCategories;
-  final void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
+  final void Function(List<CheckoutItemModel>) onCheckoutChange;
   final String restaurantImage;
 
   @override
@@ -38,7 +36,7 @@ class StoreMenueList extends StatefulWidget {
 
 class _StoreMenueListState extends State<StoreMenueList> {
   late final SlidableController slidableController;
-  List<RestaurantMenueItemModel> checkoutItems = [];
+  List<CheckoutItemModel> checkoutItems = [];
 
   void _showSnackBar(BuildContext context, String text) {
     ScaffoldMessenger.of(context)
@@ -121,7 +119,6 @@ class _StoreMenueListState extends State<StoreMenueList> {
                             restaurantImage: widget.restaurantImage,
                             checkoutItems: checkoutItems,
                             onCheckoutChange: widget.onCheckoutChange,
-                            itemOptions: category.menueItems[i].itemOptions,
                           ),
                         );
                       },
@@ -137,26 +134,33 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: Text(item.title.english,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 2,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2),
+                                        child: Text(
+                                          item.title.english,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2,
+                                        ),
                                       ),
-                                      if (checkoutItems.contains(item))
+                                      if ((checkoutItems.indexWhere(
+                                            (checkouItem) =>
+                                                checkouItem.id == item.id,
+                                          )) !=
+                                          -1)
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 8),
                                           child: Text(
-                                              '${checkoutItems.where(
-                                                    (listItem) =>
-                                                        item == listItem,
-                                                  ).length}x',
-                                              overflow: TextOverflow.clip,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline2),
+                                            '${checkoutItems.where(
+                                                  (listItem) =>
+                                                      item.id == listItem.id,
+                                                ).length}x',
+                                            overflow: TextOverflow.clip,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2,
+                                          ),
                                         ),
                                     ],
                                   ),
