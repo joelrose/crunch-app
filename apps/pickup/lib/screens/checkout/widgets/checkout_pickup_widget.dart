@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 
@@ -19,51 +18,120 @@ class CheckoutPickupWidget extends StatefulWidget {
 
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   int minuteWaitTime = 20;
+  int minuteInterval = 5;
 
-  late Timer updateEvery30Seconds;
+  late int earliestMinutePickup;
+
+  late List<int> hourList;
+  late List<int> minuteList;
+
+  late Timer updateEverySecond;
   late FixedExtentScrollController hourController;
   late FixedExtentScrollController minuteController;
 
   late DateTime pickupTime;
   late String waitTime;
 
-  late String pickupHour;
-  late String pickupMinute;
+  late int pickupHour;
+  late int pickupMinute;
   late int hourSelectedIndex;
   late int minuteSelectedIndex;
 
-  List<String> hourList = [
-    for (var i = 00; i < 24; i++) i.toString().padLeft(2, '0'),
-  ];
-  List<String> minuteList = [
-    for (var i = 00; i < 60; i += 5) i.toString().padLeft(2, '0')
-  ];
-  late List<String> updatedMinuteList;
+  late List<int> updatedMinuteList;
 
-  void removePastHours(List<String> timeList) {
-    final String currentHour = DateFormat.H().format(DateTime.now());
-    for (final time in List<String>.from(timeList)) {
-      if (int.parse(time) < int.parse(currentHour)) {
+  @override
+  void initState() {
+    super.initState();
+    hourList = [
+      for (var i = 00; i < 24; i++) i,
+    ];
+    minuteList = [
+      for (var i = 00; i < 60; i += minuteInterval) i,
+    ];
+    earliestMinutePickup = getEarliestMinutePickup();
+    updatedMinuteList = List.from(minuteList);
+    pickupTime = getRoundedPickupTime(
+      DateTime.now().add(Duration(minutes: minuteWaitTime)),
+    );
+    pickupHour = pickupTime.hour;
+    pickupMinute = pickupTime.minute;
+    waitTime = getWaitTime(
+      DateTime.now().minute,
+      DateTime.now().hour,
+      pickupTime,
+    );
+    hourSelectedIndex = 0;
+    minuteSelectedIndex = 0;
+    minuteController = FixedExtentScrollController();
+    hourController = FixedExtentScrollController();
+
+    removePastHours(hourList);
+    updateHourAndMinute(
+      earliestMinutePickup,
+    );
+
+    updateEverySecond = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) return;
+      setState(() {
+        updateHourAndMinute(
+          pickupTime.minute,
+        );
+        earliestMinutePickup = earliestMinutePickup = getEarliestMinutePickup();
+      });
+    });
+  }
+
+  int getEarliestMinutePickup() {
+    final int initialMinute =
+        DateTime.now().add(Duration(minutes: minuteWaitTime)).minute;
+    if (initialMinute > 60) {
+      return initialMinute - 60;
+    }
+    if (initialMinute > 55 && initialMinute <= 60) {
+      return 0;
+    }
+    return initialMinute;
+  }
+
+  // Not in use right now
+  bool checkIfPickUpTimeValid(DateTime pickUpTime) {
+    final DateTime earliestMinutePickup =
+        DateTime.now().add(Duration(minutes: minuteWaitTime));
+    if (pickupTime.isAfter(earliestMinutePickup)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void removePastHours(List<int> timeList) {
+    final currentHour = DateTime.now().hour;
+    for (final time in List<int>.from(timeList)) {
+      if (time < currentHour) {
         timeList.remove(time);
       }
     }
   }
 
   void updateMinuteList(int hourIndex, int minute) {
-    final String minimalMinuteForPickup = DateFormat.m()
-        .format(DateTime.now().add(Duration(minutes: minuteWaitTime)));
-    final List<String> copyMinuteList = List.from(updatedMinuteList);
-    if (hourIndex == 0 && minute <= 55 && minute != 0) {
-      for (final time in List<String>.from(copyMinuteList)) {
-        if (int.parse(time) < int.parse(minimalMinuteForPickup)) {
-          copyMinuteList.remove(time);
+    final List<int> copyMinuteList = List.from(updatedMinuteList);
+    if (hourIndex == 0 &&
+        earliestMinutePickup <= 55 &&
+        earliestMinutePickup != 0) {
+      for (final minuteFromList in List<int>.from(copyMinuteList)) {
+        if (minuteFromList < earliestMinutePickup) {
+          copyMinuteList.remove(minuteFromList);
           if (minuteController.hasClients) minuteController.jumpTo(0);
         }
       }
       setState(() {
         updatedMinuteList = List.from(copyMinuteList);
-        minuteController =
-            FixedExtentScrollController(initialItem: getIndexOfMinute(minute));
+        minuteController = FixedExtentScrollController(
+          initialItem: getIndexOfMinute(
+            updatedMinuteList,
+            pickupTime,
+          ),
+        );
       });
     } else {
       setState(() {
@@ -90,8 +158,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
         now.year,
         now.month,
         now.day,
-        int.parse(pickupHour),
-        int.parse(pickupMinute),
+        pickupHour,
+        pickupMinute,
       );
       waitTime = getWaitTime(
         DateTime.now().minute,
@@ -102,17 +170,33 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     widget.getPickupTime(pickupTime);
   }
 
-  void jumpToNextHour(int minute) {
-    if (minute > 55 && DateTime.now().hour.toString() == hourList[0] ||
-        minute < DateTime.now().minute &&
-            DateTime.now().hour.toString() == hourList[0]) {
+  void jumpToNextHour() {
+    if (earliestMinutePickup > 55 && DateTime.now().hour == hourList[0] ||
+        earliestMinutePickup < DateTime.now().minute &&
+            DateTime.now().hour == hourList[0]) {
       hourList.removeAt(0);
     }
   }
 
   void updateHourAndMinute(int minute) {
-    jumpToNextHour(minute);
+    jumpToNextHour();
     updateMinuteList(hourSelectedIndex, minute);
+  }
+
+  void onHourChange(int itemIndex) {
+    setState(() {
+      hourSelectedIndex = itemIndex;
+    });
+    updateMinuteList(
+      hourSelectedIndex,
+      pickupTime.minute,
+    );
+  }
+
+  void onMinuteChange(int itemIndex) {
+    setState(() {
+      minuteSelectedIndex = itemIndex;
+    });
   }
 
   DateTime getRoundedPickupTime(DateTime dateTime) {
@@ -138,17 +222,28 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     }
   }
 
-  int getIndexOfMinute(int minute) {
-    final String roundedMinute = roundUp5MinInterval(minute).toString();
-    int index = 0;
-    for (final minute in updatedMinuteList) {
-      if (minute == roundedMinute) {
-        return index;
-      } else {
-        index++;
-      }
+  int getIndexOfMinute(List<int> updatedMinuteList, DateTime pickupTime) {
+    final int minuteIndex =
+        updatedMinuteList.indexWhere((minute) => minute == pickupTime.minute);
+    return minuteIndex;
+  }
+
+  int getIndexOfHour(DateTime pickupTime) {
+    final int hourIndex =
+        hourList.indexWhere((hour) => hour == pickupTime.hour);
+    return hourIndex;
+  }
+
+  void setIndexesRight() {
+    if (pickupTime.hour >= hourList[0]) {
+      setState(() {
+        hourSelectedIndex = getIndexOfHour(pickupTime);
+        minuteSelectedIndex = getIndexOfMinute(updatedMinuteList, pickupTime);
+      });
+    } else {
+      hourSelectedIndex = 0;
+      minuteSelectedIndex = 0;
     }
-    return 0;
   }
 
   String getWaitTime(int currentMinute, int currentHour, DateTime pickupTime) {
@@ -158,40 +253,6 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     } else {
       return (pickupTime.minute - currentMinute).toString();
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    updatedMinuteList = List.from(minuteList);
-    pickupTime = getRoundedPickupTime(
-      DateTime.now().add(Duration(minutes: minuteWaitTime)),
-    );
-    pickupHour = pickupTime.hour.toString().padLeft(2, '0');
-    pickupMinute = pickupTime.minute.toString().padLeft(2, '0');
-    waitTime = getWaitTime(
-      DateTime.now().minute,
-      DateTime.now().hour,
-      pickupTime,
-    );
-    hourSelectedIndex = 0;
-    minuteSelectedIndex = 0;
-    minuteController = FixedExtentScrollController();
-    hourController = FixedExtentScrollController();
-
-    removePastHours(hourList);
-    updateHourAndMinute(
-      DateTime.now().add(Duration(minutes: minuteWaitTime)).minute,
-    );
-
-    updateEvery30Seconds = Timer.periodic(const Duration(seconds: 30), (timer) {
-      if (!mounted) return;
-      setState(() {
-        updateHourAndMinute(
-          pickupTime.minute,
-        );
-      });
-    });
   }
 
   @override
@@ -209,12 +270,15 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
           ),
         );
 
+    final String pickupHourString = pickupHour.toString().padLeft(2, '0');
+    final String pickupMinuteString = pickupMinute.toString().padLeft(2, '0');
+
     return Column(
       children: [
         const DividerWidget(),
         CheckoutHeaderRowWidget(
           header: 'Pickup',
-          buttonText: '$pickupHour:$pickupMinute ($waitTime min)',
+          buttonText: '$pickupHourString:$pickupMinuteString ($waitTime min)',
           icon: SvgPicture.asset(
             'assets/icons/editPen.svg',
             color: AlpacaColor.primary100,
@@ -222,6 +286,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
             width: 14,
           ),
           onPressed: () {
+            setIndexesRight();
             showModalBottomSheet(
               isScrollControlled: true,
               shape: RoundedRectangleBorder(
@@ -280,12 +345,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                         controller: hourController,
                                         onSelectedItemChanged: (itemIndex) {
                                           setState(() {
-                                            hourSelectedIndex = itemIndex;
+                                            onHourChange(itemIndex);
                                           });
-                                          updateMinuteList(
-                                            hourSelectedIndex,
-                                            pickupTime.minute,
-                                          );
                                         },
                                         overAndUnderCenterOpacity: 0.2,
                                         physics:
@@ -296,7 +357,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                           children: <Widget>[
                                             for (var hour in hourList)
                                               Text(
-                                                hour,
+                                                hour.toString().padLeft(2, '0'),
                                                 style: textStyle,
                                               )
                                           ],
@@ -311,9 +372,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                       child: ListWheelScrollView.useDelegate(
                                         controller: minuteController,
                                         onSelectedItemChanged: (itemIndex) {
-                                          setState(() {
-                                            minuteSelectedIndex = itemIndex;
-                                          });
+                                          onMinuteChange(itemIndex);
                                         },
                                         overAndUnderCenterOpacity: 0.2,
                                         physics:
@@ -325,7 +384,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                             for (var minute
                                                 in updatedMinuteList)
                                               Text(
-                                                minute,
+                                                minute
+                                                    .toString()
+                                                    .padLeft(2, '0'),
                                                 style: textStyle,
                                               )
                                           ],

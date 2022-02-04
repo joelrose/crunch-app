@@ -20,7 +20,7 @@ class CreateCheckoutData {
     required this.creationTime,
   });
 
-  final List<RestaurantMenueItemModel> checkoutItems;
+  final List<CheckoutItemModel> checkoutItems;
   final String googleMaps;
   final DateTime pickupTime;
   final DateTime creationTime;

@@ -11,13 +11,11 @@ class ProductDetailsData {
     required this.restaurantImage,
     required this.checkoutItems,
     required this.onCheckoutChange,
-    this.itemOptions,
   });
   final RestaurantMenueItemModel item;
   final String restaurantImage;
-  List<RestaurantMenueItemModel> checkoutItems;
-  List<RestaurantMenueItemOptions>? itemOptions;
-  void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
+  List<CheckoutItemModel> checkoutItems;
+  void Function(List<CheckoutItemModel>) onCheckoutChange;
 }
 
 class StoreMenueList extends StatefulWidget {
@@ -29,7 +27,7 @@ class StoreMenueList extends StatefulWidget {
   }) : super(key: key);
 
   final List<RestaurantMenueCategoryModel> menueCategories;
-  final void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
+  final void Function(List<CheckoutItemModel>) onCheckoutChange;
   final String restaurantImage;
 
   @override
@@ -38,7 +36,7 @@ class StoreMenueList extends StatefulWidget {
 
 class _StoreMenueListState extends State<StoreMenueList> {
   late final SlidableController slidableController;
-  List<RestaurantMenueItemModel> checkoutItems = [];
+  List<CheckoutItemModel> checkoutItems = [];
 
   @override
   void initState() {
@@ -115,47 +113,81 @@ class _StoreMenueListState extends State<StoreMenueList> {
                             restaurantImage: widget.restaurantImage,
                             checkoutItems: checkoutItems,
                             onCheckoutChange: widget.onCheckoutChange,
-                            itemOptions: category.menueItems[i].itemOptions,
                           ),
                         );
                       },
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 25,
-                        ),
-                        title: Row(
-                          children: [
-                            Text(
-                              item.title.english,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(18, 18, 34, 18),
+                              child: Wrap(
+                                runSpacing: 10,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          item.title.english,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2,
+                                        ),
+                                      ),
+                                      if ((checkoutItems.indexWhere(
+                                            (checkouItem) =>
+                                                checkouItem.id == item.id,
+                                          )) !=
+                                          -1)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8),
+                                          child: Text(
+                                            '${checkoutItems.where(
+                                                  (listItem) =>
+                                                      item.id == listItem.id,
+                                                ).length}x',
+                                            overflow: TextOverflow.clip,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2,
+                                          ),
+                                        ),
+                                    ],
                                   ),
+                                  Text(
+                                    'Grilled sandwich with fillet, cheese, tomatoes an d salad',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                  Text(
+                                    Utilities.currencyFormat(item.price),
+                                    style: Theme.of(context).textTheme.caption,
+                                  ),
+                                ],
+                              ),
                             ),
-                            if (checkoutItems.contains(item))
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: Text(
-                                  '${checkoutItems.where(
-                                        (listItem) => item == listItem,
-                                      ).length}x',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              )
-                          ],
-                        ),
-                        subtitle: Text(
-                          Utilities.currencyFormat(item.price),
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
+                          ),
+                          const Image(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
+                            width: 114,
+                            height: 134,
+                          ),
+                        ],
                       ),
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const Divider();
+                    return const Divider(
+                      color: AlpacaColor.lightGreyColor90,
+                      height: 2,
+                      thickness: 2,
+                    );
                   },
                 ),
                 const Divider(),
