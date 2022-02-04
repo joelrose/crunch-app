@@ -12,6 +12,7 @@ import 'package:pickup/screens/profile/profile.dart';
 import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
 import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
+import 'package:pickup/shared/models.dart';
 
 const String loadingRoute = '/';
 const String onboardingWelcomeRoute = '/onboarding/welcome';
@@ -38,7 +39,7 @@ class Router {
         );
       case onboardingExplanationRoute:
         return CupertinoPageRoute(
-          builder: (_) => const OnboardingExplanationScreen(),
+          builder: (_) => OnboardingExplanationScreen(),
         );
       case onboardingAccountRoute:
         final args = settings.arguments! as bool;

@@ -38,14 +38,5 @@ void main() {
   });
 
   group('filterRestaurant function', () {
-    // You have to pass 
-    // final SanityCms cmsClient = locator<SanityCms>();
-    // RestaurantScreenModel model = locator<RestaurantScreenModel>();
-    // late final List<RestaurantOverviewModel> _restaurants = model.restaurants;
-    // test('description', () {
-    //   useCase.filteredRestaurants =
-    //       useCase.filterRestaurants(filter: 'n', restaurants: _restaurants);
-    //   expect(useCase.filteredRestaurants, '');
-    // });
   });
 }

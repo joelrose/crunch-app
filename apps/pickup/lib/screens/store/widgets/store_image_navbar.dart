@@ -4,7 +4,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
 class StoreImageNavbar extends StatelessWidget {
-  StoreImageNavbar({Key? key, required this.image, this.showButtons = true})
+  const StoreImageNavbar({Key? key, required this.image, this.showButtons = true})
       : super(key: key);
 
   final bool showButtons;

@@ -1,5 +1,4 @@
 import 'package:alpaca/alpaca.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,9 +13,7 @@ final bottonNavItems = <BottomNavigationBarItem>[
     label: 'Discover',
   ),
   BottomNavigationBarItem(
-    icon: SvgPicture.asset(
-      'assets/icons/voucher.svg',
-    ),
+    icon: SvgPicture.asset('assets/icons/voucher.svg'),
     label: 'Vouchers',
   ),
   BottomNavigationBarItem(

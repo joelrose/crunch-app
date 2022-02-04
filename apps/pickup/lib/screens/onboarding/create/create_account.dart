@@ -2,28 +2,19 @@ import 'package:alpaca/alpaca.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pickup/screens/onboarding/create/steps/insert_name.dart';
 import 'package:pickup/screens/onboarding/create/steps/phone_verification.dart';
 import 'package:pickup/screens/onboarding/create/steps/placeholder.dart';
 import 'package:pickup/screens/onboarding/create/steps/set_password.dart';
+import 'package:pickup/shared/models.dart';
 import 'package:pickup/shared/routes.dart';
 
-class CreateAccountData {
-  CreateAccountData({this.phoneNumber, required this.isSocialLogin});
-
-  final String? phoneNumber;
-  final bool isSocialLogin;
-}
-
 class OnboardingCreateAccountScreen extends StatefulWidget {
-  OnboardingCreateAccountScreen({Key? key, required this.data})
-      : super(key: key) {
-    maxSteps = data!.isSocialLogin ? 2 : 4;
-  }
+  const OnboardingCreateAccountScreen({Key? key, required this.data})
+      : super(key: key);
 
-  final CreateAccountData? data;
-  late int maxSteps;
+  final CreateAccountData data;
+  int get maxSteps => data.isSocialLogin ? 2 : 4;
 
   @override
   _OnboardingCreateAccountScreenState createState() =>
@@ -33,11 +24,6 @@ class OnboardingCreateAccountScreen extends StatefulWidget {
 class _OnboardingCreateAccountScreenState
     extends State<OnboardingCreateAccountScreen> {
   int step = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +54,8 @@ class _OnboardingCreateAccountScreenState
                             ),
                       ),
                     ),
-                    if (!(step == 0 && !widget.data!.isSocialLogin) &&
-                        (step != 1 && !widget.data!.isSocialLogin))
+                    if (!(step == 0 && !widget.data.isSocialLogin) &&
+                        (step != 1 && !widget.data.isSocialLogin))
                       Positioned(
                         left: 0,
                         child: GestureDetector(
@@ -110,7 +96,7 @@ class _OnboardingCreateAccountScreenState
                               ),
                               margin: EdgeInsets.zero,
                               width: MediaQuery.of(context).size.width *
-                                  (widget.data!.isSocialLogin ? 0.445 : 0.21),
+                                  (widget.data.isSocialLogin ? 0.445 : 0.21),
                               height: 8,
                             );
                           },
@@ -138,9 +124,9 @@ class _OnboardingCreateAccountScreenState
                     child: IndexedStack(
                       index: step,
                       children: [
-                        if (!widget.data!.isSocialLogin) ...[
+                        if (!widget.data.isSocialLogin) ...[
                           StepPhoneVerification(
-                            phoneNumber: widget.data!.phoneNumber!,
+                            phoneNumber: widget.data.phoneNumber!,
                             onFinish: nextStep,
                           ),
                           StepSetPassword(whichStepInCreateAccount: nextStep),

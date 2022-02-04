@@ -53,14 +53,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     });
   }
 
-  num _getTotalPrice() {
-    num sum = 0;
-    for (final item in widget.data.checkoutItems) {
-      sum += item.price;
-    }
-    return sum;
-  }
-
   Future<String> _getPaymentIntent() async {
     // final HttpsCallable callable =
     //     FirebaseFunctions.instance.httpsCallable('createPaymentIntent');
@@ -93,16 +85,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     try {
       await Stripe.instance.presentPaymentSheet();
 
-      Navigator.of(context).pushNamed(
-        storeCheckoutConfirmationRoute,
-        arguments: CreateCheckoutData(
-          checkoutItems: widget.data.checkoutItems,
-          googleMaps: widget.data.googleMaps,
-          pickupTime: pickupTime,
-          creationTime: DateTime.now(),
-        ),
-      );
-    } catch (e) {}
+      if (mounted) {
+        Navigator.of(context).pushNamed(
+          storeCheckoutConfirmationRoute,
+          arguments: CreateCheckoutData(
+            checkoutItems: widget.data.checkoutItems,
+            googleMaps: widget.data.googleMaps,
+            pickupTime: pickupTime,
+            creationTime: DateTime.now(),
+          ),
+        );
+      }
+    } catch (e) {
+    }
   }
 
   @override

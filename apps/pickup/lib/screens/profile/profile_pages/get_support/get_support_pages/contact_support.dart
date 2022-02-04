@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class EmailSender extends StatefulWidget {

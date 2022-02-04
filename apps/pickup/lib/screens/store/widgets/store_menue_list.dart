@@ -38,12 +38,6 @@ class _StoreMenueListState extends State<StoreMenueList> {
   late final SlidableController slidableController;
   List<CheckoutItemModel> checkoutItems = [];
 
-  void _showSnackBar(BuildContext context, String text) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(text)));
-  }
-
   @override
   void initState() {
     slidableController = SlidableController();
@@ -180,7 +174,8 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           const Image(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
+                              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+                            ),
                             width: 114,
                             height: 134,
                           ),
