@@ -20,6 +20,7 @@ ThemeData getThemeData(BuildContext context) {
           color: AlpacaColor.darkNavyColor,
         ),
         headline3: TextStyle(
+          color: AlpacaColor.lightBlackColor,
           fontSize: 18,
           fontWeight: FontWeight.w600,
           fontFamily: GoogleFonts.lexendDeca().fontFamily,

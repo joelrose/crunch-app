@@ -15,6 +15,7 @@ class AlpacaColor {
   static const Color darkGreyColor = Color(0xff7D8589);
   static const Color darkNavyColor = Color(0xff2B2D42);
   static const Color blackColor = Color(0xff000000);
+  static const Color lightBlackColor = Color(0xff0E0E2C);
   static const Color redColor = Color(0xffD9240C);
   static const Color goldColor = Color(0xffFFCA41);
 }
