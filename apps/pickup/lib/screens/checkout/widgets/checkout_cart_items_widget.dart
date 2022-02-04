@@ -54,7 +54,9 @@ class CheckOutVM {
   }
 
   bool alreadyInList(
-      List<CheckoutItemAmount> summaryList, CheckoutItemModel item) {
+    List<CheckoutItemAmount> summaryList,
+    CheckoutItemModel item,
+  ) {
     if (summaryList.isEmpty) {
       return false;
     }
@@ -72,7 +74,9 @@ class CheckOutVM {
   }
 
   int countInList(
-      List<CheckoutItemModel> checkoutList, CheckoutItemModel item) {
+    List<CheckoutItemModel> checkoutList,
+    CheckoutItemModel item,
+  ) {
     int count = 0;
     for (final itemInList in checkoutList) {
       if (itemInList.id == item.id) {
@@ -128,7 +132,8 @@ class CheckoutCartItemsWidget extends StatelessWidget {
                         ),
                         Text(
                           Utilities.currencyFormat(
-                              checkoutSummaryItem.totalPrice),
+                            checkoutSummaryItem.totalPrice,
+                          ),
                           style: const TextStyle(
                             color: AlpacaColor.blackColor,
                             fontSize: 15,

@@ -174,7 +174,8 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           const Image(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
+                              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+                            ),
                             width: 114,
                             height: 134,
                           ),

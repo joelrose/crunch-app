@@ -110,8 +110,8 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
             widget.data.checkoutItems[itemIndexInBasket].itemOptions;
 
         double addOnPrice = 0;
-        for (var item in itemTitleAndOptionsList) {
-          double itemOptionPrice = item.option.price.toDouble();
+        for (final item in itemTitleAndOptionsList) {
+          final itemOptionPrice = item.option.price.toDouble();
           addOnPrice += itemOptionPrice;
         }
         totalItemPrice = defaultItemPrice + addOnPrice;
