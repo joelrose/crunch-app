@@ -93,11 +93,11 @@ class _StepInsertNameState extends State<StepInsertName> {
             buttonText: 'Continue',
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                final data = {
-                  'lastActivity': DateTime.now(),
-                  'firstName': _firstNameController.text,
-                  'lastName': _lastNameController.text,
-                };
+                // final data = {
+                //   'lastActivity': DateTime.now(),
+                //   'firstName': _firstNameController.text,
+                //   'lastName': _lastNameController.text,
+                // };
 
                 final prefs = await SharedPreferences.getInstance();
 

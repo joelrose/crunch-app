@@ -1,6 +1,5 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/screens/onboarding/explanation/widgets/dots_indicator.dart';
 import 'package:pickup/screens/onboarding/explanation/widgets/slide_widget.dart';
