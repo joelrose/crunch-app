@@ -13,6 +13,8 @@ class CheckoutConfirmationScreen extends StatelessWidget {
   const CheckoutConfirmationScreen({Key? key, required this.data})
       : super(key: key);
 
+  static const route = '/store/checkout/confirmation';
+
   final CreateCheckoutData data;
 
   @override

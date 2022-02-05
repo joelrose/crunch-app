@@ -1,11 +1,13 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/explanation/widgets/dots_indicator.dart';
 import 'package:pickup/screens/onboarding/explanation/widgets/slide_widget.dart';
-import 'package:pickup/shared/routes.dart';
 
 class OnboardingExplanationScreen extends StatelessWidget {
+  static const route = '/onboarding/explanation';
+
   final PageController _controller = PageController();
 
   final List<Widget> _pages = [
@@ -62,8 +64,10 @@ class OnboardingExplanationScreen extends StatelessWidget {
           ),
           ActionButton(
             buttonText: 'continue'.tr(),
-            onPressed: () => Navigator.of(context)
-                .pushNamed(onboardingAccountRoute, arguments: true),
+            onPressed: () => Navigator.of(context).pushNamed(
+              OnboardingAccountScreen.route,
+              arguments: true,
+            ),
             isPrimaryButton: false,
           ),
         ],

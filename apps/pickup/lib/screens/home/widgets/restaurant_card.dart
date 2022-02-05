@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/shared/routes.dart';
+import 'package:pickup/screens/store/store.dart';
 import 'package:sanity/sanity.dart';
 
 class RestaurantCard extends StatelessWidget {
@@ -16,9 +16,10 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {
-        Navigator.of(context).pushNamed(storeRoute, arguments: restaurant.id)
-      },
+      onTap: () => Navigator.of(context).pushNamed(
+        StoreScreen.route,
+        arguments: restaurant.id,
+      ),
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(10),

@@ -37,6 +37,8 @@ class ProductAmountAndPricesData {
 
 class StoreProductOverview extends StatefulWidget {
   const StoreProductOverview({Key? key, required this.data}) : super(key: key);
+  static const route = '/store/product';
+
   final ProductDetailsData data;
 
   @override

@@ -3,11 +3,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pickup/screens/home/home.dart';
+import 'package:pickup/screens/onboarding/create/create_account.dart';
 import 'package:pickup/services/account_status.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/models.dart';
-import 'package:pickup/shared/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SocialOnboarding extends StatefulWidget {
@@ -70,13 +71,15 @@ class _SocialOnboardingState extends State<SocialOnboarding> {
 
       if (accountStatus == AccountStatus.onboarded.index) {
         if (mounted) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(homeRoute, (route) => false);
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            HomeScreen.route,
+            (route) => false,
+          );
         }
       } else {
         if (mounted) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-            onboardingCreateAccountRoute,
+            OnboardingCreateAccountScreen.route,
             (route) => false,
             arguments: CreateAccountData(
               isSocialLogin: true,

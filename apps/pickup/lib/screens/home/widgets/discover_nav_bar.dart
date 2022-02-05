@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pickup/shared/routes.dart';
+import 'package:pickup/screens/profile/profile.dart';
 
 class DiscoverNavBar extends StatelessWidget {
   const DiscoverNavBar({Key? key}) : super(key: key);
@@ -22,7 +22,9 @@ class DiscoverNavBar extends StatelessWidget {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: () => {Navigator.of(context).pushNamed(profileRoute)},
+            onTap: () => Navigator.of(context).pushNamed(
+              ProfileScreen.route,
+            ),
             child: Container(
               height: 35,
               width: 35,

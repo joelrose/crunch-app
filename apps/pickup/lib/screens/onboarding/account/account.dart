@@ -9,6 +9,8 @@ class OnboardingAccountScreen extends StatefulWidget {
   const OnboardingAccountScreen({Key? key, required this.isSignUp})
       : super(key: key);
 
+  static const route = '/onboarding/account';
+
   final bool isSignUp;
 
   @override
