@@ -35,6 +35,22 @@
 				<string>com.googleusercontent.apps.295391330962-au3si6q7mvj113a5f1os9d8eohfv9lt6</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-295391330962-ios-d811921ced4c9ce30edc4b</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-295391330962-ios-202ed1e0db4cc0ba0edc4b</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
