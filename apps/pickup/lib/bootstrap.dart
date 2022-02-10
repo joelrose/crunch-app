@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -21,7 +21,7 @@ Future<void> bootstrap(
   Enviroment enviroment,
 ) async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp();
 
   await EasyLocalization.ensureInitialized();
@@ -34,6 +34,8 @@ Future<void> bootstrap(
   await setupServiceLocator();
 
   await setupStripe();
+
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
   runZonedGuarded(
     () async => runApp(
@@ -48,6 +50,7 @@ Future<void> bootstrap(
         child: await builder(),
       ),
     ),
-    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
+    (error, stackTrace) =>
+        FirebaseCrashlytics.instance.recordError(error, stackTrace),
   );
 }
