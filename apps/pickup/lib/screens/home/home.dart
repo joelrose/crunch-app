@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickup/screens/home/base/discover.dart';
 import 'package:pickup/screens/home/base/favorites.dart';
-import 'package:pickup/screens/home/base/search.dart';
+import 'package:pickup/screens/home/base/orders.dart';
 import 'package:pickup/screens/home/base/vouchers.dart';
 
 final bottonNavItems = <BottomNavigationBarItem>[
@@ -13,16 +13,16 @@ final bottonNavItems = <BottomNavigationBarItem>[
     label: 'Discover',
   ),
   BottomNavigationBarItem(
-    icon: SvgPicture.asset('assets/icons/voucher.svg'),
+    icon: SvgPicture.asset('assets/icons/receipt-tax.svg'),
     label: 'Vouchers',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset('assets/icons/collection.svg'),
+    label: 'Orders',
   ),
   BottomNavigationBarItem(
     icon: SvgPicture.asset('assets/icons/star.svg'),
     label: 'Favorites',
-  ),
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset('assets/icons/search.svg'),
-    label: 'Search',
   ),
 ];
 
@@ -36,10 +36,17 @@ final bottonNavHighlitedItems = <BottomNavigationBarItem>[
   ),
   BottomNavigationBarItem(
     icon: SvgPicture.asset(
-      'assets/icons/voucher.svg',
+      'assets/icons/receipt-tax.svg',
       color: AlpacaColor.primary100,
     ),
     label: 'Vouchers',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/collection.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Orders',
   ),
   BottomNavigationBarItem(
     icon: SvgPicture.asset(
@@ -47,13 +54,6 @@ final bottonNavHighlitedItems = <BottomNavigationBarItem>[
       color: AlpacaColor.primary100,
     ),
     label: 'Favorites',
-  ),
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset(
-      'assets/icons/search.svg',
-      color: AlpacaColor.primary100,
-    ),
-    label: 'Search',
   ),
 ];
 
@@ -71,8 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _pages = <Widget>[
     SafeArea(child: DiscoverScreen()),
     SafeArea(child: VoucherScreen()),
+    SafeArea(child: OrdersScreen(),),
     SafeArea(child: FavoritesScreen()),
-    SearchScreen(),
   ];
 
   @override
