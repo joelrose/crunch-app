@@ -35,5 +35,10 @@ You need to install the following tools:
      
  2. Open the folder with VS Code
  3. Open an Android or iOS Simulator
- 4. Select the app you want to run with the selected Flavor in the Run and Debug tab in VS Code
- 5.  Have fun!
+ 4. Get packages with melos
+ 
+        melos bs
+       
+     
+ 5. Select the app you want to run with the selected Flavor in the Run and Debug tab in VS Code
+ 6. Have fun!

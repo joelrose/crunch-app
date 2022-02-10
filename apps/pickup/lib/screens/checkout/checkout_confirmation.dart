@@ -7,10 +7,13 @@ import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/shared/utilities.dart';
 
 class CheckoutConfirmationScreen extends StatelessWidget {
   const CheckoutConfirmationScreen({Key? key, required this.data})
       : super(key: key);
+
+  static const route = '/store/checkout/confirmation';
 
   final CreateCheckoutData data;
 
@@ -42,10 +45,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                           width: 230,
                           child: Text(
                             'Your order is being prepared...',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2
-                                ?.copyWith(fontSize: 22),
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                         ),
                       ),
@@ -93,7 +93,9 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      '${checkoutItem.price}€',
+                                      Utilities.currencyFormat(
+                                        checkoutItem.price,
+                                      ),
                                       style: const TextStyle(
                                         color: AlpacaColor.blackColor,
                                         fontSize: 15,

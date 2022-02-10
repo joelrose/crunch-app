@@ -1,17 +1,34 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
+import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
+
+class ProductDetailsData {
+  ProductDetailsData({
+    required this.item,
+    required this.restaurantImage,
+    required this.checkoutItems,
+    required this.onCheckoutChange,
+  });
+  final RestaurantMenueItemModel item;
+  final String restaurantImage;
+  List<CheckoutItemModel> checkoutItems;
+  void Function(List<CheckoutItemModel>) onCheckoutChange;
+}
 
 class StoreMenueList extends StatefulWidget {
   const StoreMenueList({
     Key? key,
     required this.menueCategories,
     required this.onCheckoutChange,
+    required this.restaurantImage,
   }) : super(key: key);
 
   final List<RestaurantMenueCategoryModel> menueCategories;
-  final void Function(List<RestaurantMenueItemModel>) onCheckoutChange;
+  final void Function(List<CheckoutItemModel>) onCheckoutChange;
+  final String restaurantImage;
 
   @override
   State<StoreMenueList> createState() => _StoreMenueListState();
@@ -19,13 +36,7 @@ class StoreMenueList extends StatefulWidget {
 
 class _StoreMenueListState extends State<StoreMenueList> {
   late final SlidableController slidableController;
-  List<RestaurantMenueItemModel> checkoutItems = [];
-
-  void _showSnackBar(BuildContext context, String text) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(text)));
-  }
+  List<CheckoutItemModel> checkoutItems = [];
 
   @override
   void initState() {
@@ -69,8 +80,8 @@ class _StoreMenueListState extends State<StoreMenueList> {
           itemCount: widget.menueCategories.length,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemBuilder: (context, i) {
-            final category = widget.menueCategories[i];
+          itemBuilder: (context, j) {
+            final category = widget.menueCategories[j];
             return Column(
               children: [
                 ListTile(
@@ -93,64 +104,91 @@ class _StoreMenueListState extends State<StoreMenueList> {
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final item = category.menueItems[i];
-                    return Slidable(
-                      key: Key(item.title.english),
-                      controller: slidableController,
-                      // dismissal: SlidableDismissal(
-                      //   child: const SlidableBehindActionPane(),
-                      //   onDismissed: (actionType) {
-                      //     _showSnackBar(
-                      //       context,
-                      //       actionType == SlideActionType.primary
-                      //           ? 'Dismiss Archive'
-                      //           : 'Dimiss Delete',
-                      //     );
-                      //   },
-                      // ),
-                      actions: [
-                        IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () {
-                            checkoutItems.remove(item);
-                            widget.onCheckoutChange(checkoutItems);
-                          },
-                        ),
-                      ],
-                      secondaryActions: [
-                        IconSlideAction(
-                          caption: 'Add',
-                          color: Colors.blue,
-                          icon: Icons.add,
-                          onTap: () {
-                            checkoutItems.add(item);
-                            widget.onCheckoutChange(checkoutItems);
-                          },
-                        ),
-                      ],
-                      actionPane: const SlidableBehindActionPane(),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 25,
-                        ),
-                        title: Text(
-                          item.title.english,
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          StoreProductOverview.route,
+                          arguments: ProductDetailsData(
+                            item: item,
+                            restaurantImage: widget.restaurantImage,
+                            checkoutItems: checkoutItems,
+                            onCheckoutChange: widget.onCheckoutChange,
+                          ),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(18, 18, 34, 18),
+                              child: Wrap(
+                                runSpacing: 10,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          item.title.english,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2,
+                                        ),
+                                      ),
+                                      if ((checkoutItems.indexWhere(
+                                            (checkouItem) =>
+                                                checkouItem.id == item.id,
+                                          )) !=
+                                          -1)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8),
+                                          child: Text(
+                                            '${checkoutItems.where(
+                                                  (listItem) =>
+                                                      item.id == listItem.id,
+                                                ).length}x',
+                                            overflow: TextOverflow.clip,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2,
+                                          ),
+                                        ),
+                                    ],
                                   ),
-                        ),
-                        subtitle: Text(
-                          '${item.price} €',
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
+                                  Text(
+                                    'Grilled sandwich with fillet, cheese, tomatoes an d salad',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                  Text(
+                                    Utilities.currencyFormat(item.price),
+                                    style: Theme.of(context).textTheme.caption,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Image(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+                            ),
+                            width: 114,
+                            height: 134,
+                          ),
+                        ],
                       ),
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const Divider();
+                    return const Divider(
+                      color: AlpacaColor.lightGreyColor90,
+                      height: 2,
+                      thickness: 2,
+                    );
                   },
                 ),
                 const Divider(),

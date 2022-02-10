@@ -20,7 +20,7 @@ class DotsIndicator extends AnimatedWidget {
   /// Called when a dot is tapped
   final ValueChanged<int> onPageSelected;
 
-  final Color selectedColor = AlpacaColor.white100Color;
+  Color get selectedColor => AlpacaColor.white100Color;
 
   final Color normalColor;
 

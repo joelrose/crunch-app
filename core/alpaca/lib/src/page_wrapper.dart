@@ -22,18 +22,17 @@ class PageWrapper extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: statusBarStyle,
       child: Scaffold(
-        backgroundColor: backgroundColor,
-        body: SafeArea(
-          child: Padding(
-            padding: padding,
-            child: child,
+          backgroundColor: backgroundColor,
+          body: SafeArea(
+            child: Padding(
+              padding: padding,
+              child: child,
+            ),
           ),
-        ),
-        floatingActionButtonLocation: floatingActionButtonWidget != null
-            ? FloatingActionButtonLocation.centerFloat
-            : null,
-        floatingActionButton: floatingActionButtonWidget,
-      ),
+          floatingActionButtonLocation: floatingActionButtonWidget != null
+              ? FloatingActionButtonLocation.centerFloat
+              : null,
+          floatingActionButton: floatingActionButtonWidget),
     );
   }
 }

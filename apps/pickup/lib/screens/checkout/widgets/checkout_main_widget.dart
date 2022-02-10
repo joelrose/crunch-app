@@ -2,21 +2,23 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutHeaderRowWidget extends StatelessWidget {
-  CheckoutHeaderRowWidget({
+  const CheckoutHeaderRowWidget({
     Key? key,
     required this.header,
     required this.onPressed,
     required this.buttonText,
+    this.icon,
     this.children,
     this.disableButton = false,
     this.buttonBackground = true,
     this.disableButtonBackground = false,
   }) : super(key: key);
 
-  List<Widget>? children;
+  final List<Widget>? children;
   final String header;
   final void Function() onPressed;
   final String buttonText;
+  final Widget? icon;
   final bool disableButton;
   final bool buttonBackground;
   final bool disableButtonBackground;
@@ -40,13 +42,12 @@ class CheckoutHeaderRowWidget extends StatelessWidget {
                       ),
                 ),
               ),
-              if (disableButton)
-                Container()
-              else
+              if (!disableButton)
                 AlpacaCheckoutButton(
                   onPressed: onPressed,
                   buttonText: buttonText,
                   disableButtonBackground: disableButtonBackground,
+                  svgPicture: icon,
                 )
             ],
           ),

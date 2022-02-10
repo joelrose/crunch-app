@@ -1,46 +1,17 @@
-
 import 'package:alpaca/alpaca.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/routes.dart';
+import 'package:pickup/screens/onboarding/account/account.dart';
+import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 
-class OnboardingWelcomeScreen extends StatefulWidget {
+class OnboardingWelcomeScreen extends StatelessWidget {
   const OnboardingWelcomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<OnboardingWelcomeScreen> createState() =>
-      _OnboardingWelcomeScreenState();
-}
-
-class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> {
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-
-  // Future initialize() async {
-  //   if (Platform.isIOS) {
-  //     firebaseMessaging.requestPermission();
-
-  //         firebaseMessaging.requestPermission((
-  //       const IosNotificationSettings(sound: true, badge: true, alert: true));
-  //   _firebaseMessaging.onIosSettingsRegistered
-  //       .listen((IosNotificationSettings settings) {
-  //     print("Settings registered: $settings");
-  //   });
-  //   _firebaseMessaging.getToken().then((String token) {
-  //     assert(token != null);
-  //     setState(() {
-  //       _homeScreenText = "Push Messaging token: $token";
-  //     });
-  //     print(_homeScreenText);
-  //   });
-  //   }
-  // }
+  static const route = '/onboarding/welcome';
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    // initialize();
     return PageWrapper(
       padding: EdgeInsets.zero,
       backgroundColor: AlpacaColor.primary100,
@@ -62,33 +33,31 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'get_started.welcome'.tr(),
-                  style: theme.headline1,
+                  'onboarding_welcome.title'.tr(),
+                  style: theme.headline1!.copyWith(
+                    color: AlpacaColor.white100Color,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 40, top: 10),
                   child: Text(
-                    'We are very excited to have you with us, let’s get started.',
+                    'onboarding_welcome.subtitle'.tr(),
                     style: theme.subtitle1,
                   ),
                 ),
                 ActionButton(
-                  buttonText: 'getStarted'.tr(),
-                  onPressed: () => {
-                    Navigator.of(context).pushNamed(
-                      onboardingExplanationRoute,
-                    ),
-                  },
+                  buttonText: 'onboarding_welcome.primaryButtonText'.tr(),
+                  onPressed: () => Navigator.of(context).pushNamed(
+                    OnboardingExplanationScreen.route,
+                  ),
                   isPrimaryButton: false,
                 ),
                 ActionButton(
-                  buttonText: 'iAlreadyHaveAnAccount'.tr(),
-                  onPressed: () => {
-                    Navigator.of(context).pushNamed(
-                      onboardingAccountRoute,
-                      arguments: false,
-                    ),
-                  },
+                  buttonText: 'onboarding_welcome.secondaryButtonText'.tr(),
+                  onPressed: () => Navigator.of(context).pushNamed(
+                    OnboardingAccountScreen.route,
+                    arguments: false,
+                  ),
                 ),
               ],
             ),

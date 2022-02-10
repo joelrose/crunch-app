@@ -1,9 +1,8 @@
 import 'package:alpaca/alpaca.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:pickup/routes.dart';
+import 'package:pickup/screens/checkout/checkout_confirmation.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_cart_items_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_contact_details_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
@@ -21,7 +20,7 @@ class CreateCheckoutData {
     required this.creationTime,
   });
 
-  final List<RestaurantMenueItemModel> checkoutItems;
+  final List<CheckoutItemModel> checkoutItems;
   final String googleMaps;
   final DateTime pickupTime;
   final DateTime creationTime;
@@ -33,6 +32,8 @@ class CheckoutScreen extends StatefulWidget {
     required this.data,
   }) : super(key: key);
 
+  static const route = '/store/checkout';
+
   final CreateStoreData data;
 
   @override
@@ -40,25 +41,32 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  num _getTotalPrice() {
-    num sum = 0;
-    for (final item in widget.data.checkoutItems) {
-      sum += item.price;
-    }
-    return sum;
+  late DateTime pickupTime;
+
+  @override
+  void initState() {
+    super.initState();
+    pickupTime = DateTime.now().add(const Duration(minutes: 20));
+  }
+
+  void getPickupTime(DateTime newPickupTime) {
+    setState(() {
+      pickupTime = newPickupTime;
+    });
   }
 
   Future<String> _getPaymentIntent() async {
-    final HttpsCallable callable =
-        FirebaseFunctions.instance.httpsCallable('createPaymentIntent');
+    // final HttpsCallable callable =
+    //     FirebaseFunctions.instance.httpsCallable('createPaymentIntent');
 
-    final results = await callable.call(<String, dynamic>{
-      'price': _getTotalPrice(),
-    });
+    // final results = await callable.call(<String, dynamic>{
+    //   'price': _getTotalPrice(),
+    // });
 
-    final responseJson = results.data['secret'];
+    // final responseJson = results.data['secret'];
 
-    return responseJson as String;
+    // return responseJson as String;
+    return '';
   }
 
   Future<void> _checkout() async {
@@ -79,15 +87,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     try {
       await Stripe.instance.presentPaymentSheet();
 
-      Navigator.of(context).pushNamed(
-        storeCheckoutConfirmationRoute,
-        arguments: CreateCheckoutData(
-          checkoutItems: widget.data.checkoutItems,
-          googleMaps: widget.data.googleMaps,
-          pickupTime: pickupTimeAsDateTime,
-          creationTime: DateTime.now(),
-        ),
-      );
+      if (mounted) {
+        Navigator.of(context).pushNamed(
+          CheckoutConfirmationScreen.route,
+          arguments: CreateCheckoutData(
+            checkoutItems: widget.data.checkoutItems,
+            googleMaps: widget.data.googleMaps,
+            pickupTime: pickupTime,
+            creationTime: DateTime.now(),
+          ),
+        );
+      }
     } catch (e) {}
   }
 
@@ -118,7 +128,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 CheckoutCartItemsWidget(
                   checkoutItems: widget.data.checkoutItems,
                 ),
-                const CheckoutPickupWidget(),
+                CheckoutPickupWidget(
+                  getPickupTime: getPickupTime,
+                ),
                 CheckoutStoreDirectionWidget(
                   googleMaps: widget.data.googleMaps,
                 ),

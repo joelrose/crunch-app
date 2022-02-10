@@ -1,20 +1,11 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
       "name": "Pickup Development",
-      "program": "apps/pickup/lib/main.dart",
       "request": "launch",
       "type": "dart",
-    },
-    {
-      "name": "Vendor Development",
-      "request": "launch",
-      "type": "dart",
-      "program": "apps/vendor/lib/main_development.dart",
+      "program": "apps/pickup/lib/main_development.dart",
       "args": [
         "--flavor",
         "development",
@@ -23,10 +14,10 @@
       ]
     },
     {
-      "name": "Vendor Staging",
+      "name": "Pickup Staging",
       "request": "launch",
       "type": "dart",
-      "program": "apps/vendor/lib/main_staging.dart",
+      "program": "apps/pickup/lib/main_development.dart",
       "args": [
         "--flavor",
         "staging",
@@ -35,10 +26,10 @@
       ]
     },
     {
-      "name": "Vendor Production",
+      "name": "Pickup Production",
       "request": "launch",
       "type": "dart",
-      "program": "apps/vendor/lib/main_production.dart",
+      "program": "apps/pickup/lib/main_development.dart",
       "args": [
         "--flavor",
         "production",

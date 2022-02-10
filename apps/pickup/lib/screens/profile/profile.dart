@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pickup/routes.dart';
+import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile_pages/get_support/get_support.dart';
 import 'package:pickup/screens/profile/profile_pages/placeholder.dart';
 import 'package:pickup/services/auth_service.dart';
@@ -74,6 +74,8 @@ class ProfileTile extends StatelessWidget {
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
+  static const route = '/profile';
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -145,10 +147,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               textColor: AlpacaColor.redColor,
               onPressed: () async {
                 await auth.signOut();
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  onboardingWelcomeRoute,
-                  (route) => false,
-                );
+
+                if (mounted) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    OnboardingWelcomeScreen.route,
+                    (route) => false,
+                  );
+                }
               },
             ),
           ),

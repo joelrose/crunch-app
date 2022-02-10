@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/services/database_service.dart';
-import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/services/account_status.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StepInsertName extends StatefulWidget {
   const StepInsertName({Key? key, required this.whichStepInCreateAccount})
@@ -93,13 +93,18 @@ class _StepInsertNameState extends State<StepInsertName> {
             buttonText: 'Continue',
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                final data = {
-                  'lastActivity': DateTime.now(),
-                  'firstName': _firstNameController.text,
-                  'lastName': _lastNameController.text,
-                };
+                // final data = {
+                //   'lastActivity': DateTime.now(),
+                //   'firstName': _firstNameController.text,
+                //   'lastName': _lastNameController.text,
+                // };
 
-                await locator<DatabaseService>().saveUserData(data);
+                final prefs = await SharedPreferences.getInstance();
+
+                prefs.setInt(
+                  'ONBOARDING_STEP',
+                  AccountStatus.onboarded.index,
+                );
 
                 widget.whichStepInCreateAccount();
               }

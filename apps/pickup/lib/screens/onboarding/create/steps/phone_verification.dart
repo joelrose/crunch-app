@@ -8,9 +8,11 @@ import 'package:pickup/services/service_locator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class StepPhoneVerification extends StatefulWidget {
-  const StepPhoneVerification(
-      {Key? key, required this.onFinish, required this.phoneNumber})
-      : super(key: key);
+  const StepPhoneVerification({
+    Key? key,
+    required this.onFinish,
+    required this.phoneNumber,
+  }) : super(key: key);
 
   final void Function() onFinish;
   final String phoneNumber;
@@ -21,7 +23,7 @@ class StepPhoneVerification extends StatefulWidget {
 
 class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   AuthService auth = locator<AuthService>();
-  String? _verificationId;
+  late String _verificationId;
 
   final TextEditingController _textController = TextEditingController();
 
@@ -82,7 +84,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
 
   Future<void> _verifyNumber(String code) async {
     final credential = PhoneAuthProvider.credential(
-      verificationId: _verificationId!,
+      verificationId: _verificationId,
       smsCode: code,
     );
 

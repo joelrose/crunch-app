@@ -6,8 +6,7 @@ definitions:
         set -e
         set -x
         cd /Users/builder/clone
-        brew tap dart-lang/dart
-        brew install dart
+        HOMEBREW_NO_AUTO_UPDATE=1 brew install dart
         dart pub global activate melos
         export PATH="$PATH":"$HOME/.pub-cache/bin"
         melos bs
@@ -27,34 +26,32 @@ workflows:
       cocoapods: default
     triggering:
       events:
-        - pull_request
+        - push
       branch_patterns: 
-        - pattern: staging
+        - pattern: main
       cancel_previous_builds: true
     when:
       changeset:
         includes:
-          - 'apps/pickup'
+          - 'apps/*'
     cache:
       cache_paths:
         - $HOME/Library/Caches/CocoaPods
         - $FLUTTER_ROOT/.pub-cache
-        - /usr/local/opt/dart/libexec
     scripts:
       - *melos-setup
       - keychain initialize
-      - app-store-connect fetch-signing-files "tech.getcrunch.crunch" --type IOS_APP_STORE
+      - app-store-connect fetch-signing-files "tech.getcrunch.crunch.stg" --type IOS_APP_STORE
         --create
       - keychain add-certificates
       - xcode-project use-profiles
-      - cd apps/pickup && flutter build ipa --export-options-plist=/Users/builder/export_options.plist
+      - cd apps/pickup && flutter build ipa --flavor staging --target lib/main_staging.dart --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - apps/pickup/build/ios/ipa/*.ipa
     publishing:
-      email:
-        recipients:
-          - joel.rose@code.berlin
-          - crunchapp2021@gmail.com
+      slack:
+        channel: '#codemagic-pipeline'
+        notify_on_build_start: false
       app_store_connect:
         api_key: Encrypted(Z0FBQUFBQmhnNThFd2U0Z2kxZnhuQ08yMUNmbEM4LVJmcTY2TUhLNU04NThTdWg0bzJMcnVrWGdCX2tyVWxSOWVaOERaVURNYk5ER0VyZ0otSVZKczNleHFYWEZXSjREU3N0Q2xycXNlWTNIR0o3bFo3NTMtLXQtal9HU0NNekdQQXpyRTNJWkpEQXYtRXJva3hpcnc2WEJlU3RJRG5mdjk2NW5hZWJvWjRXSmlGSGxkMkFiZmhNeGtUZlJpUHI2TnBqQmIzU0FEZkctZ0RqMjRsdXVUUkdWQ0VUV0tJQjdxYURpZ0dFNUE2MDhLRm1VOWRfTFRjSk5iV2kwalhBTGVsdGQ1TFBRcEhEZ0NFRGxrYVFMU0x0TEdvS1BDQ1RJNTJkdzJiSGY5dWxvLTVicXd0dFgwM0ZEeUFiS05FdWpNTnExMi1aV3Z4UjVjd2p4X1AzWktCOVZaR3NGVXJIb3owMDdSSjk1ckp3RmRkZEJIU0V2QWtDTjZycTdaajRSMVMxOEZXeTZrYW9DTXJDZzVtc3BCVTYtYThsUWJmRHVBaFZwaEZ4UF94UGFCTGxGcTZkZzItND0=)
         key_id: 647N3684PB
