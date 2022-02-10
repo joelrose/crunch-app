@@ -2,8 +2,8 @@ import 'package:alpaca/alpaca.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/screens/onboarding/account/widgets/social_onboarding.dart';
+import 'package:pickup/screens/onboarding/create/create_account.dart';
 import 'package:pickup/shared/models.dart';
-import 'package:pickup/shared/routes.dart';
 
 class OnboardingLoginFields extends StatefulWidget {
   const OnboardingLoginFields({Key? key, required this.isSignUp})
@@ -62,7 +62,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
               suffixIcon: GestureDetector(
                 onTap: () async {
                   Navigator.of(context).pushNamed(
-                    onboardingCreateAccountRoute,
+                    OnboardingCreateAccountScreen.route,
                     arguments: CreateAccountData(
                       phoneNumber: _textController.text,
                       isSocialLogin: false,

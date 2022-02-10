@@ -1,10 +1,13 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/shared/routes.dart';
+import 'package:pickup/screens/onboarding/account/account.dart';
+import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 
 class OnboardingWelcomeScreen extends StatelessWidget {
   const OnboardingWelcomeScreen({Key? key}) : super(key: key);
+
+  static const route = '/onboarding/welcome';
 
   @override
   Widget build(BuildContext context) {
@@ -44,19 +47,17 @@ class OnboardingWelcomeScreen extends StatelessWidget {
                 ),
                 ActionButton(
                   buttonText: 'onboarding_welcome.primaryButtonText'.tr(),
-                  onPressed: () => {
-                    Navigator.of(context).pushNamed(onboardingExplanationRoute),
-                  },
+                  onPressed: () => Navigator.of(context).pushNamed(
+                    OnboardingExplanationScreen.route,
+                  ),
                   isPrimaryButton: false,
                 ),
                 ActionButton(
                   buttonText: 'onboarding_welcome.secondaryButtonText'.tr(),
-                  onPressed: () => {
-                    Navigator.of(context).pushNamed(
-                      onboardingAccountRoute,
-                      arguments: false,
-                    ),
-                  },
+                  onPressed: () => Navigator.of(context).pushNamed(
+                    OnboardingAccountScreen.route,
+                    arguments: false,
+                  ),
                 ),
               ],
             ),
