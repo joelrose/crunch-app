@@ -2,16 +2,18 @@ import 'package:alpaca/alpaca.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/onboarding/create/steps/insert_name.dart';
 import 'package:pickup/screens/onboarding/create/steps/phone_verification.dart';
 import 'package:pickup/screens/onboarding/create/steps/placeholder.dart';
 import 'package:pickup/screens/onboarding/create/steps/set_password.dart';
 import 'package:pickup/shared/models.dart';
-import 'package:pickup/shared/routes.dart';
 
 class OnboardingCreateAccountScreen extends StatefulWidget {
   const OnboardingCreateAccountScreen({Key? key, required this.data})
       : super(key: key);
+
+  static const route = '/onboarding/account/create';
 
   final CreateAccountData data;
   int get maxSteps => data.isSocialLogin ? 2 : 4;
@@ -133,12 +135,11 @@ class _OnboardingCreateAccountScreenState
                         ],
                         StepInsertName(whichStepInCreateAccount: nextStep),
                         StepPlaceholder(
-                          onFinish: () {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              homeRoute,
-                              (route) => false,
-                            );
-                          },
+                          onFinish: () =>
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                            HomeScreen.route,
+                            (route) => false,
+                          ),
                         ),
                       ],
                     ),

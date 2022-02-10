@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:pickup/screens/checkout/checkout_confirmation.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_cart_items_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_contact_details_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
@@ -9,7 +10,6 @@ import 'package:pickup/screens/checkout/widgets/checkout_order_summary_widget.da
 import 'package:pickup/screens/checkout/widgets/checkout_pickup_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:pickup/screens/store/store.dart';
-import 'package:pickup/shared/routes.dart';
 import 'package:sanity/sanity.dart';
 
 class CreateCheckoutData {
@@ -31,6 +31,8 @@ class CheckoutScreen extends StatefulWidget {
     Key? key,
     required this.data,
   }) : super(key: key);
+
+  static const route = '/store/checkout';
 
   final CreateStoreData data;
 
@@ -87,7 +89,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
       if (mounted) {
         Navigator.of(context).pushNamed(
-          storeCheckoutConfirmationRoute,
+          CheckoutConfirmationScreen.route,
           arguments: CreateCheckoutData(
             checkoutItems: widget.data.checkoutItems,
             googleMaps: widget.data.googleMaps,
@@ -96,8 +98,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
         );
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   @override
