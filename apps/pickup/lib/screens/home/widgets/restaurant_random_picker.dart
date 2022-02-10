@@ -34,23 +34,15 @@ class RestaurantRandomPickGenerator extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Not sure what \nto grab?',
                   overflow: TextOverflow.fade,
-                  style: TextStyle(
-                    color: AlpacaColor.white100Color,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.headline1,
                 ),
                 Text(
                   'Lets find something together.',
-                  style: TextStyle(
-                    color: AlpacaColor.white100Color,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.subtitle1,
                 )
               ],
             ),
