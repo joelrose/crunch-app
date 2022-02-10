@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/screens/loading/loading.dart';
 
 import 'package:pickup/shared/routes.dart' as routes;
 
@@ -35,7 +36,7 @@ class _MainAppState extends State<MainApp> {
             locale: context.locale,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: routes.Router.generateRoute,
-            initialRoute: routes.loadingRoute,
+            initialRoute: LoadingScreen.route,
             theme: getThemeData(context),
             navigatorObservers: <NavigatorObserver>[observer],
           );

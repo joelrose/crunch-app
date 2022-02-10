@@ -26,15 +26,16 @@ class SearchScreen extends StatelessWidget {
                   snippet: "Hi I'm a Platform Marker",
                 ),
                 onTap: () {
-                  print("Marker tapped");
+                  // print("Marker tapped");
                 },
               ),
             },
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
-            onTap: (location) => print('onTap: $location'),
-            onCameraMove: (cameraUpdate) =>
-                print('onCameraMove: $cameraUpdate'),
+            // onTap: (location) => print('onTap: $location'),
+            onCameraMove: (cameraUpdate) {
+              // print('onCameraMove: $cameraUpdate');
+            },
             // onMapCreated: (controller) {
             //   Future.delayed(const Duration(seconds: 2)).then(
             //     (_) {

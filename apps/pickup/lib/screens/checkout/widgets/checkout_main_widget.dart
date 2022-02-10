@@ -42,9 +42,7 @@ class CheckoutHeaderRowWidget extends StatelessWidget {
                       ),
                 ),
               ),
-              if (disableButton)
-                Container()
-              else
+              if (!disableButton)
                 AlpacaCheckoutButton(
                   onPressed: onPressed,
                   buttonText: buttonText,

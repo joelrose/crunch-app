@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pickup/screens/home/home.dart';
+import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/shared/routes.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
+
+  static const route = '/';
 
   @override
   State<LoadingScreen> createState() => _LoadingScreenState();
@@ -94,11 +97,13 @@ class _LoadingScreenState extends State<LoadingScreen>
     auth.getUser.then(
       (user) {
         if (user != null) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(homeRoute, (route) => false);
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            HomeScreen.route,
+            (route) => false,
+          );
         } else {
           Navigator.of(context).pushNamedAndRemoveUntil(
-            onboardingWelcomeRoute,
+            OnboardingWelcomeScreen.route,
             (route) => false,
           );
         }

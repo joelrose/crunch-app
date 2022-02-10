@@ -19,8 +19,7 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 15),
+          padding: const EdgeInsets.all(15),
           child: Column(
             children: [
               Stack(

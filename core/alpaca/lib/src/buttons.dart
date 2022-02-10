@@ -73,13 +73,7 @@ class _AlpacaButton extends StatelessWidget {
         child: Text(
           buttonText,
           textAlign: TextAlign.center,
-          style: GoogleFonts.inter(
-            color: textColor,
-            fontSize: 16,
-            letterSpacing: 0,
-            fontWeight: FontWeight.w600,
-            height: 1,
-          ),
+          style: Theme.of(context).textTheme.button!.copyWith(color: textColor),
         ),
       ),
     );
@@ -340,6 +334,71 @@ class AlpacaClosePopUpWindownButton extends StatelessWidget {
         onPressed: onPressed,
         icon: const Icon(Icons.close_rounded),
         color: AlpacaColor.darkGreyColor,
+      ),
+    );
+  }
+}
+
+class CheckoutButton extends StatelessWidget {
+  const CheckoutButton({
+    Key? key,
+    required this.buttonText,
+    required this.priceText,
+    required this.onPressed,
+    this.textColor,
+  }) : super(key: key);
+
+  final String buttonText;
+  final String priceText;
+  final void Function() onPressed;
+
+  final Color? textColor;
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoButton(
+      onPressed: onPressed,
+      padding: EdgeInsets.zero,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+            color: AlpacaColor.primary100),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(18),
+              child: Text(
+                buttonText,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: textColor,
+                  fontSize: 16,
+                  letterSpacing: 0,
+                  fontWeight: FontWeight.w600,
+                  height: 1,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.horizontal(
+                      right: Radius.circular(8.0)),
+                  color: AlpacaColor.primary80),
+              child: Text(
+                priceText,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: textColor,
+                  fontSize: 16,
+                  letterSpacing: 0,
+                  fontWeight: FontWeight.w600,
+                  height: 1,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

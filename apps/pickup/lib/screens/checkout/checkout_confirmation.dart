@@ -13,6 +13,8 @@ class CheckoutConfirmationScreen extends StatelessWidget {
   const CheckoutConfirmationScreen({Key? key, required this.data})
       : super(key: key);
 
+  static const route = '/store/checkout/confirmation';
+
   final CreateCheckoutData data;
 
   @override
@@ -43,10 +45,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                           width: 230,
                           child: Text(
                             'Your order is being prepared...',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2
-                                ?.copyWith(fontSize: 22),
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                         ),
                       ),

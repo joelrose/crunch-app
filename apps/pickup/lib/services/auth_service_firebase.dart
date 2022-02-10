@@ -100,14 +100,6 @@ class AuthServiceFirebase implements AuthService {
         phoneNumber: number,
         codeSent: (String verificationId, int? resendToken) async {
           verifyCallback(verificationId);
-          // Create a PhoneAuthCredential with the code
-          // final PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          //   verificationId: verificationId,
-          //   smsCode: smsCode,
-          // );
-
-          // // Sign the user in (or link) with the credential
-          // await _firebaseAuth.currentUser!.linkWithCredential(credential);
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
         verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},

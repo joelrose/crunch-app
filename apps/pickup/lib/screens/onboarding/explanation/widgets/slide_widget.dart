@@ -1,3 +1,4 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
 class SlideWidget extends StatelessWidget {
@@ -23,13 +24,13 @@ class SlideWidget extends StatelessWidget {
         Container(
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(
-            top: 60.0,
+            top: 60,
             bottom: 10,
           ),
           child: Text(
             title,
             style: Theme.of(context).textTheme.headline1!.copyWith(
-                  fontSize: 30,
+                  color: AlpacaColor.white100Color,
                 ),
             textAlign: TextAlign.left,
           ),

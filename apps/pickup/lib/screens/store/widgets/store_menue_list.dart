@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:pickup/shared/routes.dart';
+import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 
@@ -37,12 +37,6 @@ class StoreMenueList extends StatefulWidget {
 class _StoreMenueListState extends State<StoreMenueList> {
   late final SlidableController slidableController;
   List<CheckoutItemModel> checkoutItems = [];
-
-  void _showSnackBar(BuildContext context, String text) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(text)));
-  }
 
   @override
   void initState() {
@@ -113,7 +107,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                     return GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed(
-                          productDetailOverview,
+                          StoreProductOverview.route,
                           arguments: ProductDetailsData(
                             item: item,
                             restaurantImage: widget.restaurantImage,
@@ -180,7 +174,8 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           const Image(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
+                              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+                            ),
                             width: 114,
                             height: 134,
                           ),
