@@ -28,12 +28,12 @@ workflows:
       events:
         - push
       branch_patterns: 
-        - pattern: staging
+        - pattern: main
       cancel_previous_builds: true
     when:
       changeset:
         includes:
-          - 'apps/pickup/'
+          - 'apps/*'
     cache:
       cache_paths:
         - $HOME/Library/Caches/CocoaPods
