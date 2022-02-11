@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/screens/home/widgets/favourites/favourites.dart';
 import 'package:pickup/screens/home/widgets/restaurant_random_picker.dart';
-import 'package:pickup/screens/home/widgets/scrolling_list.dart';
 import 'package:pickup/screens/home/widgets/search_bar/main_search_bar.dart';
 
 class DiscoverScreen extends StatelessWidget {
@@ -35,7 +35,7 @@ class DiscoverScreen extends StatelessWidget {
                       height: 1,
                     ),
                     RestaurantRandomPickGenerator(),
-                    LeftToRightScrollingList(),
+                    Favourites()
                   ],
                 ),
               ),
