@@ -49,6 +49,7 @@ class SearchBarUI extends StatelessWidget {
           Flexible(
             child: FloatingSearchBar(
               margins: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+              insets: const EdgeInsets.symmetric(horizontal: 1),
               borderRadius: BorderRadius.circular(8),
               backgroundColor: AlpacaColor.lightGreyColor80,
               backdropColor: AlpacaColor.white100Color,
