@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/screens/home/widgets/discover_nav_bar.dart';
+import 'package:pickup/screens/home/widgets/search_bar/search_results_widget.dart';
 import 'package:sanity/sanity.dart';
-
-import 'search_results_widget.dart';
 
 class SearchBarUI extends StatelessWidget {
   const SearchBarUI({

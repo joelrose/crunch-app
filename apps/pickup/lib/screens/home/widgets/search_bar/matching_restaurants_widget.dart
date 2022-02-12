@@ -22,7 +22,7 @@ class MatchingRestaurantsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 20),
           child: Text(
             'Matching restaurants',
             style: Theme.of(context).textTheme.headline5!.copyWith(

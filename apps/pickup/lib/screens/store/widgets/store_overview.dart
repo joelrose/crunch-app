@@ -48,7 +48,7 @@ class StoreOverview extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(right: 6),
                       child: Icon(
                         Icons.timelapse,

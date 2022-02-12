@@ -2,9 +2,11 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
 class ProductBasicDetails extends StatelessWidget {
-  const ProductBasicDetails(
-      {Key? key, required this.title, required this.itemPrice})
-      : super(key: key);
+  const ProductBasicDetails({
+    Key? key,
+    required this.title,
+    required this.itemPrice,
+  }) : super(key: key);
   final String title;
   final num itemPrice;
 

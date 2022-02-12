@@ -1,15 +1,11 @@
-import 'dart:ui';
-
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
+import 'package:pickup/screens/home/widgets/favourites/favourites_detail.dart';
 import 'package:pickup/screens/home/widgets/favourites/restaurant_card_widget.dart';
 import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/viewstate.dart';
 import 'package:skeleton_loader/skeleton_loader.dart';
-
-import 'favourites_detail.dart';
 
 class Favourites extends StatelessWidget {
   const Favourites({Key? key}) : super(key: key);

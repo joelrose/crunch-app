@@ -133,8 +133,9 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
         Padding(
           padding: const EdgeInsets.only(bottom: 40, top: 10),
           child: Text(
-              'Please check your messages and enter the code in the boxes below.',
-              style: theme.headline5),
+            'Please check your messages and enter the code in the boxes below.',
+            style: theme.headline5,
+          ),
         ),
         PinCodeTextField(
           length: 6,
