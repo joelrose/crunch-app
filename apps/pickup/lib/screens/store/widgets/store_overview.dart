@@ -10,8 +10,6 @@ class StoreOverview extends StatelessWidget {
     required this.name,
     required this.rating,
     required this.googleMaps,
-    required this.walkingTime,
-    required this.walkingDistance,
   }) : super(key: key);
 
   static const String route = '/store-overview';
@@ -19,8 +17,6 @@ class StoreOverview extends StatelessWidget {
   final String name;
   final String rating;
   final String googleMaps;
-  final String walkingTime;
-  final String walkingDistance;
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +49,14 @@ class StoreOverview extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 6),
-                      child: SvgPicture.asset(
-                        'assets/icons/directions_walk.svg',
-                        color: AlpacaColor.greyColor80,
+                      padding: EdgeInsets.only(right: 6),
+                      child: Icon(
+                        Icons.timelapse,
+                        size: 18,
                       ),
                     ),
                     Text(
-                      '${walkingTime}min (${walkingDistance}m)',
+                      '20 min',
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme

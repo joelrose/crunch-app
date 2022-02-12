@@ -27,7 +27,7 @@ class Favourites extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Favourite stores',
+                  'Restaurants',
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 Container(

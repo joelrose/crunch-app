@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
+import 'package:pickup/shared/alpaca_divider.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 
@@ -67,8 +68,8 @@ class _StoreMenueListState extends State<StoreMenueList> {
                             color: AlpacaColor.darkNavyColor,
                           ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -82,23 +83,21 @@ class _StoreMenueListState extends State<StoreMenueList> {
             return Column(
               children: [
                 ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                  ),
+                  contentPadding: const EdgeInsets.fromLTRB(25, 15, 0, 0),
                   title: Text(
                     category.title.english,
                     style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
-                const Divider(),
+                const AlpacaDivider(),
                 ListView.separated(
                   itemCount: category.menueItems.length,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final item = category.menueItems[i];
-                    return GestureDetector(
-                      onTap: () {
+                    return TextButton(
+                      onPressed: () {
                         Navigator.of(context).pushNamed(
                           StoreProductOverview.route,
                           arguments: ProductDetailsData(
@@ -109,6 +108,9 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           ),
                         );
                       },
+                      style: TextButton.styleFrom(
+                        primary: AlpacaColor.primary100,
+                      ),
                       child: Row(
                         children: [
                           Flexible(
@@ -170,11 +172,9 @@ class _StoreMenueListState extends State<StoreMenueList> {
                               ),
                             ),
                           ),
-                          const Image(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
-                            ),
+                          Image.network(
+                            'https://picsum.photos/250?image=18',
+                            fit: BoxFit.fitHeight,
                             width: 114,
                             height: 134,
                           ),
@@ -183,14 +183,10 @@ class _StoreMenueListState extends State<StoreMenueList> {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const Divider(
-                      color: AlpacaColor.lightGreyColor90,
-                      height: 2,
-                      thickness: 2,
-                    );
+                    return const AlpacaDivider();
                   },
                 ),
-                const Divider(),
+                const AlpacaDivider(),
               ],
             );
           },

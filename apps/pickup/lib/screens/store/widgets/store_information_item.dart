@@ -28,7 +28,13 @@ class StoreInformationItem extends StatelessWidget {
             width: 18,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12.0),
+            padding: const EdgeInsets.only(top: 1.5),
+            child: Icon(icon, size: 24, color: AlpacaColor.primary80),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 12.0,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
