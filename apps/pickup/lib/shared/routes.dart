@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
+import 'package:pickup/screens/home/widgets/favourites/favourites_detail.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/create/create_account.dart';
@@ -65,6 +66,10 @@ class Router {
           builder: (_) => StoreProductOverview(
             data: args,
           ),
+        );
+      case FavouritesDetail.route:
+        return CupertinoPageRoute(
+          builder: (context) => FavouritesDetail(),
         );
       default:
         return MaterialPageRoute(

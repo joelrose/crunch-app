@@ -19,7 +19,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   int minuteWaitTime = 20;
   int minuteInterval = 5;
 
-  late int earliestMinutePickup;
+  late int earliestMinutePickup; 
 
   late List<int> hourList;
   late List<int> minuteList;

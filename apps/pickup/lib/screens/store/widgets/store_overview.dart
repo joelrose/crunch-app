@@ -14,6 +14,8 @@ class StoreOverview extends StatelessWidget {
     required this.walkingDistance,
   }) : super(key: key);
 
+  static const String route = '/store-overview';
+
   final String name;
   final String rating;
   final String googleMaps;
