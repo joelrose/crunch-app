@@ -15,9 +15,10 @@ ThemeData getThemeData(BuildContext context) {
       ),
       headline2: TextStyle(
         fontSize: 22,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w700,
         fontFamily: GoogleFonts.lexendDeca().fontFamily,
         color: AlpacaColor.darkNavyColor,
+        letterSpacing: -0.015
       ),
       headline3: TextStyle(
         color: AlpacaColor.lightBlackColor,
