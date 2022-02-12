@@ -1,7 +1,9 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pickup/screens/home/base/discover.dart';
 import 'package:pickup/shared/construction.dart';
 
@@ -64,6 +66,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        //Remove this method to stop OneSignal Debugging
+        // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+        OneSignal.shared.setAppId(dotenv.get('ONESIGNAL_APPID'));
+
+        OneSignal.shared
+            .promptUserForPushNotificationPermission()
+            .then((accepted) {
+          print('Accepted permission: $accepted');
+        });
+      },
+    );
+  }
+
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = [
