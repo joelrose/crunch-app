@@ -49,7 +49,6 @@ class SearchBarUI extends StatelessWidget {
           Flexible(
             child: FloatingSearchBar(
               margins: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-              insets: const EdgeInsets.symmetric(horizontal: 1),
               borderRadius: BorderRadius.circular(8),
               backgroundColor: AlpacaColor.lightGreyColor80,
               backdropColor: AlpacaColor.white100Color,
@@ -62,7 +61,7 @@ class SearchBarUI extends StatelessWidget {
               ),
               controller: controller,
               transition: CircularFloatingSearchBarTransition(),
-              hint: 'Food, store, or tags',
+              hint: 'Search for food, store, or tags',
               hintStyle: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
@@ -100,7 +99,7 @@ class SearchBarUI extends StatelessWidget {
                   child: TextButton(
                     child: Text(
                       'Cancel',
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
                             color: AlpacaColor.darkGreyColor,
                           ),
                     ),
