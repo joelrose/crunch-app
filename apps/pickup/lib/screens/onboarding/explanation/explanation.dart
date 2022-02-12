@@ -22,13 +22,14 @@ class OnboardingExplanationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageWrapper(
+      padding: EdgeInsets.zero,
       backgroundColor: AlpacaColor.primary100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             alignment: Alignment.topLeft,
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.fromLTRB(18, 30, 18, 0),
             child: GestureDetector(
               onTap: () => Navigator.of(context).pop(),
               child: const Icon(
@@ -62,13 +63,18 @@ class OnboardingExplanationScreen extends StatelessWidget {
               ),
             ),
           ),
-          ActionButton(
-            buttonText: 'continue'.tr(),
-            onPressed: () => Navigator.of(context).pushNamed(
-              OnboardingAccountScreen.route,
-              arguments: true,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 18,
             ),
-            isPrimaryButton: false,
+            child: ActionButton(
+              buttonText: 'continue'.tr(),
+              onPressed: () => Navigator.of(context).pushNamed(
+                OnboardingAccountScreen.route,
+                arguments: true,
+              ),
+              isPrimaryButton: false,
+            ),
           ),
         ],
       ),

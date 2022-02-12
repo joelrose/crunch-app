@@ -15,30 +15,40 @@ class SlideWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Image.asset(
           image,
           fit: BoxFit.cover,
-          height: MediaQuery.of(context).size.height * 0.38,
+          height: MediaQuery.of(context).size.height * 0.33,
         ),
-        Container(
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(
-            top: 60,
-            bottom: 10,
-          ),
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.headline1!.copyWith(
-                  color: AlpacaColor.white100Color,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(
+                  bottom: 10,
                 ),
-            textAlign: TextAlign.left,
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: AlpacaColor.white100Color,
+                      ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Text(
+                description,
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      color: AlpacaColor.white100Color,
+                    ),
+                textAlign: TextAlign.left,
+              ),
+            ],
           ),
-        ),
-        Text(
-          description,
-          style: Theme.of(context).textTheme.subtitle1,
-          textAlign: TextAlign.left,
         ),
       ],
     );

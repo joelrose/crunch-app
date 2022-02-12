@@ -110,17 +110,14 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(right: size.width * 0.2),
+          padding: EdgeInsets.only(
+            right: size.width * 0.2,
+            top: size.height * 0.03,
+          ),
           child: Text(
             "We've sent a verification Code to",
-            style: theme.headline1!.merge(
-              const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-                color: AlpacaColor.blackColor,
-                height: 1.4,
-                letterSpacing: -0.24,
-              ),
+            style: theme.headline1!.copyWith(
+              color: AlpacaColor.blackColor,
             ),
           ),
         ),
@@ -128,27 +125,16 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
           alignment: Alignment.centerLeft,
           child: Text(
             widget.phoneNumber,
-            style: theme.headline1!.merge(
-              const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-                color: AlpacaColor.primary100,
-                height: 1.4,
-                letterSpacing: -0.24,
-              ),
+            style: theme.headline1!.copyWith(
+              color: AlpacaColor.primary100,
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 40, top: 10),
           child: Text(
-            'Please check your messages and enter the code in the boxes below.',
-            style: theme.subtitle1!.merge(
-              const TextStyle(
-                color: AlpacaColor.blackColor,
-              ),
-            ),
-          ),
+              'Please check your messages and enter the code in the boxes below.',
+              style: theme.headline5),
         ),
         PinCodeTextField(
           length: 6,
@@ -171,10 +157,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
             activeColor: const Color(0xffE8E8E8),
           ),
           cursorColor: AlpacaColor.blackColor,
-          textStyle: const TextStyle(
-            color: Colors.black,
-            fontSize: 22,
-          ),
+          textStyle: Theme.of(context).textTheme.headline2,
           animationDuration: const Duration(milliseconds: 300),
           enableActiveFill: true,
           onCompleted: (v) {
@@ -188,10 +171,8 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
             padding: const EdgeInsets.only(bottom: 10, top: 10),
             child: Text(
               'The entered code is not valid, please try again!',
-              style: theme.subtitle1!.merge(
-                const TextStyle(
-                  color: Colors.red,
-                ),
+              style: theme.headline4!.copyWith(
+                color: Colors.red,
               ),
             ),
           ),
@@ -217,12 +198,10 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
                 ),
                 Text(
                   _start != 0 ? 'Resend code! ($_start)' : 'Resend code!',
-                  style: theme.subtitle1!.merge(
-                    TextStyle(
-                      color: _start != 0
-                          ? AlpacaColor.darkGreyColor
-                          : AlpacaColor.primary100,
-                    ),
+                  style: theme.headline4!.copyWith(
+                    color: _start != 0
+                        ? AlpacaColor.darkGreyColor
+                        : AlpacaColor.primary100,
                   ),
                 ),
               ],
