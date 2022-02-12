@@ -51,7 +51,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
         Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 10,
-            horizontal: 25,
+            horizontal: 18,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,15 +60,12 @@ class _StoreMenueListState extends State<StoreMenueList> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       'Menu',
-                      style: TextStyle(
-                        color: AlpacaColor.darkNavyColor,
-                        fontSize: 18,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                            color: AlpacaColor.darkNavyColor,
+                          ),
                     ),
                   ],
                 ),
@@ -86,15 +83,11 @@ class _StoreMenueListState extends State<StoreMenueList> {
               children: [
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 25,
+                    horizontal: 18,
                   ),
                   title: Text(
                     category.title.english,
-                    style: Theme.of(context).textTheme.headline3!.merge(
-                          const TextStyle(
-                            fontSize: 22,
-                          ),
-                        ),
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 const Divider(),
@@ -134,7 +127,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                           maxLines: 2,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline2,
+                                              .headline3,
                                         ),
                                       ),
                                       if ((checkoutItems.indexWhere(
@@ -153,19 +146,25 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                             overflow: TextOverflow.clip,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2,
+                                                .headline4!
+                                                .copyWith(
+                                                  color: AlpacaColor.primary80,
+                                                ),
                                           ),
                                         ),
                                     ],
                                   ),
                                   Text(
-                                    'Grilled sandwich with fillet, cheese, tomatoes an d salad',
+                                    'Grilled sandwich with fillet, cheese, tomatoes and salad',
                                     style:
-                                        Theme.of(context).textTheme.bodyText1,
+                                        Theme.of(context).textTheme.headline5,
                                   ),
                                   Text(
                                     Utilities.currencyFormat(item.price),
-                                    style: Theme.of(context).textTheme.caption,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline4!
+                                        .copyWith(color: AlpacaColor.primary80),
                                   ),
                                 ],
                               ),
