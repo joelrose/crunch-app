@@ -112,6 +112,9 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           ),
                         );
                       },
+                      style: TextButton.styleFrom(
+                        primary: AlpacaColor.primary100,
+                      ),
                       child: Row(
                         children: [
                           Flexible(
@@ -168,7 +171,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                             ),
                           ),
                           Image.network(
-                            'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+                            'https://picsum.photos/250?image=18',
                             fit: BoxFit.fitHeight,
                             width: 114,
                             height: 134,
