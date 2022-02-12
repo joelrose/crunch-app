@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/store/store_screen_model.dart';
 import 'package:pickup/screens/store/widgets/store_information_item.dart';
@@ -138,7 +139,7 @@ class StoreInformation extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
-        horizontal: 20,
+        horizontal: 18,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,35 +148,34 @@ class StoreInformation extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
                   'Store information',
-                  style: TextStyle(
-                    color: AlpacaColor.darkNavyColor,
-                    fontSize: 18,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                        color: AlpacaColor.darkNavyColor,
+                      ),
                 ),
-                // Icon(
-                //   Icons.keyboard_arrow_down_rounded,
-                //   size: 30,
-                // ),
+                SvgPicture.asset(
+                        'assets/icons/chevron-left.svg',
+                        color: AlpacaColor.lightGreyColor100,
+                        height: 24,
+                        width: 24,
+                ),
               ],
             ),
           ),
           const StoreInformationItem(
-            icon: Icons.access_time,
+            icon: 'assets/icons/clock-opening-times.svg',
             title: 'Opening times',
             description: '11:00-22:00',
           ),
           StoreInformationItem(
-            icon: Icons.phone_outlined,
+            icon: 'assets/icons/phone-store-address.svg',
             title: 'Contact number',
             description: phoneNumer,
           ),
           StoreInformationItem(
-            icon: Icons.location_on_outlined,
+            icon: 'assets/icons/location-store-address.svg',
             title: 'Store address',
             description: address,
           ),

@@ -1,15 +1,11 @@
-import 'dart:ui';
-
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
+import 'package:pickup/screens/home/widgets/favourites/favourites_detail.dart';
 import 'package:pickup/screens/home/widgets/favourites/restaurant_card_widget.dart';
 import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/viewstate.dart';
 import 'package:skeleton_loader/skeleton_loader.dart';
-
-import 'favourites_detail.dart';
 
 class Favourites extends StatelessWidget {
   const Favourites({Key? key}) : super(key: key);
@@ -28,12 +24,7 @@ class Favourites extends StatelessWidget {
               children: [
                 Text(
                   'Restaurants',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: GoogleFonts.lexendDeca().fontFamily,
-                    fontWeight: FontWeight.w700,
-                    color: AlpacaColor.darkNavyColor,
-                  ),
+                  style: Theme.of(context).textTheme.headline2,
                 ),
                 GestureDetector(
                   onTap: () =>
@@ -42,20 +33,20 @@ class Favourites extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      border: Border.all(color: AlpacaColor.greyColor),
+                      border: Border.all(color: AlpacaColor.lightGreyColor90),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         'View all',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: AlpacaColor.darkNavyColor,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(color: AlpacaColor.darkNavyColor),
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -87,7 +78,7 @@ class _RestaurantOverviewListHorizontalState
           ? SkeletonLoader(
               builder: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 194,
+                height: 190,
                 child: ListView.separated(
                   clipBehavior: Clip.none,
                   scrollDirection: Axis.horizontal,
@@ -99,8 +90,8 @@ class _RestaurantOverviewListHorizontalState
                       elevation: 2,
                       borderRadius: BorderRadius.circular(10),
                       child: const SizedBox(
-                        height: 200,
-                        width: 250,
+                        height: 190,
+                        width: 235,
                       ),
                     );
                   },
@@ -109,8 +100,8 @@ class _RestaurantOverviewListHorizontalState
               highlightColor: AlpacaColor.primary100,
             )
           : Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              height: 194,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              height: 190,
               child: ListView.separated(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,

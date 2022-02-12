@@ -38,7 +38,7 @@ class _CheckoutContactDetailsWidgetState
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 15),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                     child: AlpacaTextField(
                       textColor: AlpacaColor.darkNavyColor,
                       hintText: 'Phone Number',

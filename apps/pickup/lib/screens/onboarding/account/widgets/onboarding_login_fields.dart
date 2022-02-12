@@ -50,7 +50,8 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
               widget.isSignUp
                   ? 'onboarding.signUpCTA'.tr()
                   : 'onboarding.signInCTA'.tr(),
-              style: theme.subtitle1,
+              style:
+                  theme.headline5!.copyWith(color: AlpacaColor.white100Color),
             ),
           ),
           buildTextField(),
@@ -66,7 +67,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'or'.tr(),
-                  style: theme.bodyText2!
+                  style: theme.headline5!
                       .copyWith(color: AlpacaColor.white100Color),
                 ),
               ),
@@ -92,93 +93,125 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         right: 20,
         top: 10,
       ),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          text: 'By continuing, I agree to Crunch’s ',
-          children: [
-            TextSpan(
-              text: 'Terms of service',
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => launch(
-                      'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
-                    ),
-              style: const TextStyle(
-                decoration: TextDecoration.underline,
-              ),
+      child: Container(
+        alignment: Alignment.center,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.65,
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: 'By continuing, I agree to Crunch’s ',
+              children: [
+                TextSpan(
+                  text: 'Terms of service',
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => launch(
+                          'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
+                        ),
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                const TextSpan(text: ' and'),
+                TextSpan(
+                  text: ' Privacy Policy.',
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => launch(
+                          'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
+                        ),
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(color: AlpacaColor.white100Color),
             ),
-            const TextSpan(text: ' and'),
-            TextSpan(
-              text: ' Privacy Policy.',
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => launch(
-                      'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
-                    ),
-              style: const TextStyle(
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ],
-          style: Theme.of(context)
-              .textTheme
-              .bodyText2!
-              .copyWith(color: AlpacaColor.white100Color),
+          ),
         ),
       ),
     );
   }
 
   Widget buildTextField() {
-    return TextField(
-      controller: _textController,
-      textInputAction: TextInputAction.done,
-      keyboardType: TextInputType.phone,
-      autocorrect: false,
-      cursorColor: AlpacaColor.white100Color,
-      scrollPadding: const EdgeInsets.only(bottom: 30),
-      decoration: InputDecoration(
-        suffixIcon: GestureDetector(
-          onTap: () async {
-            Navigator.of(context).pushNamed(
-              OnboardingCreateAccountScreen.route,
-              arguments: CreateAccountData(
-                phoneNumber: _textController.text,
-                isSocialLogin: false,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 6),
+          child: Text(
+            'Phone number',
+            style: Theme.of(context)
+                .textTheme
+                .headline4!
+                .copyWith(color: AlpacaColor.white100Color),
+          ),
+        ),
+        TextField(
+          controller: _textController,
+          style: Theme.of(context).textTheme.headline5!.copyWith(
+                color: AlpacaColor.white100Color,
               ),
-            );
-          },
-          child: const Icon(
-            Icons.arrow_forward,
-            color: AlpacaColor.white80Color,
+          textInputAction: TextInputAction.done,
+          keyboardType: TextInputType.phone,
+          autocorrect: false,
+          cursorColor: AlpacaColor.white100Color,
+          scrollPadding: const EdgeInsets.only(bottom: 30),
+          decoration: InputDecoration(
+            suffixIcon: GestureDetector(
+              onTap: () async {
+                Navigator.of(context).pushNamed(
+                  OnboardingCreateAccountScreen.route,
+                  arguments: CreateAccountData(
+                    phoneNumber: _textController.text,
+                    isSocialLogin: false,
+                  ),
+                );
+              },
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.horizontal(right: Radius.circular(8)),
+                child: Container(
+                  color: AlpacaColor.white100Color,
+                  child: const Icon(
+                    Icons.arrow_forward,
+                    color: AlpacaColor.primary100,
+                    size: 15,
+                  ),
+                ),
+              ),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 15.0,
+            ),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AlpacaColor.primary80,
+              ),
+            ),
+            fillColor: AlpacaColor.primary80,
+            hintText: 'Phone number',
+            filled: true,
+            hintStyle: const TextStyle(
+              color: AlpacaColor.white80Color,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: AlpacaColor.primary80,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: AlpacaColor.primary80,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 15.0,
-        ),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AlpacaColor.primary80,
-          ),
-        ),
-        fillColor: AlpacaColor.primary80,
-        hintText: 'Please enter your phone number',
-        filled: true,
-        hintStyle: const TextStyle(
-          color: AlpacaColor.white80Color,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: AlpacaColor.primary80,
-          ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: AlpacaColor.primary80,
-          ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
+      ],
     );
   }
 }

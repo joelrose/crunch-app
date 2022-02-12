@@ -21,13 +21,13 @@ class MatchingRestaurantsWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 20),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
           child: Text(
             'Matching restaurants',
-            style: TextStyle(
-              color: AlpacaColor.darkGreyColor,
-            ),
+            style: Theme.of(context).textTheme.headline5!.copyWith(
+                  color: AlpacaColor.darkGreyColor,
+                ),
           ),
         ),
         ListView.separated(

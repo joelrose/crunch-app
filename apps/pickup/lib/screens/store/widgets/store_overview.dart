@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_tag.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,7 +21,7 @@ class StoreOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,11 +30,7 @@ class StoreOverview extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: Theme.of(context).textTheme.headline3!.merge(
-                      const TextStyle(
-                        fontSize: 22,
-                      ),
-                    ),
+                style: Theme.of(context).textTheme.headline2,
               ),
               Container(
                 decoration: BoxDecoration(
@@ -50,8 +47,8 @@ class StoreOverview extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Padding(
+                  children: [
+                    const Padding(
                       padding: EdgeInsets.only(right: 6),
                       child: Icon(
                         Icons.timelapse,
@@ -61,11 +58,10 @@ class StoreOverview extends StatelessWidget {
                     Text(
                       '20 min',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff848484),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: AlpacaColor.greyColor80),
                     ),
                   ],
                 ),
@@ -92,21 +88,28 @@ class StoreOverview extends StatelessWidget {
                   children: [
                     Text(
                       rating,
-                      style: const TextStyle(
-                        color: AlpacaColor.darkNavyColor,
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: AlpacaColor.darkNavyColor,
+                          ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 4),
-                      child: Icon(
-                        Icons.star,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4),
+                      child: SvgPicture.asset(
+                        'assets/icons/starRating.svg',
                         color: AlpacaColor.goldColor,
-                        size: 18,
+                        height: 12,
+                        width: 13,
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4),
+                      child: Text(
+                        '(20 ratings)',
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              color: AlpacaColor.darkGreyColor,
+                            ),
+                      ),
+                    )
                   ],
                 ),
                 GestureDetector(
@@ -114,17 +117,14 @@ class StoreOverview extends StatelessWidget {
                     await launch(googleMaps);
                   },
                   child: Row(
-                    children: const [
+                    children: [
                       Text(
                         'Get directions',
-                        style: TextStyle(
-                          color: Color(0xff6400fe),
-                          fontSize: 12,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: AlpacaColor.primary100,
+                            ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(left: 4),
                         child: Icon(
                           Icons.arrow_forward,

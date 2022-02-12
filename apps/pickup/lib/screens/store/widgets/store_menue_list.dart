@@ -52,24 +52,24 @@ class _StoreMenueListState extends State<StoreMenueList> {
         Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 10,
-            horizontal: 25,
+            horizontal: 18,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    'Menu',
-                    style: TextStyle(
-                      color: AlpacaColor.darkNavyColor,
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Menu',
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                            color: AlpacaColor.darkNavyColor,
+                          ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -86,11 +86,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                   contentPadding: const EdgeInsets.fromLTRB(25, 15, 0, 0),
                   title: Text(
                     category.title.english,
-                    style: Theme.of(context).textTheme.headline3!.merge(
-                          const TextStyle(
-                            fontSize: 22,
-                          ),
-                        ),
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 const AlpacaDivider(),
@@ -133,7 +129,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                           maxLines: 2,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline2,
+                                              .headline3,
                                         ),
                                       ),
                                       if ((checkoutItems.indexWhere(
@@ -152,7 +148,10 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                             overflow: TextOverflow.clip,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2,
+                                                .headline4!
+                                                .copyWith(
+                                                  color: AlpacaColor.primary80,
+                                                ),
                                           ),
                                         ),
                                     ],
@@ -160,11 +159,14 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                   Text(
                                     'Grilled sandwich with fillet, cheese, tomatoes and salad',
                                     style:
-                                        Theme.of(context).textTheme.bodyText1,
+                                        Theme.of(context).textTheme.headline5,
                                   ),
                                   Text(
                                     Utilities.currencyFormat(item.price),
-                                    style: Theme.of(context).textTheme.caption,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline4!
+                                        .copyWith(color: AlpacaColor.primary80),
                                   ),
                                 ],
                               ),

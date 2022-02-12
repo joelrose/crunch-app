@@ -7,12 +7,10 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
     Key? key,
     this.storeName,
     required this.pageOverviewName,
-    this.disableEditButton = false,
   }) : super(key: key);
 
   final String? storeName;
   final String pageOverviewName;
-  final bool disableEditButton;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,7 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
                       children: [
                         Text(
                           pageOverviewName,
-                          style: Theme.of(context).textTheme.headline2,
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                         if (storeName != null) ...[
                           Padding(
@@ -40,11 +38,9 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
                               storeName!,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyText2!
                                   .copyWith(
                                     color: AlpacaColor.darkGreyColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
                                   ),
                             ),
                           )
@@ -65,19 +61,6 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (!disableEditButton)
-                    Positioned(
-                      right: 0,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          'Edit',
-                          style: Theme.of(context).textTheme.headline3,
-                        ),
-                      ),
-                    )
                 ],
               ),
             ],

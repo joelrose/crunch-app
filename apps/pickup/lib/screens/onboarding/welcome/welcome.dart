@@ -18,48 +18,56 @@ class OnboardingWelcomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(
-            'assets/onboarding/splash-graphic.png',
+          SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.5,
-            fit: BoxFit.scaleDown,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 15.0,
-              horizontal: 20.0,
+            height: MediaQuery.of(context).size.height * 0.60,
+            child: Image.asset(
+              'assets/onboarding/splash-graphic.png',
+              fit: BoxFit.cover,
+              alignment: Alignment.bottomCenter,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'onboarding_welcome.title'.tr(),
-                  style: theme.headline1!.copyWith(
-                    color: AlpacaColor.white100Color,
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'onboarding_welcome.title'.tr(),
+                    style: theme.headline1!.copyWith(
+                      fontSize: 36,
+                      color: AlpacaColor.white100Color,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 40, top: 10),
-                  child: Text(
-                    'onboarding_welcome.subtitle'.tr(),
-                    style: theme.subtitle1,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 40, top: 10),
+                    child: Text(
+                      'onboarding_welcome.subtitle'.tr(),
+                      style: theme.headline5!.copyWith(
+                        color: AlpacaColor.white100Color,
+                      ),
+                    ),
                   ),
-                ),
-                ActionButton(
-                  buttonText: 'onboarding_welcome.primaryButtonText'.tr(),
-                  onPressed: () => Navigator.of(context).pushNamed(
-                    OnboardingExplanationScreen.route,
+                  ActionButton(
+                    buttonText: 'onboarding_welcome.primaryButtonText'.tr(),
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      OnboardingExplanationScreen.route,
+                    ),
+                    isPrimaryButton: false,
                   ),
-                  isPrimaryButton: false,
-                ),
-                ActionButton(
-                  buttonText: 'onboarding_welcome.secondaryButtonText'.tr(),
-                  onPressed: () => Navigator.of(context).pushNamed(
-                    OnboardingAccountScreen.route,
-                    arguments: false,
+                  ActionButton(
+                    buttonText: 'onboarding_welcome.secondaryButtonText'.tr(),
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      OnboardingAccountScreen.route,
+                      arguments: false,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

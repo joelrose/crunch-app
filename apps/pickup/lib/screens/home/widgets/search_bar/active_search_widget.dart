@@ -40,11 +40,11 @@ class ActiveSearchWidget extends StatelessWidget {
             addSearchTerm: addSearchTerm,
           ),
         if (controller.query.isNotEmpty && filteredRestaurants.isEmpty)
-          const Text(
+          Text(
             'No matching restaurant found...',
-            style: TextStyle(
-              color: AlpacaColor.darkGreyColor,
-            ),
+            style: Theme.of(context).textTheme.headline5!.copyWith(
+                  color: AlpacaColor.darkGreyColor,
+                ),
           )
       ],
     );

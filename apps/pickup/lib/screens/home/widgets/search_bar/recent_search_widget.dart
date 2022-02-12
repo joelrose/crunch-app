@@ -19,47 +19,59 @@ class RecentSearchWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Recent searches',
-          style: TextStyle(
-            color: AlpacaColor.darkGreyColor,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Text(
+            'Recent searches',
+            style: Theme.of(context).textTheme.headline5!.copyWith(
+                  color: AlpacaColor.darkGreyColor,
+                ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: filteredSearchHistory
-                .where(
-                  (recentSearch) =>
-                      recentSearch.toLowerCase() !=
-                      controller.query.toLowerCase(),
-                )
-                .map(
-                  (recentSearch) => ListTile(
-                    onTap: () {
-                      controller.query = recentSearch;
-                    },
-                    title: Text(
-                      recentSearch,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: AlpacaColor.darkNavyColor,
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: filteredSearchHistory
+              .where(
+                (recentSearch) =>
+                    recentSearch.toLowerCase() !=
+                    controller.query.toLowerCase(),
+              )
+              .map(
+                (recentSearch) => Padding(
+                  padding: const EdgeInsets.only(bottom: 30.0),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        onTap: () {
+                          controller.query = recentSearch;
+                        },
+                        title: Text(
+                          recentSearch,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.headline5!.copyWith(
+                                color: AlpacaColor.darkNavyColor,
+                              ),
+                        ),
+                        trailing: IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            deleteSearchTerm(
+                              term: recentSearch,
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        deleteSearchTerm(
-                          term: recentSearch,
-                        );
-                      },
-                    ),
+                      const Divider(
+                        height: 0,
+                      )
+                    ],
                   ),
-                )
-                .toList(),
-          ),
+                ),
+              )
+              .toList(),
         )
       ],
     );

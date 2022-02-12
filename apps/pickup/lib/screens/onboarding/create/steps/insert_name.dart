@@ -37,25 +37,15 @@ class _StepInsertNameState extends State<StepInsertName> {
         children: [
           Text(
             "Woo, you're not a robot!",
-            style: theme.headline1!.merge(
-              const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-                color: AlpacaColor.blackColor,
-                height: 1.4,
-                letterSpacing: -0.24,
-              ),
+            style: theme.headline1!.copyWith(
+              color: AlpacaColor.blackColor,
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 20, top: 10),
             child: Text(
               'We need a little more information from you? What can we call you?',
-              style: theme.subtitle1!.merge(
-                const TextStyle(
-                  color: AlpacaColor.blackColor,
-                ),
-              ),
+              style: theme.headline5,
             ),
           ),
           Padding(

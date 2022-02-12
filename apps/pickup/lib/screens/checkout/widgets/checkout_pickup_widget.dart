@@ -261,12 +261,10 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText1?.merge(
-          const TextStyle(
-            color: AlpacaColor.darkNavyColor,
-            fontSize: 44,
-            fontWeight: FontWeight.normal,
-          ),
+    final textStyle = Theme.of(context).textTheme.bodyText1?.copyWith(
+          color: AlpacaColor.darkNavyColor,
+          fontSize: 42,
+          fontWeight: FontWeight.w500,
         );
 
     final String pickupHourString = pickupHour.toString().padLeft(2, '0');
@@ -316,7 +314,6 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                           .textTheme
                                           .headline2
                                           ?.copyWith(
-                                            fontSize: 22,
                                             color: AlpacaColor.darkNavyColor,
                                           ),
                                     ),

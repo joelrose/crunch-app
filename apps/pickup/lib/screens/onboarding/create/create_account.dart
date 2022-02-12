@@ -48,11 +48,8 @@ class _OnboardingCreateAccountScreenState
                       alignment: Alignment.center,
                       child: Text(
                         '${'step'.tr()} ${step + 1}/${widget.maxSteps}',
-                        style: Theme.of(context).textTheme.bodyText1!.merge(
-                              const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                              color: AlpacaColor.darkNavyColor,
                             ),
                       ),
                     ),

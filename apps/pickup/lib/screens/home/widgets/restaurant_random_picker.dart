@@ -34,25 +34,20 @@ class RestaurantRandomPickGenerator extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Welcome to Crunch',
                   overflow: TextOverflow.fade,
-                  style: TextStyle(
-                    color: AlpacaColor.white100Color,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 SizedBox(
                   width: 200,
                   child: Text(
                     'Ordering takeout has never been easier',
-                    style: TextStyle(
-                      color: AlpacaColor.white100Color,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(color: AlpacaColor.white100Color),
                   ),
                 )
               ],

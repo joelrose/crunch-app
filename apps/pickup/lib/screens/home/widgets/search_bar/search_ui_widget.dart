@@ -1,10 +1,10 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/screens/home/widgets/discover_nav_bar.dart';
+import 'package:pickup/screens/home/widgets/search_bar/search_results_widget.dart';
 import 'package:sanity/sanity.dart';
-
-import 'search_results_widget.dart';
 
 class SearchBarUI extends StatelessWidget {
   const SearchBarUI({
@@ -43,60 +43,89 @@ class SearchBarUI extends StatelessWidget {
           flexibleSpace: Wrap(children: const [DiscoverNavBar()]),
         ),
       ],
-      body: FloatingSearchBar(
-        margins: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-        insets: const EdgeInsets.symmetric(horizontal: 1),
-        borderRadius: BorderRadius.circular(8),
-        backgroundColor: AlpacaColor.lightGreyColor80,
-        backdropColor: AlpacaColor.white100Color,
-        shadowColor: Colors.transparent,
-        iconColor: AlpacaColor.darkGreyColor,
-        queryStyle: const TextStyle(color: AlpacaColor.blackColor),
-        controller: controller,
-        transition: CircularFloatingSearchBarTransition(),
-        hint: 'Search for food, stores or tags...',
-        hintStyle: const TextStyle(
-          color: AlpacaColor.darkGreyColor,
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-        automaticallyImplyBackButton: false,
-        padding: const EdgeInsets.symmetric(horizontal: 6),
-        leadingActions: [
-          FloatingSearchBarAction.searchToClear(
-            color: AlpacaColor.darkGreyColor,
-            duration: const Duration(milliseconds: 400),
+      body: Row(
+        children: [
+          Flexible(
+            child: FloatingSearchBar(
+              margins: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+              insets: const EdgeInsets.symmetric(horizontal: 1),
+              borderRadius: BorderRadius.circular(8),
+              backgroundColor: AlpacaColor.lightGreyColor80,
+              backdropColor: AlpacaColor.white100Color,
+              shadowColor: Colors.transparent,
+              iconColor: AlpacaColor.darkGreyColor,
+              queryStyle: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.normal,
+                color: AlpacaColor.darkNavyColor,
+              ),
+              controller: controller,
+              transition: CircularFloatingSearchBarTransition(),
+              hint: 'Search for food, store, or tags',
+              hintStyle: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: AlpacaColor.greyColor80,
+              ),
+              automaticallyImplyBackButton: false,
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              leadingActions: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: SvgPicture.asset(
+                    'assets/icons/search.svg',
+                    color: AlpacaColor.darkGreyColor,
+                  ),
+                ),
+              ],
+              actions: [
+                if (controller.query.isNotEmpty)
+                  FloatingSearchBarAction(
+                    showIfOpened: true,
+                    showIfClosed: false,
+                    child: IconButton(
+                      icon: SvgPicture.asset(
+                        'assets/icons/close.svg',
+                        color: AlpacaColor.darkGreyColor,
+                      ),
+                      onPressed: () {
+                        controller.query = '';
+                      },
+                    ),
+                  ),
+                FloatingSearchBarAction(
+                  showIfOpened: true,
+                  showIfClosed: false,
+                  child: TextButton(
+                    child: Text(
+                      'Cancel',
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: AlpacaColor.darkGreyColor,
+                          ),
+                    ),
+                    onPressed: () {
+                      controller.close();
+                    },
+                  ),
+                )
+              ],
+              onQueryChanged: (query) => onQueryChanged(query),
+              onFocusChanged: (v) => onFocusChanged(),
+              onSubmitted: (query) => onSubmitted(query),
+              builder: (context, transition) {
+                return SearchResultsWidget(
+                  controller: controller,
+                  filteredSearchHistory: filteredSearchHistory,
+                  filteredRestaurants: filteredRestaurants,
+                  isRecentSearchVisible: isRecentSearchVisible,
+                  deleteSearchTerm: deleteSearchTerm,
+                  addSearchTerm: addSearchTerm,
+                );
+              },
+              body: child,
+            ),
           ),
         ],
-        actions: [
-          FloatingSearchBarAction(
-            showIfOpened: true,
-            showIfClosed: false,
-            child: TextButton(
-              child: const Text(
-                'Cancel',
-                style: TextStyle(color: AlpacaColor.darkGreyColor),
-              ),
-              onPressed: () {
-                controller.close();
-              },
-            ),
-          )
-        ],
-        onQueryChanged: (query) => onQueryChanged(query),
-        onFocusChanged: (v) => onFocusChanged(),
-        onSubmitted: (query) => onSubmitted(query),
-        builder: (context, transition) {
-          return SearchResultsWidget(
-            controller: controller,
-            filteredSearchHistory: filteredSearchHistory,
-            filteredRestaurants: filteredRestaurants,
-            isRecentSearchVisible: isRecentSearchVisible,
-            deleteSearchTerm: deleteSearchTerm,
-            addSearchTerm: addSearchTerm,
-          );
-        },
-        body: child,
       ),
     );
   }
