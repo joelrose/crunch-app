@@ -105,11 +105,10 @@ class CheckoutCartItemsWidget extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          buttonText: '',
-          disableButton: true,
+          buttonText: 'Edit',
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 18),
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: checkoutSummaryList.length,
@@ -124,21 +123,16 @@ class CheckoutCartItemsWidget extends StatelessWidget {
                       children: [
                         Text(
                           '${checkoutSummaryItem.amount}x ${checkoutSummaryItem.checkoutItem.title.english}',
-                          style: const TextStyle(
-                            color: AlpacaColor.darkGreyColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
-                          ),
+                          style: Theme.of(context).textTheme.headline4,
                         ),
                         Text(
                           Utilities.currencyFormat(
                             checkoutSummaryItem.totalPrice,
                           ),
-                          style: const TextStyle(
-                            color: AlpacaColor.blackColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(color: AlpacaColor.darkNavyColor),
                         ),
                       ],
                     ),

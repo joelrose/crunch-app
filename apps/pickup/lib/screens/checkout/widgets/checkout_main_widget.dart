@@ -28,7 +28,7 @@ class CheckoutHeaderRowWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -36,8 +36,7 @@ class CheckoutHeaderRowWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
                   header,
-                  style: Theme.of(context).textTheme.headline2?.copyWith(
-                        fontSize: 18,
+                  style: Theme.of(context).textTheme.headline3?.copyWith(
                         color: AlpacaColor.darkNavyColor,
                       ),
                 ),
