@@ -12,6 +12,7 @@ ThemeData getThemeData(BuildContext context) {
         fontWeight: FontWeight.w700,
         fontFamily: GoogleFonts.lexendDeca().fontFamily,
         color: AlpacaColor.white100Color,
+        letterSpacing: -0.015
       ),
       headline2: TextStyle(
         fontSize: 22,
@@ -36,6 +37,7 @@ ThemeData getThemeData(BuildContext context) {
           fontWeight: FontWeight.w400,
           fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 15,
+          letterSpacing: -0.02,
           color: AlpacaColor.greyColor80),
       subtitle1: TextStyle(
         fontSize: 24,
