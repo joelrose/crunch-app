@@ -38,11 +38,14 @@ class RestaurantRandomPickGenerator extends StatelessWidget {
                 Text(
                   'Not sure what \nto grab?',
                   overflow: TextOverflow.fade,
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
                   'Lets find something together.',
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(color: AlpacaColor.white100Color),
                 )
               ],
             ),

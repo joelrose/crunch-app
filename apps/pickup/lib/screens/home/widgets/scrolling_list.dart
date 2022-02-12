@@ -24,27 +24,22 @@ class LeftToRightScrollingList extends StatelessWidget {
               children: [
                 Text(
                   'Favourite stores',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: GoogleFonts.lexendDeca().fontFamily,
-                    fontWeight: FontWeight.w700,
-                    color: AlpacaColor.darkNavyColor,
-                  ),
+                  style: Theme.of(context).textTheme.headline2,
                 ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    border: Border.all(color: AlpacaColor.greyColor),
+                    border: Border.all(color: AlpacaColor.lightGreyColor90),
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       'View all',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AlpacaColor.darkNavyColor,
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: AlpacaColor.darkNavyColor),
                     ),
                   ),
                 )
@@ -77,7 +72,7 @@ class _RestaurantOverviewListState extends State<RestaurantOverviewList> {
           ? SkeletonLoader(
               builder: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 194,
+                height: 174,
                 child: ListView.separated(
                   clipBehavior: Clip.none,
                   scrollDirection: Axis.horizontal,
@@ -89,8 +84,8 @@ class _RestaurantOverviewListState extends State<RestaurantOverviewList> {
                       elevation: 2,
                       borderRadius: BorderRadius.circular(10),
                       child: const SizedBox(
-                        height: 200,
-                        width: 250,
+                        height: 174,
+                        width: 235,
                       ),
                     );
                   },
@@ -99,8 +94,8 @@ class _RestaurantOverviewListState extends State<RestaurantOverviewList> {
               highlightColor: AlpacaColor.primary100,
             )
           : Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              height: 194,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              height: 174,
               child: ListView.separated(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,

@@ -7,51 +7,67 @@ ThemeData getThemeData(BuildContext context) {
     brightness: Brightness.light,
     fontFamily: GoogleFonts.inter().fontFamily,
     textTheme: TextTheme(
-        headline1: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.w700,
-          fontFamily: GoogleFonts.lexendDeca().fontFamily,
-          color: AlpacaColor.white100Color,
-        ),
-        headline2: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          fontFamily: GoogleFonts.lexendDeca().fontFamily,
-          color: AlpacaColor.darkNavyColor,
-          letterSpacing: -1.5
-        ),
-        headline3: TextStyle(
-          color: AlpacaColor.lightBlackColor,
+      headline1: TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.w700,
+        fontFamily: GoogleFonts.lexendDeca().fontFamily,
+        color: AlpacaColor.white100Color,
+      ),
+      headline2: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        fontFamily: GoogleFonts.lexendDeca().fontFamily,
+        color: AlpacaColor.darkNavyColor,
+      ),
+      headline3: TextStyle(
+        color: AlpacaColor.lightBlackColor,
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        fontFamily: GoogleFonts.lexendDeca().fontFamily,
+      ),
+      headline4: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 15,
-          fontWeight: FontWeight.w600,
-          fontFamily: GoogleFonts.lexendDeca().fontFamily,
-        ),
-        subtitle1: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: AlpacaColor.white100Color
-        ),
-        subtitle2: const TextStyle(
-          fontSize: 11,
+          color: AlpacaColor.greyColor80),
+      headline5: TextStyle(
           fontWeight: FontWeight.w400,
-          color: AlpacaColor.greyColor80
-        ),
-        bodyText1: const TextStyle(
-          fontWeight: FontWeight.normal,
+          fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 15,
-          height: 1.4,
-          color: AlpacaColor.greyColor80
-        ),
-        bodyText2: const TextStyle(
-          fontWeight: FontWeight.w500,
+          color: AlpacaColor.greyColor80),
+      subtitle1: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w700,
+        fontFamily: GoogleFonts.lexendDeca().fontFamily,
+        color: AlpacaColor.white100Color,
+      ),
+      bodyText1: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 12,
-        ),
-        button: TextStyle(
-          color: AlpacaColor.blackColor,
-          fontSize: 16,
+          color: AlpacaColor.greyColor80),
+      bodyText2: TextStyle(
           fontWeight: FontWeight.w600,
-          letterSpacing: 0,
-          height: 1,
-        )),
+          fontFamily: GoogleFonts.inter().fontFamily,
+          fontSize: 12,
+          color: AlpacaColor.greyColor80),
+      caption: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontFamily: GoogleFonts.inter().fontFamily,
+          fontSize: 11,
+          color: AlpacaColor.greyColor80),
+      button: TextStyle(
+        color: AlpacaColor.blackColor,
+        fontFamily: GoogleFonts.inter().fontFamily,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+      ),
+      overline: TextStyle(
+        color: AlpacaColor.blackColor,
+        fontFamily: GoogleFonts.inter().fontFamily,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
   );
 }

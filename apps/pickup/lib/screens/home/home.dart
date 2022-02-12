@@ -21,7 +21,7 @@ final bottonNavItems = <BottomNavigationBarItem>[
     label: 'Orders',
   ),
   BottomNavigationBarItem(
-    icon: SvgPicture.asset('assets/icons/star.svg'),
+    icon: SvgPicture.asset('assets/icons/starNavbar.svg'),
     label: 'Favorites',
   ),
 ];
@@ -50,7 +50,7 @@ final bottonNavHighlitedItems = <BottomNavigationBarItem>[
   ),
   BottomNavigationBarItem(
     icon: SvgPicture.asset(
-      'assets/icons/star.svg',
+      'assets/icons/starNavbar.svg',
       color: AlpacaColor.primary100,
     ),
     label: 'Favorites',
@@ -90,7 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
           selectedItemColor: AlpacaColor.primary100,
           unselectedItemColor: AlpacaColor.greyColor,
           backgroundColor: AlpacaColor.white100Color,
-          unselectedFontSize: 14.0,
+          selectedFontSize: 11,
+          unselectedFontSize: 11,
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
           showUnselectedLabels: true,
