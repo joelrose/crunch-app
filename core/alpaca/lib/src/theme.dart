@@ -29,6 +29,7 @@ ThemeData getThemeData(BuildContext context) {
           fontWeight: FontWeight.w600,
           fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 15,
+          letterSpacing: -0.02,
           color: AlpacaColor.greyColor80),
       headline5: TextStyle(
           fontWeight: FontWeight.w400,
