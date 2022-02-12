@@ -30,23 +30,27 @@ class Favourites extends StatelessWidget {
                   'Restaurants',
                   style: Theme.of(context).textTheme.headline2,
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AlpacaColor.lightGreyColor90),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'View all',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(color: AlpacaColor.darkNavyColor),
+                GestureDetector(
+                  onTap: () =>
+                      Navigator.of(context).pushNamed(FavouritesDetail.route),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AlpacaColor.lightGreyColor90),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'View all',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(color: AlpacaColor.darkNavyColor),
+                      ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -78,7 +82,7 @@ class _RestaurantOverviewListHorizontalState
           ? SkeletonLoader(
               builder: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 174,
+                height: 190,
                 child: ListView.separated(
                   clipBehavior: Clip.none,
                   scrollDirection: Axis.horizontal,
@@ -90,7 +94,7 @@ class _RestaurantOverviewListHorizontalState
                       elevation: 2,
                       borderRadius: BorderRadius.circular(10),
                       child: const SizedBox(
-                        height: 174,
+                        height: 190,
                         width: 235,
                       ),
                     );
@@ -101,7 +105,7 @@ class _RestaurantOverviewListHorizontalState
             )
           : Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              height: 174,
+              height: 190,
               child: ListView.separated(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,
