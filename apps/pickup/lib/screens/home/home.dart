@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickup/screens/home/base/discover.dart';
-import 'package:pickup/screens/home/base/favorites.dart';
-import 'package:pickup/screens/home/base/orders.dart';
-import 'package:pickup/screens/home/base/vouchers.dart';
+import 'package:pickup/shared/construction.dart';
 
 final bottonNavItems = <BottomNavigationBarItem>[
   BottomNavigationBarItem(
@@ -70,11 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final List<Widget> _pages = [
     const SafeArea(child: DiscoverScreen()),
-    const SafeArea(child: VoucherScreen()),
-    const SafeArea(
-      child: OrdersScreen(),
-    ),
-    SafeArea(child: FavoritesScreen()),
+    const SafeArea(child: ConstructionScreen(title: 'Orders')),
+    const SafeArea(child: ConstructionScreen(title: 'Vouchers')),
+    const SafeArea(child: ConstructionScreen(title: 'Friends')),
   ];
 
   @override
