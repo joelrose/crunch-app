@@ -2,10 +2,10 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
-import 'package:pickup/screens/profile/profile_pages/get_support/get_support.dart';
 import 'package:pickup/screens/profile/profile_pages/placeholder.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/alpaca_divider.dart';
 
 class ProfileTile extends StatelessWidget {
   const ProfileTile({
@@ -23,7 +23,7 @@ class ProfileTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Divider(),
+        const AlpacaDivider(),
         TextButton(
           style: TextButton.styleFrom(padding: EdgeInsets.zero),
           onPressed: () {
@@ -33,17 +33,12 @@ class ProfileTile extends StatelessWidget {
             );
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(
-                      icon,
-                      size: 30,
-                      color: AlpacaColor.darkGreyColor,
-                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
@@ -95,48 +90,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Column(
             children: [
               Container(
-                height: 85,
-                width: 85,
-                margin: const EdgeInsets.only(bottom: 30),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(color: AlpacaColor.primary100, width: 3),
-                ),
-              ),
-              const ProfileTile(
-                title: 'My orders',
-                icon: Icons.menu,
-                link: PlaceholderSide(),
-              ),
-              const Divider(),
-              Container(
                 height: 20,
               ),
               const ProfileTile(
-                title: 'My details',
+                title: 'Terms & Conditions',
                 icon: Icons.person_outlined,
                 link: PlaceholderSide(),
               ),
               const ProfileTile(
-                title: 'Payment methods',
-                icon: Icons.credit_card,
+                title: 'Data Privacy',
+                icon: Icons.person_outlined,
                 link: PlaceholderSide(),
               ),
               const ProfileTile(
-                title: 'Preferences',
+                title: 'Contact Us',
+                icon: Icons.person_outlined,
+                link: PlaceholderSide(),
+              ),
+              const ProfileTile(
+                title: 'Visit our Website',
                 icon: Icons.settings,
                 link: PlaceholderSide(),
               ),
-              const Divider(),
-              Container(
-                height: 20,
-              ),
-              const ProfileTile(
-                title: 'Get support',
-                icon: Icons.help_outline,
-                link: GetSupport(),
-              ),
-              const Divider(),
+              const AlpacaDivider(),
             ],
           ),
           Container(

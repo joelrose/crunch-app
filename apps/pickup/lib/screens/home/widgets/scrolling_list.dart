@@ -23,7 +23,7 @@ class LeftToRightScrollingList extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Favourite stores',
+                  'Restaurants',
                   style: TextStyle(
                     fontSize: 24,
                     fontFamily: GoogleFonts.lexendDeca().fontFamily,

@@ -1,4 +1,3 @@
-
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +20,14 @@ class StoreInformationItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 24, color: AlpacaColor.primary80),
           Padding(
-            padding: const EdgeInsets.only(left: 12.0),
+            padding: const EdgeInsets.only(top: 1.5),
+            child: Icon(icon, size: 24, color: AlpacaColor.primary80),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 12.0,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

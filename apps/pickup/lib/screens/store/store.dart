@@ -83,8 +83,6 @@ class _StoreScreenState extends State<StoreScreen> {
                     StoreOverview(
                       name: model.restaurant.name,
                       rating: '4.8',
-                      walkingDistance: '200',
-                      walkingTime: '11',
                       googleMaps: model.restaurant.googleMapsUrl,
                     ),
                     const Divider(),
@@ -148,10 +146,10 @@ class StoreInformation extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  size: 30,
-                ),
+                // Icon(
+                //   Icons.keyboard_arrow_down_rounded,
+                //   size: 30,
+                // ),
               ],
             ),
           ),

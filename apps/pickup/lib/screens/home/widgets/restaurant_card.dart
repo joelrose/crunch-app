@@ -65,18 +65,18 @@ class RestaurantCard extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 2,
-                                      ),
-                                      child: Icon(
-                                        Icons.location_on_outlined,
-                                        size: 12,
-                                        color: AlpacaColor.white100Color,
-                                      ),
-                                    ),
+                                    // const Padding(
+                                    //   padding: EdgeInsets.only(
+                                    //     right: 2,
+                                    //   ),
+                                    //   child: Icon(
+                                    //     Icons.location_on_outlined,
+                                    //     size: 12,
+                                    //     color: AlpacaColor.white100Color,
+                                    //   ),
+                                    // ),
                                     Text(
-                                      '11 min',
+                                      '20 min',
                                       textAlign: TextAlign.right,
                                       style: Theme.of(context)
                                           .textTheme
