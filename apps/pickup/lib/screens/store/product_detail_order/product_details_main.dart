@@ -214,6 +214,7 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
                         showButtons: false,
                       ),
                       ProductBasicDetails(
+                        itemPrice: widget.data.item.price,
                         title: widget.data.item.title.english,
                       ),
                       ProductRadioCheckbox(

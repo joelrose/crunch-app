@@ -85,10 +85,8 @@ class _ProductAmountAndAddToOrderState
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
-                                    .merge(
-                                      const TextStyle(
-                                        color: AlpacaColor.blackColor,
-                                      ),
+                                    .copyWith(
+                                      color: AlpacaColor.darkNavyColor,
                                     ),
                                 textAlign: TextAlign.center,
                               ),
@@ -126,12 +124,8 @@ class _ProductAmountAndAddToOrderState
                     ),
                     Text(
                       '${widget.priceData.newTotalPrice.toStringAsFixed(2)} €',
-                      style: Theme.of(context).textTheme.headline2!.merge(
-                            const TextStyle(
-                              color: AlpacaColor.primary100,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w700,
-                            ),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                            color: AlpacaColor.primary100,
                           ),
                     )
                   ],

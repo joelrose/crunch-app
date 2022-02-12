@@ -1,8 +1,12 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
 class ProductBasicDetails extends StatelessWidget {
-  const ProductBasicDetails({Key? key, required this.title}) : super(key: key);
+  const ProductBasicDetails(
+      {Key? key, required this.title, required this.itemPrice})
+      : super(key: key);
   final String title;
+  final num itemPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -11,19 +15,30 @@ class ProductBasicDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .headline2!
-                .merge(const TextStyle(fontSize: 22)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline2!
+                    .merge(const TextStyle(fontSize: 22)),
+              ),
+              Text(
+                '${itemPrice.toStringAsFixed(2)} €',
+                style: Theme.of(context).textTheme.headline2!.copyWith(
+                      color: AlpacaColor.primary100,
+                    ),
+              )
+            ],
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
             'Example description! Should be changed when basic details are available',
-            style: Theme.of(context).textTheme.subtitle2,
+            style: Theme.of(context).textTheme.headline5,
           )
         ],
       ),
