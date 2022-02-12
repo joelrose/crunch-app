@@ -13,16 +13,16 @@ final bottonNavItems = <BottomNavigationBarItem>[
     label: 'Discover',
   ),
   BottomNavigationBarItem(
-    icon: SvgPicture.asset('assets/icons/receipt-tax.svg'),
-    label: 'Vouchers',
-  ),
-  BottomNavigationBarItem(
     icon: SvgPicture.asset('assets/icons/collection.svg'),
     label: 'Orders',
   ),
   BottomNavigationBarItem(
-    icon: SvgPicture.asset('assets/icons/star.svg'),
-    label: 'Favorites',
+    icon: SvgPicture.asset('assets/icons/receipt-tax.svg'),
+    label: 'Vouchers',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset('assets/icons/users.svg'),
+    label: 'Friends',
   ),
 ];
 
@@ -36,13 +36,6 @@ final bottonNavHighlitedItems = <BottomNavigationBarItem>[
   ),
   BottomNavigationBarItem(
     icon: SvgPicture.asset(
-      'assets/icons/receipt-tax.svg',
-      color: AlpacaColor.primary100,
-    ),
-    label: 'Vouchers',
-  ),
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset(
       'assets/icons/collection.svg',
       color: AlpacaColor.primary100,
     ),
@@ -50,10 +43,17 @@ final bottonNavHighlitedItems = <BottomNavigationBarItem>[
   ),
   BottomNavigationBarItem(
     icon: SvgPicture.asset(
-      'assets/icons/star.svg',
+      'assets/icons/receipt-tax.svg',
       color: AlpacaColor.primary100,
     ),
-    label: 'Favorites',
+    label: 'Vouchers',
+  ),
+  BottomNavigationBarItem(
+    icon: SvgPicture.asset(
+      'assets/icons/users.svg',
+      color: AlpacaColor.primary100,
+    ),
+    label: 'Friends',
   ),
 ];
 
@@ -68,10 +68,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _pages = <Widget>[
-    SafeArea(child: DiscoverScreen()),
-    SafeArea(child: VoucherScreen()),
-    SafeArea(child: OrdersScreen(),),
+  static final List<Widget> _pages = [
+    const SafeArea(child: DiscoverScreen()),
+    const SafeArea(child: VoucherScreen()),
+    const SafeArea(
+      child: OrdersScreen(),
+    ),
     SafeArea(child: FavoritesScreen()),
   ];
 
