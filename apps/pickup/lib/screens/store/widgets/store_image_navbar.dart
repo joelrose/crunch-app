@@ -42,31 +42,31 @@ class StoreImageNavbar extends StatelessWidget {
           if (showButtons)
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 10,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 10,
-                          sigmaY: 10,
-                        ),
-                        child: IconButton(
-                          onPressed: () {},
-                          color: AlpacaColor.white100Color,
-                          icon: const Icon(
-                            Icons.star_border_outlined,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //     right: 10,
+                //   ),
+                //   child: ClipRRect(
+                //     borderRadius: BorderRadius.circular(30),
+                //     child: SizedBox(
+                //       height: 40,
+                //       width: 40,
+                //       child: BackdropFilter(
+                //         filter: ImageFilter.blur(
+                //           sigmaX: 10,
+                //           sigmaY: 10,
+                //         ),
+                //         child: IconButton(
+                //           onPressed: () {},
+                //           color: AlpacaColor.white100Color,
+                //           icon: const Icon(
+                //             Icons.star_border_outlined,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: SizedBox(

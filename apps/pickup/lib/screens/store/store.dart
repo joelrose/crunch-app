@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/store/store_screen_model.dart';
-import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
 import 'package:pickup/screens/store/widgets/store_information_item.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
@@ -12,6 +11,7 @@ import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:pickup/shared/viewstate.dart';
 import 'package:sanity/sanity.dart';
+import 'package:stretchy_header/stretchy_header.dart';
 
 class CreateStoreData {
   CreateStoreData({
@@ -74,39 +74,48 @@ class _StoreScreenState extends State<StoreScreen> {
               padding: EdgeInsets.zero,
               backgroundColor: AlpacaColor.white100Color,
               statusBarStyle: SystemUiOverlayStyle.dark,
-              child: SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    StoreImageNavbar(image: model.restaurant.image),
-                    StoreOverview(
-                      name: model.restaurant.name,
-                      rating: '4.8',
-                      walkingDistance: '200',
-                      walkingTime: '11',
-                      googleMaps: model.restaurant.googleMapsUrl,
-                    ),
-                    const Divider(),
-                    StoreInformation(
-                      phoneNumer: model.restaurant.phoneNumber,
-                      address: model.restaurant.address,
-                    ),
-                    const Divider(),
-                    StoreMenueList(
-                      menueCategories: model.restaurant.menueCategories,
-                      onCheckoutChange: (list) {
-                        setState(() {
-                          checkoutItems = list;
-                        });
-                      },
-                      restaurantImage: model.restaurant.image,
-                    ),
-                    if (checkoutItems.isNotEmpty)
-                      const SizedBox(
-                        height: 80,
+              child: StretchyHeader.singleChild(
+                headerData: HeaderData(
+                  headerHeight: 200,
+                  header: Image.network(
+                    model.restaurant.image,
+                    fit: BoxFit.cover,
+                  ),
+                  blurContent: false,
+                  // overlay:
+                ),
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // StoreImageNavbar(image: model.restaurant.image),
+                      StoreOverview(
+                        name: model.restaurant.name,
+                        rating: '4.8',
+                        googleMaps: model.restaurant.googleMapsUrl,
                       ),
-                  ],
+                      const Divider(),
+                      StoreInformation(
+                        phoneNumer: model.restaurant.phoneNumber,
+                        address: model.restaurant.address,
+                      ),
+                      const Divider(),
+                      StoreMenueList(
+                        menueCategories: model.restaurant.menueCategories,
+                        onCheckoutChange: (list) {
+                          setState(() {
+                            checkoutItems = list;
+                          });
+                        },
+                        restaurantImage: model.restaurant.image,
+                      ),
+                      if (checkoutItems.isNotEmpty)
+                        const SizedBox(
+                          height: 80,
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -148,10 +157,10 @@ class StoreInformation extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  size: 30,
-                ),
+                // Icon(
+                //   Icons.keyboard_arrow_down_rounded,
+                //   size: 30,
+                // ),
               ],
             ),
           ),
