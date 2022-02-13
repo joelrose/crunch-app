@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
 import 'package:pickup/screens/checkout/checkout_confirmation.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_cart_items_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_contact_details_widget.dart';
@@ -10,6 +11,9 @@ import 'package:pickup/screens/checkout/widgets/checkout_order_summary_widget.da
 import 'package:pickup/screens/checkout/widgets/checkout_pickup_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:pickup/screens/store/store.dart';
+import 'package:pickup/services/hermes_service.dart';
+import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/extensions.dart';
 import 'package:sanity/sanity.dart';
 
 class CreateCheckoutData {
@@ -56,17 +60,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   Future<String> _getPaymentIntent() async {
-    // final HttpsCallable callable =
-    //     FirebaseFunctions.instance.httpsCallable('createPaymentIntent');
+    final hermesService = locator<HermesService>();
 
-    // final results = await callable.call(<String, dynamic>{
-    //   'price': _getTotalPrice(),
-    // });
+    final response = await hermesService.client.apiOrdersPost(
+      body: CreateOrderRequestDto(
+        storeId: widget.data.storeName,
+        price: widget.data.checkoutItems.getTotalPrice().toDouble(),
+        items: [],
+      ),
+    );
 
-    // final responseJson = results.data['secret'];
-
-    // return responseJson as String;
-    return '';
+    return response.body!.clientSecret!;
   }
 
   Future<void> _checkout() async {
@@ -98,7 +102,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
         );
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override

@@ -5,6 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pickup/screens/home/base/discover.dart';
+import 'package:pickup/services/auth_service.dart';
+import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/construction.dart';
 
 final bottonNavItems = <BottomNavigationBarItem>[
@@ -70,21 +72,29 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        //Remove this method to stop OneSignal Debugging
-        // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+    Future.delayed(const Duration(seconds: 2), () => initOneSignal());
+  }
 
-        OneSignal.shared.setAppId(dotenv.get('ONESIGNAL_APPID'));
+  Future<void> initOneSignal() async {
+    //n Remove this method to stop OneSignal Debugging
+    // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-        OneSignal.shared
-            .promptUserForPushNotificationPermission()
-            .then((accepted) {
-          print('Accepted permission: $accepted');
-        });
-      },
-    );
+    OneSignal.shared.setAppId(dotenv.get('ONESIGNAL_APPID'));
+
+    OneSignal.shared
+        .promptUserForPushNotificationPermission()
+        .then((accepted) async {
+      final auth = locator<AuthService>();
+      final user = await auth.getUser;
+      if (user != null) {
+        OneSignal.shared.setExternalUserId(user.uid);
+
+        if (user.email != null) {
+          OneSignal.shared.setEmail(email: user.email!);
+        }
+      }
+      print('Accepted permission: $accepted');
+    });
   }
 
   int _selectedIndex = 0;
