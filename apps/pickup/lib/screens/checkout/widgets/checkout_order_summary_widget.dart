@@ -66,8 +66,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Order summary',
-                  style: Theme.of(context).textTheme.headline2?.copyWith(
-                        fontSize: 18,
+                  style: Theme.of(context).textTheme.headline3?.copyWith(
                         color: AlpacaColor.darkNavyColor,
                       ),
                 ),
@@ -79,9 +78,11 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
                 checkoutItems.getTotalPrice(),
               ),
             ),
-            const CheckoutOrderSummaryItem(
+            CheckoutOrderSummaryItem(
               labelText: 'Discount',
-              price: '0.00 €',
+              price: Utilities.currencyFormat(
+                0.0,
+              ),
             ),
           ],
         ),

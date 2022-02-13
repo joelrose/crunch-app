@@ -1,8 +1,9 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
-import 'product_details_main.dart';
 
 class ProductAmountAndAddToOrder extends StatefulWidget {
   const ProductAmountAndAddToOrder({
@@ -53,6 +54,7 @@ class _ProductAmountAndAddToOrderState
                             ),
                             child: GestureDetector(
                               onTap: () {
+                                HapticFeedback.mediumImpact();
                                 widget.priceData.decreaseItemAmount();
                               },
                               child: Container(
@@ -85,10 +87,8 @@ class _ProductAmountAndAddToOrderState
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
-                                    .merge(
-                                      const TextStyle(
-                                        color: AlpacaColor.blackColor,
-                                      ),
+                                    .copyWith(
+                                      color: AlpacaColor.darkNavyColor,
                                     ),
                                 textAlign: TextAlign.center,
                               ),
@@ -101,6 +101,7 @@ class _ProductAmountAndAddToOrderState
                             ),
                             child: GestureDetector(
                               onTap: () {
+                                HapticFeedback.mediumImpact();
                                 widget.priceData.increaseItemAmount();
                               },
                               child: Container(
@@ -126,12 +127,8 @@ class _ProductAmountAndAddToOrderState
                     ),
                     Text(
                       '${widget.priceData.newTotalPrice.toStringAsFixed(2)} €',
-                      style: Theme.of(context).textTheme.headline2!.merge(
-                            const TextStyle(
-                              color: AlpacaColor.primary100,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w700,
-                            ),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                            color: AlpacaColor.primary100,
                           ),
                     )
                   ],

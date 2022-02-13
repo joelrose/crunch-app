@@ -25,19 +25,12 @@ class DiscoverNavBar extends StatelessWidget {
             onTap: () => Navigator.of(context).pushNamed(
               ProfileScreen.route,
             ),
-            child: Container(
-              height: 35,
-              width: 35,
-              padding: const EdgeInsets.all(1),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(
-                  color: AlpacaColor.primary100,
-                  width: 6 / MediaQuery.of(context).devicePixelRatio,
-                ),
-              ),
-              child: Image.asset(
-                'assets/placeholder/profile_img_placeholder.png',
+            child: Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: SvgPicture.asset(
+                'assets/icons/user.svg',
+                height: 28,
+                color: AlpacaColor.primary100,
               ),
             ),
           ),

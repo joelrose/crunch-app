@@ -1,10 +1,9 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:pickup/screens/home/widgets/search_bar/active_search_widget.dart';
+import 'package:pickup/screens/home/widgets/search_bar/start_searching_widget.dart';
 import 'package:sanity/sanity.dart';
-
-import 'active_search_widget.dart';
-import 'start_searching_widget.dart';
 
 class SearchResultsWidget extends StatelessWidget {
   const SearchResultsWidget({

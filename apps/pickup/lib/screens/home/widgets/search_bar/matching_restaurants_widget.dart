@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:pickup/screens/home/widgets/restaurant_card.dart';
+import 'package:pickup/screens/home/widgets/favourites/restaurant_card_widget.dart';
 import 'package:sanity/sanity.dart';
 
 class MatchingRestaurantsWidget extends StatelessWidget {
@@ -21,13 +21,13 @@ class MatchingRestaurantsWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 20),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
           child: Text(
             'Matching restaurants',
-            style: TextStyle(
-              color: AlpacaColor.darkGreyColor,
-            ),
+            style: Theme.of(context).textTheme.headline5!.copyWith(
+                  color: AlpacaColor.darkGreyColor,
+                ),
           ),
         ),
         ListView.separated(

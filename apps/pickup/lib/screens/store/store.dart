@@ -1,9 +1,9 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/store/store_screen_model.dart';
-import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
 import 'package:pickup/screens/store/widgets/store_information_item.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
@@ -12,6 +12,7 @@ import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:pickup/shared/viewstate.dart';
 import 'package:sanity/sanity.dart';
+import 'package:stretchy_header/stretchy_header.dart';
 
 class CreateStoreData {
   CreateStoreData({
@@ -74,39 +75,48 @@ class _StoreScreenState extends State<StoreScreen> {
               padding: EdgeInsets.zero,
               backgroundColor: AlpacaColor.white100Color,
               statusBarStyle: SystemUiOverlayStyle.dark,
-              child: SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    StoreImageNavbar(image: model.restaurant.image),
-                    StoreOverview(
-                      name: model.restaurant.name,
-                      rating: '4.8',
-                      walkingDistance: '200',
-                      walkingTime: '11',
-                      googleMaps: model.restaurant.googleMapsUrl,
-                    ),
-                    const Divider(),
-                    StoreInformation(
-                      phoneNumer: model.restaurant.phoneNumber,
-                      address: model.restaurant.address,
-                    ),
-                    const Divider(),
-                    StoreMenueList(
-                      menueCategories: model.restaurant.menueCategories,
-                      onCheckoutChange: (list) {
-                        setState(() {
-                          checkoutItems = list;
-                        });
-                      },
-                      restaurantImage: model.restaurant.image,
-                    ),
-                    if (checkoutItems.isNotEmpty)
-                      const SizedBox(
-                        height: 80,
+              child: StretchyHeader.singleChild(
+                headerData: HeaderData(
+                  headerHeight: 200,
+                  header: Image.network(
+                    model.restaurant.image,
+                    fit: BoxFit.cover,
+                  ),
+                  blurContent: false,
+                  // overlay:
+                ),
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // StoreImageNavbar(image: model.restaurant.image),
+                      StoreOverview(
+                        name: model.restaurant.name,
+                        rating: '4.8',
+                        googleMaps: model.restaurant.googleMapsUrl,
                       ),
-                  ],
+                      const Divider(),
+                      StoreInformation(
+                        phoneNumer: model.restaurant.phoneNumber,
+                        address: model.restaurant.address,
+                      ),
+                      const Divider(),
+                      StoreMenueList(
+                        menueCategories: model.restaurant.menueCategories,
+                        onCheckoutChange: (list) {
+                          setState(() {
+                            checkoutItems = list;
+                          });
+                        },
+                        restaurantImage: model.restaurant.image,
+                      ),
+                      if (checkoutItems.isNotEmpty)
+                        const SizedBox(
+                          height: 80,
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -129,7 +139,7 @@ class StoreInformation extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
-        horizontal: 20,
+        horizontal: 18,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,35 +148,34 @@ class StoreInformation extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
                   'Store information',
-                  style: TextStyle(
-                    color: AlpacaColor.darkNavyColor,
-                    fontSize: 18,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                        color: AlpacaColor.darkNavyColor,
+                      ),
                 ),
-                Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  size: 30,
+                SvgPicture.asset(
+                        'assets/icons/chevron-left.svg',
+                        color: AlpacaColor.lightGreyColor100,
+                        height: 24,
+                        width: 24,
                 ),
               ],
             ),
           ),
           const StoreInformationItem(
-            icon: Icons.access_time,
+            icon: 'assets/icons/clock-opening-times.svg',
             title: 'Opening times',
             description: '11:00-22:00',
           ),
           StoreInformationItem(
-            icon: Icons.phone_outlined,
+            icon: 'assets/icons/phone-store-address.svg',
             title: 'Contact number',
             description: phoneNumer,
           ),
           StoreInformationItem(
-            icon: Icons.location_on_outlined,
+            icon: 'assets/icons/location-store-address.svg',
             title: 'Store address',
             description: address,
           ),

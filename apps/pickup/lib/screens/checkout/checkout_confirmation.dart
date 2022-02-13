@@ -27,7 +27,6 @@ class CheckoutConfirmationScreen extends StatelessWidget {
         children: [
           const CheckoutOrderNavbarWidget(
             pageOverviewName: 'Order status',
-            disableEditButton: true,
           ),
           Flexible(
             child: ListView(

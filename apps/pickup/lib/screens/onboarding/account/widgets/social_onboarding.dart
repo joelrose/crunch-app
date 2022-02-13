@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/onboarding/create/create_account.dart';
-import 'package:pickup/services/account_status.dart';
 import 'package:pickup/services/auth_service.dart';
+import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/models.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SocialOnboarding extends StatefulWidget {
   const SocialOnboarding({Key? key, required this.isSignUp}) : super(key: key);
@@ -63,13 +62,12 @@ class _SocialOnboardingState extends State<SocialOnboarding> {
     final User? user =
         await (appleLogin ? auth.signInWithApple() : auth.signInWithGoogle());
     if (user != null) {
-      final prefs = await SharedPreferences.getInstance();
+      // TODO: loading screen
+      final hermesService = locator<HermesService>();
 
-      final accountStatus = prefs.getInt(
-        'ONBOARDING_STEP',
-      );
+      final account = await hermesService.client.apiUsersGet();
 
-      if (accountStatus == AccountStatus.onboarded.index) {
+      if (account.statusCode == 200) {
         if (mounted) {
           Navigator.of(context).pushNamedAndRemoveUntil(
             HomeScreen.route,

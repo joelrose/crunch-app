@@ -187,10 +187,10 @@ class AlpacaTextField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
           child: Text(
             hintText,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
-                ),
+            style: Theme.of(context)
+                .textTheme
+                .headline4!
+                .copyWith(color: AlpacaColor.darkNavyColor),
           ),
         ),
         TextFormField(
@@ -200,9 +200,9 @@ class AlpacaTextField extends StatelessWidget {
           autocorrect: false,
           cursorColor: cursorColor,
           obscureText: obscureText,
-          style: TextStyle(
-            color: textColor,
-          ),
+          style: Theme.of(context).textTheme.headline5!.copyWith(
+                color: AlpacaColor.darkNavyColor,
+              ),
           validator: validator,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
@@ -270,11 +270,9 @@ class AlpacaCheckoutButton extends StatelessWidget {
         children: [
           Text(
             buttonText,
-            style: const TextStyle(
-              color: AlpacaColor.primary80,
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
-            ),
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  color: AlpacaColor.primary80,
+                ),
           ),
           if (svgPicture != null)
             Padding(

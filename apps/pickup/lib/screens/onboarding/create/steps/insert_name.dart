@@ -1,7 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/services/account_status.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hermes_api/hermes_api.dart';
+import 'package:pickup/services/hermes_service.dart';
+import 'package:pickup/services/service_locator.dart';
 
 class StepInsertName extends StatefulWidget {
   const StepInsertName({Key? key, required this.whichStepInCreateAccount})
@@ -37,25 +38,15 @@ class _StepInsertNameState extends State<StepInsertName> {
         children: [
           Text(
             "Woo, you're not a robot!",
-            style: theme.headline1!.merge(
-              const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-                color: AlpacaColor.blackColor,
-                height: 1.4,
-                letterSpacing: -0.24,
-              ),
+            style: theme.headline1!.copyWith(
+              color: AlpacaColor.blackColor,
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 20, top: 10),
             child: Text(
               'We need a little more information from you? What can we call you?',
-              style: theme.subtitle1!.merge(
-                const TextStyle(
-                  color: AlpacaColor.blackColor,
-                ),
-              ),
+              style: theme.headline5,
             ),
           ),
           Padding(
@@ -93,17 +84,14 @@ class _StepInsertNameState extends State<StepInsertName> {
             buttonText: 'Continue',
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                // final data = {
-                //   'lastActivity': DateTime.now(),
-                //   'firstName': _firstNameController.text,
-                //   'lastName': _lastNameController.text,
-                // };
+                final hermesService = locator<HermesService>();
 
-                final prefs = await SharedPreferences.getInstance();
-
-                prefs.setInt(
-                  'ONBOARDING_STEP',
-                  AccountStatus.onboarded.index,
+                // TODO: validate response
+                await hermesService.client.apiUsersPost(
+                  body: CreateUserRequestDto(
+                    firstName: _firstNameController.text,
+                    lastName: _lastNameController.text,
+                  ),
                 );
 
                 widget.whichStepInCreateAccount();

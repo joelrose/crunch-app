@@ -57,14 +57,13 @@ abstract class Swagger extends ChopperService {
       {@Body() required CreateTokenRequestDto? body});
 
   ///
-  @Get(path: '/api/tokens')
-  Future<chopper.Response<List<TokenModel>>> apiTokensGet();
+  @Delete(path: '/api/tokens')
+  Future<chopper.Response<bool>> apiTokensDelete(
+      {@Body() required String? body});
 
   ///
-  ///@param fcmToken
-  @Delete(path: '/api/tokens/{fcmToken}')
-  Future<chopper.Response<bool>> apiTokensFcmTokenDelete(
-      {@Path('fcmToken') required String? fcmToken});
+  @Get(path: '/api/tokens')
+  Future<chopper.Response<List<TokenModel>>> apiTokensGet();
 
   ///
   @Post(path: '/api/users')
@@ -150,6 +149,7 @@ class CreateOrderRequestDto {
     this.storeId,
     this.price,
     this.items,
+    this.stripeOrderId,
   });
 
   factory CreateOrderRequestDto.fromJson(Map<String, dynamic> json) =>
@@ -162,6 +162,8 @@ class CreateOrderRequestDto {
   @JsonKey(
       name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[])
   final List<CreateOrderItemDto>? items;
+  @JsonKey(name: 'stripeOrderId', includeIfNull: false)
+  final String? stripeOrderId;
   static const fromJsonFactory = _$CreateOrderRequestDtoFromJson;
   static const toJsonFactory = _$CreateOrderRequestDtoToJson;
   Map<String, dynamic> toJson() => _$CreateOrderRequestDtoToJson(this);
@@ -176,7 +178,10 @@ class CreateOrderRequestDto {
             (identical(other.price, price) ||
                 const DeepCollectionEquality().equals(other.price, price)) &&
             (identical(other.items, items) ||
-                const DeepCollectionEquality().equals(other.items, items)));
+                const DeepCollectionEquality().equals(other.items, items)) &&
+            (identical(other.stripeOrderId, stripeOrderId) ||
+                const DeepCollectionEquality()
+                    .equals(other.stripeOrderId, stripeOrderId)));
   }
 
   @override
@@ -184,16 +189,21 @@ class CreateOrderRequestDto {
       const DeepCollectionEquality().hash(storeId) ^
       const DeepCollectionEquality().hash(price) ^
       const DeepCollectionEquality().hash(items) ^
+      const DeepCollectionEquality().hash(stripeOrderId) ^
       runtimeType.hashCode;
 }
 
 extension $CreateOrderRequestDtoExtension on CreateOrderRequestDto {
   CreateOrderRequestDto copyWith(
-      {String? storeId, double? price, List<CreateOrderItemDto>? items}) {
+      {String? storeId,
+      double? price,
+      List<CreateOrderItemDto>? items,
+      String? stripeOrderId}) {
     return CreateOrderRequestDto(
         storeId: storeId ?? this.storeId,
         price: price ?? this.price,
-        items: items ?? this.items);
+        items: items ?? this.items,
+        stripeOrderId: stripeOrderId ?? this.stripeOrderId);
   }
 }
 
@@ -236,15 +246,15 @@ extension $CreateOrderResponseDtoExtension on CreateOrderResponseDto {
 @JsonSerializable(explicitToJson: true)
 class CreateTokenRequestDto {
   CreateTokenRequestDto({
-    this.fcmToken,
+    this.playerId,
     this.device,
   });
 
   factory CreateTokenRequestDto.fromJson(Map<String, dynamic> json) =>
       _$CreateTokenRequestDtoFromJson(json);
 
-  @JsonKey(name: 'fcmToken', includeIfNull: false)
-  final String? fcmToken;
+  @JsonKey(name: 'playerId', includeIfNull: false)
+  final String? playerId;
   @JsonKey(
       name: 'device',
       includeIfNull: false,
@@ -259,25 +269,25 @@ class CreateTokenRequestDto {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is CreateTokenRequestDto &&
-            (identical(other.fcmToken, fcmToken) ||
+            (identical(other.playerId, playerId) ||
                 const DeepCollectionEquality()
-                    .equals(other.fcmToken, fcmToken)) &&
+                    .equals(other.playerId, playerId)) &&
             (identical(other.device, device) ||
                 const DeepCollectionEquality().equals(other.device, device)));
   }
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(fcmToken) ^
+      const DeepCollectionEquality().hash(playerId) ^
       const DeepCollectionEquality().hash(device) ^
       runtimeType.hashCode;
 }
 
 extension $CreateTokenRequestDtoExtension on CreateTokenRequestDto {
   CreateTokenRequestDto copyWith(
-      {String? fcmToken, enums.TokenDevice? device}) {
+      {String? playerId, enums.TokenDevice? device}) {
     return CreateTokenRequestDto(
-        fcmToken: fcmToken ?? this.fcmToken, device: device ?? this.device);
+        playerId: playerId ?? this.playerId, device: device ?? this.device);
   }
 }
 
@@ -329,7 +339,6 @@ extension $CreateUserRequestDtoExtension on CreateUserRequestDto {
 @JsonSerializable(explicitToJson: true)
 class GetOrderResponseDto {
   GetOrderResponseDto({
-    this.id,
     this.storeId,
     this.status,
     this.price,
@@ -339,8 +348,6 @@ class GetOrderResponseDto {
   factory GetOrderResponseDto.fromJson(Map<String, dynamic> json) =>
       _$GetOrderResponseDtoFromJson(json);
 
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String? id;
   @JsonKey(name: 'storeId', includeIfNull: false)
   final String? storeId;
   @JsonKey(
@@ -362,8 +369,6 @@ class GetOrderResponseDto {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is GetOrderResponseDto &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.storeId, storeId) ||
                 const DeepCollectionEquality()
                     .equals(other.storeId, storeId)) &&
@@ -377,7 +382,6 @@ class GetOrderResponseDto {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(storeId) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(price) ^
@@ -387,13 +391,11 @@ class GetOrderResponseDto {
 
 extension $GetOrderResponseDtoExtension on GetOrderResponseDto {
   GetOrderResponseDto copyWith(
-      {String? id,
-      String? storeId,
+      {String? storeId,
       enums.OrderStatus? status,
       double? price,
       List<OrderItemModel>? items}) {
     return GetOrderResponseDto(
-        id: id ?? this.id,
         storeId: storeId ?? this.storeId,
         status: status ?? this.status,
         price: price ?? this.price,
@@ -537,7 +539,7 @@ class TokenModel {
   TokenModel({
     this.id,
     this.createdAt,
-    this.fcmToken,
+    this.playerId,
     this.device,
   });
 
@@ -548,8 +550,8 @@ class TokenModel {
   final String? id;
   @JsonKey(name: 'createdAt', includeIfNull: false)
   final DateTime? createdAt;
-  @JsonKey(name: 'fcmToken', includeIfNull: false)
-  final String? fcmToken;
+  @JsonKey(name: 'playerId', includeIfNull: false)
+  final String? playerId;
   @JsonKey(
       name: 'device',
       includeIfNull: false,
@@ -569,9 +571,9 @@ class TokenModel {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
-            (identical(other.fcmToken, fcmToken) ||
+            (identical(other.playerId, playerId) ||
                 const DeepCollectionEquality()
-                    .equals(other.fcmToken, fcmToken)) &&
+                    .equals(other.playerId, playerId)) &&
             (identical(other.device, device) ||
                 const DeepCollectionEquality().equals(other.device, device)));
   }
@@ -580,7 +582,7 @@ class TokenModel {
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(createdAt) ^
-      const DeepCollectionEquality().hash(fcmToken) ^
+      const DeepCollectionEquality().hash(playerId) ^
       const DeepCollectionEquality().hash(device) ^
       runtimeType.hashCode;
 }
@@ -589,12 +591,12 @@ extension $TokenModelExtension on TokenModel {
   TokenModel copyWith(
       {String? id,
       DateTime? createdAt,
-      String? fcmToken,
+      String? playerId,
       enums.TokenDevice? device}) {
     return TokenModel(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
-        fcmToken: fcmToken ?? this.fcmToken,
+        playerId: playerId ?? this.playerId,
         device: device ?? this.device);
   }
 }

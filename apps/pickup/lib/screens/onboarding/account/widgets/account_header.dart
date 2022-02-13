@@ -7,7 +7,7 @@ class OnboardingAccountHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.4,
       child: Stack(
         children: [
           Container(
@@ -32,7 +32,7 @@ class OnboardingAccountHeader extends StatelessWidget {
           Positioned(
             right: -70,
             top: -15,
-            height: MediaQuery.of(context).size.height * 0.45,
+            height: MediaQuery.of(context).size.height * 0.55,
             child: Transform.rotate(
               angle: -45,
               child: Image.asset(

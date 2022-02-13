@@ -5,7 +5,7 @@ class PageWrapper extends StatelessWidget {
   const PageWrapper({
     Key? key,
     required this.child,
-    this.padding = const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+    this.padding = const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
     this.statusBarStyle = SystemUiOverlayStyle.light,
     this.floatingActionButtonWidget,
     required this.backgroundColor,

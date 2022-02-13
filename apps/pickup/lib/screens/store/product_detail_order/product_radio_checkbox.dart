@@ -41,7 +41,7 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                 children: [
                   Text(
                     item.title.english,
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.headline3,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 20),
@@ -121,30 +121,21 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                                             .english,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle1!
-                                            .merge(
-                                              const TextStyle(
-                                                color:
-                                                    AlpacaColor.darkNavyColor,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 13,
-                                              ),
+                                            .headline4!
+                                            .copyWith(
+                                              color: AlpacaColor.darkNavyColor,
                                             ),
                                       ),
                                       if (item.options[optionChoiceIndex]
                                               .price !=
                                           0)
                                         Text(
-                                          '+ ${item.options[optionChoiceIndex].price.toString()}€',
+                                          '+${item.options[optionChoiceIndex].price.toString()} €',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .subtitle1!
-                                              .merge(
-                                                const TextStyle(
-                                                  color: AlpacaColor.primary100,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 12,
-                                                ),
+                                              .headline4!
+                                              .copyWith(
+                                                color: AlpacaColor.primary100,
                                               ),
                                         ),
                                     ],

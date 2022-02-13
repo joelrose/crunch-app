@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
+import 'package:pickup/shared/alpaca_divider.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 
@@ -51,7 +52,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
         Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 10,
-            horizontal: 25,
+            horizontal: 18,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,15 +61,12 @@ class _StoreMenueListState extends State<StoreMenueList> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       'Menu',
-                      style: TextStyle(
-                        color: AlpacaColor.darkNavyColor,
-                        fontSize: 18,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                            color: AlpacaColor.darkNavyColor,
+                          ),
                     ),
                   ],
                 ),
@@ -85,27 +83,21 @@ class _StoreMenueListState extends State<StoreMenueList> {
             return Column(
               children: [
                 ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                  ),
+                  contentPadding: const EdgeInsets.fromLTRB(25, 15, 0, 0),
                   title: Text(
                     category.title.english,
-                    style: Theme.of(context).textTheme.headline3!.merge(
-                          const TextStyle(
-                            fontSize: 22,
-                          ),
-                        ),
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
-                const Divider(),
+                const AlpacaDivider(),
                 ListView.separated(
                   itemCount: category.menueItems.length,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final item = category.menueItems[i];
-                    return GestureDetector(
-                      onTap: () {
+                    return TextButton(
+                      onPressed: () {
                         Navigator.of(context).pushNamed(
                           StoreProductOverview.route,
                           arguments: ProductDetailsData(
@@ -116,6 +108,9 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           ),
                         );
                       },
+                      style: TextButton.styleFrom(
+                        primary: AlpacaColor.primary100,
+                      ),
                       child: Row(
                         children: [
                           Flexible(
@@ -134,7 +129,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                           maxLines: 2,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline2,
+                                              .headline3,
                                         ),
                                       ),
                                       if ((checkoutItems.indexWhere(
@@ -153,29 +148,33 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                             overflow: TextOverflow.clip,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2,
+                                                .headline4!
+                                                .copyWith(
+                                                  color: AlpacaColor.primary80,
+                                                ),
                                           ),
                                         ),
                                     ],
                                   ),
                                   Text(
-                                    'Grilled sandwich with fillet, cheese, tomatoes an d salad',
+                                    'Grilled sandwich with fillet, cheese, tomatoes and salad',
                                     style:
-                                        Theme.of(context).textTheme.bodyText1,
+                                        Theme.of(context).textTheme.headline5,
                                   ),
                                   Text(
                                     Utilities.currencyFormat(item.price),
-                                    style: Theme.of(context).textTheme.caption,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline4!
+                                        .copyWith(color: AlpacaColor.primary80),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          const Image(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
-                            ),
+                          Image.network(
+                            'https://picsum.photos/250?image=18',
+                            fit: BoxFit.fitHeight,
                             width: 114,
                             height: 134,
                           ),
@@ -184,14 +183,10 @@ class _StoreMenueListState extends State<StoreMenueList> {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const Divider(
-                      color: AlpacaColor.lightGreyColor90,
-                      height: 2,
-                      thickness: 2,
-                    );
+                    return const AlpacaDivider();
                   },
                 ),
-                const Divider(),
+                const AlpacaDivider(),
               ],
             );
           },

@@ -32,41 +32,39 @@ class RestaurantRandomPickGenerator extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  'Not sure what \nto grab?',
+                  'Welcome to Crunch',
                   overflow: TextOverflow.fade,
-                  style: TextStyle(
-                    color: AlpacaColor.white100Color,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
-                Text(
-                  'Lets find something together.',
-                  style: TextStyle(
-                    color: AlpacaColor.white100Color,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
+                SizedBox(
+                  width: 200,
+                  child: Text(
+                    'Ordering takeout has never been easier',
+                    style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(color: AlpacaColor.white100Color),
                   ),
                 )
               ],
             ),
-            Container(
-              alignment: Alignment.center,
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(45),
-                color: AlpacaColor.white100Color,
-              ),
-              child: const Icon(
-                Icons.arrow_forward_rounded,
-                size: 19,
-              ),
-            )
+            // Container(
+            //   alignment: Alignment.center,
+            //   height: 50,
+            //   width: 50,
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(45),
+            //     color: AlpacaColor.white100Color,
+            //   ),
+            //   child: const Icon(
+            //     Icons.arrow_forward_rounded,
+            //     size: 19,
+            //   ),
+            // )
           ],
         ),
       ),

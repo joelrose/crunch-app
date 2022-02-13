@@ -23,12 +23,9 @@ class StoreTag extends StatelessWidget {
         children: [
           Text(
             name,
-            style: const TextStyle(
-              color: AlpacaColor.primary80,
-              fontSize: 12,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w600,
-            ),
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  color: AlpacaColor.primary80,
+                ),
           ),
         ],
       ),

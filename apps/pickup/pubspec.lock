@@ -64,6 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  bouncing_widget:
+    dependency: "direct main"
+    description:
+      name: bouncing_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   build:
     dependency: transitive
     description:
@@ -623,6 +630,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  onesignal_flutter:
+    dependency: "direct main"
+    description:
+      name: onesignal_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.8"
   package_config:
     dependency: transitive
     description:
@@ -940,6 +954,13 @@ packages:
     dependency: transitive
     description:
       name: stream_transform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  stretchy_header:
+    dependency: "direct main"
+    description:
+      name: stretchy_header
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
