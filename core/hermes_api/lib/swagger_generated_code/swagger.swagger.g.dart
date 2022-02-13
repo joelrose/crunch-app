@@ -38,6 +38,7 @@ CreateOrderRequestDto _$CreateOrderRequestDtoFromJson(
                   (e) => CreateOrderItemDto.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      stripeOrderId: json['stripeOrderId'] as String?,
     );
 
 Map<String, dynamic> _$CreateOrderRequestDtoToJson(
@@ -53,6 +54,7 @@ Map<String, dynamic> _$CreateOrderRequestDtoToJson(
   writeNotNull('storeId', instance.storeId);
   writeNotNull('price', instance.price);
   writeNotNull('items', instance.items?.map((e) => e.toJson()).toList());
+  writeNotNull('stripeOrderId', instance.stripeOrderId);
   return val;
 }
 
@@ -79,7 +81,7 @@ Map<String, dynamic> _$CreateOrderResponseDtoToJson(
 CreateTokenRequestDto _$CreateTokenRequestDtoFromJson(
         Map<String, dynamic> json) =>
     CreateTokenRequestDto(
-      fcmToken: json['fcmToken'] as String?,
+      playerId: json['playerId'] as String?,
       device: tokenDeviceFromJson(json['device'] as String?),
     );
 
@@ -93,7 +95,7 @@ Map<String, dynamic> _$CreateTokenRequestDtoToJson(
     }
   }
 
-  writeNotNull('fcmToken', instance.fcmToken);
+  writeNotNull('playerId', instance.playerId);
   writeNotNull('device', tokenDeviceToJson(instance.device));
   return val;
 }
@@ -122,7 +124,6 @@ Map<String, dynamic> _$CreateUserRequestDtoToJson(
 
 GetOrderResponseDto _$GetOrderResponseDtoFromJson(Map<String, dynamic> json) =>
     GetOrderResponseDto(
-      id: json['id'] as String?,
       storeId: json['storeId'] as String?,
       status: orderStatusFromJson(json['status'] as String?),
       price: (json['price'] as num?)?.toDouble(),
@@ -141,7 +142,6 @@ Map<String, dynamic> _$GetOrderResponseDtoToJson(GetOrderResponseDto instance) {
     }
   }
 
-  writeNotNull('id', instance.id);
   writeNotNull('storeId', instance.storeId);
   writeNotNull('status', orderStatusToJson(instance.status));
   writeNotNull('price', instance.price);
@@ -208,7 +208,7 @@ TokenModel _$TokenModelFromJson(Map<String, dynamic> json) => TokenModel(
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
-      fcmToken: json['fcmToken'] as String?,
+      playerId: json['playerId'] as String?,
       device: tokenDeviceFromJson(json['device'] as String?),
     );
 
@@ -223,7 +223,7 @@ Map<String, dynamic> _$TokenModelToJson(TokenModel instance) {
 
   writeNotNull('id', instance.id);
   writeNotNull('createdAt', instance.createdAt?.toIso8601String());
-  writeNotNull('fcmToken', instance.fcmToken);
+  writeNotNull('playerId', instance.playerId);
   writeNotNull('device', tokenDeviceToJson(instance.device));
   return val;
 }

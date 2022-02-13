@@ -1,7 +1,5 @@
 // Generated code
 
-// ignore_for_file: unnecessary_brace_in_string_interps
-
 part of 'swagger.swagger.dart';
 
 // **************************************************************************
@@ -68,17 +66,18 @@ class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<bool>> apiTokensDelete({required String? body}) {
+    final $url = '/api/tokens';
+    final $body = body;
+    final $request = Request('DELETE', $url, client.baseUrl, body: $body);
+    return client.send<bool, bool>($request);
+  }
+
+  @override
   Future<Response<List<TokenModel>>> apiTokensGet() {
     final $url = '/api/tokens';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<List<TokenModel>, TokenModel>($request);
-  }
-
-  @override
-  Future<Response<bool>> apiTokensFcmTokenDelete({required String? fcmToken}) {
-    final $url = '/api/tokens/${fcmToken}';
-    final $request = Request('DELETE', $url, client.baseUrl);
-    return client.send<bool, bool>($request);
   }
 
   @override
