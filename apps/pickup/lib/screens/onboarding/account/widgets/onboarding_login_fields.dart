@@ -162,6 +162,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
           decoration: InputDecoration(
             suffixIcon: GestureDetector(
               onTap: () async {
+                // TODO: Validation
                 Navigator.of(context).pushNamed(
                   OnboardingCreateAccountScreen.route,
                   arguments: CreateAccountData(
