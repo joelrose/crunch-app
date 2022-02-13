@@ -206,7 +206,6 @@ DEPENDENCIES:
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
-  - OneSignalXCFramework (< 4.0, >= 3.4.3)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - stripe_ios (from `.symlinks/plugins/stripe_ios/ios`)
@@ -315,6 +314,6 @@ SPEC CHECKSUMS:
   the_apple_sign_in: 2e78c83cdb09eba07bb16dcc1f3bc12fcdc8263d
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
-PODFILE CHECKSUM: 9508baa9d4f363ae1d941ae5c169ae972d1b35c3
+PODFILE CHECKSUM: 3dfe38aba478d44fa3054990f8a334b68f8d18a7
 
 COCOAPODS: 1.11.2
