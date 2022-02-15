@@ -25,32 +25,36 @@ class ProfileTile extends StatelessWidget {
           onPressed: () => launch(link),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Text(
-                        title,
-                        style: Theme.of(context).textTheme.bodyText1!.merge(
-                              const TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
+            child: _buildTileContent(context),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTileContent(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.bodyText1!.merge(
+                      const TextStyle(
+                        fontSize: 16,
                       ),
                     ),
-                  ],
-                ),
-                const Icon(
-                  Icons.navigate_next,
-                  size: 30,
-                  color: AlpacaColor.darkGreyColor,
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
+        ),
+        const Icon(
+          Icons.navigate_next,
+          size: 30,
+          color: AlpacaColor.darkGreyColor,
         ),
       ],
     );
