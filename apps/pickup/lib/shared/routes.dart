@@ -44,7 +44,7 @@ class Router {
       case HomeScreen.route:
         return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomeScreen());
       case ProfileScreen.route:
-        return CupertinoPageRoute(builder: (_) => const ProfileScreen());
+        return CupertinoPageRoute(builder: (_) => ProfileScreen());
       case StoreScreen.route:
         final args = settings.arguments! as String;
         return CupertinoPageRoute(
