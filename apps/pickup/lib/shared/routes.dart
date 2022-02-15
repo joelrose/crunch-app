@@ -41,8 +41,8 @@ class Router {
         return CupertinoPageRoute(
           builder: (_) => OnboardingCreateAccountScreen(data: args),
         );
-      case HomeScreen.route:
-        return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomeScreen());
+      case HomePage.route:
+        return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomePage());
       case ProfileScreen.route:
         return CupertinoPageRoute(builder: (_) => ProfileScreen());
       case StoreScreen.route:

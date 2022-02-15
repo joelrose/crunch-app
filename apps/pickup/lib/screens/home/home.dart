@@ -1,73 +1,26 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pickup/screens/home/base/discover.dart';
+import 'package:pickup/screens/home/cubit/home_cubit.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/construction.dart';
 
-final bottonNavItems = <BottomNavigationBarItem>[
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset('assets/icons/compass.svg'),
-    label: 'Discover',
-  ),
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset('assets/icons/collection.svg'),
-    label: 'Orders',
-  ),
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset('assets/icons/receipt-tax.svg'),
-    label: 'Vouchers',
-  ),
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset('assets/icons/users.svg'),
-    label: 'Friends',
-  ),
-];
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-final bottonNavHighlitedItems = <BottomNavigationBarItem>[
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset(
-      'assets/icons/compass.svg',
-      color: AlpacaColor.primary100,
-    ),
-    label: 'Discover',
-  ),
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset(
-      'assets/icons/collection.svg',
-      color: AlpacaColor.primary100,
-    ),
-    label: 'Orders',
-  ),
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset(
-      'assets/icons/receipt-tax.svg',
-      color: AlpacaColor.primary100,
-    ),
-    label: 'Vouchers',
-  ),
-  BottomNavigationBarItem(
-    icon: SvgPicture.asset(
-      'assets/icons/users.svg',
-      color: AlpacaColor.primary100,
-    ),
-    label: 'Friends',
-  ),
-];
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
   static const route = '/home';
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
@@ -76,9 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> initOneSignal() async {
-    //n Remove this method to stop OneSignal Debugging
-    // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
     OneSignal.shared.setAppId(dotenv.get('ONESIGNAL_APPID'));
 
     OneSignal.shared
@@ -93,28 +43,40 @@ class _HomeScreenState extends State<HomeScreen> {
           OneSignal.shared.setEmail(email: user.email!);
         }
       }
-      print('Accepted permission: $accepted');
     });
   }
 
-  int _selectedIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => HomeCubit(),
+      child: HomeView(),
+    );
+  }
+}
 
-  static final List<Widget> _pages = [
-    const SafeArea(child: DiscoverScreen()),
-    const SafeArea(child: ConstructionScreen(title: 'Orders')),
-    const SafeArea(child: ConstructionScreen(title: 'Vouchers')),
-    const SafeArea(child: ConstructionScreen(title: 'Friends')),
-  ];
+class HomeView extends StatelessWidget {
+  static final bottomNavigationBar = _bottomNavigationBar();
+  static final highlitedBottomNavigationBar = _bottomNavigationBar(
+    highlited: true,
+  );
 
   @override
   Widget build(BuildContext context) {
+    final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         backgroundColor: AlpacaColor.white100Color,
         body: IndexedStack(
-          index: _selectedIndex,
-          children: _pages,
+          index: selectedTab.index,
+          children: const [
+            SafeArea(child: DiscoverScreen()),
+            SafeArea(child: ConstructionScreen(title: 'Orders')),
+            SafeArea(child: ConstructionScreen(title: 'Vouchers')),
+            SafeArea(child: ConstructionScreen(title: 'Friends')),
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -123,14 +85,16 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: AlpacaColor.white100Color,
           selectedFontSize: 11,
           unselectedFontSize: 11,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
+          currentIndex: selectedTab.index,
+          onTap: (value) => context.read<HomeCubit>().setTab(
+                HomeTab.values[value],
+              ),
           showUnselectedLabels: true,
-          items: bottonNavItems.asMap().entries.map((entry) {
+          items: bottomNavigationBar.asMap().entries.map((entry) {
             final int index = entry.key;
             final BottomNavigationBarItem value = entry.value;
-            return index == _selectedIndex
-                ? bottonNavHighlitedItems[index]
+            return index == selectedTab.index
+                ? highlitedBottomNavigationBar[index]
                 : value;
           }).toList(),
         ),
@@ -138,9 +102,38 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  static List<BottomNavigationBarItem> _bottomNavigationBar(
+      {bool highlited = false}) {
+    final color = highlited ? AlpacaColor.primary100 : AlpacaColor.greyColor;
+    return [
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'assets/icons/compass.svg',
+          color: color,
+        ),
+        label: 'Discover',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'assets/icons/collection.svg',
+          color: color,
+        ),
+        label: 'Orders',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'assets/icons/receipt-tax.svg',
+          color: color,
+        ),
+        label: 'Vouchers',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'assets/icons/users.svg',
+          color: color,
+        ),
+        label: 'Friends',
+      ),
+    ];
   }
 }

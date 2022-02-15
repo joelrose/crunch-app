@@ -134,7 +134,7 @@ class _OnboardingCreateAccountScreenState
                         StepPlaceholder(
                           onFinish: () =>
                               Navigator.of(context).pushNamedAndRemoveUntil(
-                            HomeScreen.route,
+                            HomePage.route,
                             (route) => false,
                           ),
                         ),

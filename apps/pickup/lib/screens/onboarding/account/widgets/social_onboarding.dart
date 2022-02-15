@@ -70,7 +70,7 @@ class _SocialOnboardingState extends State<SocialOnboarding> {
       if (account.statusCode == 200) {
         if (mounted) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-            HomeScreen.route,
+            HomePage.route,
             (route) => false,
           );
         }
