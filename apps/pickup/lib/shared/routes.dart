@@ -6,7 +6,7 @@ import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/home/widgets/favourites/favourites_detail.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
-import 'package:pickup/screens/onboarding/create/create_account.dart';
+import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile.dart';

@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pickup/screens/onboarding/create/steps/insert_name.dart';
+import 'package:pickup/screens/onboarding/create_account/steps/insert_name.dart';
 
 void main() {
   testWidgets('type in first name without lastname', (tester) async {

@@ -3,10 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickup/screens/home/home.dart';
-import 'package:pickup/screens/onboarding/create/steps/insert_name.dart';
-import 'package:pickup/screens/onboarding/create/steps/phone_verification.dart';
-import 'package:pickup/screens/onboarding/create/steps/placeholder.dart';
-import 'package:pickup/screens/onboarding/create/steps/set_password.dart';
+import 'package:pickup/screens/onboarding/create_account/steps/insert_name.dart';
+import 'package:pickup/screens/onboarding/create_account/steps/phone_verification.dart';
+import 'package:pickup/screens/onboarding/create_account/steps/placeholder.dart';
+import 'package:pickup/screens/onboarding/create_account/steps/set_password.dart';
 import 'package:pickup/shared/models.dart';
 
 class OnboardingCreateAccountScreen extends StatefulWidget {
