@@ -6,6 +6,7 @@ import 'package:pickup/screens/store/product_detail_order/product_detail_text.da
 import 'package:pickup/screens/store/product_detail_order/product_radio_checkbox.dart';
 import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
+import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:sanity/sanity.dart';
 
 class PriceData {

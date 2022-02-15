@@ -13,6 +13,7 @@ import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 import 'package:stretchy_header/stretchy_header.dart';
+import 'widgets/store_information.dart';
 
 class CreateStoreData {
   CreateStoreData({
@@ -120,67 +121,6 @@ class _StoreScreenState extends State<StoreScreen> {
                 ),
               ),
             ),
-    );
-  }
-}
-
-class StoreInformation extends StatelessWidget {
-  const StoreInformation({
-    Key? key,
-    required this.phoneNumer,
-    required this.address,
-  }) : super(key: key);
-
-  final String phoneNumer;
-  final String address;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 18,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Store information',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
-                        color: AlpacaColor.darkNavyColor,
-                      ),
-                ),
-                SvgPicture.asset(
-                        'assets/icons/chevron-left.svg',
-                        color: AlpacaColor.lightGreyColor100,
-                        height: 24,
-                        width: 24,
-                ),
-              ],
-            ),
-          ),
-          const StoreInformationItem(
-            icon: 'assets/icons/clock-opening-times.svg',
-            title: 'Opening times',
-            description: '11:00-22:00',
-          ),
-          StoreInformationItem(
-            icon: 'assets/icons/phone-store-address.svg',
-            title: 'Contact number',
-            description: phoneNumer,
-          ),
-          StoreInformationItem(
-            icon: 'assets/icons/location-store-address.svg',
-            title: 'Store address',
-            description: address,
-          ),
-        ],
-      ),
     );
   }
 }

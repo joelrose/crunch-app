@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
+import 'package:pickup/shared/models/product_detail_model.dart';
 
 class ProductAmountAndAddToOrder extends StatefulWidget {
   const ProductAmountAndAddToOrder({

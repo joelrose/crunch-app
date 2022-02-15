@@ -3,21 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
 import 'package:pickup/shared/alpaca_divider.dart';
+import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 
-class ProductDetailsData {
-  ProductDetailsData({
-    required this.item,
-    required this.restaurantImage,
-    required this.checkoutItems,
-    required this.onCheckoutChange,
-  });
-  final RestaurantMenueItemModel item;
-  final String restaurantImage;
-  List<CheckoutItemModel> checkoutItems;
-  void Function(List<CheckoutItemModel>) onCheckoutChange;
-}
+
 
 class StoreMenueList extends StatefulWidget {
   const StoreMenueList({
