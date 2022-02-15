@@ -8,9 +8,9 @@ import 'package:pickup/screens/store/widgets/store_information_item.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
 import 'package:pickup/shared/base_screen.dart';
+import 'package:pickup/shared/enum/viewstate.dart';
 import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
-import 'package:pickup/shared/viewstate.dart';
 import 'package:sanity/sanity.dart';
 import 'package:stretchy_header/stretchy_header.dart';
 

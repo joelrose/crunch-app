@@ -1,6 +1,6 @@
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/base_model.dart';
-import 'package:pickup/shared/viewstate.dart';
+import 'package:pickup/shared/enum/viewstate.dart';
 import 'package:sanity/sanity.dart';
 
 class RestaurantScreenModel extends BaseModel {

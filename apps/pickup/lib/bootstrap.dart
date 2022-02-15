@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/shared/enviroment.dart';
+import 'package:pickup/shared/enum/enviroment.dart';
 
 Future setupStripe() async {
   Stripe.publishableKey = dotenv.env['STRIPE_KEY']!;

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
 import 'package:pickup/screens/home/widgets/favourites/restaurant_card_widget.dart';
 import 'package:pickup/shared/base_screen.dart';
-import 'package:pickup/shared/viewstate.dart';
+import 'package:pickup/shared/enum/viewstate.dart';
 import 'package:skeleton_loader/skeleton_loader.dart';
 
 class FavouritesDetail extends StatelessWidget {
