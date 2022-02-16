@@ -1,6 +1,5 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/widgets/store_rating.dart';
 import 'package:pickup/screens/store/widgets/store_tag.dart';
 import 'package:url_launcher/url_launcher.dart';

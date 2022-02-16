@@ -50,9 +50,10 @@ class RecentSearchWidget extends StatelessWidget {
                           recentSearch,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.headline5!.copyWith(
-                                color: AlpacaColor.darkNavyColor,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline5!.copyWith(
+                                    color: AlpacaColor.darkNavyColor,
+                                  ),
                         ),
                         trailing: IconButton(
                           padding: EdgeInsets.zero,

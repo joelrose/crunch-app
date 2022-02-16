@@ -1,11 +1,7 @@
-
-
 import 'package:alpaca/alpaca.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import 'store_information_item.dart';
+import 'package:pickup/screens/store/widgets/store_information_item.dart';
 
 class StoreInformation extends StatelessWidget {
   const StoreInformation({
@@ -39,10 +35,10 @@ class StoreInformation extends StatelessWidget {
                       ),
                 ),
                 SvgPicture.asset(
-                        'assets/icons/chevron-left.svg',
-                        color: AlpacaColor.lightGreyColor100,
-                        height: 24,
-                        width: 24,
+                  'assets/icons/chevron-left.svg',
+                  color: AlpacaColor.lightGreyColor100,
+                  height: 24,
+                  width: 24,
                 ),
               ],
             ),

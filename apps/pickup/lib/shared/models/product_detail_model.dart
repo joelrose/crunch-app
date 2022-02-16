@@ -1,4 +1,3 @@
-
 import 'package:sanity/sanity.dart';
 
 class ProductDetailsData {

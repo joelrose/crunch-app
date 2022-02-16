@@ -33,7 +33,7 @@ class SearchBarView extends StatelessWidget {
   final List<String> filteredSearchHistory;
   final List<RestaurantOverviewModel> filteredRestaurants;
   final Widget child;
-  
+
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(

@@ -1,10 +1,9 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/store/store_screen_model.dart';
-import 'package:pickup/screens/store/widgets/store_information_item.dart';
+import 'package:pickup/screens/store/widgets/store_information.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
 import 'package:pickup/shared/base_screen.dart';
@@ -13,7 +12,6 @@ import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 import 'package:stretchy_header/stretchy_header.dart';
-import 'widgets/store_information.dart';
 
 class CreateStoreData {
   CreateStoreData({
