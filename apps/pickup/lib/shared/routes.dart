@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
-import 'package:pickup/screens/home/widgets/favourites/favourites_detail.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
-import 'package:pickup/screens/onboarding/create/create_account.dart';
+import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile.dart';
+import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
 import 'package:pickup/screens/store/store.dart';
-import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/shared/models.dart';
+import 'package:pickup/shared/models/product_detail_model.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -41,10 +41,10 @@ class Router {
         return CupertinoPageRoute(
           builder: (_) => OnboardingCreateAccountScreen(data: args),
         );
-      case HomeScreen.route:
-        return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomeScreen());
+      case HomePage.route:
+        return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomePage());
       case ProfileScreen.route:
-        return CupertinoPageRoute(builder: (_) => const ProfileScreen());
+        return CupertinoPageRoute(builder: (_) => ProfileScreen());
       case StoreScreen.route:
         final args = settings.arguments! as String;
         return CupertinoPageRoute(
@@ -67,9 +67,9 @@ class Router {
             data: args,
           ),
         );
-      case FavouritesDetail.route:
+      case RestaurantDetailView.route:
         return CupertinoPageRoute(
-          builder: (context) => FavouritesDetail(),
+          builder: (context) => RestaurantDetailView(),
         );
       default:
         return MaterialPageRoute(

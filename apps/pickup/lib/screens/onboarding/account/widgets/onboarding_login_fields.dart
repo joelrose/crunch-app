@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/screens/onboarding/account/widgets/social_onboarding.dart';
-import 'package:pickup/screens/onboarding/create/create_account.dart';
+import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/shared/models.dart';
 import 'package:url_launcher/url_launcher.dart';
 

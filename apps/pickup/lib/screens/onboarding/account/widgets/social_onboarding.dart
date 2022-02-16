@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickup/screens/home/home.dart';
-import 'package:pickup/screens/onboarding/create/create_account.dart';
+import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
@@ -70,7 +70,7 @@ class _SocialOnboardingState extends State<SocialOnboarding> {
       if (account.statusCode == 200) {
         if (mounted) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-            HomeScreen.route,
+            HomePage.route,
             (route) => false,
           );
         }

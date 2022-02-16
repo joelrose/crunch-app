@@ -98,7 +98,7 @@ class _LoadingScreenState extends State<LoadingScreen>
       (user) {
         if (user != null) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-            HomeScreen.route,
+            HomePage.route,
             (route) => false,
           );
         } else {
