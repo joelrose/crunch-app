@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:pickup/screens/home/widgets/search_bar/search_ui_widget.dart';
-import 'package:pickup/screens/home/widgets/search_bar/search_viewmodel.dart';
+import 'package:pickup/screens/search_bar/cubit/search_viewmodel.dart';
+import 'package:pickup/screens/search_bar/widgets/search_bar_view.dart';
 
-class DiscoverSearchBar extends StatefulWidget {
-  const DiscoverSearchBar({Key? key, required this.child}) : super(key: key);
+class SearchBar extends StatefulWidget {
+  const SearchBar({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
   @override
-  _DiscoverSearchBarState createState() => _DiscoverSearchBarState();
+  _SearchBarState createState() => _SearchBarState();
 }
 
-class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
+class _SearchBarState extends State<SearchBar> {
   late Widget child = widget.child;
   DiscoverySearchBarViewModel searchVM = DiscoverySearchBarViewModel();
 
@@ -73,7 +73,7 @@ class _DiscoverSearchBarState extends State<DiscoverSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SearchBarUI(
+    return SearchBarView(
       controller: controller,
       isAppBarVisible: searchVM.isAppBarVisible,
       isRecentSearchVisible: searchVM.isRecentSearchVisible,

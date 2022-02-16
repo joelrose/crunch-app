@@ -2,12 +2,12 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:pickup/screens/home/widgets/discover_nav_bar.dart';
-import 'package:pickup/screens/home/widgets/search_bar/search_results_widget.dart';
+import 'package:pickup/screens/discover/widgets/widgets.dart';
+import 'package:pickup/screens/search_bar/widgets/search_results_widget.dart';
 import 'package:sanity/sanity.dart';
 
-class SearchBarUI extends StatelessWidget {
-  const SearchBarUI({
+class SearchBarView extends StatelessWidget {
+  const SearchBarView({
     Key? key,
     required this.controller,
     required this.isAppBarVisible,
@@ -33,6 +33,7 @@ class SearchBarUI extends StatelessWidget {
   final List<String> filteredSearchHistory;
   final List<RestaurantOverviewModel> filteredRestaurants;
   final Widget child;
+  
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
@@ -40,7 +41,7 @@ class SearchBarUI extends StatelessWidget {
         SliverAppBar(
           toolbarHeight: isAppBarVisible ? 0 : 50,
           backgroundColor: AlpacaColor.white100Color,
-          flexibleSpace: Wrap(children: const [DiscoverNavBar()]),
+          flexibleSpace: Wrap(children: const [DiscoverAppBar()]),
         ),
       ],
       body: Row(

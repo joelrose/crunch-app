@@ -1,8 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:pickup/screens/home/widgets/search_bar/matching_restaurants_widget.dart';
-import 'package:pickup/screens/home/widgets/search_bar/recent_search_widget.dart';
+import 'package:pickup/screens/search_bar/widgets/matching_restaurants_widget.dart';
+import 'package:pickup/screens/search_bar/widgets/recent_search_widget.dart';
 import 'package:sanity/sanity.dart';
 
 class ActiveSearchWidget extends StatelessWidget {

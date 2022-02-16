@@ -1,16 +1,13 @@
-import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
-import 'package:pickup/services/service_locator.dart';
 import 'package:sanity/sanity.dart';
 
 class DiscoverySearchBarViewModel {
-  late RestaurantScreenModel restaurantModel = locator<RestaurantScreenModel>();
 
-  Future<dynamic> fetchRestaurants() {
-    return restaurantModel.fetchRestaurants();
+  dynamic fetchRestaurants() {
+    return [];
   }
 
   List<RestaurantOverviewModel> getRestaurants() {
-    return restaurantModel.restaurants;
+    return List.empty();
   }
 
   static const historyLenght = 5;
