@@ -1,8 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantRandomPickGenerator extends StatelessWidget {
-  const RestaurantRandomPickGenerator({
+class DiscoverNews extends StatelessWidget {
+  const DiscoverNews({
     Key? key,
   }) : super(key: key);
 
@@ -45,26 +45,13 @@ class RestaurantRandomPickGenerator extends StatelessWidget {
                   child: Text(
                     'Ordering takeout has never been easier',
                     style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(color: AlpacaColor.white100Color),
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(color: AlpacaColor.white100Color),
                   ),
                 )
               ],
             ),
-            // Container(
-            //   alignment: Alignment.center,
-            //   height: 50,
-            //   width: 50,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(45),
-            //     color: AlpacaColor.white100Color,
-            //   ),
-            //   child: const Icon(
-            //     Icons.arrow_forward_rounded,
-            //     size: 19,
-            //   ),
-            // )
           ],
         ),
       ),

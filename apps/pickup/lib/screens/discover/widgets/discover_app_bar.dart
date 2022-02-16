@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/profile/profile.dart';
 
-class DiscoverNavBar extends StatelessWidget {
-  const DiscoverNavBar({Key? key}) : super(key: key);
+class DiscoverAppBar extends StatelessWidget {
+  const DiscoverAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

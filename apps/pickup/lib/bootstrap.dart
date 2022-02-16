@@ -4,10 +4,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/enum/enviroment.dart';
+import 'package:sanity/sanity.dart';
 
 Future setupStripe() async {
   Stripe.publishableKey = dotenv.env['STRIPE_KEY']!;
@@ -47,7 +50,20 @@ Future<void> bootstrap(
         path: 'assets/translations',
         fallbackLocale: const Locale('en', 'US'),
         useOnlyLangCode: true,
-        child: await builder(),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) {
+                final cubit = DiscoverCubit(
+                  locator<SanityCms>(),
+                );
+                cubit.fetchRestaurants();
+                return cubit;
+              },
+            ),
+          ],
+          child: await builder(),
+        ),
       ),
     ),
     (error, stackTrace) =>

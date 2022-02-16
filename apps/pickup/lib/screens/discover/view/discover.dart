@@ -1,15 +1,14 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/screens/home/widgets/favourites/favourites.dart';
-import 'package:pickup/screens/home/widgets/restaurant_random_picker.dart';
-import 'package:pickup/screens/home/widgets/search_bar/main_search_bar.dart';
+import 'package:pickup/screens/discover/widgets/widgets.dart';
+import 'package:pickup/screens/search_bar/search_bar.dart';
 
-class DiscoverScreen extends StatelessWidget {
-  const DiscoverScreen({Key? key}) : super(key: key);
+class DiscoverPage extends StatelessWidget {
+  const DiscoverPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return DiscoverSearchBar(
+    return SearchBar(
       child: Column(
         children: [
           Container(
@@ -34,8 +33,8 @@ class DiscoverScreen extends StatelessWidget {
                     Divider(
                       height: 1,
                     ),
-                    RestaurantRandomPickGenerator(),
-                    Favourites()
+                    DiscoverNews(),
+                    RestaurantListSection(),
                   ],
                 ),
               ),
