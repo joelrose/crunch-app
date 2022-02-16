@@ -7,10 +7,12 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
     Key? key,
     this.storeName,
     required this.pageOverviewName,
+    this.showBackButton = true,
   }) : super(key: key);
 
   final String? storeName;
   final String pageOverviewName;
+  final bool showBackButton;
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +50,20 @@ class CheckoutOrderNavbarWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Positioned(
-                    left: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios,
-                        size: 20,
-                        color: AlpacaColor.blackColor,
+                  if (showBackButton)
+                    Positioned(
+                      left: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          size: 20,
+                          color: AlpacaColor.blackColor,
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ],

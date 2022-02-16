@@ -7,6 +7,7 @@ import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class CheckoutConfirmationScreen extends StatelessWidget {
@@ -27,6 +28,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
         children: [
           const CheckoutOrderNavbarWidget(
             pageOverviewName: 'Order status',
+            showBackButton: false,
           ),
           Flexible(
             child: ListView(
@@ -110,7 +112,22 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                         const DividerWidget(),
                       ],
                     ),
-                    CheckoutStoreDirectionWidget(googleMaps: data.googleMaps)
+                    CheckoutStoreDirectionWidget(googleMaps: data.googleMaps),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 20,
+                      ),
+                      child: ActionButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            HomePage.route,
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                        buttonText: 'Continue',
+                      ),
+                    ),
                   ],
                 )
               ],
