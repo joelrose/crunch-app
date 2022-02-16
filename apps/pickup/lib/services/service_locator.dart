@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:pickup/screens/home/models/restaurant_overview_model.dart';
 import 'package:pickup/screens/store/store_screen_model.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/auth_service_firebase.dart';
@@ -36,6 +35,5 @@ Future<void> setupServiceLocator() async {
     );
   }
 
-  locator.registerFactory(() => RestaurantScreenModel());
   locator.registerFactory(() => StoreScreenModel());
 }
