@@ -39,33 +39,33 @@ class OnboardingExplanationScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.65,
-            child: PageView.builder(
-              itemCount: _pages.length,
-              controller: _controller,
-              physics: const ClampingScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return _pages[index % _pages.length];
-              },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.65,
+              child: PageView.builder(
+                itemCount: _pages.length,
+                controller: _controller,
+                physics: const ClampingScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return _pages[index % _pages.length];
+                },
+              ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: DotsIndicator(
-              controller: _controller,
-              itemCount: _pages.length,
-              normalColor: Theme.of(context).scaffoldBackgroundColor,
-              onPageSelected: (int page) => _controller.animateToPage(
-                page,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.ease,
-              ),
+          DotsIndicator(
+            controller: _controller,
+            itemCount: _pages.length,
+            normalColor: Theme.of(context).scaffoldBackgroundColor,
+            onPageSelected: (int page) => _controller.animateToPage(
+              page,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.ease,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 18,
+              horizontal: 25,
             ),
             child: ActionButton(
               buttonText: 'continue'.tr(),
@@ -76,6 +76,7 @@ class OnboardingExplanationScreen extends StatelessWidget {
               isPrimaryButton: false,
             ),
           ),
+          const SizedBox(height: 5),
         ],
       ),
     );
