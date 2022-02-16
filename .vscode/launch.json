@@ -5,7 +5,7 @@
       "name": "Pickup Development",
       "request": "launch",
       "type": "dart",
-      "program": "apps/pickup/lib/main_development.dart",
+      "program": "lib/main_development.dart",
       "args": [
         "--flavor",
         "development",
@@ -17,7 +17,7 @@
       "name": "Pickup Staging",
       "request": "launch",
       "type": "dart",
-      "program": "apps/pickup/lib/main_development.dart",
+      "program": "lib/main_development.dart",
       "args": [
         "--flavor",
         "staging",
@@ -29,7 +29,7 @@
       "name": "Pickup Production",
       "request": "launch",
       "type": "dart",
-      "program": "apps/pickup/lib/main_development.dart",
+      "program": "lib/main_development.dart",
       "args": [
         "--flavor",
         "production",
