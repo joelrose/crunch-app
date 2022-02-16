@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
-import 'package:pickup/screens/home/widgets/favourites/favourites_detail.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile.dart';
+import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
 import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/shared/models.dart';
@@ -67,9 +67,9 @@ class Router {
             data: args,
           ),
         );
-      case FavouritesDetail.route:
+      case RestaurantDetailView.route:
         return CupertinoPageRoute(
-          builder: (context) => FavouritesDetail(),
+          builder: (context) => RestaurantDetailView(),
         );
       default:
         return MaterialPageRoute(
