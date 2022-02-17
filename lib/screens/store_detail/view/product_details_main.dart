@@ -1,38 +1,13 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pickup/screens/store/product_detail_order/product_amount_and_add_to_order.dart';
-import 'package:pickup/screens/store/product_detail_order/product_detail_text.dart';
-import 'package:pickup/screens/store/product_detail_order/product_radio_checkbox.dart';
+import 'package:pickup/screens/store_detail/model/model.dart';
+import 'package:pickup/screens/store_detail/widgets/product_amount_and_add_to_order.dart';
+import 'package:pickup/screens/store_detail/widgets/product_detail_text.dart';
+import 'package:pickup/screens/store_detail/widgets/product_radio_checkbox.dart';
 import 'package:pickup/shared/alpaca_stretchy_header.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:sanity/sanity.dart';
-
-class PriceData {
-  PriceData({
-    required this.totalItemPrice,
-    required this.amountOfProductsToAddToBasket,
-    required this.newTotalPrice,
-  });
-  double totalItemPrice;
-  int amountOfProductsToAddToBasket;
-  double newTotalPrice;
-}
-
-class ProductAmountAndPricesData {
-  ProductAmountAndPricesData({
-    required this.amountOfProductsToAddToBasket,
-    required this.newTotalPrice,
-    required this.increaseItemAmount,
-    required this.decreaseItemAmount,
-    required this.addToOrderOnClick,
-  });
-  int amountOfProductsToAddToBasket;
-  double newTotalPrice;
-  Function increaseItemAmount;
-  Function decreaseItemAmount;
-  Function addToOrderOnClick;
-}
 
 class StoreProductOverview extends StatefulWidget {
   const StoreProductOverview({Key? key, required this.data}) : super(key: key);

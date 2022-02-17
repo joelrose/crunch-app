@@ -2,7 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
-import 'package:pickup/screens/store/store_screen_model.dart';
+import 'package:pickup/screens/store/model/store_screen_model.dart';
 import 'package:pickup/screens/store/widgets/store_information.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';

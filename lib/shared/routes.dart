@@ -10,8 +10,8 @@ import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
-import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
 import 'package:pickup/screens/store/store.dart';
+import 'package:pickup/screens/store_detail/store_detail.dart';
 import 'package:pickup/shared/models.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 

@@ -2,7 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pickup/screens/store/product_detail_order/product_details_main.dart';
+import 'package:pickup/screens/store_detail/model/model.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 
 class ProductAmountAndAddToOrder extends StatefulWidget {
