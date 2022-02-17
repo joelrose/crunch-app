@@ -1,6 +1,5 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/profile/profile.dart';
 
@@ -23,7 +22,6 @@ class DiscoverAppBar extends StatelessWidget {
           ),
           const Spacer(),
           Bounceable(
-            duration: const Duration(milliseconds: 50),
             scaleFactor: 0.5,
             onTap: () => Navigator.of(context).pushNamed(
               ProfileScreen.route,

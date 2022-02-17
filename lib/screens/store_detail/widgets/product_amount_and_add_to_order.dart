@@ -2,7 +2,6 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 
@@ -50,7 +49,6 @@ class _ProductAmountAndAddToOrderState
                                   vertical: 11,
                                 ),
                                 child: Bounceable(
-                                  duration: const Duration(milliseconds: 50),
                                   onTap: () {
                                     HapticFeedback.mediumImpact();
                                     context
@@ -102,7 +100,6 @@ class _ProductAmountAndAddToOrderState
                                   vertical: 11,
                                 ),
                                 child: Bounceable(
-                                  duration: const Duration(milliseconds: 50),
                                   onTap: () {
                                     HapticFeedback.mediumImpact();
                                     context

@@ -5,7 +5,6 @@ import 'package:pickup/screens/orders/cubit/orders_cubit.dart';
 import 'package:pickup/screens/orders/widgets/widgets.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/shared/alpaca_divider.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({Key? key}) : super(key: key);

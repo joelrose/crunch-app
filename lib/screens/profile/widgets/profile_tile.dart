@@ -1,6 +1,5 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/shared/alpaca_divider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileTile extends StatelessWidget {

@@ -1,7 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
-import 'package:pickup/shared/alpaca_divider.dart';
 
 class OrdersListView extends StatelessWidget {
   const OrdersListView({Key? key, required this.order}) : super(key: key);

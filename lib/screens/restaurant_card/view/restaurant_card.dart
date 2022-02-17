@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:pickup/screens/store/store.dart';
 import 'package:sanity/sanity.dart';
 
@@ -17,7 +16,6 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Bounceable(
-      duration: const Duration(milliseconds: 50),
       onTap: () => {
         Navigator.of(context)
             .pushNamed(StoreScreen.route, arguments: restaurant.id)

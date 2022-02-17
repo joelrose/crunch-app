@@ -5,7 +5,6 @@ import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/widgets/profile_tile.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/shared/alpaca_divider.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const route = '/profile';

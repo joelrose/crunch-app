@@ -18,8 +18,10 @@ class DiscoverState extends Equatable {
   final DiscoverStatus status;
   final List<RestaurantOverviewModel> restaurants;
 
-  DiscoverState copyWith(
-      {DiscoverStatus? status, List<RestaurantOverviewModel>? restaurants}) {
+  DiscoverState copyWith({
+    DiscoverStatus? status,
+    List<RestaurantOverviewModel>? restaurants,
+  }) {
     return DiscoverState(
       status: status ?? this.status,
       restaurants: restaurants ?? [],

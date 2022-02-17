@@ -55,8 +55,9 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  static List<BottomNavigationBarItem> _bottomNavigationBar(
-      {bool highlited = false}) {
+  static List<BottomNavigationBarItem> _bottomNavigationBar({
+    bool highlited = false,
+  }) {
     final color = highlited ? AlpacaColor.primary100 : AlpacaColor.greyColor;
     return [
       BottomNavigationBarItem(
