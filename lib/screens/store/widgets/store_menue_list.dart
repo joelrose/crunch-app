@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:pickup/screens/store_detail/view/product_details_main.dart';
+import 'package:pickup/screens/store_detail/store_detail.dart';
 import 'package:pickup/shared/alpaca_divider.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/utilities.dart';
