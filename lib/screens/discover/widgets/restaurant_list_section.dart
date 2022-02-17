@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/restaurant_overview_list/restaurant_overview_list.dart';
 
@@ -22,7 +23,8 @@ class RestaurantListSection extends StatelessWidget {
                   'Restaurants',
                   style: Theme.of(context).textTheme.headline2,
                 ),
-                GestureDetector(
+                Bounceable(
+                  duration: const Duration(milliseconds: 100),
                   onTap: () => Navigator.of(context)
                       .pushNamed(RestaurantDetailView.route),
                   child: Container(
@@ -32,14 +34,12 @@ class RestaurantListSection extends StatelessWidget {
                       border: Border.all(color: AlpacaColor.lightGreyColor90),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: Center(
-                      child: Text(
-                        'View all',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .copyWith(color: AlpacaColor.darkNavyColor),
-                      ),
+                    child: Text(
+                      'View all',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: AlpacaColor.darkNavyColor),
                     ),
                   ),
                 ),
