@@ -6,12 +6,10 @@ class ProfileTile extends StatelessWidget {
   const ProfileTile({
     Key? key,
     required this.title,
-    required this.icon,
     required this.link,
   }) : super(key: key);
 
   final String title;
-  final IconData icon;
   final String link;
 
   @override
@@ -20,7 +18,10 @@ class ProfileTile extends StatelessWidget {
       children: [
         const AlpacaDivider(),
         TextButton(
-          style: TextButton.styleFrom(padding: EdgeInsets.zero),
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            primary: AlpacaColor.primary100,
+          ),
           onPressed: () => launch(link),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),

@@ -17,23 +17,59 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildTiles(),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: ActionButton(
-              buttonText: 'Logout',
-              isPrimaryButton: false,
-              textColor: AlpacaColor.redColor,
-              onPressed: () async {
-                await auth.signOut();
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Center(
+                child: Text(
+                  'Profile',
+                  style: Theme.of(context).textTheme.headline1!.merge(
+                        const TextStyle(
+                          color: AlpacaColor.blackColor,
+                        ),
+                      ),
+                ),
+              ),
+              Positioned(
+                left: 20,
+                child: IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  color: AlpacaColor.blackColor,
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                  ),
+                  padding: const EdgeInsets.all(10),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const AlpacaDivider(),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildTiles(),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: ActionButton(
+                    buttonText: 'Logout',
+                    isPrimaryButton: false,
+                    textColor: AlpacaColor.redColor,
+                    onPressed: () async {
+                      await auth.signOut();
 
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  OnboardingWelcomeScreen.route,
-                  (route) => false,
-                );
-              },
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        OnboardingWelcomeScreen.route,
+                        (route) => false,
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -48,23 +84,23 @@ class ProfileScreen extends StatelessWidget {
           height: 20,
         ),
         const ProfileTile(
+          title: 'Language',
+          link: '',
+        ),
+        const ProfileTile(
           title: 'Terms & Conditions',
-          icon: Icons.person_outlined,
           link: '',
         ),
         const ProfileTile(
           title: 'Data Privacy',
-          icon: Icons.person_outlined,
           link: '',
         ),
         const ProfileTile(
           title: 'Contact Us',
-          icon: Icons.person_outlined,
           link: '',
         ),
         const ProfileTile(
           title: 'Visit our Website',
-          icon: Icons.settings,
           link: '',
         ),
         const AlpacaDivider(),
