@@ -53,13 +53,9 @@ Future<void> bootstrap(
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (_) {
-                final cubit = DiscoverCubit(
-                  locator<SanityCms>(),
-                );
-                cubit.fetchRestaurants();
-                return cubit;
-              },
+              create: (_) => DiscoverCubit(
+                locator<SanityCms>(),
+              ),
             ),
           ],
           child: await builder(),

@@ -13,13 +13,9 @@ class OrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) {
-        final cubit = OrdersCubit(
-          locator<HermesService>(),
-        );
-        cubit.fetchOrders();
-        return cubit;
-      },
+      create: (_) => OrdersCubit(
+        locator<HermesService>(),
+      ),
       child: const OrdersView(),
     );
   }

@@ -6,7 +6,9 @@ import 'package:pickup/services/hermes_service.dart';
 part 'orders_state.dart';
 
 class OrdersCubit extends Cubit<OrdersState> {
-  OrdersCubit(this._hermesService) : super(OrdersState());
+  OrdersCubit(this._hermesService) : super(OrdersState()) {
+    fetchOrders();
+  }
 
   final HermesService _hermesService;
 
