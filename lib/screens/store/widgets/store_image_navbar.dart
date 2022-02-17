@@ -4,8 +4,11 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
 class StoreImageNavbar extends StatelessWidget {
-  const StoreImageNavbar({Key? key, required this.image, this.showButtons = true})
-      : super(key: key);
+  const StoreImageNavbar({
+    Key? key,
+    required this.image,
+    this.showButtons = true,
+  }) : super(key: key);
 
   final bool showButtons;
   final String image;
@@ -40,52 +43,23 @@ class StoreImageNavbar extends StatelessWidget {
             alignment: Alignment.topLeft,
           ),
           if (showButtons)
-            Row(
-              children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     right: 10,
-                //   ),
-                //   child: ClipRRect(
-                //     borderRadius: BorderRadius.circular(30),
-                //     child: SizedBox(
-                //       height: 40,
-                //       width: 40,
-                //       child: BackdropFilter(
-                //         filter: ImageFilter.blur(
-                //           sigmaX: 10,
-                //           sigmaY: 10,
-                //         ),
-                //         child: IconButton(
-                //           onPressed: () {},
-                //           color: AlpacaColor.white100Color,
-                //           icon: const Icon(
-                //             Icons.star_border_outlined,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 10,
-                        sigmaY: 10,
-                      ),
-                      child: IconButton(
-                        onPressed: () {},
-                        color: AlpacaColor.white100Color,
-                        icon: const Icon(Icons.info_outline),
-                      ),
-                    ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: SizedBox(
+                height: 40,
+                width: 40,
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 10,
+                    sigmaY: 10,
+                  ),
+                  child: IconButton(
+                    onPressed: () {},
+                    color: AlpacaColor.white100Color,
+                    icon: const Icon(Icons.info_outline),
                   ),
                 ),
-              ],
+              ),
             ),
         ],
       ),

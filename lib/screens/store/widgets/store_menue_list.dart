@@ -7,8 +7,6 @@ import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
 
-
-
 class StoreMenueList extends StatefulWidget {
   const StoreMenueList({
     Key? key,
