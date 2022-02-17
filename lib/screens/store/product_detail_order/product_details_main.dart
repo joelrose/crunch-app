@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:pickup/screens/store/product_detail_order/product_amount_and_add_to_order.dart';
 import 'package:pickup/screens/store/product_detail_order/product_detail_text.dart';
 import 'package:pickup/screens/store/product_detail_order/product_radio_checkbox.dart';
-import 'package:pickup/screens/store/widgets/store_image_navbar.dart';
+import 'package:pickup/shared/alpaca_stretchy_header.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:sanity/sanity.dart';
 
@@ -202,30 +202,26 @@ class _StoreProductOverviewState extends State<StoreProductOverview> {
       child: Column(
         children: [
           Expanded(
-            child: CustomScrollView(
-              shrinkWrap: true,
-              slivers: [
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      StoreImageNavbar(
-                        image: widget.data.restaurantImage,
-                        showButtons: false,
-                      ),
-                      ProductBasicDetails(
-                        itemPrice: widget.data.item.price,
-                        title: widget.data.item.title.english,
-                      ),
-                      ProductRadioCheckbox(
-                        itemCategories: widget.data.item.itemOptions,
-                        itemPrice: widget.data.item.price.toDouble(),
-                        changeItemPrice: changeItemPrice,
-                        itemTitleAndOptionsList: itemTitleAndOptionsList,
-                      )
-                    ],
+            child: AlpacaStretchyHeader(
+              image: widget.data.restaurantImage,
+              child: Column(
+                children: [
+                  // StoreImageNavbar(
+                  //   image: widget.data.restaurantImage,
+                  //   showButtons: false,
+                  // ),
+                  ProductBasicDetails(
+                    itemPrice: widget.data.item.price,
+                    title: widget.data.item.title.english,
                   ),
-                ),
-              ],
+                  ProductRadioCheckbox(
+                    itemCategories: widget.data.item.itemOptions,
+                    itemPrice: widget.data.item.price.toDouble(),
+                    changeItemPrice: changeItemPrice,
+                    itemTitleAndOptionsList: itemTitleAndOptionsList,
+                  )
+                ],
+              ),
             ),
           ),
           ProductAmountAndAddToOrder(

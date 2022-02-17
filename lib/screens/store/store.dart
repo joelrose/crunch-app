@@ -6,12 +6,12 @@ import 'package:pickup/screens/store/store_screen_model.dart';
 import 'package:pickup/screens/store/widgets/store_information.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
+import 'package:pickup/shared/alpaca_stretchy_header.dart';
 import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/enum/viewstate.dart';
 import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
-import 'package:stretchy_header/stretchy_header.dart';
 
 class CreateStoreData {
   CreateStoreData({
@@ -74,36 +74,8 @@ class _StoreScreenState extends State<StoreScreen> {
               padding: EdgeInsets.zero,
               backgroundColor: AlpacaColor.white100Color,
               statusBarStyle: SystemUiOverlayStyle.dark,
-              child: StretchyHeader.singleChild(
-                headerData: HeaderData(
-                  headerHeight: 200,
-                  header: Image.network(
-                    model.restaurant.image,
-                    fit: BoxFit.cover,
-                  ),
-                  blurContent: false,
-                  overlay: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18,
-                      vertical: 18,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          color: AlpacaColor.white100Color,
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          alignment: Alignment.topLeft,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              child: AlpacaStretchyHeader(
+                image: model.restaurant.image,
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
                   child: Column(
