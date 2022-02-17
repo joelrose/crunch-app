@@ -82,14 +82,33 @@ class _StoreScreenState extends State<StoreScreen> {
                     fit: BoxFit.cover,
                   ),
                   blurContent: false,
-                  // overlay:
+                  overlay: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 18,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          color: AlpacaColor.white100Color,
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          alignment: Alignment.topLeft,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // StoreImageNavbar(image: model.restaurant.image),
                       StoreOverview(
                         name: model.restaurant.name,
                         rating: '4.8',
