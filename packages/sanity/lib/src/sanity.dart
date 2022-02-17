@@ -34,7 +34,7 @@ class SanityClient {
     switch (response.statusCode) {
       case 200:
         final responseJson = jsonDecode(response.body);
-        return responseJson["result"];
+        return responseJson['result'];
       case 400:
         throw BadRequestException(response.body);
       case 401:
@@ -105,7 +105,9 @@ class SanityCms extends SanityClient {
 
     return response
         .map<RestaurantOverviewModel>(
-          (data) => RestaurantOverviewModel.fromMap(data as Map<dynamic, dynamic>),
+          (data) => RestaurantOverviewModel.fromMap(
+            data as Map<dynamic, dynamic>,
+          ),
         )
         .toList() as List<RestaurantOverviewModel>;
   }

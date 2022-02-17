@@ -1,19 +1,12 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:sanity/sanity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 
 class ProductRadioCheckbox extends StatefulWidget {
   const ProductRadioCheckbox({
     Key? key,
-    required this.itemCategories,
-    required this.itemPrice,
-    required this.changeItemPrice,
-    required this.itemTitleAndOptionsList,
   }) : super(key: key);
-  final List<RestaurantMenueItemOptions>? itemCategories;
-  final double itemPrice;
-  final Function changeItemPrice;
-  final List<CheckoutItemOptionsModel> itemTitleAndOptionsList;
 
   @override
   _ProductRadioCheckboxState createState() => _ProductRadioCheckboxState();
@@ -22,18 +15,25 @@ class ProductRadioCheckbox extends StatefulWidget {
 class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: widget.itemCategories?.length ?? 0,
-      itemBuilder: (context, itemCategoryIndex) {
-        final item = widget.itemCategories![itemCategoryIndex];
+    return BlocBuilder<StoreDetailCubit, StoreDetailState>(
+      builder: (context, state) {
+        final cubit = context.read<StoreDetailCubit>();
 
-        return StatefulBuilder(
-          builder: (
-            BuildContext context,
-            StateSetter setState,
-          ) {
+        final itemPrice = cubit.data.item.price;
+        
+        return ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount:
+              context.read<StoreDetailCubit>().data.item.itemOptions?.length ??
+                  0,
+          itemBuilder: (context, itemCategoryIndex) {
+            final item = context
+                .read<StoreDetailCubit>()
+                .data
+                .item
+                .itemOptions![itemCategoryIndex];
+
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -66,46 +66,45 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                         return GestureDetector(
                           behavior: HitTestBehavior.translucent,
                           onTap: () {
-                            widget.changeItemPrice(
-                              widget.itemPrice,
+                            cubit.itemTitleAndOptionsList[itemCategoryIndex]
+                                .option.id = item.options[optionChoiceIndex].id;
+
+                            cubit
+                                .itemTitleAndOptionsList[itemCategoryIndex]
+                                .option
+                                .title = item.options[optionChoiceIndex].title;
+
+                            cubit
+                                .itemTitleAndOptionsList[itemCategoryIndex]
+                                .option
+                                .price = item.options[optionChoiceIndex].price;
+
+                            cubit.changeItemPrice(
+                              cubit.data.item.price.toDouble(),
                               item.options[optionChoiceIndex].price.toDouble(),
                             );
-                            setState(() {
-                              widget
-                                  .itemTitleAndOptionsList[itemCategoryIndex]
-                                  .option
-                                  .id = item.options[optionChoiceIndex].id;
-
-                              widget.itemTitleAndOptionsList[itemCategoryIndex]
-                                      .option.title =
-                                  item.options[optionChoiceIndex].title;
-
-                              widget.itemTitleAndOptionsList[itemCategoryIndex]
-                                      .option.price =
-                                  item.options[optionChoiceIndex].price;
-                            });
                           },
                           child: Row(
                             children: [
                               Radio(
                                 value: item.options[optionChoiceIndex].id,
-                                groupValue: widget
+                                groupValue: context
+                                    .read<StoreDetailCubit>()
                                     .itemTitleAndOptionsList[itemCategoryIndex]
                                     .option
                                     .id,
                                 onChanged: (value) {
-                                  widget.changeItemPrice(
-                                    widget.itemPrice,
+                                  cubit
+                                      .itemTitleAndOptionsList[
+                                          itemCategoryIndex]
+                                      .option
+                                      .id = value.toString();
+
+                                  cubit.changeItemPrice(
+                                    itemPrice.toDouble(),
                                     item.options[optionChoiceIndex].price
                                         .toDouble(),
                                   );
-                                  setState(() {
-                                    widget
-                                        .itemTitleAndOptionsList[
-                                            itemCategoryIndex]
-                                        .option
-                                        .id = value.toString();
-                                  });
                                 },
                                 activeColor: AlpacaColor.primary100,
                               ),
