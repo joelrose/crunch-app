@@ -48,17 +48,23 @@ class OrdersView extends StatelessWidget {
         BlocBuilder<OrdersCubit, OrdersState>(
           builder: (context, state) {
             if (state.status.isSuccess) {
-              return RefreshIndicator(
-                color: AlpacaColor.primary100,
-                onRefresh: () => context.read<OrdersCubit>().fetchOrders(),
-                child: ListView.builder(
-                  itemCount: state.orders.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return OrdersListView(
-                      order: state.orders.elementAt(index),
-                    );
-                  },
+              return Expanded(
+                child: RefreshIndicator(
+                  color: AlpacaColor.primary100,
+                  onRefresh: () => context.read<OrdersCubit>().fetchOrders(),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height - 200,
+                    child: ListView.builder(
+                      itemCount: state.orders.length,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return OrdersListView(
+                          order: state.orders.elementAt(index),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               );
             } else {
