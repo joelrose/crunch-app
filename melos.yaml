@@ -1,9 +1,0 @@
-name: crunch
-
-packages:
-  - apps/**
-  - core/**
-
-scripts:
-  analyze: melos exec -- dart analyze
-  test: melos exec -- flutter test
