@@ -16,24 +16,26 @@ class RestaurantListView extends StatelessWidget {
     return BlocBuilder<DiscoverCubit, DiscoverState>(
       builder: (BuildContext context, state) {
         if (state.status.isSuccess) {
-          return Container(
-            padding: isHorizontal
-                ? const EdgeInsets.symmetric(horizontal: 20)
-                : EdgeInsets.zero,
-            height: 190,
-            child: ListView.separated(
-              clipBehavior: Clip.none,
-              scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,
-              separatorBuilder: (context, index) => isHorizontal
-                  ? const SizedBox(width: 25)
-                  : const SizedBox(
-                      height: 25,
-                    ),
-              itemCount: state.restaurants.length,
-              itemBuilder: (context, index) {
-                final restaurant = state.restaurants[index];
-                return RestaurantCard(restaurant: restaurant);
-              },
+          return Flexible(
+            child: Container(
+              padding: isHorizontal
+                  ? const EdgeInsets.symmetric(horizontal: 20)
+                  : EdgeInsets.zero,
+              height: 176,
+              child: ListView.separated(
+                clipBehavior: Clip.none,
+                scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,
+                separatorBuilder: (context, index) => isHorizontal
+                    ? const SizedBox(width: 25)
+                    : const SizedBox(
+                        height: 25,
+                      ),
+                itemCount: state.restaurants.length,
+                itemBuilder: (context, index) {
+                  final restaurant = state.restaurants[index];
+                  return RestaurantCard(restaurant: restaurant);
+                },
+              ),
             ),
           );
         }
