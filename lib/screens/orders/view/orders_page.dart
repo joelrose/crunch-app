@@ -1,6 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/orders/cubit/orders_cubit.dart';
 import 'package:pickup/screens/orders/widgets/widgets.dart';
 import 'package:pickup/services/hermes_service.dart';
@@ -49,16 +51,7 @@ class OrdersView extends StatelessWidget {
                   onRefresh: () => context.read<OrdersCubit>().fetchOrders(),
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height - 200,
-                    child: ListView.builder(
-                      itemCount: state.orders.length,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return OrdersListView(
-                          order: state.orders.elementAt(index),
-                        );
-                      },
-                    ),
+                    child: _buildListView(state.orders),
                   ),
                 ),
               );
@@ -69,5 +62,32 @@ class OrdersView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _buildListView(List<GetOrderResponseDto> orders) {
+    if (orders.isNotEmpty) {
+      return ListView.builder(
+        itemCount: orders.length,
+        physics: const AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return OrdersListView(
+            order: orders.elementAt(index),
+          );
+        },
+      );
+    } else {
+      return ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 150),
+            child: SvgPicture.asset(
+              'assets/no-data.svg',
+              height: 200,
+            ),
+          ),
+        ],
+      );
+    }
   }
 }
