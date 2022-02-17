@@ -21,7 +21,8 @@ class DiscoverAppBar extends StatelessWidget {
             color: AlpacaColor.primary100,
           ),
           const Spacer(),
-          GestureDetector(
+          Bounceable(
+            scaleFactor: 0.5,
             onTap: () => Navigator.of(context).pushNamed(
               ProfileScreen.route,
             ),

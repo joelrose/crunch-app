@@ -5,7 +5,9 @@ import 'package:sanity/sanity.dart';
 part 'discover_state.dart';
 
 class DiscoverCubit extends Cubit<DiscoverState> {
-  DiscoverCubit(this._sanityClient) : super(DiscoverState());
+  DiscoverCubit(this._sanityClient) : super(DiscoverState()) {
+    fetchRestaurants();
+  }
 
   final SanityCms _sanityClient;
 

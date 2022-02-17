@@ -1,4 +1,3 @@
-
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/discover/discover.dart';
 import 'package:pickup/screens/home/home.dart';
+import 'package:pickup/screens/orders/orders.dart';
 import 'package:pickup/shared/construction.dart';
 
 class HomeView extends StatelessWidget {
@@ -26,7 +26,7 @@ class HomeView extends StatelessWidget {
           index: selectedTab.index,
           children: const [
             SafeArea(child: DiscoverPage()),
-            SafeArea(child: ConstructionScreen(title: 'Orders')),
+            SafeArea(child: OrdersPage()),
             SafeArea(child: ConstructionScreen(title: 'Vouchers')),
             SafeArea(child: ConstructionScreen(title: 'Friends')),
           ],
@@ -55,8 +55,9 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  static List<BottomNavigationBarItem> _bottomNavigationBar(
-      {bool highlited = false}) {
+  static List<BottomNavigationBarItem> _bottomNavigationBar({
+    bool highlited = false,
+  }) {
     final color = highlited ? AlpacaColor.primary100 : AlpacaColor.greyColor;
     return [
       BottomNavigationBarItem(

@@ -2,16 +2,16 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
-import 'package:pickup/screens/store/store_screen_model.dart';
+import 'package:pickup/screens/store/model/store_screen_model.dart';
 import 'package:pickup/screens/store/widgets/store_information.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
+import 'package:pickup/shared/alpaca_stretchy_header.dart';
 import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/enum/viewstate.dart';
 import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:sanity/sanity.dart';
-import 'package:stretchy_header/stretchy_header.dart';
 
 class CreateStoreData {
   CreateStoreData({
@@ -74,22 +74,13 @@ class _StoreScreenState extends State<StoreScreen> {
               padding: EdgeInsets.zero,
               backgroundColor: AlpacaColor.white100Color,
               statusBarStyle: SystemUiOverlayStyle.dark,
-              child: StretchyHeader.singleChild(
-                headerData: HeaderData(
-                  headerHeight: 200,
-                  header: Image.network(
-                    model.restaurant.image,
-                    fit: BoxFit.cover,
-                  ),
-                  blurContent: false,
-                  // overlay:
-                ),
+              child: AlpacaStretchyHeader(
+                image: model.restaurant.image,
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // StoreImageNavbar(image: model.restaurant.image),
                       StoreOverview(
                         name: model.restaurant.name,
                         rating: '4.8',

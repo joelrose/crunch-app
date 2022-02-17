@@ -12,7 +12,6 @@ dependencies:
   alpaca: 
     path: packages/alpaca
   bloc: ^8.0.1
-  bouncing_widget: ^2.0.0
   cupertino_icons: ^1.0.4
   easy_localization: ^3.0.0
   equatable: ^2.0.3

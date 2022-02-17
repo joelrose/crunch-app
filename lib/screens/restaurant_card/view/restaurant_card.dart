@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:alpaca/alpaca.dart';
-import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store/store.dart';
@@ -17,11 +16,8 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    BouncingWidget(
-      duration: const Duration(milliseconds: 100),
-      scaleFactor: 0.3,
-      onPressed: () => {
+    return Bounceable(
+      onTap: () => {
         Navigator.of(context)
             .pushNamed(StoreScreen.route, arguments: restaurant.id)
       },

@@ -42,7 +42,7 @@ class ConstructionScreen extends StatelessWidget {
                   vertical: 40,
                 ),
                 child: Text(
-                  'Hey, we building something great here. Stay tuned!',
+                  'Hey, we are building something great here. Stay tuned!',
                   style: Theme.of(context).textTheme.bodyText1!.merge(
                         const TextStyle(
                           color: AlpacaColor.darkGreyColor,

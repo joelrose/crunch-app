@@ -15,24 +15,30 @@ class RestaurantDetailView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
+          Stack(
+            alignment: Alignment.center,
             children: [
-              IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                color: AlpacaColor.blackColor,
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                ),
-                padding: const EdgeInsets.all(10),
-              ),
-              Text(
-                'Restaurants',
-                style: Theme.of(context).textTheme.headline1!.merge(
-                      const TextStyle(
-                        color: AlpacaColor.blackColor,
+              Center(
+                child: Text(
+                  'Restaurants',
+                  style: Theme.of(context).textTheme.headline1!.merge(
+                        const TextStyle(
+                          color: AlpacaColor.blackColor,
+                        ),
                       ),
-                    ),
+                ),
               ),
+              Positioned(
+                left: 0,
+                child: IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  color: AlpacaColor.blackColor,
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                  ),
+                  padding: const EdgeInsets.all(10),
+                ),
+              )
             ],
           ),
           const Divider(height: 40),
