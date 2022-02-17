@@ -1,4 +1,3 @@
-
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
@@ -71,16 +70,30 @@ class OrdersListView extends StatelessWidget {
                   ],
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Expanded(
                       child: ListView.builder(
                         itemCount: order.items?.length ?? 0,
                         shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           final item = order.items!.elementAt(index);
-                          return Text(item.name!);
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 10, left: 2),
+                            child: Text(
+                              '\u2022 1x ${item.name!}',
+                              style: theme.textTheme.headline5,
+                            ),
+                          );
                         },
                       ),
+                    ),
+                    Text(
+                      '${order.price!.toStringAsFixed(2)} €',
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                            color: AlpacaColor.primary100,
+                          ),
                     ),
                   ],
                 )
