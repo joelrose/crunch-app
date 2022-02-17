@@ -7,4 +7,12 @@ abstract class StoreDetailState extends Equatable {
   List<Object> get props => [];
 }
 
-class StoreDetailInitial extends StoreDetailState {}
+class StoreDetailReload extends StoreDetailState {
+  const StoreDetailReload(this.data, this.price);
+
+  final ProductDetailsData data;
+  final double price;
+
+  @override
+  List<Object> get props => [data, price];
+}

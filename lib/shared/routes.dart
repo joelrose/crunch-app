@@ -60,10 +60,10 @@ class Router {
         return CupertinoPageRoute(
           builder: (_) => CheckoutConfirmationScreen(data: args),
         );
-      case StoreProductOverview.route:
+      case StoreDetailPage.route:
         final args = settings.arguments! as ProductDetailsData;
         return CupertinoPageRoute(
-          builder: (_) => StoreProductOverview(
+          builder: (_) => StoreDetailPage(
             data: args,
           ),
         );
