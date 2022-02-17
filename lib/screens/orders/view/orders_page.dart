@@ -32,7 +32,6 @@ class OrdersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           padding: const EdgeInsets.all(20),
@@ -48,8 +47,10 @@ class OrdersView extends StatelessWidget {
         const AlpacaDivider(),
         BlocBuilder<OrdersCubit, OrdersState>(
           builder: (context, state) {
-            if (state.status == OrdersStatus.success) {
-              return Expanded(
+            if (state.status.isSuccess) {
+              return RefreshIndicator(
+                color: AlpacaColor.primary100,
+                onRefresh: () => context.read<OrdersCubit>().fetchOrders(),
                 child: ListView.builder(
                   itemCount: state.orders.length,
                   shrinkWrap: true,
@@ -60,13 +61,12 @@ class OrdersView extends StatelessWidget {
                   },
                 ),
               );
+            } else {
+              return const OrdersLoadingView();
             }
-
-            return const OrdersLoadingView();
           },
         ),
       ],
     );
   }
 }
-
