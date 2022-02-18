@@ -15,11 +15,24 @@ class CheckoutPickupWidget extends StatefulWidget {
   State<CheckoutPickupWidget> createState() => _CheckoutPickupWidgetState();
 }
 
+class OpeningTimesBreak {
+  int start;
+  int end;
+  OpeningTimesBreak(this.start, this.end);
+}
+
+class OpeningTimes {
+  num opening;
+  num closing;
+  OpeningTimesBreak breaks;
+  OpeningTimes(this.opening, this.closing, this.breaks);
+}
+
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   int minuteWaitTime = 20;
   int minuteInterval = 5;
 
-  late int earliestMinutePickup; 
+  late int earliestMinutePickup;
 
   late List<int> hourList;
   late List<int> minuteList;
@@ -36,11 +49,17 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   late int hourSelectedIndex;
   late int minuteSelectedIndex;
 
+  late List<OpeningTimes> openingTimes = [];
+
   late List<int> updatedMinuteList;
 
   @override
   void initState() {
     super.initState();
+    for (var i = 0; i < 7; i++) {
+      openingTimes.add(OpeningTimes(5, 18, OpeningTimesBreak(12, 13)));
+    }
+
     hourList = [
       for (var i = 00; i < 24; i++) i,
     ];
@@ -64,20 +83,22 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     minuteController = FixedExtentScrollController();
     hourController = FixedExtentScrollController();
 
+    checkOpeningTimes(openingTimes, hourList);
     removePastHours(hourList);
+
     updateHourAndMinute(
       earliestMinutePickup,
     );
 
-    updateEverySecond = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!mounted) return;
-      setState(() {
-        updateHourAndMinute(
-          pickupTime.minute,
-        );
-        earliestMinutePickup = earliestMinutePickup = getEarliestMinutePickup();
-      });
-    });
+    // updateEverySecond = Timer.periodic(const Duration(seconds: 1), (timer) {
+    //   if (!mounted) return;
+    //   setState(() {
+    //     updateHourAndMinute(
+    //       pickupTime.minute,
+    //     );
+    //     earliestMinutePickup = earliestMinutePickup = getEarliestMinutePickup();
+    //   });
+    // });
   }
 
   int getEarliestMinutePickup() {
@@ -100,6 +121,18 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       return true;
     } else {
       return false;
+    }
+  }
+
+  void checkOpeningTimes(List<OpeningTimes> openingTimes, List<int> hourList) {
+    final today = DateTime.now().weekday - 1;
+    for (final int hour in List<int>.from(hourList)) {
+      if (hour < openingTimes[today].opening ||
+          hour > openingTimes[today].closing ||
+          hour >= openingTimes[today].breaks.start &&
+              hour < openingTimes[today].breaks.end) {
+        hourList.remove(hour);
+      }
     }
   }
 
@@ -178,8 +211,10 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   }
 
   void updateHourAndMinute(int minute) {
-    jumpToNextHour();
-    updateMinuteList(hourSelectedIndex, minute);
+    if (hourList.isNotEmpty) {
+      jumpToNextHour();
+      updateMinuteList(hourSelectedIndex, minute);
+    }
   }
 
   void onHourChange(int itemIndex) {
@@ -269,156 +304,165 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
     final String pickupHourString = pickupHour.toString().padLeft(2, '0');
     final String pickupMinuteString = pickupMinute.toString().padLeft(2, '0');
-
-    return Column(
-      children: [
-        const DividerWidget(),
-        CheckoutHeaderRowWidget(
-          header: 'Pickup',
-          buttonText: '$pickupHourString:$pickupMinuteString ($waitTime min)',
-          icon: SvgPicture.asset(
-            'assets/icons/editPen.svg',
-            color: AlpacaColor.primary100,
-            height: 14,
-            width: 14,
-          ),
-          onPressed: () {
-            setIndexesRight();
-            showModalBottomSheet(
-              isScrollControlled: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              context: context,
-              builder: (context) {
-                return StatefulBuilder(
-                  builder: (context, setState) {
-                    return ListView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 24),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Pickup time',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline2
-                                          ?.copyWith(
-                                            color: AlpacaColor.darkNavyColor,
-                                          ),
-                                    ),
-                                    AlpacaClosePopUpWindownButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: AlpacaColor.greyColor,
+    if (DateTime.now().hour > openingTimes[DateTime.now().weekday].closing) {
+      return CheckoutHeaderRowWidget(
+        header: 'Pickup',
+        buttonText: 'Closed',
+        onPressed: () {},
+      );
+    } else {
+      return Column(
+        children: [
+          const DividerWidget(),
+          CheckoutHeaderRowWidget(
+            header: 'Pickup',
+            buttonText: '$pickupHourString:$pickupMinuteString ($waitTime min)',
+            icon: SvgPicture.asset(
+              'assets/icons/editPen.svg',
+              color: AlpacaColor.primary100,
+              height: 14,
+              width: 14,
+            ),
+            onPressed: () {
+              setIndexesRight();
+              showModalBottomSheet(
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                context: context,
+                builder: (context) {
+                  return StatefulBuilder(
+                    builder: (context, setState) {
+                      return ListView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 24),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Pickup time',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2
+                                            ?.copyWith(
+                                              color: AlpacaColor.darkNavyColor,
+                                            ),
+                                      ),
+                                      AlpacaClosePopUpWindownButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
                                   ),
                                 ),
-                                height: 151,
-                                width: double.infinity,
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: ListWheelScrollView.useDelegate(
-                                        controller: hourController,
-                                        onSelectedItemChanged: (itemIndex) {
-                                          setState(() {
-                                            onHourChange(itemIndex);
-                                          });
-                                        },
-                                        overAndUnderCenterOpacity: 0.2,
-                                        physics:
-                                            const FixedExtentScrollPhysics(),
-                                        itemExtent: 50,
-                                        childDelegate:
-                                            ListWheelChildListDelegate(
-                                          children: <Widget>[
-                                            for (var hour in hourList)
-                                              Text(
-                                                hour.toString().padLeft(2, '0'),
-                                                style: textStyle,
-                                              )
-                                          ],
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: AlpacaColor.greyColor,
+                                    ),
+                                  ),
+                                  height: 151,
+                                  width: double.infinity,
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        child: ListWheelScrollView.useDelegate(
+                                          controller: hourController,
+                                          onSelectedItemChanged: (itemIndex) {
+                                            setState(() {
+                                              onHourChange(itemIndex);
+                                            });
+                                          },
+                                          overAndUnderCenterOpacity: 0.2,
+                                          physics:
+                                              const FixedExtentScrollPhysics(),
+                                          itemExtent: 50,
+                                          childDelegate:
+                                              ListWheelChildListDelegate(
+                                            children: <Widget>[
+                                              for (var hour in hourList)
+                                                Text(
+                                                  hour
+                                                      .toString()
+                                                      .padLeft(2, '0'),
+                                                  style: textStyle,
+                                                )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      ':',
-                                      style: textStyle,
-                                    ),
-                                    Flexible(
-                                      child: ListWheelScrollView.useDelegate(
-                                        controller: minuteController,
-                                        onSelectedItemChanged: (itemIndex) {
-                                          onMinuteChange(itemIndex);
-                                        },
-                                        overAndUnderCenterOpacity: 0.2,
-                                        physics:
-                                            const FixedExtentScrollPhysics(),
-                                        itemExtent: 50,
-                                        childDelegate:
-                                            ListWheelChildListDelegate(
-                                          children: <Widget>[
-                                            for (var minute
-                                                in updatedMinuteList)
-                                              Text(
-                                                minute
-                                                    .toString()
-                                                    .padLeft(2, '0'),
-                                                style: textStyle,
-                                              )
-                                          ],
+                                      Text(
+                                        ':',
+                                        style: textStyle,
+                                      ),
+                                      Flexible(
+                                        child: ListWheelScrollView.useDelegate(
+                                          controller: minuteController,
+                                          onSelectedItemChanged: (itemIndex) {
+                                            onMinuteChange(itemIndex);
+                                          },
+                                          overAndUnderCenterOpacity: 0.2,
+                                          physics:
+                                              const FixedExtentScrollPhysics(),
+                                          itemExtent: 50,
+                                          childDelegate:
+                                              ListWheelChildListDelegate(
+                                            children: <Widget>[
+                                              for (var minute
+                                                  in updatedMinuteList)
+                                                Text(
+                                                  minute
+                                                      .toString()
+                                                      .padLeft(2, '0'),
+                                                  style: textStyle,
+                                                )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
-                                child: ActionButton(
-                                  buttonText: 'Done',
-                                  onPressed: () {
-                                    setPickUpTime(
-                                      hourSelectedIndex,
-                                      minuteSelectedIndex,
-                                    );
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              )
-                            ],
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: ActionButton(
+                                    buttonText: 'Done',
+                                    onPressed: () {
+                                      setPickUpTime(
+                                        hourSelectedIndex,
+                                        minuteSelectedIndex,
+                                      );
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            );
-          },
-        ),
-        const DividerWidget(),
-      ],
-    );
+                        ],
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          ),
+          const DividerWidget(),
+        ],
+      );
+    }
   }
 }
