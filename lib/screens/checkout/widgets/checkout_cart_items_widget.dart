@@ -70,7 +70,7 @@ class CheckOutVM {
   }
 
   bool sameItem(CheckoutItemModel item1, CheckoutItemModel item2) {
-    return item1.id == item2.id && item1.itemOptions == item2.itemOptions;
+    return item1.id == item2.id; //&& item1.itemOptions == item2.itemOptions;
   }
 
   int countInList(
