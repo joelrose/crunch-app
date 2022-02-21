@@ -88,21 +88,21 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
     minuteController = FixedExtentScrollController();
     hourController =
-        FixedExtentScrollController(initialItem: checkWhatIsNextOpenHour(0));
+        FixedExtentScrollController(initialItem: checkWhatForNextOpenHour(0));
 
     updateHourAndMinute(
       earliestMinutePickup,
     );
 
-    // updateEverySecond = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   if (!mounted) return;
-    //   setState(() {
-    //     updateHourAndMinute(
-    //       pickupTime.minute,
-    //     );
-    //     earliestMinutePickup = earliestMinutePickup = getEarliestMinutePickup();
-    //   });
-    // });
+    updateEverySecond = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) return;
+      setState(() {
+        updateHourAndMinute(
+          pickupTime.minute,
+        );
+        earliestMinutePickup = earliestMinutePickup = getEarliestMinutePickup();
+      });
+    });
   }
 
   int getEarliestMinutePickup() {
@@ -182,7 +182,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   ) {
     final now = DateTime.now();
     setState(() {
-      pickupHour = openingHourList[newHourIndex];
+      pickupHour = hourList[newHourIndex];
       pickupMinute = updatedMinuteList[newMinuteIndex];
       hourController = FixedExtentScrollController(
         initialItem: newHourIndex,
@@ -297,7 +297,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     }
   }
 
-  int checkWhatIsNextOpenHour(int inputHour) {
+  int checkWhatForNextOpenHour(int inputHour) {
     final int countTop = countsHoursToTop(inputHour);
     final int countBottom = countsHoursToBottom(inputHour);
     if (countBottom < countTop && countBottom != 100) {
@@ -305,6 +305,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     }
     if (countTop < countBottom && countTop != 100) {
       return countTop;
+    }
+    if (countTop == countBottom && countTop != 100) {
+      return 1;
     }
     return 0;
   }
@@ -327,7 +330,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   int countsHoursToBottom(int inputHour) {
     int hour = inputHour;
     int count = 0;
-    for (int i = 0; i > 0; i++) {
+    for (int i = 0; i < 24; i++) {
       hour--;
       count++;
       if (hour < 24) {
@@ -431,10 +434,18 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                         child: ListWheelScrollView.useDelegate(
                                           controller: hourController,
                                           onSelectedItemChanged: (itemIndex) {
-                                            itemIndex +=
-                                                checkWhatIsNextOpenHour(
-                                              itemIndex,
-                                            );
+                                            if (!openingHourList.contains(
+                                              hourList[itemIndex],
+                                            )) {
+                                              itemIndex +=
+                                                  checkWhatForNextOpenHour(
+                                                itemIndex,
+                                              );
+                                              hourController.jumpToItem(
+                                                itemIndex,
+                                              );
+                                            }
+
                                             setState(() {
                                               onHourChange(itemIndex);
                                             });
