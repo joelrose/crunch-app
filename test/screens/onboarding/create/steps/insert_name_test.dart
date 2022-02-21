@@ -3,7 +3,7 @@
 // import 'package:flutter_test/flutter_test.dart';
 // import 'package:pickup/screens/onboarding/create_account/steps/insert_name.dart';
 
-// void main() {
+void main() {
 //   testWidgets('type in first name without lastname', (tester) async {
 //     // Assamble
 //     await tester.pumpWidget(
@@ -115,4 +115,4 @@
 //     // Assert
 //     expect(nameErrorMessage, findsNWidgets(2));
 //   });
-// }
+}
