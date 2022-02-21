@@ -4,165 +4,171 @@ import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/store/store.dart';
 
 void main() {
-  // testWidgets('Search for top bar: Order Overview ', (tester) async {
-  //   await tester.pumpWidget(
-  //     MediaQuery(
-  //       data: const MediaQueryData(),
-  //       child: MaterialApp(
-  //         home: Scaffold(
-  //           body: CheckoutScreen(
-  //             data: CreateStoreData(
-  //               checkoutItems: [],
-  //               storeName: '',
-  //               googleMaps: '',
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
+  testWidgets('Search for top bar: Order Overview ', (tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: CheckoutScreen(
+              data: CreateStoreData(
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
+            ),
+          ),
+        ),
+      ),
+      const Duration(seconds: 1),
+    );
 
-  //   expect(find.text('Order Overview'), findsOneWidget);
-  // });
+    expect(find.text('Order Overview'), findsOneWidget);
+  });
 
-  // testWidgets('Search for items Widget', (tester) async {
-  //   await tester.pumpWidget(
-  //     MediaQuery(
-  //       data: const MediaQueryData(),
-  //       child: MaterialApp(
-  //         home: Scaffold(
-  //           body: CheckoutScreen(
-  //             data: CreateStoreData(
-  //               checkoutItems: [],
-  //               storeName: '',
-  //               googleMaps: '',
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
+  testWidgets('Search for items Widget', (tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: CheckoutScreen(
+              data: CreateStoreData(
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
+            ),
+          ),
+        ),
+      ),
+      const Duration(seconds: 1),
+    );
 
-  //   expect(find.text('Cart items'), findsOneWidget);
-  // });
+    expect(find.text('Cart items'), findsOneWidget);
+  });
 
-  // testWidgets('Search for Pickup Widget', (tester) async {
-  //   await tester.pumpWidget(
-  //     MediaQuery(
-  //       data: const MediaQueryData(),
-  //       child: MaterialApp(
-  //         home: Scaffold(
-  //           body: CheckoutScreen(
-  //             data: CreateStoreData(
-  //               checkoutItems: [],
-  //               storeName: '',
-  //               googleMaps: '',
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
+  testWidgets('Search for Pickup Widget', (tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: CheckoutScreen(
+              data: CreateStoreData(
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
+            ),
+          ),
+        ),
+      ),
+      const Duration(seconds: 1),
+    );
 
-  //   expect(find.text('Pickup'), findsOneWidget);
-  // });
+    expect(find.text('Pickup'), findsOneWidget);
+  });
 
-  // testWidgets('Search for Store Widget', (tester) async {
-  //   await tester.pumpWidget(
-  //     MediaQuery(
-  //       data: const MediaQueryData(),
-  //       child: MaterialApp(
-  //         home: Scaffold(
-  //           body: CheckoutScreen(
-  //             data: CreateStoreData(
-  //               checkoutItems: [],
-  //               storeName: '',
-  //               googleMaps: '',
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
+  testWidgets('Search for Store Widget', (tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: CheckoutScreen(
+              data: CreateStoreData(
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
+            ),
+          ),
+        ),
+      ),
+      const Duration(seconds: 1),
+    );
 
-  //   expect(find.text('Store'), findsOneWidget);
-  // });
+    expect(find.text('Store'), findsOneWidget);
+  });
 
-  // testWidgets('Search for Contact Details Widget', (tester) async {
-  //   await tester.pumpWidget(
-  //     MediaQuery(
-  //       data: const MediaQueryData(),
-  //       child: MaterialApp(
-  //         home: Scaffold(
-  //           body: CheckoutScreen(
-  //             data: CreateStoreData(
-  //               checkoutItems: [],
-  //               storeName: '',
-  //               googleMaps: '',
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
+  testWidgets('Search for Contact Details Widget', (tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: CheckoutScreen(
+              data: CreateStoreData(
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
+            ),
+          ),
+        ),
+      ),
+      const Duration(seconds: 1),
+    );
 
-  //   expect(find.text('Contact details'), findsOneWidget);
-  // });
+    expect(find.text('Contact details'), findsOneWidget);
+  });
 
-  // testWidgets('Search for Phone number Input', (tester) async {
-  //   // await tester.pumpWidget(
-  //   //   MediaQuery(
-  //   //     data: const MediaQueryData(),
-  //   //     child: MaterialApp(
-  //   //       home: Scaffold(
-  //   //         body: CheckoutScreen(
-  //   //           data: CreateStoreData(
-  //   //               checkoutItems: [], storeName: '', googleMaps: ''),
-  //   //         ),
-  //   //       ),
-  //   //     ),
-  //   //   ),
-  //   // );
+  testWidgets('Search for Phone number Input', (tester) async {
+    // await tester.pumpWidget(
+    //   MediaQuery(
+    //     data: const MediaQueryData(),
+    //     child: MaterialApp(
+    //       home: Scaffold(
+    //         body: CheckoutScreen(
+    //           data: CreateStoreData(
+    //               checkoutItems: [], storeName: '', googleMaps: ''),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
 
-  //   // expect(find.text('Phone number'), findsOneWidget);
-  // });
+    // expect(find.text('Phone number'), findsOneWidget);
+  });
 
-  // testWidgets('Search for Order summary Widget', (tester) async {
-  //   // await tester.pumpWidget(
-  //   //   MediaQuery(
-  //   //     data: const MediaQueryData(),
-  //   //     child: MaterialApp(
-  //   //       home: Scaffold(
-  //   //         body: CheckoutScreen(
-  //   //           data: CreateStoreData(
-  //   //               checkoutItems: [], storeName: '', googleMaps: ''),
-  //   //         ),
-  //   //       ),
-  //   //     ),
-  //   //   ),
-  //   // );
+  testWidgets('Search for Order summary Widget', (tester) async {
+    // await tester.pumpWidget(
+    //   MediaQuery(
+    //     data: const MediaQueryData(),
+    //     child: MaterialApp(
+    //       home: Scaffold(
+    //         body: CheckoutScreen(
+    //           data: CreateStoreData(
+    //               checkoutItems: [], storeName: '', googleMaps: ''),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
 
-  //   // expect(find.text('Order summary'), findsOneWidget);
-  // });
+    // expect(find.text('Order summary'), findsOneWidget);
+  });
 
-  // testWidgets('Search for Checkout Button', (tester) async {
-  //   await tester.pumpWidget(
-  //     MediaQuery(
-  //       data: const MediaQueryData(),
-  //       child: MaterialApp(
-  //         home: Scaffold(
-  //           body: CheckoutScreen(
-  //             data: CreateStoreData(
-  //               checkoutItems: [],
-  //               storeName: '',
-  //               googleMaps: '',
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
+  testWidgets('Search for Checkout Button', (tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: CheckoutScreen(
+              data: CreateStoreData(
+                checkoutItems: [],
+                storeName: '',
+                googleMaps: '',
+              ),
+            ),
+          ),
+        ),
+      ),
+      const Duration(seconds: 1),
+    );
 
-  //   expect(find.text('Pay now'), findsOneWidget);
-  // });
+    expect(find.text('Pay now'), findsOneWidget);
+  });
 }

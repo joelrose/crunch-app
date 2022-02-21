@@ -7,6 +7,6 @@ class MockAuth extends Mock implements FirebaseAuth {
 }
 
 void main() {
-  // setUp(() {});
-  // tearDown(() {});
+  setUp(() {});
+  tearDown(() {});
 }
