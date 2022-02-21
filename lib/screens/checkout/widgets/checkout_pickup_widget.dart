@@ -34,6 +34,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
   late int earliestMinutePickup;
 
+  late List<int> openingHourList;
   late List<int> hourList;
   late List<int> minuteList;
 
@@ -63,6 +64,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     hourList = [
       for (var i = 00; i < 24; i++) i,
     ];
+    openingHourList = List.from(hourList);
     minuteList = [
       for (var i = 00; i < 60; i += minuteInterval) i,
     ];
@@ -80,11 +82,13 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     );
     hourSelectedIndex = 0;
     minuteSelectedIndex = 0;
-    minuteController = FixedExtentScrollController();
-    hourController = FixedExtentScrollController();
 
-    checkOpeningTimes(openingTimes, hourList);
-    removePastHours(hourList);
+    checkOpeningTimes(openingTimes, openingHourList);
+    removePastHours(openingHourList);
+
+    minuteController = FixedExtentScrollController();
+    hourController =
+        FixedExtentScrollController(initialItem: checkWhatIsNextOpenHour(0));
 
     updateHourAndMinute(
       earliestMinutePickup,
@@ -178,7 +182,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   ) {
     final now = DateTime.now();
     setState(() {
-      pickupHour = hourList[newHourIndex];
+      pickupHour = openingHourList[newHourIndex];
       pickupMinute = updatedMinuteList[newMinuteIndex];
       hourController = FixedExtentScrollController(
         initialItem: newHourIndex,
@@ -203,15 +207,16 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
   }
 
   void jumpToNextHour() {
-    if (earliestMinutePickup > 55 && DateTime.now().hour == hourList[0] ||
+    if (earliestMinutePickup > 55 &&
+            DateTime.now().hour == openingHourList[0] ||
         earliestMinutePickup < DateTime.now().minute &&
-            DateTime.now().hour == hourList[0]) {
-      hourList.removeAt(0);
+            DateTime.now().hour == openingHourList[0]) {
+      openingHourList.removeAt(0);
     }
   }
 
   void updateHourAndMinute(int minute) {
-    if (hourList.isNotEmpty) {
+    if (openingHourList.isNotEmpty) {
       jumpToNextHour();
       updateMinuteList(hourSelectedIndex, minute);
     }
@@ -219,6 +224,9 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
   void onHourChange(int itemIndex) {
     setState(() {
+      hourController = FixedExtentScrollController(
+        initialItem: itemIndex,
+      );
       hourSelectedIndex = itemIndex;
     });
     updateMinuteList(
@@ -264,12 +272,12 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
   int getIndexOfHour(DateTime pickupTime) {
     final int hourIndex =
-        hourList.indexWhere((hour) => hour == pickupTime.hour);
+        openingHourList.indexWhere((hour) => hour == pickupTime.hour);
     return hourIndex;
   }
 
   void setIndexesRight() {
-    if (pickupTime.hour >= hourList[0]) {
+    if (pickupTime.hour >= openingHourList[0]) {
       setState(() {
         hourSelectedIndex = getIndexOfHour(pickupTime);
         minuteSelectedIndex = getIndexOfMinute(updatedMinuteList, pickupTime);
@@ -287,6 +295,48 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     } else {
       return (pickupTime.minute - currentMinute).toString();
     }
+  }
+
+  int checkWhatIsNextOpenHour(int inputHour) {
+    final int countTop = countsHoursToTop(inputHour);
+    final int countBottom = countsHoursToBottom(inputHour);
+    if (countBottom < countTop && countBottom != 100) {
+      return -countBottom;
+    }
+    if (countTop < countBottom && countTop != 100) {
+      return countTop;
+    }
+    return 0;
+  }
+
+  int countsHoursToTop(int inputHour) {
+    int hour = inputHour;
+    int count = 0;
+    for (int i = 0; i < 24; i++) {
+      hour++;
+      count++;
+      if (hour < 24) {
+        if (openingHourList.contains(hour)) {
+          return count;
+        }
+      }
+    }
+    return 100;
+  }
+
+  int countsHoursToBottom(int inputHour) {
+    int hour = inputHour;
+    int count = 0;
+    for (int i = 0; i > 0; i++) {
+      hour--;
+      count++;
+      if (hour < 24) {
+        if (openingHourList.contains(hour)) {
+          return count;
+        }
+      }
+    }
+    return 100;
   }
 
   @override
@@ -381,6 +431,10 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                         child: ListWheelScrollView.useDelegate(
                                           controller: hourController,
                                           onSelectedItemChanged: (itemIndex) {
+                                            itemIndex +=
+                                                checkWhatIsNextOpenHour(
+                                              itemIndex,
+                                            );
                                             setState(() {
                                               onHourChange(itemIndex);
                                             });
@@ -393,12 +447,24 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
                                               ListWheelChildListDelegate(
                                             children: <Widget>[
                                               for (var hour in hourList)
-                                                Text(
-                                                  hour
-                                                      .toString()
-                                                      .padLeft(2, '0'),
-                                                  style: textStyle,
-                                                )
+                                                if (openingHourList
+                                                    .contains(hour))
+                                                  Text(
+                                                    hour
+                                                        .toString()
+                                                        .padLeft(2, '0'),
+                                                    style: textStyle,
+                                                  )
+                                                else
+                                                  Text(
+                                                    hour
+                                                        .toString()
+                                                        .padLeft(2, '0'),
+                                                    style: textStyle!.copyWith(
+                                                      color:
+                                                          AlpacaColor.greyColor,
+                                                    ),
+                                                  )
                                             ],
                                           ),
                                         ),
