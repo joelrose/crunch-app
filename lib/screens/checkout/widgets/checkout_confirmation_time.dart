@@ -24,13 +24,13 @@ class _CheckoutConfirmationTimeState extends State<CheckoutConfirmationTime> {
     pickupTime = widget.pickupTime;
     minutesToPickupOrder = pickupTime.difference(now).inMinutes;
     if (minutesToPickupOrder >= 0) {
-      Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (!mounted) return;
-        setState(() {
-          now = DateTime.now();
-          minutesToPickupOrder = pickupTime.difference(now).inMinutes;
-        });
-      });
+      // Timer.periodic(const Duration(seconds: 1), (timer) {
+      //   if (!mounted) return;
+      //   setState(() {
+      //     now = DateTime.now();
+      //     minutesToPickupOrder = pickupTime.difference(now).inMinutes;
+      //   });
+      // });
     }
 
     super.initState();

@@ -1,3 +1,4 @@
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
@@ -5,113 +6,125 @@ import 'package:pickup/screens/store/store.dart';
 
 void main() {
   testWidgets('Search for top bar: Order Overview ', (tester) async {
-    await tester.pumpWidget(
-      MediaQuery(
-        data: const MediaQueryData(),
-        child: MaterialApp(
-          home: Scaffold(
-            body: CheckoutScreen(
-              data: CreateStoreData(
-                checkoutItems: [],
-                storeName: '',
-                googleMaps: '',
+    fakeAsync((async) {
+      tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(),
+          child: MaterialApp(
+            home: Scaffold(
+              body: CheckoutScreen(
+                data: CreateStoreData(
+                  checkoutItems: [],
+                  storeName: '',
+                  googleMaps: '',
+                ),
               ),
             ),
           ),
         ),
-      ),
-      const Duration(seconds: 1),
-    );
+      );
+      async.elapse(const Duration(seconds: 1));
 
-    expect(find.text('Order Overview'), findsOneWidget);
+      expect(find.text('Order Overview'), findsOneWidget);
+    });
   });
 
   testWidgets('Search for items Widget', (tester) async {
-    await tester.pumpWidget(
-      MediaQuery(
-        data: const MediaQueryData(),
-        child: MaterialApp(
-          home: Scaffold(
-            body: CheckoutScreen(
-              data: CreateStoreData(
-                checkoutItems: [],
-                storeName: '',
-                googleMaps: '',
+    fakeAsync((async) {
+      tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(),
+          child: MaterialApp(
+            home: Scaffold(
+              body: CheckoutScreen(
+                data: CreateStoreData(
+                  checkoutItems: [],
+                  storeName: '',
+                  googleMaps: '',
+                ),
               ),
             ),
           ),
         ),
-      ),
-      const Duration(seconds: 1),
-    );
+      );
+      async.elapse(const Duration(seconds: 1));
 
-    expect(find.text('Cart items'), findsOneWidget);
+      expect(find.text('Cart items'), findsOneWidget);
+    });
   });
 
   testWidgets('Search for Pickup Widget', (tester) async {
-    await tester.pumpWidget(
-      MediaQuery(
-        data: const MediaQueryData(),
-        child: MaterialApp(
-          home: Scaffold(
-            body: CheckoutScreen(
-              data: CreateStoreData(
-                checkoutItems: [],
-                storeName: '',
-                googleMaps: '',
+    fakeAsync((async) {
+      tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(),
+          child: MaterialApp(
+            home: Scaffold(
+              body: CheckoutScreen(
+                data: CreateStoreData(
+                  checkoutItems: [],
+                  storeName: '',
+                  googleMaps: '',
+                ),
               ),
             ),
           ),
         ),
-      ),
-      const Duration(seconds: 1),
-    );
+        const Duration(seconds: 1),
+      );
+      async.elapse(const Duration(seconds: 1));
 
-    expect(find.text('Pickup'), findsOneWidget);
+      expect(find.text('Pickup'), findsOneWidget);
+    });
   });
 
   testWidgets('Search for Store Widget', (tester) async {
-    await tester.pumpWidget(
-      MediaQuery(
-        data: const MediaQueryData(),
-        child: MaterialApp(
-          home: Scaffold(
-            body: CheckoutScreen(
-              data: CreateStoreData(
-                checkoutItems: [],
-                storeName: '',
-                googleMaps: '',
+    fakeAsync((async) {
+      tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(),
+          child: MaterialApp(
+            home: Scaffold(
+              body: CheckoutScreen(
+                data: CreateStoreData(
+                  checkoutItems: [],
+                  storeName: '',
+                  googleMaps: '',
+                ),
               ),
             ),
           ),
         ),
-      ),
-      const Duration(seconds: 1),
-    );
+      );
+      async.elapse(const Duration(seconds: 1));
 
-    expect(find.text('Store'), findsOneWidget);
+      expect(find.text('Store'), findsOneWidget);
+    });
   });
 
   testWidgets('Search for Contact Details Widget', (tester) async {
-    await tester.pumpWidget(
-      MediaQuery(
-        data: const MediaQueryData(),
-        child: MaterialApp(
-          home: Scaffold(
-            body: CheckoutScreen(
-              data: CreateStoreData(
-                checkoutItems: [],
-                storeName: '',
-                googleMaps: '',
+    fakeAsync((async) {
+      tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(),
+          child: MaterialApp(
+            home: Scaffold(
+              body: CheckoutScreen(
+                data: CreateStoreData(
+                  checkoutItems: [],
+                  storeName: '',
+                  googleMaps: '',
+                ),
               ),
             ),
           ),
         ),
-      ),
-      const Duration(seconds: 1),
-    );
+        const Duration(seconds: 1),
+      );
+      async.elapse(const Duration(seconds: 1));
 
-    expect(find.text('Contact details'), findsOneWidget);
+      expect(find.text('Contact details'), findsOneWidget);
+    });
   });
 
   testWidgets('Search for Phone number Input', (tester) async {
@@ -151,24 +164,26 @@ void main() {
   });
 
   testWidgets('Search for Checkout Button', (tester) async {
-    await tester.pumpWidget(
-      MediaQuery(
-        data: const MediaQueryData(),
-        child: MaterialApp(
-          home: Scaffold(
-            body: CheckoutScreen(
-              data: CreateStoreData(
-                checkoutItems: [],
-                storeName: '',
-                googleMaps: '',
+    fakeAsync((async) {
+      tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(),
+          child: MaterialApp(
+            home: Scaffold(
+              body: CheckoutScreen(
+                data: CreateStoreData(
+                  checkoutItems: [],
+                  storeName: '',
+                  googleMaps: '',
+                ),
               ),
             ),
           ),
         ),
-      ),
-      const Duration(seconds: 1),
-    );
+      );
+      async.elapse(const Duration(seconds: 1));
 
-    expect(find.text('Pay now'), findsOneWidget);
+      expect(find.text('Pay now'), findsOneWidget);
+    });
   });
 }
