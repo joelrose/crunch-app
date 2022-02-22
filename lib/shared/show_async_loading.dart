@@ -9,18 +9,18 @@ Future<void> showAsyncLoading(
   String successText = '',
   String errorText = '',
   EasyLoadingIndicatorType selectedIndicatorType =
-      EasyLoadingIndicatorType.doubleBounce,
+      EasyLoadingIndicatorType.ring,
 ]) async {
   EasyLoading.instance
     ..loadingStyle = EasyLoadingStyle.custom
     ..indicatorType = selectedIndicatorType
-    ..indicatorSize = 50.0
+    ..indicatorSize = 45.0
     ..indicatorColor = AlpacaColor.primary100
     ..backgroundColor = AlpacaColor.white100Color
     ..textColor = AlpacaColor.darkNavyColor
     ..textStyle = Theme.of(context).textTheme.headline3
     ..textPadding = const EdgeInsets.all(12)
-    ..maskColor = AlpacaColor.white100Color;
+    ..maskColor = const Color.fromARGB(100, 0, 0, 0);
   EasyLoading.show(
     status: loadingText,
     maskType: EasyLoadingMaskType.custom,
