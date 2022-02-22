@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
 import 'package:pickup/screens/checkout/checkout_confirmation.dart';
@@ -14,6 +15,7 @@ import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/extensions.dart';
+import 'package:pickup/shared/show_async_loading.dart';
 import 'package:sanity/sanity.dart';
 
 class CreateCheckoutData {
@@ -101,7 +103,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             creationTime: DateTime.now(),
           ),
         );
-      }
+      } 
     } catch (e) {
       print(e);
     }
@@ -117,7 +119,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: ActionButton(
           onPressed: () {
-            _checkout();
+            showAsyncLoading(
+              context,
+              _checkout(),
+            );
           },
           buttonText: 'Pay now',
         ),
