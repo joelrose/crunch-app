@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
-import 'package:pickup/screens/checkout/checkout_confirmation.dart';
+import 'package:pickup/screens/checkout/models/models.dart';
+import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';

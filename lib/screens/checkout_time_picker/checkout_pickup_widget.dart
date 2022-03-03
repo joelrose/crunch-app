@@ -9,7 +9,7 @@ import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 class CheckoutPickupWidget extends StatefulWidget {
   const CheckoutPickupWidget({Key? key, required this.getPickupTime})
       : super(key: key);
-  final Function getPickupTime;
+  final Function(DateTime) getPickupTime;
 
   @override
   State<CheckoutPickupWidget> createState() => _CheckoutPickupWidgetState();

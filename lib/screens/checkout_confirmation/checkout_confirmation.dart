@@ -1,12 +1,12 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pickup/screens/checkout/checkout.dart';
-import 'package:pickup/screens/checkout/widgets/checkout_confirmation_time.dart';
+import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/screens/checkout_confirmation/checkout_confirmation_time.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/shared/utilities.dart';
 
