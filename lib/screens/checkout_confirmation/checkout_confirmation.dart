@@ -2,13 +2,12 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
+import 'package:pickup/screens/checkout/widgets/check_out_items_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
-import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation_time.dart';
 import 'package:pickup/screens/home/home.dart';
-import 'package:pickup/shared/utilities.dart';
 
 class CheckoutConfirmationScreen extends StatelessWidget {
   const CheckoutConfirmationScreen({Key? key, required this.data})
@@ -69,49 +68,8 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                       onPressed: () {},
                       buttonText: '',
                       disableButton: true,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: data.checkoutItems.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, i) {
-                              final checkoutItem = data.checkoutItems[i];
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 3),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '1x ${checkoutItem.title.english}',
-                                      style: const TextStyle(
-                                        color: AlpacaColor.darkGreyColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    Text(
-                                      Utilities.currencyFormat(
-                                        checkoutItem.price,
-                                      ),
-                                      style: const TextStyle(
-                                        color: AlpacaColor.blackColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        const DividerWidget(),
-                      ],
                     ),
+                    CheckOutItemsWidget(checkoutItems: data.checkoutItems),
                     CheckoutStoreDirectionWidget(googleMaps: data.googleMaps),
                     Padding(
                       padding: const EdgeInsets.symmetric(
