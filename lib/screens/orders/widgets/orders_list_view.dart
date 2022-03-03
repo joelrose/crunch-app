@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
+import 'package:pickup/screens/orders/view/order_detail_view.dart';
 
 class OrdersListView extends StatelessWidget {
   const OrdersListView({Key? key, required this.order}) : super(key: key);
@@ -12,7 +13,8 @@ class OrdersListView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return InkWell(
-      onTap: () {},
+      onTap: () => Navigator.of(context)
+          .pushNamed(OrderDetailView.route, arguments: order),
       splashColor: AlpacaColor.primary20,
       child: Column(
         children: [

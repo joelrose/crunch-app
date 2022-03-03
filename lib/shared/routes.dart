@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
@@ -8,6 +9,7 @@ import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
+import 'package:pickup/screens/orders/view/order_detail_view.dart';
 import 'package:pickup/screens/profile/profile.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/store/store.dart';
@@ -70,6 +72,11 @@ class Router {
       case RestaurantDetailView.route:
         return CupertinoPageRoute(
           builder: (context) => RestaurantDetailView(),
+        );
+      case OrderDetailView.route:
+        final args = settings.arguments! as GetOrderResponseDto;
+        return CupertinoPageRoute(
+          builder: (_) => OrderDetailView(order: args),
         );
       default:
         return MaterialPageRoute(
