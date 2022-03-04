@@ -54,7 +54,7 @@ Future<void> bootstrap(
           providers: [
             BlocProvider(
               create: (_) => DiscoverCubit(
-                locator<SanityCms>(),
+                locator<SanityService>(),
               ),
             ),
           ],

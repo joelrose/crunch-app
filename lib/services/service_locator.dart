@@ -20,8 +20,8 @@ Future<void> setupServiceLocator() async {
     );
   }
 
-  if (!locator.isRegistered<SanityCms>()) {
-    locator.registerLazySingleton<SanityCms>(
+  if (!locator.isRegistered<SanityService>()) {
+    locator.registerLazySingleton<SanityService>(
       () => SanityCms(
         projectId: 'd9v945zu',
         dataset: 'production',
