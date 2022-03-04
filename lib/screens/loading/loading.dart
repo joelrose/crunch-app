@@ -119,43 +119,51 @@ class _LoadingScreenState extends State<LoadingScreen>
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: <Widget>[
-            Positioned.fill(
-              left: -size.height,
-              right: -size.height,
-              bottom: -(size.width / 2),
-              top: -100,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: AnimatedBuilder(
-                  builder: (BuildContext context, Widget? child) {
-                    return Container(
-                      height: heightSequence.value * size.height,
-                      width: widthSequence.value * size.width,
-                      alignment: Alignment.bottomCenter,
-                      decoration: const BoxDecoration(
-                        color: AlpacaColor.primary100,
-                        shape: BoxShape.circle,
-                      ),
-                    );
-                  },
-                  animation: animationController,
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: Align(
-                child: AnimatedOpacity(
-                  opacity: isLogoVisible ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 300),
-                  child: SvgPicture.asset(
-                    'assets/logo/crunch-logo.svg',
-                    color: AlpacaColor.white100Color,
-                    width: MediaQuery.of(context).size.width * 0.65,
-                  ),
-                ),
-              ),
-            ),
+            _buildAnimation(size),
+            _buildLogo(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return Positioned.fill(
+      child: Align(
+        child: AnimatedOpacity(
+          opacity: isLogoVisible ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 300),
+          child: SvgPicture.asset(
+            'assets/logo/crunch-logo.svg',
+            color: AlpacaColor.white100Color,
+            width: MediaQuery.of(context).size.width * 0.65,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnimation(Size size) {
+    return Positioned.fill(
+      left: -size.height,
+      right: -size.height,
+      bottom: -(size.width / 2),
+      top: -100,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: AnimatedBuilder(
+          builder: (BuildContext context, Widget? child) {
+            return Container(
+              height: heightSequence.value * size.height,
+              width: widthSequence.value * size.width,
+              alignment: Alignment.bottomCenter,
+              decoration: const BoxDecoration(
+                color: AlpacaColor.primary100,
+                shape: BoxShape.circle,
+              ),
+            );
+          },
+          animation: animationController,
         ),
       ),
     );
