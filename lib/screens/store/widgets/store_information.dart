@@ -23,43 +23,53 @@ class StoreInformation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Store information',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
-                        color: AlpacaColor.darkNavyColor,
-                      ),
+          _buildInformation(context),
+          ..._buildInformationItems(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInformation(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Store information',
+            style: Theme.of(context).textTheme.headline3!.copyWith(
+                  color: AlpacaColor.darkNavyColor,
                 ),
-                SvgPicture.asset(
-                  'assets/icons/chevron-left.svg',
-                  color: AlpacaColor.lightGreyColor100,
-                  height: 24,
-                  width: 24,
-                ),
-              ],
-            ),
           ),
-          const StoreInformationItem(
-            icon: 'assets/icons/clock-opening-times.svg',
-            title: 'Opening times',
-            description: '11:00-22:00',
-          ),
-          StoreInformationItem(
-            icon: 'assets/icons/phone-store-address.svg',
-            title: 'Contact number',
-            description: phoneNumer,
-          ),
-          StoreInformationItem(
-            icon: 'assets/icons/location-store-address.svg',
-            title: 'Store address',
-            description: address,
+          SvgPicture.asset(
+            'assets/icons/chevron-left.svg',
+            color: AlpacaColor.lightGreyColor100,
+            height: 24,
+            width: 24,
           ),
         ],
       ),
     );
+  }
+
+  List<Widget> _buildInformationItems() {
+    return [
+      const StoreInformationItem(
+        icon: 'assets/icons/clock-opening-times.svg',
+        title: 'Opening times',
+        description: '11:00-22:00',
+      ),
+      StoreInformationItem(
+        icon: 'assets/icons/phone-store-address.svg',
+        title: 'Contact number',
+        description: phoneNumer,
+      ),
+      StoreInformationItem(
+        icon: 'assets/icons/location-store-address.svg',
+        title: 'Store address',
+        description: address,
+      ),
+    ];
   }
 }
