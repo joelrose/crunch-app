@@ -5,16 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 
-class ProductAmountAndAddToOrder extends StatefulWidget {
+class ProductAmountAndAddToOrder extends StatelessWidget {
   const ProductAmountAndAddToOrder({Key? key}) : super(key: key);
 
-  @override
-  _ProductAmountAndAddToOrderState createState() =>
-      _ProductAmountAndAddToOrderState();
-}
-
-class _ProductAmountAndAddToOrderState
-    extends State<ProductAmountAndAddToOrder> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<StoreDetailCubit, StoreDetailState>(
@@ -137,22 +130,26 @@ class _ProductAmountAndAddToOrderState
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: ActionButton(
-                      onPressed: () {
-                        context.read<StoreDetailCubit>().addToOrderOnClick();
-                        Navigator.pop(context);
-                      },
-                      buttonText: 'Add to order',
-                    ),
-                  )
+                  _buildButton(context),
                 ],
               ),
             ),
           ],
         );
       },
+    );
+  }
+
+  Widget _buildButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: ActionButton(
+        onPressed: () {
+          context.read<StoreDetailCubit>().addToOrderOnClick();
+          Navigator.pop(context);
+        },
+        buttonText: 'Add to order',
+      ),
     );
   }
 }

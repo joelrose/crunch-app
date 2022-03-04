@@ -22,14 +22,16 @@ class HomeView extends StatelessWidget {
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         backgroundColor: AlpacaColor.white100Color,
-        body: IndexedStack(
-          index: selectedTab.index,
-          children: const [
-            SafeArea(child: DiscoverPage()),
-            SafeArea(child: OrdersPage()),
-            SafeArea(child: ConstructionScreen(title: 'Vouchers')),
-            SafeArea(child: ConstructionScreen(title: 'Friends')),
-          ],
+        body: SafeArea(
+          child: IndexedStack(
+            index: selectedTab.index,
+            children: const [
+              DiscoverPage(),
+              OrdersPage(),
+              ConstructionScreen(title: 'Vouchers'),
+              ConstructionScreen(title: 'Friends'),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

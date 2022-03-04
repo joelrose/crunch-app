@@ -1,24 +1,21 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class AuthServiceFirebase implements AuthService {
   AuthServiceFirebase(
-    FirebaseAuth firebaseAuth,
-    GoogleSignIn googleSignIn,
-    GoogleHelper googleHelper,
-  ) {
-    _firebaseAuth = firebaseAuth;
-    _googleSignIn = googleSignIn;
-    _googleHelper = googleHelper;
-  }
+    this._firebaseAuth,
+    this._googleSignIn,
+    this._googleHelper,
+  );
 
-  late FirebaseAuth _firebaseAuth;
-  late GoogleSignIn _googleSignIn;
-  late GoogleHelper _googleHelper;
+  final FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
+  final GoogleHelper _googleHelper;
 
   @override
   Future<User?> get getUser => Future<User?>.value(_firebaseAuth.currentUser);
@@ -103,9 +100,13 @@ class AuthServiceFirebase implements AuthService {
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
         verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
-        verificationFailed: (FirebaseAuthException error) {},
+        verificationFailed: (FirebaseAuthException exception) {
+          FirebaseCrashlytics.instance.recordError(exception, null);
+        },
       );
-    } catch (e) {}
+    } catch (exception, stack) {
+      FirebaseCrashlytics.instance.recordError(exception, stack);
+    }
   }
 
   @override

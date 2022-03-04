@@ -54,7 +54,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
                   theme.headline5!.copyWith(color: AlpacaColor.white100Color),
             ),
           ),
-          buildTextField(),
+          _buildTextField(),
           Row(
             children: [
               const Expanded(
@@ -80,13 +80,13 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
             ],
           ),
           SocialOnboarding(isSignUp: widget.isSignUp),
-          buildAgreeToTerms()
+          _buildAgreeToTerms()
         ],
       ),
     );
   }
 
-  Widget buildAgreeToTerms() {
+  Widget _buildAgreeToTerms() {
     return Padding(
       padding: const EdgeInsets.only(
         left: 20,
@@ -135,7 +135,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
     );
   }
 
-  Widget buildTextField() {
+  Widget _buildTextField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

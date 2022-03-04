@@ -16,16 +16,18 @@ class CheckoutPickupWidget extends StatefulWidget {
 }
 
 class OpeningTimesBreak {
+  OpeningTimesBreak(this.start, this.end);
+
   int start;
   int end;
-  OpeningTimesBreak(this.start, this.end);
 }
 
 class OpeningTimes {
+  OpeningTimes(this.opening, this.closing, this.breaks);
+
   num opening;
   num closing;
   OpeningTimesBreak breaks;
-  OpeningTimes(this.opening, this.closing, this.breaks);
 }
 
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
