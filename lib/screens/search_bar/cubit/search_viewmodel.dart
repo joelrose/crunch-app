@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:sanity/sanity.dart';
 
 class DiscoverySearchBarViewModel {
@@ -10,10 +12,16 @@ class DiscoverySearchBarViewModel {
 
   List<String> searchHistory = ['test 1'];
 
-  final bool isAppBarVisible = false;
+  bool isAppBarVisible = false;
   bool isRecentSearchVisible = true;
 
   String query = '';
+
+  void newQuery(String newQuery) {
+    query = newQuery;
+    search();
+    updateRecentSearchVisibilty();
+  }
 
   void search() {
     filteredRestaurant = [];
@@ -28,8 +36,12 @@ class DiscoverySearchBarViewModel {
     return restaurantName[query.length].toLowerCase() == query.toLowerCase();
   }
 
-  void deleteSearchTerm(String search) {
-    searchHistory.remove(search);
+  void addQuerry(String querry) {
+    searchHistory.insert(0, querry);
+  }
+
+  void deleteQuerry(String querry) {
+    searchHistory.remove(querry);
   }
 
   void updateRecentSearchVisibilty() {
