@@ -19,7 +19,7 @@ Widget createHomeScreen() => MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (_) => DiscoverCubit(
-            locator<SanityService>(),
+            locator<HermesService>(),
           ),
         ),
       ],

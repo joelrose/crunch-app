@@ -44,9 +44,10 @@ class MatchingRestaurantsWidget extends StatelessWidget {
                   term: controller.query,
                   filter: controller.query,
                 ),
-                child: RestaurantCard(
+                child: Container(),
+                /*RestaurantCard(
                   restaurant: restaurant,
-                ),
+                ),*/
               ),
             );
           },

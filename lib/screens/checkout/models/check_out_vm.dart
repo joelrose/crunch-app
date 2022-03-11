@@ -17,7 +17,7 @@ class CheckOutVM {
 
   void addToSummary(CheckoutItemModel item) {
     for (final summaryItem in checkoutSummaryList) {
-      if (summaryItem.checkoutItem.id == item.id) {
+      if (summaryItem.checkoutItem.plu == item.plu) {
         summaryItem.amount += 1;
         summaryItem.totalPrice += calculateItemPrice(item);
         return;
@@ -35,7 +35,7 @@ class CheckOutVM {
 
   double calculateItemPrice(CheckoutItemModel item) {
     double price = item.price.toDouble();
-    for (final itemOption in item.itemOptions) {
+    for (final itemOption in item.itemOptionPlus) {
       price += itemOption.option.price;
     }
     return price;
