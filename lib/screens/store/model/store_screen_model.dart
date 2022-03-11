@@ -4,7 +4,7 @@ import 'package:pickup/shared/enum/viewstate.dart';
 import 'package:sanity/sanity.dart';
 
 class StoreScreenModel extends BaseModel {
-  final SanityCms cmsClient = locator<SanityCms>();
+  final SanityService cmsClient = locator<SanityService>();
   late RestaurantStoreModel _restaurant;
 
   RestaurantStoreModel get restaurant => _restaurant;

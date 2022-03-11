@@ -9,7 +9,7 @@ class DiscoverCubit extends Cubit<DiscoverState> {
     fetchRestaurants();
   }
 
-  final SanityCms _sanityClient;
+  final SanityService _sanityClient;
 
   Future<void> fetchRestaurants() async {
     emit(state.copyWith(status: DiscoverStatus.loading));
