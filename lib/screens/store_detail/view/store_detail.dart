@@ -44,7 +44,10 @@ class StoreDetailView extends StatelessWidget {
             child: AlpacaStretchyHeader(
               image: image,
               child: Column(
-                children: const [ProductBasicDetails(), ProductRadioCheckbox()],
+                children: const [
+                  ProductBasicDetails(),
+                  ProductRadioCheckbox(),
+                ],
               ),
             ),
           ),

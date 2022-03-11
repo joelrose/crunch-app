@@ -106,8 +106,8 @@ class _StoreMenueListState extends State<StoreMenueList> {
                             child: Padding(
                               padding:
                                   const EdgeInsets.fromLTRB(18, 18, 34, 18),
-                              child: Wrap(
-                                runSpacing: 10,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     children: [
@@ -145,11 +145,20 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                         ),
                                     ],
                                   ),
-                                  Text(
-                                    item.description!,
-                                    style:
-                                        Theme.of(context).textTheme.headline5,
+                                  Container(
+                                    height: 10,
                                   ),
+                                  if (item.description != null &&
+                                      item.description != '') ...[
+                                    Text(
+                                      item.description!,
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    ),
+                                    Container(
+                                      height: 10,
+                                    ),
+                                  ],
                                   Text(
                                     Utilities.currencyFormat(item.price!),
                                     style: Theme.of(context)
