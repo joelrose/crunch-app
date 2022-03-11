@@ -29,9 +29,9 @@ class RestaurantListView extends StatelessWidget {
                   : const SizedBox(
                       height: 25,
                     ),
-              itemCount: state.restaurants.length,
+              itemCount: state.stores.length,
               itemBuilder: (context, index) {
-                final restaurant = state.restaurants[index];
+                final restaurant = state.stores[index];
                 return RestaurantCard(restaurant: restaurant);
               },
             ),

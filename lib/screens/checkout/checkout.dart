@@ -50,17 +50,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Future<String?> _getPaymentIntent() async {
     final hermesService = locator<HermesService>();
 
-    final response = await hermesService.client.apiOrdersPost(
-      body: CreateOrderRequestDto(
-        storeId: widget.data.storeName,
-        price: widget.data.checkoutItems.getTotalPrice().toDouble(),
-        items: [],
-      ),
-    );
+    // final response = await hermesService.client.apiOrdersPost(
+    //   body: CreateOrderRequestDto(
+    //     storeId: widget.data.storeName,
+    //     price: widget.data.checkoutItems.getTotalPrice().toDouble(),
+    //     items: [],
+    //   ),
+    // );
 
-    if (response.isSuccessful) {
-      return response.body!.clientSecret!;
-    }
+    // if (response.isSuccessful) {
+    //   return response.body!.clientSecret!;
+    // }
 
     return null;
   }

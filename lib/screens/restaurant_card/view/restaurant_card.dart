@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/store/store.dart';
 import 'package:sanity/sanity.dart';
 
@@ -11,14 +12,14 @@ class RestaurantCard extends StatelessWidget {
     required this.restaurant,
   }) : super(key: key);
 
-  final RestaurantOverviewModel restaurant;
+  final GetMenusResponseDto restaurant;
 
   @override
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () => {
         Navigator.of(context)
-            .pushNamed(StoreScreen.route, arguments: restaurant.id)
+            .pushNamed(StoreScreen.route, arguments: restaurant.menuId)
       },
       child: Material(
         color: Colors.white,
@@ -40,7 +41,7 @@ class RestaurantCard extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage(
-                                restaurant.image,
+                                restaurant.menuImageUrl ?? '',
                               ),
                               fit: BoxFit.cover,
                             ),
@@ -111,7 +112,7 @@ class RestaurantCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                restaurant.name,
+                                restaurant.menu!,
                                 style: Theme.of(context).textTheme.headline3,
                               ),
                               Container(

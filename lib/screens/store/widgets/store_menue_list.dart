@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/store_detail/view/store_detail.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/utilities.dart';
@@ -14,7 +15,7 @@ class StoreMenueList extends StatefulWidget {
     required this.restaurantImage,
   }) : super(key: key);
 
-  final List<RestaurantMenueCategoryModel> menueCategories;
+  final List<DeliverectCategoryModelDto> menueCategories;
   final void Function(List<CheckoutItemModel>) onCheckoutChange;
   final String restaurantImage;
 
@@ -72,17 +73,17 @@ class _StoreMenueListState extends State<StoreMenueList> {
                 ListTile(
                   contentPadding: const EdgeInsets.fromLTRB(25, 15, 0, 0),
                   title: Text(
-                    category.title.english,
+                    category.name!,
                     style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 const AlpacaDivider(),
                 ListView.separated(
-                  itemCount: category.menueItems.length,
+                  itemCount: category.products?.length ?? 0,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
-                    final item = category.menueItems[i];
+                    final item = category.products![i].product!;
                     return TextButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed(
@@ -111,7 +112,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          item.title.english,
+                                          item.name!,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                           style: Theme.of(context)
@@ -121,7 +122,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                       ),
                                       if ((checkoutItems.indexWhere(
                                             (checkouItem) =>
-                                                checkouItem.id == item.id,
+                                                checkouItem.plu == item.plu,
                                           )) !=
                                           -1)
                                         Padding(
@@ -130,7 +131,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                           child: Text(
                                             '${checkoutItems.where(
                                                   (listItem) =>
-                                                      item.id == listItem.id,
+                                                      item.plu == listItem.plu,
                                                 ).length}x',
                                             overflow: TextOverflow.clip,
                                             style: Theme.of(context)
@@ -144,12 +145,12 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                     ],
                                   ),
                                   Text(
-                                    'Grilled sandwich with fillet, cheese, tomatoes and salad',
+                                    item.description!,
                                     style:
                                         Theme.of(context).textTheme.headline5,
                                   ),
                                   Text(
-                                    Utilities.currencyFormat(item.price),
+                                    Utilities.currencyFormat(item.price!),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline4!
@@ -159,12 +160,13 @@ class _StoreMenueListState extends State<StoreMenueList> {
                               ),
                             ),
                           ),
-                          Image.network(
-                            'https://picsum.photos/250?image=18',
-                            fit: BoxFit.fitHeight,
-                            width: 114,
-                            height: 134,
-                          ),
+                          if(item.imageUrl != null) 
+                            Image.network(
+                              item.imageUrl!,
+                              fit: BoxFit.fitHeight,
+                              width: 114,
+                              height: 134,
+                            ),
                         ],
                       ),
                     );

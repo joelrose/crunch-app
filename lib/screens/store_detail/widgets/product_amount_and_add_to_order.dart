@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
+import 'package:pickup/shared/utilities.dart';
 
 class ProductAmountAndAddToOrder extends StatefulWidget {
   const ProductAmountAndAddToOrder({Key? key}) : super(key: key);
@@ -128,7 +129,9 @@ class _ProductAmountAndAddToOrderState
                           ),
                         ),
                         Text(
-                          '${context.read<StoreDetailCubit>().newTotalPrice.toStringAsFixed(2)} €',
+                          Utilities.currencyFormat(
+                            context.read<StoreDetailCubit>().newTotalPrice,
+                          ),
                           style:
                               Theme.of(context).textTheme.headline2!.copyWith(
                                     color: AlpacaColor.primary100,

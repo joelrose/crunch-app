@@ -25,7 +25,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   void init() {
     productAmountInBasket = data.checkoutItems
         .where(
-          (listItem) => data.item.id == listItem.id,
+          (listItem) => data.item.plu == listItem.plu,
         )
         .length;
 
@@ -36,32 +36,32 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
       productAmountInBasket = 0;
     }
 
-    defaultItemPrice = data.item.price.toDouble();
+    defaultItemPrice = data.item.price!.toDouble();
     totalItemPrice = defaultItemPrice;
 
     final item = data.item;
 
     itemTitleAndOptionsList = [];
-    if (data.item.itemOptions != null) {
+    if (data.item.childProducts != null) {
       if (!_isItemInBasket()) {
-        for (final itemOptions in item.itemOptions!) {
+        for (final child in item.childProducts!) {
           itemOption = CheckoutOptionForItemOptionsModel(
-            id: itemOptions.options[0].id,
-            price: itemOptions.options[0].price,
-            title: itemOptions.options[0].title,
+            plu: child.childProduct!.plu!,
+            price: child.childProduct!.price!,
+            title: child.childProduct!.name!,
           );
           itemTitleAndOptions = CheckoutItemOptionsModel(
             option: itemOption,
-            title: itemOptions.title,
+            plu: child.childProduct!.plu!,
           );
           itemTitleAndOptionsList.add(itemTitleAndOptions);
         }
       } else {
         final int itemIndexInBasket = data.checkoutItems.indexWhere(
-          (checkoutItem) => checkoutItem.id == data.item.id,
+          (checkoutItem) => checkoutItem.plu == data.item.plu,
         );
         itemTitleAndOptionsList =
-            data.checkoutItems[itemIndexInBasket].itemOptions;
+            data.checkoutItems[itemIndexInBasket].itemOptionPlus;
 
         double addOnPrice = 0;
         for (final item in itemTitleAndOptionsList) {
@@ -118,7 +118,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
           i > amountOfProductsToAddToBasket;
           i--) {
         data.checkoutItems.removeWhere(
-          (checkoutItem) => checkoutItem.id == data.item.id,
+          (checkoutItem) => checkoutItem.plu == data.item.plu,
         );
         productAmountInBasket = 0;
       }
@@ -129,10 +129,9 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
           i++) {
         data.checkoutItems.add(
           CheckoutItemModel(
-            id: item.id,
-            itemOptions: itemTitleAndOptionsList,
-            price: item.price,
-            title: item.title,
+            plu: item.plu!,
+            itemOptionPlus: itemTitleAndOptionsList,
+            price: item.price!,
           ),
         );
       }
@@ -143,7 +142,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
 
   bool _isItemInBasket() {
     if (data.checkoutItems.indexWhere(
-          (checkoutItem) => checkoutItem.id == data.item.id,
+          (checkoutItem) => checkoutItem.plu == data.item.plu,
         ) !=
         -1) {
       return true;

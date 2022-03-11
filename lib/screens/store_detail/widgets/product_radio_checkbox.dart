@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
+import 'package:pickup/shared/utilities.dart';
 
 class ProductRadioCheckbox extends StatefulWidget {
   const ProductRadioCheckbox({
@@ -20,19 +21,23 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
         final cubit = context.read<StoreDetailCubit>();
 
         final itemPrice = cubit.data.item.price;
-        
+
         return ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount:
-              context.read<StoreDetailCubit>().data.item.itemOptions?.length ??
-                  0,
+          itemCount: context
+                  .read<StoreDetailCubit>()
+                  .data
+                  .item
+                  .childProducts
+                  ?.length ??
+              0,
           itemBuilder: (context, itemCategoryIndex) {
             final item = context
                 .read<StoreDetailCubit>()
                 .data
                 .item
-                .itemOptions![itemCategoryIndex];
+                .childProducts![itemCategoryIndex];
 
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -40,7 +45,7 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item.title.english,
+                    item.childProduct!.name!,
                     style: Theme.of(context).textTheme.headline3,
                   ),
                   Container(
@@ -54,7 +59,7 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: ListView.separated(
-                      itemCount: item.options.length,
+                      itemCount: item.childProduct!.childProducts!.length,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       separatorBuilder: (context, index) {
@@ -63,46 +68,67 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                         );
                       },
                       itemBuilder: (context, optionChoiceIndex) {
+                        final value = item.childProduct!.childProducts!
+                            .elementAt(optionChoiceIndex)
+                            .childProduct!;
                         return GestureDetector(
                           behavior: HitTestBehavior.translucent,
                           onTap: () {
                             cubit.itemTitleAndOptionsList[itemCategoryIndex]
-                                .option.id = item.options[optionChoiceIndex].id;
+                                    .option.plu =
+                                item.childProduct!.childProducts!
+                                    .elementAt(optionChoiceIndex)
+                                    .childProduct!
+                                    .plu!;
 
-                            cubit
-                                .itemTitleAndOptionsList[itemCategoryIndex]
-                                .option
-                                .title = item.options[optionChoiceIndex].title;
+                            cubit.itemTitleAndOptionsList[itemCategoryIndex]
+                                    .option.title =
+                                item.childProduct!.childProducts!
+                                    .elementAt(optionChoiceIndex)
+                                    .childProduct!
+                                    .name!;
 
-                            cubit
-                                .itemTitleAndOptionsList[itemCategoryIndex]
-                                .option
-                                .price = item.options[optionChoiceIndex].price;
+                            cubit.itemTitleAndOptionsList[itemCategoryIndex]
+                                    .option.price =
+                                item.childProduct!.childProducts!
+                                    .elementAt(optionChoiceIndex)
+                                    .childProduct!
+                                    .price!;
 
                             cubit.changeItemPrice(
-                              cubit.data.item.price.toDouble(),
-                              item.options[optionChoiceIndex].price.toDouble(),
+                              cubit.data.item.price!.toDouble(),
+                              item.childProduct!.childProducts!
+                                  .elementAt(optionChoiceIndex)
+                                  .childProduct!
+                                  .price!
+                                  .toDouble(),
                             );
                           },
                           child: Row(
                             children: [
                               Radio(
-                                value: item.options[optionChoiceIndex].id,
+                                value: item.childProduct!.childProducts!
+                                    .elementAt(optionChoiceIndex)
+                                    .childProduct!
+                                    .plu!,
                                 groupValue: context
                                     .read<StoreDetailCubit>()
                                     .itemTitleAndOptionsList[itemCategoryIndex]
                                     .option
-                                    .id,
+                                    .plu,
                                 onChanged: (value) {
                                   cubit
                                       .itemTitleAndOptionsList[
                                           itemCategoryIndex]
                                       .option
-                                      .id = value.toString();
+                                      .plu = value.toString();
 
                                   cubit.changeItemPrice(
-                                    itemPrice.toDouble(),
-                                    item.options[optionChoiceIndex].price
+                                    itemPrice!.toDouble(),
+                                    item.childProduct!.childProducts!
+                                        .elementAt(optionChoiceIndex)
+                                        .childProduct!
+                                        .price!
                                         .toDouble(),
                                   );
                                 },
@@ -116,8 +142,10 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        item.options[optionChoiceIndex].title
-                                            .english,
+                                        item.childProduct!.childProducts!
+                                            .elementAt(optionChoiceIndex)
+                                            .childProduct!
+                                            .name!,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline4!
@@ -125,11 +153,9 @@ class _ProductRadioCheckboxState extends State<ProductRadioCheckbox> {
                                               color: AlpacaColor.darkNavyColor,
                                             ),
                                       ),
-                                      if (item.options[optionChoiceIndex]
-                                              .price !=
-                                          0)
+                                      if (value.price != 0)
                                         Text(
-                                          '+${item.options[optionChoiceIndex].price.toString()} €',
+                                          '+${Utilities.currencyFormat(value.price!)}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline4!

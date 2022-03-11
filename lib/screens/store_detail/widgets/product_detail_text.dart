@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
+import 'package:pickup/shared/utilities.dart';
 
 class ProductBasicDetails extends StatelessWidget {
   const ProductBasicDetails({Key? key}) : super(key: key);
@@ -20,14 +21,14 @@ class ProductBasicDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    data.item.title.english,
+                    data.item.name!,
                     style: Theme.of(context)
                         .textTheme
                         .headline2!
                         .merge(const TextStyle(fontSize: 22)),
                   ),
                   Text(
-                    '${data.item.price.toStringAsFixed(2)} €',
+                    Utilities.currencyFormat(data.item.price!),
                     style: Theme.of(context).textTheme.headline2!.copyWith(
                           color: AlpacaColor.primary100,
                         ),
@@ -38,7 +39,8 @@ class ProductBasicDetails extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                'Example description! Should be changed when basic details are available',
+                data.item
+                    .description!,
                 style: Theme.of(context).textTheme.headline5,
               )
             ],

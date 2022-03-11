@@ -21,7 +21,7 @@ class StoreDetailPage extends StatelessWidget {
     return BlocProvider(
       create: (_) => StoreDetailCubit(data),
       child: StoreDetailView(
-        image: data.restaurantImage,
+        image: data.item.imageUrl ?? data.restaurantImage,
       ),
     );
   }

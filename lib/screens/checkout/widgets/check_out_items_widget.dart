@@ -42,7 +42,7 @@ class CheckOutItemsWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${item.amount}x ${item.checkoutItem.title.english}',
+          '${item.amount}x ${item.checkoutItem.plu}',
           style: Theme.of(context).textTheme.headline4,
         ),
         Text(
