@@ -58,8 +58,8 @@ class _StoreScreenState extends State<StoreScreen> {
                         CheckoutScreen.route,
                         arguments: CreateStoreData(
                           checkoutItems: checkoutItems,
-                          storeName: model.restaurant.name,
-                          googleMaps: model.restaurant.googleMapsUrl,
+                          storeName: '', //model.store.,
+                          googleMaps: '', //model.restaurant.googleMapsUrl,
                         ),
                       );
                     },
@@ -75,31 +75,31 @@ class _StoreScreenState extends State<StoreScreen> {
               backgroundColor: AlpacaColor.white100Color,
               statusBarStyle: SystemUiOverlayStyle.dark,
               child: AlpacaStretchyHeader(
-                image: model.restaurant.image,
+                image: model.store.menuImageUrl ?? '',
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       StoreOverview(
-                        name: model.restaurant.name,
+                        name: model.store.menu ?? '',
                         rating: '4.8',
-                        googleMaps: model.restaurant.googleMapsUrl,
+                        googleMaps: '', // model.restaurant.googleMapsUrl,
                       ),
                       const Divider(),
                       StoreInformation(
-                        phoneNumer: model.restaurant.phoneNumber,
-                        address: model.restaurant.address,
+                        phoneNumer: '', // model.restaurant.phoneNumber,
+                        address: '', // model.restaurant.address,
                       ),
                       const Divider(),
                       StoreMenueList(
-                        menueCategories: model.restaurant.menueCategories,
+                        menueCategories: model.store.categories ?? [],
                         onCheckoutChange: (list) {
                           setState(() {
                             checkoutItems = list;
                           });
                         },
-                        restaurantImage: model.restaurant.image,
+                        restaurantImage: model.store.menuImageUrl ?? '',
                       ),
                       if (checkoutItems.isNotEmpty)
                         const SizedBox(

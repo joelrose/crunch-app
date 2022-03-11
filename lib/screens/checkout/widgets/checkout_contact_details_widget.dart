@@ -32,28 +32,26 @@ class _CheckoutContactDetailsWidgetState
           onPressed: () {},
           buttonText: '',
           disableButton: true,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                    child: AlpacaTextField(
-                      textColor: AlpacaColor.darkNavyColor,
-                      hintText: 'Phone Number',
-                      textController: _phoneNumberController,
-                      validator: (value) {},
-                    ),
-                  ),
-                  Text(
-                    'Providing a phone number allows the restaurant to contact you easily in case there is an issue with your order.',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  )
-                ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                child: AlpacaTextField(
+                  textColor: AlpacaColor.darkNavyColor,
+                  hintText: 'Phone Number',
+                  textController: _phoneNumberController,
+                  validator: (value) {},
+                ),
               ),
-            ),
-          ],
+              Text(
+                'Providing a phone number allows the restaurant to contact you easily in case there is an issue with your order.',
+                style: Theme.of(context).textTheme.bodyText2,
+              )
+            ],
+          ),
         ),
         const DividerWidget(),
       ],

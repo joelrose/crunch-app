@@ -1,28 +1,33 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sanity/sanity.dart';
+import 'package:hermes_api/hermes_api.dart';
+import 'package:pickup/services/hermes_service.dart';
 
 part 'discover_state.dart';
 
 class DiscoverCubit extends Cubit<DiscoverState> {
-  DiscoverCubit(this._sanityClient) : super(DiscoverState()) {
+  DiscoverCubit(this._hermesService) : super(DiscoverState()) {
     fetchRestaurants();
   }
 
-  final SanityCms _sanityClient;
+  final HermesService _hermesService;
 
   Future<void> fetchRestaurants() async {
     emit(state.copyWith(status: DiscoverStatus.loading));
 
     try {
-      final restaurants = await _sanityClient.getRestaurants();
+      final stores = await _hermesService.client.apiMenuGet();
 
-      emit(
-        state.copyWith(
-          status: DiscoverStatus.success,
-          restaurants: restaurants,
-        ),
-      );
+      if (stores.isSuccessful) {
+        emit(
+          state.copyWith(
+            status: DiscoverStatus.success,
+            stores: stores.body,
+          ),
+        );
+      } else {
+        throw Exception();
+      }
     } on Exception {
       emit(state.copyWith(status: DiscoverStatus.failure));
     }

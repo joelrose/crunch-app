@@ -11,7 +11,7 @@ class HermesService {
       baseUrl: dotenv.get('API_URL'),
       services: [Swagger.create(ChopperClient())],
       converter: JsonSerializableConverter(SwaggerJsonDecoderMappings),
-      interceptors: [authHeader],
+      interceptors: [_authHeader],
     );
   }
 
@@ -20,7 +20,7 @@ class HermesService {
 
   Swagger get client => _chopperClient.getService<Swagger>();
 
-  Future<Request> authHeader(Request request) async {
+  Future<Request> _authHeader(Request request) async {
     final Map<String, String> updatedHeaders =
         Map<String, String>.of(request.headers);
 

@@ -8,9 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
+import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/enum/enviroment.dart';
-import 'package:sanity/sanity.dart';
 
 Future setupStripe() async {
   Stripe.publishableKey = dotenv.env['STRIPE_KEY']!;
@@ -54,7 +54,7 @@ Future<void> bootstrap(
           providers: [
             BlocProvider(
               create: (_) => DiscoverCubit(
-                locator<SanityCms>(),
+                locator<HermesService>(),
               ),
             ),
           ],

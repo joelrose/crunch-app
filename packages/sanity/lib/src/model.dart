@@ -152,7 +152,7 @@ class RestaurantMenueItemMenueOption {
     );
   }
 
-  final String id; 
+  final String id;
   final LocaleString title;
   final num price;
 }
@@ -178,29 +178,34 @@ class LocaleString {
 
 class CheckoutItemModel {
   CheckoutItemModel({
-    required this.id,
-    required this.itemOptions,
+    required this.plu,
+    required this.itemOptionPlus,
     required this.price,
-    required this.title,
   });
-  String id;
-  List<CheckoutItemOptionsModel> itemOptions;
+  
+  String plu;
+  List<CheckoutItemOptionsModel> itemOptionPlus;
   num price;
-  LocaleString title;
 }
 
 class CheckoutItemOptionsModel {
   CheckoutItemOptionsModel({
     required this.option,
-    required this.title,
+    required this.plu,
   });
+
   CheckoutOptionForItemOptionsModel option;
-  LocaleString title;
+  String plu;
 }
 
 class CheckoutOptionForItemOptionsModel {
-  CheckoutOptionForItemOptionsModel({required this.id, required this.price, required this.title});
-  String id;
+  CheckoutOptionForItemOptionsModel({
+    required this.plu,
+    required this.price,
+    required this.title,
+  });
+
+  String plu;
   num price;
-  LocaleString title;
+  String title;
 }

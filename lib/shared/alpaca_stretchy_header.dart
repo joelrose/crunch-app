@@ -1,4 +1,5 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stretchy_header/stretchy_header.dart';
 
@@ -17,12 +18,13 @@ class AlpacaStretchyHeader extends StatelessWidget {
     return StretchyHeader.singleChild(
       headerData: HeaderData(
         headerHeight: 200,
-        header: Image.network(
-          image,
+        header: CachedNetworkImage(
+          imageUrl: image,
           fit: BoxFit.cover,
         ),
         blurContent: false,
-        overlay: Padding(
+        highlightHeaderAlignment: HighlightHeaderAlignment.top,
+        highlightHeader: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 18,
             vertical: 18,
