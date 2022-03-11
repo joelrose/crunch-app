@@ -1,4 +1,5 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hermes_api/hermes_api.dart';
@@ -160,9 +161,9 @@ class _StoreMenueListState extends State<StoreMenueList> {
                               ),
                             ),
                           ),
-                          if(item.imageUrl != null) 
-                            Image.network(
-                              item.imageUrl!,
+                          if (item.imageUrl != null)
+                            CachedNetworkImage(
+                              imageUrl: item.imageUrl!,
                               fit: BoxFit.fitHeight,
                               width: 114,
                               height: 134,
