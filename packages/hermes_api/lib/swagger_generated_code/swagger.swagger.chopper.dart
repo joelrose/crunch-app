@@ -17,6 +17,32 @@ class _$Swagger extends Swagger {
   final definitionType = Swagger;
 
   @override
+  Future<Response<List<GetMenusResponseDto>>> apiMenuGet() {
+    final $url = '/api/menu';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client
+        .send<List<GetMenusResponseDto>, GetMenusResponseDto>($request);
+  }
+
+  @override
+  Future<Response<GetMenuResponseDto>> apiMenuMenuIdGet(
+      {required String? menuId}) {
+    final $url = '/api/menu/${menuId}';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<GetMenuResponseDto, GetMenuResponseDto>($request);
+  }
+
+  @override
+  Future<Response<CreateMerchantResponseDto>> apiMerchantsPost(
+      {required CreateMerchantRequestDto? body}) {
+    final $url = '/api/merchants';
+    final $body = body;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client
+        .send<CreateMerchantResponseDto, CreateMerchantResponseDto>($request);
+  }
+
+  @override
   Future<Response<CreateOrderResponseDto>> apiOrdersPost(
       {required CreateOrderRequestDto? body}) {
     final $url = '/api/orders';
@@ -48,13 +74,6 @@ class _$Swagger extends Swagger {
     final $url = '/api/orders/${orderId}';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<GetOrderResponseDto, GetOrderResponseDto>($request);
-  }
-
-  @override
-  Future<Response<bool>> webhookStripePost() {
-    final $url = '/webhook/stripe';
-    final $request = Request('POST', $url, client.baseUrl);
-    return client.send<bool, bool>($request);
   }
 
   @override

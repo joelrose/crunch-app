@@ -1,5 +1,54 @@
 import 'package:json_annotation/json_annotation.dart';
 
+enum DeliverectDay {
+  @JsonValue('swaggerGeneratedUnknown')
+  swaggerGeneratedUnknown,
+  @JsonValue('Monday')
+  monday,
+  @JsonValue('Tuesday')
+  tuesday,
+  @JsonValue('Wednesday')
+  wednesday,
+  @JsonValue('Thursday')
+  thursday,
+  @JsonValue('Friday')
+  friday,
+  @JsonValue('Saturday')
+  saturday,
+  @JsonValue('Sunday')
+  sunday
+}
+
+const $DeliverectDayMap = {
+  DeliverectDay.monday: 'Monday',
+  DeliverectDay.tuesday: 'Tuesday',
+  DeliverectDay.wednesday: 'Wednesday',
+  DeliverectDay.thursday: 'Thursday',
+  DeliverectDay.friday: 'Friday',
+  DeliverectDay.saturday: 'Saturday',
+  DeliverectDay.sunday: 'Sunday'
+};
+
+enum DeliverectOrderTypes {
+  @JsonValue('swaggerGeneratedUnknown')
+  swaggerGeneratedUnknown,
+  @JsonValue('PICKUP')
+  pickup,
+  @JsonValue('DELIVERY')
+  delivery,
+  @JsonValue('EAT_IN')
+  eatIn,
+  @JsonValue('CURBSIDE')
+  curbside
+}
+
+const $DeliverectOrderTypesMap = {
+  DeliverectOrderTypes.pickup: 'PICKUP',
+  DeliverectOrderTypes.delivery: 'DELIVERY',
+  DeliverectOrderTypes.eatIn: 'EAT_IN',
+  DeliverectOrderTypes.curbside: 'CURBSIDE'
+};
+
 enum OrderStatus {
   @JsonValue('swaggerGeneratedUnknown')
   swaggerGeneratedUnknown,
