@@ -1,6 +1,4 @@
-import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/screens/store_detail/widgets/product_amount_and_add_to_order.dart';
@@ -34,26 +32,21 @@ class StoreDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageWrapper(
-      statusBarStyle: SystemUiOverlayStyle.dark,
-      padding: EdgeInsets.zero,
-      backgroundColor: AlpacaColor.white100Color,
-      child: Column(
-        children: [
-          Expanded(
-            child: AlpacaStretchyHeader(
-              image: image,
-              child: Column(
-                children: const [
-                  ProductBasicDetails(),
-                  ProductRadioCheckbox(),
-                ],
-              ),
+    return Column(
+      children: [
+        Expanded(
+          child: AlpacaStretchyHeader(
+            image: image,
+            child: Column(
+              children: const [
+                ProductBasicDetails(),
+                ProductRadioCheckbox(),
+              ],
             ),
           ),
-          const ProductAmountAndAddToOrder()
-        ],
-      ),
+        ),
+        ProductAmountAndAddToOrder()
+      ],
     );
   }
 }

@@ -87,15 +87,27 @@ class _StoreMenueListState extends State<StoreMenueList> {
                     final item = category.products![i].product!;
                     return TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          StoreDetailPage.route,
-                          arguments: ProductDetailsData(
-                            item: item,
-                            restaurantImage: widget.restaurantImage,
-                            checkoutItems: checkoutItems,
-                            onCheckoutChange: widget.onCheckoutChange,
-                          ),
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return FractionallySizedBox(
+                              heightFactor: 0.9,
+                              child: StoreDetailPage(
+                                data: ProductDetailsData(
+                                  item: item,
+                                  restaurantImage: widget.restaurantImage,
+                                  checkoutItems: checkoutItems,
+                                  onCheckoutChange: widget.onCheckoutChange,
+                                ),
+                              ),
+                            );
+                          },
                         );
+                        // Navigator.of(context).pushNamed(
+                        //   StoreDetailPage.route,
+                        //   arguments:
+                        // );
                       },
                       style: TextButton.styleFrom(
                         primary: AlpacaColor.primary100,
