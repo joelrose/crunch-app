@@ -19,7 +19,7 @@ enum DeliverectDay {
   sunday
 }
 
-// TODO: fixed manually
+// FIXED MANUALLY
 const $DeliverectDayMap = {
   DeliverectDay.monday: '1',
   DeliverectDay.tuesday: '2',
@@ -28,26 +28,6 @@ const $DeliverectDayMap = {
   DeliverectDay.friday: '5',
   DeliverectDay.saturday: '6',
   DeliverectDay.sunday: '7'
-};
-
-enum DeliverectOrderTypes {
-  @JsonValue('swaggerGeneratedUnknown')
-  swaggerGeneratedUnknown,
-  @JsonValue('PICKUP')
-  pickup,
-  @JsonValue('DELIVERY')
-  delivery,
-  @JsonValue('EAT_IN')
-  eatIn,
-  @JsonValue('CURBSIDE')
-  curbside
-}
-
-const $DeliverectOrderTypesMap = {
-  DeliverectOrderTypes.pickup: 'PICKUP',
-  DeliverectOrderTypes.delivery: 'DELIVERY',
-  DeliverectOrderTypes.eatIn: 'EAT_IN',
-  DeliverectOrderTypes.curbside: 'CURBSIDE'
 };
 
 enum OrderStatus {
@@ -71,18 +51,4 @@ const $OrderStatusMap = {
   OrderStatus.declined: 'Declined',
   OrderStatus.confirmed: 'Confirmed',
   OrderStatus.done: 'Done'
-};
-
-enum TokenDevice {
-  @JsonValue('swaggerGeneratedUnknown')
-  swaggerGeneratedUnknown,
-  @JsonValue('IOS')
-  ios,
-  @JsonValue('Android')
-  android
-}
-
-const $TokenDeviceMap = {
-  TokenDevice.ios: 'IOS',
-  TokenDevice.android: 'Android'
 };

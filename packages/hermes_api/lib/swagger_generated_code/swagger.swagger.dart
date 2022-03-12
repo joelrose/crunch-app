@@ -28,19 +28,14 @@ abstract class Swagger extends ChopperService {
   }
 
   ///
-  @Get(path: '/api/menu')
-  Future<chopper.Response<List<GetMenusResponseDto>>> apiMenuGet();
+  @Get(path: '/api/menus')
+  Future<chopper.Response<List<GetMenusResponseDto>>> apiMenusGet();
 
   ///
   ///@param menuId
-  @Get(path: '/api/menu/{menuId}')
-  Future<chopper.Response<GetMenuResponseDto>> apiMenuMenuIdGet(
+  @Get(path: '/api/menus/{menuId}')
+  Future<chopper.Response<GetMenuResponseDto>> apiMenusMenuIdGet(
       {@Path('menuId') required String? menuId});
-
-  ///
-  @Post(path: '/api/merchants')
-  Future<chopper.Response<CreateMerchantResponseDto>> apiMerchantsPost(
-      {@Body() required CreateMerchantRequestDto? body});
 
   ///
   @Post(path: '/api/orders')
@@ -63,20 +58,6 @@ abstract class Swagger extends ChopperService {
       {@Path('orderId') required String? orderId});
 
   ///
-  @Post(path: '/api/tokens')
-  Future<chopper.Response<bool>> apiTokensPost(
-      {@Body() required CreateTokenRequestDto? body});
-
-  ///
-  @Delete(path: '/api/tokens')
-  Future<chopper.Response<bool>> apiTokensDelete(
-      {@Body() required String? body});
-
-  ///
-  @Get(path: '/api/tokens')
-  Future<chopper.Response<List<TokenModel>>> apiTokensGet();
-
-  ///
   @Post(path: '/api/users')
   Future<chopper.Response<bool>> apiUsersPost(
       {@Body() required CreateUserRequestDto? body});
@@ -93,15 +74,14 @@ abstract class Swagger extends ChopperService {
 final Map<Type, Object Function(Map<String, dynamic>)>
     SwaggerJsonDecoderMappings = {
   CategoryRelationModelDto: CategoryRelationModelDto.fromJsonFactory,
-  CreateMerchantRequestDto: CreateMerchantRequestDto.fromJsonFactory,
-  CreateMerchantResponseDto: CreateMerchantResponseDto.fromJsonFactory,
   CreateOrderItemDto: CreateOrderItemDto.fromJsonFactory,
   CreateOrderRequestDto: CreateOrderRequestDto.fromJsonFactory,
   CreateOrderResponseDto: CreateOrderResponseDto.fromJsonFactory,
-  CreateTokenRequestDto: CreateTokenRequestDto.fromJsonFactory,
   CreateUserRequestDto: CreateUserRequestDto.fromJsonFactory,
   DeliverectAvailabilityModel: DeliverectAvailabilityModel.fromJsonFactory,
   DeliverectCategoryModelDto: DeliverectCategoryModelDto.fromJsonFactory,
+  DeliverectMenuDto: DeliverectMenuDto.fromJsonFactory,
+  DeliverectMenusDto: DeliverectMenusDto.fromJsonFactory,
   DeliverectProductModelDto: DeliverectProductModelDto.fromJsonFactory,
   GetMenuResponseDto: GetMenuResponseDto.fromJsonFactory,
   GetMenusResponseDto: GetMenusResponseDto.fromJsonFactory,
@@ -109,7 +89,6 @@ final Map<Type, Object Function(Map<String, dynamic>)>
   GetUserResponseDto: GetUserResponseDto.fromJsonFactory,
   OrderItemModel: OrderItemModel.fromJsonFactory,
   ProductRelationModelDto: ProductRelationModelDto.fromJsonFactory,
-  TokenModel: TokenModel.fromJsonFactory,
   UpdateStatusOrderModel: UpdateStatusOrderModel.fromJsonFactory,
 };
 
@@ -148,93 +127,13 @@ extension $CategoryRelationModelDtoExtension on CategoryRelationModelDto {
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateMerchantRequestDto {
-  CreateMerchantRequestDto({
-    this.firstName,
-    this.lastName,
-  });
-
-  factory CreateMerchantRequestDto.fromJson(Map<String, dynamic> json) =>
-      _$CreateMerchantRequestDtoFromJson(json);
-
-  @JsonKey(name: 'firstName', includeIfNull: false)
-  final String? firstName;
-  @JsonKey(name: 'lastName', includeIfNull: false)
-  final String? lastName;
-  static const fromJsonFactory = _$CreateMerchantRequestDtoFromJson;
-  static const toJsonFactory = _$CreateMerchantRequestDtoToJson;
-  Map<String, dynamic> toJson() => _$CreateMerchantRequestDtoToJson(this);
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is CreateMerchantRequestDto &&
-            (identical(other.firstName, firstName) ||
-                const DeepCollectionEquality()
-                    .equals(other.firstName, firstName)) &&
-            (identical(other.lastName, lastName) ||
-                const DeepCollectionEquality()
-                    .equals(other.lastName, lastName)));
-  }
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(firstName) ^
-      const DeepCollectionEquality().hash(lastName) ^
-      runtimeType.hashCode;
-}
-
-extension $CreateMerchantRequestDtoExtension on CreateMerchantRequestDto {
-  CreateMerchantRequestDto copyWith({String? firstName, String? lastName}) {
-    return CreateMerchantRequestDto(
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName);
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateMerchantResponseDto {
-  CreateMerchantResponseDto({
-    this.merchantId,
-  });
-
-  factory CreateMerchantResponseDto.fromJson(Map<String, dynamic> json) =>
-      _$CreateMerchantResponseDtoFromJson(json);
-
-  @JsonKey(name: 'merchantId', includeIfNull: false)
-  final String? merchantId;
-  static const fromJsonFactory = _$CreateMerchantResponseDtoFromJson;
-  static const toJsonFactory = _$CreateMerchantResponseDtoToJson;
-  Map<String, dynamic> toJson() => _$CreateMerchantResponseDtoToJson(this);
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is CreateMerchantResponseDto &&
-            (identical(other.merchantId, merchantId) ||
-                const DeepCollectionEquality()
-                    .equals(other.merchantId, merchantId)));
-  }
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(merchantId) ^ runtimeType.hashCode;
-}
-
-extension $CreateMerchantResponseDtoExtension on CreateMerchantResponseDto {
-  CreateMerchantResponseDto copyWith({String? merchantId}) {
-    return CreateMerchantResponseDto(merchantId: merchantId ?? this.merchantId);
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class CreateOrderItemDto {
   CreateOrderItemDto({
     this.plu,
-    this.orderType,
     this.name,
     this.price,
     this.quantity,
+    this.items,
   });
 
   factory CreateOrderItemDto.fromJson(Map<String, dynamic> json) =>
@@ -242,18 +141,15 @@ class CreateOrderItemDto {
 
   @JsonKey(name: 'plu', includeIfNull: false)
   final String? plu;
-  @JsonKey(
-      name: 'orderType',
-      includeIfNull: false,
-      toJson: deliverectOrderTypesToJson,
-      fromJson: deliverectOrderTypesFromJson)
-  final enums.DeliverectOrderTypes? orderType;
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(name: 'price', includeIfNull: false)
   final int? price;
   @JsonKey(name: 'quantity', includeIfNull: false)
   final int? quantity;
+  @JsonKey(
+      name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[])
+  final List<CreateOrderItemDto>? items;
   static const fromJsonFactory = _$CreateOrderItemDtoFromJson;
   static const toJsonFactory = _$CreateOrderItemDtoToJson;
   Map<String, dynamic> toJson() => _$CreateOrderItemDtoToJson(this);
@@ -264,41 +160,40 @@ class CreateOrderItemDto {
         (other is CreateOrderItemDto &&
             (identical(other.plu, plu) ||
                 const DeepCollectionEquality().equals(other.plu, plu)) &&
-            (identical(other.orderType, orderType) ||
-                const DeepCollectionEquality()
-                    .equals(other.orderType, orderType)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.price, price) ||
                 const DeepCollectionEquality().equals(other.price, price)) &&
             (identical(other.quantity, quantity) ||
                 const DeepCollectionEquality()
-                    .equals(other.quantity, quantity)));
+                    .equals(other.quantity, quantity)) &&
+            (identical(other.items, items) ||
+                const DeepCollectionEquality().equals(other.items, items)));
   }
 
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(plu) ^
-      const DeepCollectionEquality().hash(orderType) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(price) ^
       const DeepCollectionEquality().hash(quantity) ^
+      const DeepCollectionEquality().hash(items) ^
       runtimeType.hashCode;
 }
 
 extension $CreateOrderItemDtoExtension on CreateOrderItemDto {
   CreateOrderItemDto copyWith(
       {String? plu,
-      enums.DeliverectOrderTypes? orderType,
       String? name,
       int? price,
-      int? quantity}) {
+      int? quantity,
+      List<CreateOrderItemDto>? items}) {
     return CreateOrderItemDto(
         plu: plu ?? this.plu,
-        orderType: orderType ?? this.orderType,
         name: name ?? this.name,
         price: price ?? this.price,
-        quantity: quantity ?? this.quantity);
+        quantity: quantity ?? this.quantity,
+        items: items ?? this.items);
   }
 }
 
@@ -307,7 +202,6 @@ class CreateOrderRequestDto {
   CreateOrderRequestDto({
     this.merchantId,
     this.items,
-    this.stripeOrderId,
   });
 
   factory CreateOrderRequestDto.fromJson(Map<String, dynamic> json) =>
@@ -318,8 +212,6 @@ class CreateOrderRequestDto {
   @JsonKey(
       name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[])
   final List<CreateOrderItemDto>? items;
-  @JsonKey(name: 'stripeOrderId', includeIfNull: false)
-  final String? stripeOrderId;
   static const fromJsonFactory = _$CreateOrderRequestDtoFromJson;
   static const toJsonFactory = _$CreateOrderRequestDtoToJson;
   Map<String, dynamic> toJson() => _$CreateOrderRequestDtoToJson(this);
@@ -332,29 +224,21 @@ class CreateOrderRequestDto {
                 const DeepCollectionEquality()
                     .equals(other.merchantId, merchantId)) &&
             (identical(other.items, items) ||
-                const DeepCollectionEquality().equals(other.items, items)) &&
-            (identical(other.stripeOrderId, stripeOrderId) ||
-                const DeepCollectionEquality()
-                    .equals(other.stripeOrderId, stripeOrderId)));
+                const DeepCollectionEquality().equals(other.items, items)));
   }
 
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(merchantId) ^
       const DeepCollectionEquality().hash(items) ^
-      const DeepCollectionEquality().hash(stripeOrderId) ^
       runtimeType.hashCode;
 }
 
 extension $CreateOrderRequestDtoExtension on CreateOrderRequestDto {
   CreateOrderRequestDto copyWith(
-      {String? merchantId,
-      List<CreateOrderItemDto>? items,
-      String? stripeOrderId}) {
+      {String? merchantId, List<CreateOrderItemDto>? items}) {
     return CreateOrderRequestDto(
-        merchantId: merchantId ?? this.merchantId,
-        items: items ?? this.items,
-        stripeOrderId: stripeOrderId ?? this.stripeOrderId);
+        merchantId: merchantId ?? this.merchantId, items: items ?? this.items);
   }
 }
 
@@ -391,54 +275,6 @@ extension $CreateOrderResponseDtoExtension on CreateOrderResponseDto {
   CreateOrderResponseDto copyWith({String? clientSecret}) {
     return CreateOrderResponseDto(
         clientSecret: clientSecret ?? this.clientSecret);
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateTokenRequestDto {
-  CreateTokenRequestDto({
-    this.playerId,
-    this.device,
-  });
-
-  factory CreateTokenRequestDto.fromJson(Map<String, dynamic> json) =>
-      _$CreateTokenRequestDtoFromJson(json);
-
-  @JsonKey(name: 'playerId', includeIfNull: false)
-  final String? playerId;
-  @JsonKey(
-      name: 'device',
-      includeIfNull: false,
-      toJson: tokenDeviceToJson,
-      fromJson: tokenDeviceFromJson)
-  final enums.TokenDevice? device;
-  static const fromJsonFactory = _$CreateTokenRequestDtoFromJson;
-  static const toJsonFactory = _$CreateTokenRequestDtoToJson;
-  Map<String, dynamic> toJson() => _$CreateTokenRequestDtoToJson(this);
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is CreateTokenRequestDto &&
-            (identical(other.playerId, playerId) ||
-                const DeepCollectionEquality()
-                    .equals(other.playerId, playerId)) &&
-            (identical(other.device, device) ||
-                const DeepCollectionEquality().equals(other.device, device)));
-  }
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(playerId) ^
-      const DeepCollectionEquality().hash(device) ^
-      runtimeType.hashCode;
-}
-
-extension $CreateTokenRequestDtoExtension on CreateTokenRequestDto {
-  CreateTokenRequestDto copyWith(
-      {String? playerId, enums.TokenDevice? device}) {
-    return CreateTokenRequestDto(
-        playerId: playerId ?? this.playerId, device: device ?? this.device);
   }
 }
 
@@ -496,7 +332,6 @@ extension $CreateUserRequestDtoExtension on CreateUserRequestDto {
   }
 }
 
-// TODO: fixed manually
 @JsonSerializable(explicitToJson: true)
 class DeliverectAvailabilityModel {
   DeliverectAvailabilityModel({
@@ -693,6 +528,204 @@ extension $DeliverectCategoryModelDtoExtension on DeliverectCategoryModelDto {
 }
 
 @JsonSerializable(explicitToJson: true)
+class DeliverectMenuDto {
+  DeliverectMenuDto({
+    this.availabilities,
+    this.categories,
+    this.channelLinkId,
+    this.currency,
+    this.description,
+    this.menu,
+    this.menuId,
+    this.menuImageUrl,
+    this.menuType,
+  });
+
+  factory DeliverectMenuDto.fromJson(Map<String, dynamic> json) =>
+      _$DeliverectMenuDtoFromJson(json);
+
+  @JsonKey(
+      name: 'availabilities',
+      includeIfNull: false,
+      defaultValue: <DeliverectAvailabilityModel>[])
+  final List<DeliverectAvailabilityModel>? availabilities;
+  @JsonKey(
+      name: 'categories',
+      includeIfNull: false,
+      defaultValue: <DeliverectCategoryModelDto>[])
+  final List<DeliverectCategoryModelDto>? categories;
+  @JsonKey(name: 'channelLinkId', includeIfNull: false)
+  final String? channelLinkId;
+  @JsonKey(name: 'currency', includeIfNull: false)
+  final int? currency;
+  @JsonKey(name: 'description', includeIfNull: false)
+  final String? description;
+  @JsonKey(name: 'menu', includeIfNull: false)
+  final String? menu;
+  @JsonKey(name: 'menuId', includeIfNull: false)
+  final String? menuId;
+  @JsonKey(name: 'menuImageUrl', includeIfNull: false)
+  final String? menuImageUrl;
+  @JsonKey(name: 'menuType', includeIfNull: false)
+  final int? menuType;
+  static const fromJsonFactory = _$DeliverectMenuDtoFromJson;
+  static const toJsonFactory = _$DeliverectMenuDtoToJson;
+  Map<String, dynamic> toJson() => _$DeliverectMenuDtoToJson(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is DeliverectMenuDto &&
+            (identical(other.availabilities, availabilities) ||
+                const DeepCollectionEquality()
+                    .equals(other.availabilities, availabilities)) &&
+            (identical(other.categories, categories) ||
+                const DeepCollectionEquality()
+                    .equals(other.categories, categories)) &&
+            (identical(other.channelLinkId, channelLinkId) ||
+                const DeepCollectionEquality()
+                    .equals(other.channelLinkId, channelLinkId)) &&
+            (identical(other.currency, currency) ||
+                const DeepCollectionEquality()
+                    .equals(other.currency, currency)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)) &&
+            (identical(other.menu, menu) ||
+                const DeepCollectionEquality().equals(other.menu, menu)) &&
+            (identical(other.menuId, menuId) ||
+                const DeepCollectionEquality().equals(other.menuId, menuId)) &&
+            (identical(other.menuImageUrl, menuImageUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.menuImageUrl, menuImageUrl)) &&
+            (identical(other.menuType, menuType) ||
+                const DeepCollectionEquality()
+                    .equals(other.menuType, menuType)));
+  }
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(availabilities) ^
+      const DeepCollectionEquality().hash(categories) ^
+      const DeepCollectionEquality().hash(channelLinkId) ^
+      const DeepCollectionEquality().hash(currency) ^
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(menu) ^
+      const DeepCollectionEquality().hash(menuId) ^
+      const DeepCollectionEquality().hash(menuImageUrl) ^
+      const DeepCollectionEquality().hash(menuType) ^
+      runtimeType.hashCode;
+}
+
+extension $DeliverectMenuDtoExtension on DeliverectMenuDto {
+  DeliverectMenuDto copyWith(
+      {List<DeliverectAvailabilityModel>? availabilities,
+      List<DeliverectCategoryModelDto>? categories,
+      String? channelLinkId,
+      int? currency,
+      String? description,
+      String? menu,
+      String? menuId,
+      String? menuImageUrl,
+      int? menuType}) {
+    return DeliverectMenuDto(
+        availabilities: availabilities ?? this.availabilities,
+        categories: categories ?? this.categories,
+        channelLinkId: channelLinkId ?? this.channelLinkId,
+        currency: currency ?? this.currency,
+        description: description ?? this.description,
+        menu: menu ?? this.menu,
+        menuId: menuId ?? this.menuId,
+        menuImageUrl: menuImageUrl ?? this.menuImageUrl,
+        menuType: menuType ?? this.menuType);
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeliverectMenusDto {
+  DeliverectMenusDto({
+    this.availabilities,
+    this.description,
+    this.menu,
+    this.menuId,
+    this.menuImageUrl,
+    this.menuType,
+  });
+
+  factory DeliverectMenusDto.fromJson(Map<String, dynamic> json) =>
+      _$DeliverectMenusDtoFromJson(json);
+
+  @JsonKey(
+      name: 'availabilities',
+      includeIfNull: false,
+      defaultValue: <DeliverectAvailabilityModel>[])
+  final List<DeliverectAvailabilityModel>? availabilities;
+  @JsonKey(name: 'description', includeIfNull: false)
+  final String? description;
+  @JsonKey(name: 'menu', includeIfNull: false)
+  final String? menu;
+  @JsonKey(name: 'menuId', includeIfNull: false)
+  final String? menuId;
+  @JsonKey(name: 'menuImageUrl', includeIfNull: false)
+  final String? menuImageUrl;
+  @JsonKey(name: 'menuType', includeIfNull: false)
+  final int? menuType;
+  static const fromJsonFactory = _$DeliverectMenusDtoFromJson;
+  static const toJsonFactory = _$DeliverectMenusDtoToJson;
+  Map<String, dynamic> toJson() => _$DeliverectMenusDtoToJson(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is DeliverectMenusDto &&
+            (identical(other.availabilities, availabilities) ||
+                const DeepCollectionEquality()
+                    .equals(other.availabilities, availabilities)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)) &&
+            (identical(other.menu, menu) ||
+                const DeepCollectionEquality().equals(other.menu, menu)) &&
+            (identical(other.menuId, menuId) ||
+                const DeepCollectionEquality().equals(other.menuId, menuId)) &&
+            (identical(other.menuImageUrl, menuImageUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.menuImageUrl, menuImageUrl)) &&
+            (identical(other.menuType, menuType) ||
+                const DeepCollectionEquality()
+                    .equals(other.menuType, menuType)));
+  }
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(availabilities) ^
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(menu) ^
+      const DeepCollectionEquality().hash(menuId) ^
+      const DeepCollectionEquality().hash(menuImageUrl) ^
+      const DeepCollectionEquality().hash(menuType) ^
+      runtimeType.hashCode;
+}
+
+extension $DeliverectMenusDtoExtension on DeliverectMenusDto {
+  DeliverectMenusDto copyWith(
+      {List<DeliverectAvailabilityModel>? availabilities,
+      String? description,
+      String? menu,
+      String? menuId,
+      String? menuImageUrl,
+      int? menuType}) {
+    return DeliverectMenusDto(
+        availabilities: availabilities ?? this.availabilities,
+        description: description ?? this.description,
+        menu: menu ?? this.menu,
+        menuId: menuId ?? this.menuId,
+        menuImageUrl: menuImageUrl ?? this.menuImageUrl,
+        menuType: menuType ?? this.menuType);
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class DeliverectProductModelDto {
   DeliverectProductModelDto({
     this.productId,
@@ -884,47 +917,35 @@ extension $DeliverectProductModelDtoExtension on DeliverectProductModelDto {
 @JsonSerializable(explicitToJson: true)
 class GetMenuResponseDto {
   GetMenuResponseDto({
-    this.availabilities,
-    this.categories,
-    this.channelLinkId,
-    this.currency,
-    this.description,
+    this.id,
+    this.phoneNumber,
+    this.rating,
+    this.reviewCount,
+    this.averagePickUpTime,
+    this.address,
+    this.googleMapsLink,
     this.menu,
-    this.menuId,
-    this.menuImageUrl,
-    this.menuType,
-    this.nestedModifiers,
   });
 
   factory GetMenuResponseDto.fromJson(Map<String, dynamic> json) =>
       _$GetMenuResponseDtoFromJson(json);
 
-  @JsonKey(
-      name: 'availabilities',
-      includeIfNull: false,
-      defaultValue: <DeliverectAvailabilityModel>[])
-  final List<DeliverectAvailabilityModel>? availabilities;
-  @JsonKey(
-      name: 'categories',
-      includeIfNull: false,
-      defaultValue: <DeliverectCategoryModelDto>[])
-  final List<DeliverectCategoryModelDto>? categories;
-  @JsonKey(name: 'channelLinkId', includeIfNull: false)
-  final String? channelLinkId;
-  @JsonKey(name: 'currency', includeIfNull: false)
-  final int? currency;
-  @JsonKey(name: 'description', includeIfNull: false)
-  final String? description;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
+  @JsonKey(name: 'phoneNumber', includeIfNull: false)
+  final String? phoneNumber;
+  @JsonKey(name: 'rating', includeIfNull: false)
+  final double? rating;
+  @JsonKey(name: 'reviewCount', includeIfNull: false)
+  final String? reviewCount;
+  @JsonKey(name: 'averagePickUpTime', includeIfNull: false)
+  final String? averagePickUpTime;
+  @JsonKey(name: 'address', includeIfNull: false)
+  final String? address;
+  @JsonKey(name: 'googleMapsLink', includeIfNull: false)
+  final String? googleMapsLink;
   @JsonKey(name: 'menu', includeIfNull: false)
-  final String? menu;
-  @JsonKey(name: 'menuId', includeIfNull: false)
-  final String? menuId;
-  @JsonKey(name: 'menuImageUrl', includeIfNull: false)
-  final String? menuImageUrl;
-  @JsonKey(name: 'menuType', includeIfNull: false)
-  final int? menuType;
-  @JsonKey(name: 'nestedModifiers', includeIfNull: false)
-  final bool? nestedModifiers;
+  final DeliverectMenuDto? menu;
   static const fromJsonFactory = _$GetMenuResponseDtoFromJson;
   static const toJsonFactory = _$GetMenuResponseDtoToJson;
   Map<String, dynamic> toJson() => _$GetMenuResponseDtoToJson(this);
@@ -933,112 +954,87 @@ class GetMenuResponseDto {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is GetMenuResponseDto &&
-            (identical(other.availabilities, availabilities) ||
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.phoneNumber, phoneNumber) ||
                 const DeepCollectionEquality()
-                    .equals(other.availabilities, availabilities)) &&
-            (identical(other.categories, categories) ||
+                    .equals(other.phoneNumber, phoneNumber)) &&
+            (identical(other.rating, rating) ||
+                const DeepCollectionEquality().equals(other.rating, rating)) &&
+            (identical(other.reviewCount, reviewCount) ||
                 const DeepCollectionEquality()
-                    .equals(other.categories, categories)) &&
-            (identical(other.channelLinkId, channelLinkId) ||
+                    .equals(other.reviewCount, reviewCount)) &&
+            (identical(other.averagePickUpTime, averagePickUpTime) ||
                 const DeepCollectionEquality()
-                    .equals(other.channelLinkId, channelLinkId)) &&
-            (identical(other.currency, currency) ||
+                    .equals(other.averagePickUpTime, averagePickUpTime)) &&
+            (identical(other.address, address) ||
                 const DeepCollectionEquality()
-                    .equals(other.currency, currency)) &&
-            (identical(other.description, description) ||
+                    .equals(other.address, address)) &&
+            (identical(other.googleMapsLink, googleMapsLink) ||
                 const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                    .equals(other.googleMapsLink, googleMapsLink)) &&
             (identical(other.menu, menu) ||
-                const DeepCollectionEquality().equals(other.menu, menu)) &&
-            (identical(other.menuId, menuId) ||
-                const DeepCollectionEquality().equals(other.menuId, menuId)) &&
-            (identical(other.menuImageUrl, menuImageUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.menuImageUrl, menuImageUrl)) &&
-            (identical(other.menuType, menuType) ||
-                const DeepCollectionEquality()
-                    .equals(other.menuType, menuType)) &&
-            (identical(other.nestedModifiers, nestedModifiers) ||
-                const DeepCollectionEquality()
-                    .equals(other.nestedModifiers, nestedModifiers)));
+                const DeepCollectionEquality().equals(other.menu, menu)));
   }
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(availabilities) ^
-      const DeepCollectionEquality().hash(categories) ^
-      const DeepCollectionEquality().hash(channelLinkId) ^
-      const DeepCollectionEquality().hash(currency) ^
-      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(phoneNumber) ^
+      const DeepCollectionEquality().hash(rating) ^
+      const DeepCollectionEquality().hash(reviewCount) ^
+      const DeepCollectionEquality().hash(averagePickUpTime) ^
+      const DeepCollectionEquality().hash(address) ^
+      const DeepCollectionEquality().hash(googleMapsLink) ^
       const DeepCollectionEquality().hash(menu) ^
-      const DeepCollectionEquality().hash(menuId) ^
-      const DeepCollectionEquality().hash(menuImageUrl) ^
-      const DeepCollectionEquality().hash(menuType) ^
-      const DeepCollectionEquality().hash(nestedModifiers) ^
       runtimeType.hashCode;
 }
 
 extension $GetMenuResponseDtoExtension on GetMenuResponseDto {
   GetMenuResponseDto copyWith(
-      {List<DeliverectAvailabilityModel>? availabilities,
-      List<DeliverectCategoryModelDto>? categories,
-      String? channelLinkId,
-      int? currency,
-      String? description,
-      String? menu,
-      String? menuId,
-      String? menuImageUrl,
-      int? menuType,
-      bool? nestedModifiers}) {
+      {String? id,
+      String? phoneNumber,
+      double? rating,
+      String? reviewCount,
+      String? averagePickUpTime,
+      String? address,
+      String? googleMapsLink,
+      DeliverectMenuDto? menu}) {
     return GetMenuResponseDto(
-        availabilities: availabilities ?? this.availabilities,
-        categories: categories ?? this.categories,
-        channelLinkId: channelLinkId ?? this.channelLinkId,
-        currency: currency ?? this.currency,
-        description: description ?? this.description,
-        menu: menu ?? this.menu,
-        menuId: menuId ?? this.menuId,
-        menuImageUrl: menuImageUrl ?? this.menuImageUrl,
-        menuType: menuType ?? this.menuType,
-        nestedModifiers: nestedModifiers ?? this.nestedModifiers);
+        id: id ?? this.id,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        rating: rating ?? this.rating,
+        reviewCount: reviewCount ?? this.reviewCount,
+        averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
+        address: address ?? this.address,
+        googleMapsLink: googleMapsLink ?? this.googleMapsLink,
+        menu: menu ?? this.menu);
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class GetMenusResponseDto {
   GetMenusResponseDto({
-    this.availabilities,
-    this.currency,
-    this.description,
+    this.id,
+    this.rating,
+    this.reviewCount,
+    this.averagePickUpTime,
     this.menu,
-    this.menuId,
-    this.menuImageUrl,
-    this.menuType,
-    this.nestedModifiers,
   });
 
   factory GetMenusResponseDto.fromJson(Map<String, dynamic> json) =>
       _$GetMenusResponseDtoFromJson(json);
 
-  @JsonKey(
-      name: 'availabilities',
-      includeIfNull: false,
-      defaultValue: <DeliverectAvailabilityModel>[])
-  final List<DeliverectAvailabilityModel>? availabilities;
-  @JsonKey(name: 'currency', includeIfNull: false)
-  final int? currency;
-  @JsonKey(name: 'description', includeIfNull: false)
-  final String? description;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
+  @JsonKey(name: 'rating', includeIfNull: false)
+  final double? rating;
+  @JsonKey(name: 'reviewCount', includeIfNull: false)
+  final String? reviewCount;
+  @JsonKey(name: 'averagePickUpTime', includeIfNull: false)
+  final String? averagePickUpTime;
   @JsonKey(name: 'menu', includeIfNull: false)
-  final String? menu;
-  @JsonKey(name: 'menuId', includeIfNull: false)
-  final String? menuId;
-  @JsonKey(name: 'menuImageUrl', includeIfNull: false)
-  final String? menuImageUrl;
-  @JsonKey(name: 'menuType', includeIfNull: false)
-  final int? menuType;
-  @JsonKey(name: 'nestedModifiers', includeIfNull: false)
-  final bool? nestedModifiers;
+  final DeliverectMenusDto? menu;
   static const fromJsonFactory = _$GetMenusResponseDtoFromJson;
   static const toJsonFactory = _$GetMenusResponseDtoToJson;
   Map<String, dynamic> toJson() => _$GetMenusResponseDtoToJson(this);
@@ -1047,62 +1043,43 @@ class GetMenusResponseDto {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is GetMenusResponseDto &&
-            (identical(other.availabilities, availabilities) ||
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.rating, rating) ||
+                const DeepCollectionEquality().equals(other.rating, rating)) &&
+            (identical(other.reviewCount, reviewCount) ||
                 const DeepCollectionEquality()
-                    .equals(other.availabilities, availabilities)) &&
-            (identical(other.currency, currency) ||
+                    .equals(other.reviewCount, reviewCount)) &&
+            (identical(other.averagePickUpTime, averagePickUpTime) ||
                 const DeepCollectionEquality()
-                    .equals(other.currency, currency)) &&
-            (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                    .equals(other.averagePickUpTime, averagePickUpTime)) &&
             (identical(other.menu, menu) ||
-                const DeepCollectionEquality().equals(other.menu, menu)) &&
-            (identical(other.menuId, menuId) ||
-                const DeepCollectionEquality().equals(other.menuId, menuId)) &&
-            (identical(other.menuImageUrl, menuImageUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.menuImageUrl, menuImageUrl)) &&
-            (identical(other.menuType, menuType) ||
-                const DeepCollectionEquality()
-                    .equals(other.menuType, menuType)) &&
-            (identical(other.nestedModifiers, nestedModifiers) ||
-                const DeepCollectionEquality()
-                    .equals(other.nestedModifiers, nestedModifiers)));
+                const DeepCollectionEquality().equals(other.menu, menu)));
   }
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(availabilities) ^
-      const DeepCollectionEquality().hash(currency) ^
-      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(rating) ^
+      const DeepCollectionEquality().hash(reviewCount) ^
+      const DeepCollectionEquality().hash(averagePickUpTime) ^
       const DeepCollectionEquality().hash(menu) ^
-      const DeepCollectionEquality().hash(menuId) ^
-      const DeepCollectionEquality().hash(menuImageUrl) ^
-      const DeepCollectionEquality().hash(menuType) ^
-      const DeepCollectionEquality().hash(nestedModifiers) ^
       runtimeType.hashCode;
 }
 
 extension $GetMenusResponseDtoExtension on GetMenusResponseDto {
   GetMenusResponseDto copyWith(
-      {List<DeliverectAvailabilityModel>? availabilities,
-      int? currency,
-      String? description,
-      String? menu,
-      String? menuId,
-      String? menuImageUrl,
-      int? menuType,
-      bool? nestedModifiers}) {
+      {String? id,
+      double? rating,
+      String? reviewCount,
+      String? averagePickUpTime,
+      DeliverectMenusDto? menu}) {
     return GetMenusResponseDto(
-        availabilities: availabilities ?? this.availabilities,
-        currency: currency ?? this.currency,
-        description: description ?? this.description,
-        menu: menu ?? this.menu,
-        menuId: menuId ?? this.menuId,
-        menuImageUrl: menuImageUrl ?? this.menuImageUrl,
-        menuType: menuType ?? this.menuType,
-        nestedModifiers: nestedModifiers ?? this.nestedModifiers);
+        id: id ?? this.id,
+        rating: rating ?? this.rating,
+        reviewCount: reviewCount ?? this.reviewCount,
+        averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
+        menu: menu ?? this.menu);
   }
 }
 
@@ -1243,11 +1220,9 @@ class OrderItemModel {
     this.name,
     this.price,
     this.quantity,
-    this.remark,
-    this.subItems,
-    this.description,
-    this.imageUrl,
-    this.productType,
+    this.parent,
+    this.parentId,
+    this.items,
   });
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) =>
@@ -1265,17 +1240,13 @@ class OrderItemModel {
   final int? price;
   @JsonKey(name: 'quantity', includeIfNull: false)
   final int? quantity;
-  @JsonKey(name: 'remark', includeIfNull: false)
-  final String? remark;
+  @JsonKey(name: 'parent', includeIfNull: false)
+  final OrderItemModel? parent;
+  @JsonKey(name: 'parentId', includeIfNull: false)
+  final String? parentId;
   @JsonKey(
-      name: 'subItems', includeIfNull: false, defaultValue: <OrderItemModel>[])
-  final List<OrderItemModel>? subItems;
-  @JsonKey(name: 'description', includeIfNull: false)
-  final String? description;
-  @JsonKey(name: 'imageUrl', includeIfNull: false)
-  final String? imageUrl;
-  @JsonKey(name: 'productType', includeIfNull: false)
-  final int? productType;
+      name: 'items', includeIfNull: false, defaultValue: <OrderItemModel>[])
+  final List<OrderItemModel>? items;
   static const fromJsonFactory = _$OrderItemModelFromJson;
   static const toJsonFactory = _$OrderItemModelToJson;
   Map<String, dynamic> toJson() => _$OrderItemModelToJson(this);
@@ -1298,20 +1269,13 @@ class OrderItemModel {
             (identical(other.quantity, quantity) ||
                 const DeepCollectionEquality()
                     .equals(other.quantity, quantity)) &&
-            (identical(other.remark, remark) ||
-                const DeepCollectionEquality().equals(other.remark, remark)) &&
-            (identical(other.subItems, subItems) ||
+            (identical(other.parent, parent) ||
+                const DeepCollectionEquality().equals(other.parent, parent)) &&
+            (identical(other.parentId, parentId) ||
                 const DeepCollectionEquality()
-                    .equals(other.subItems, subItems)) &&
-            (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.imageUrl, imageUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.imageUrl, imageUrl)) &&
-            (identical(other.productType, productType) ||
-                const DeepCollectionEquality()
-                    .equals(other.productType, productType)));
+                    .equals(other.parentId, parentId)) &&
+            (identical(other.items, items) ||
+                const DeepCollectionEquality().equals(other.items, items)));
   }
 
   @override
@@ -1322,11 +1286,9 @@ class OrderItemModel {
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(price) ^
       const DeepCollectionEquality().hash(quantity) ^
-      const DeepCollectionEquality().hash(remark) ^
-      const DeepCollectionEquality().hash(subItems) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(imageUrl) ^
-      const DeepCollectionEquality().hash(productType) ^
+      const DeepCollectionEquality().hash(parent) ^
+      const DeepCollectionEquality().hash(parentId) ^
+      const DeepCollectionEquality().hash(items) ^
       runtimeType.hashCode;
 }
 
@@ -1338,11 +1300,9 @@ extension $OrderItemModelExtension on OrderItemModel {
       String? name,
       int? price,
       int? quantity,
-      String? remark,
-      List<OrderItemModel>? subItems,
-      String? description,
-      String? imageUrl,
-      int? productType}) {
+      OrderItemModel? parent,
+      String? parentId,
+      List<OrderItemModel>? items}) {
     return OrderItemModel(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
@@ -1350,11 +1310,9 @@ extension $OrderItemModelExtension on OrderItemModel {
         name: name ?? this.name,
         price: price ?? this.price,
         quantity: quantity ?? this.quantity,
-        remark: remark ?? this.remark,
-        subItems: subItems ?? this.subItems,
-        description: description ?? this.description,
-        imageUrl: imageUrl ?? this.imageUrl,
-        productType: productType ?? this.productType);
+        parent: parent ?? this.parent,
+        parentId: parentId ?? this.parentId,
+        items: items ?? this.items);
   }
 }
 
@@ -1391,73 +1349,6 @@ extension $ProductRelationModelDtoExtension on ProductRelationModelDto {
   ProductRelationModelDto copyWith({DeliverectProductModelDto? childProduct}) {
     return ProductRelationModelDto(
         childProduct: childProduct ?? this.childProduct);
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class TokenModel {
-  TokenModel({
-    this.id,
-    this.createdAt,
-    this.playerId,
-    this.device,
-  });
-
-  factory TokenModel.fromJson(Map<String, dynamic> json) =>
-      _$TokenModelFromJson(json);
-
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String? id;
-  @JsonKey(name: 'createdAt', includeIfNull: false)
-  final DateTime? createdAt;
-  @JsonKey(name: 'playerId', includeIfNull: false)
-  final String? playerId;
-  @JsonKey(
-      name: 'device',
-      includeIfNull: false,
-      toJson: tokenDeviceToJson,
-      fromJson: tokenDeviceFromJson)
-  final enums.TokenDevice? device;
-  static const fromJsonFactory = _$TokenModelFromJson;
-  static const toJsonFactory = _$TokenModelToJson;
-  Map<String, dynamic> toJson() => _$TokenModelToJson(this);
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is TokenModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.createdAt, createdAt) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdAt, createdAt)) &&
-            (identical(other.playerId, playerId) ||
-                const DeepCollectionEquality()
-                    .equals(other.playerId, playerId)) &&
-            (identical(other.device, device) ||
-                const DeepCollectionEquality().equals(other.device, device)));
-  }
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(createdAt) ^
-      const DeepCollectionEquality().hash(playerId) ^
-      const DeepCollectionEquality().hash(device) ^
-      runtimeType.hashCode;
-}
-
-extension $TokenModelExtension on TokenModel {
-  TokenModel copyWith(
-      {String? id,
-      DateTime? createdAt,
-      String? playerId,
-      enums.TokenDevice? device}) {
-    return TokenModel(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        playerId: playerId ?? this.playerId,
-        device: device ?? this.device);
   }
 }
 
@@ -1545,48 +1436,6 @@ List<enums.DeliverectDay> deliverectDayListFromJson(List? deliverectDay) {
   return deliverectDay.map((e) => deliverectDayFromJson(e.toString())).toList();
 }
 
-String? deliverectOrderTypesToJson(
-    enums.DeliverectOrderTypes? deliverectOrderTypes) {
-  return enums.$DeliverectOrderTypesMap[deliverectOrderTypes];
-}
-
-enums.DeliverectOrderTypes deliverectOrderTypesFromJson(
-    String? deliverectOrderTypes) {
-  if (deliverectOrderTypes == null) {
-    return enums.DeliverectOrderTypes.swaggerGeneratedUnknown;
-  }
-
-  return enums.$DeliverectOrderTypesMap.entries
-      .firstWhere(
-          (element) =>
-              element.value.toLowerCase() == deliverectOrderTypes.toLowerCase(),
-          orElse: () => const MapEntry(
-              enums.DeliverectOrderTypes.swaggerGeneratedUnknown, ''))
-      .key;
-}
-
-List<String> deliverectOrderTypesListToJson(
-    List<enums.DeliverectOrderTypes>? deliverectOrderTypes) {
-  if (deliverectOrderTypes == null) {
-    return [];
-  }
-
-  return deliverectOrderTypes
-      .map((e) => enums.$DeliverectOrderTypesMap[e]!)
-      .toList();
-}
-
-List<enums.DeliverectOrderTypes> deliverectOrderTypesListFromJson(
-    List? deliverectOrderTypes) {
-  if (deliverectOrderTypes == null) {
-    return [];
-  }
-
-  return deliverectOrderTypes
-      .map((e) => deliverectOrderTypesFromJson(e.toString()))
-      .toList();
-}
-
 String? orderStatusToJson(enums.OrderStatus? orderStatus) {
   return enums.$OrderStatusMap[orderStatus];
 }
@@ -1618,39 +1467,6 @@ List<enums.OrderStatus> orderStatusListFromJson(List? orderStatus) {
   }
 
   return orderStatus.map((e) => orderStatusFromJson(e.toString())).toList();
-}
-
-String? tokenDeviceToJson(enums.TokenDevice? tokenDevice) {
-  return enums.$TokenDeviceMap[tokenDevice];
-}
-
-enums.TokenDevice tokenDeviceFromJson(String? tokenDevice) {
-  if (tokenDevice == null) {
-    return enums.TokenDevice.swaggerGeneratedUnknown;
-  }
-
-  return enums.$TokenDeviceMap.entries
-      .firstWhere(
-          (element) => element.value.toLowerCase() == tokenDevice.toLowerCase(),
-          orElse: () =>
-              const MapEntry(enums.TokenDevice.swaggerGeneratedUnknown, ''))
-      .key;
-}
-
-List<String> tokenDeviceListToJson(List<enums.TokenDevice>? tokenDevice) {
-  if (tokenDevice == null) {
-    return [];
-  }
-
-  return tokenDevice.map((e) => enums.$TokenDeviceMap[e]!).toList();
-}
-
-List<enums.TokenDevice> tokenDeviceListFromJson(List? tokenDevice) {
-  if (tokenDevice == null) {
-    return [];
-  }
-
-  return tokenDevice.map((e) => tokenDeviceFromJson(e.toString())).toList();
 }
 
 typedef $JsonFactory<T> = T Function(Map<String, dynamic> json);
