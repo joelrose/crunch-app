@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/store/model/store_screen_model.dart';
 import 'package:pickup/screens/store/widgets/store_information.dart';
@@ -89,7 +90,10 @@ class _StoreScreenState extends State<StoreScreen> {
                       const Divider(),
                       StoreInformation(
                         phoneNumer: '', // model.restaurant.phoneNumber,
-                        address: '', // model.restaurant.address,
+                        address: '',
+                        openingTimes: _getOpeningTimes(
+                          model.store.availabilities!,
+                        ), // model.restaurant.address,
                       ),
                       const Divider(),
                       StoreMenueList(
@@ -111,5 +115,32 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
             ),
     );
+  }
+
+  String _getOpeningTimes(List<DeliverectAvailabilityModel> availabilities) {
+    final today = DateTime.now();
+
+    final todaysOpeningHours = availabilities
+        .where(
+          (element) => element.dayOfWeek!.index == today.weekday,
+        )
+        .toList();
+
+    String openingTimes = 'Closed';
+    for (final hour in todaysOpeningHours) {
+      final startTime = hour.startTime!.split(':');
+      final endTime = hour.startTime!.split(':');
+
+      final startHour = int.parse(startTime[0]);
+      final startMinutes = int.parse(startTime[0]);
+
+      if (today.hour > startHour) {
+        openingTimes = '${hour.startTime!} - ${hour.endTime!}';
+      } else if (today.hour == startHour && today.minute < startMinutes) {
+        openingTimes = '${hour.startTime!} - ${hour.endTime!}';
+      }
+    }
+
+    return openingTimes;
   }
 }

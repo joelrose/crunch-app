@@ -8,10 +8,12 @@ class StoreInformation extends StatelessWidget {
     Key? key,
     required this.phoneNumer,
     required this.address,
+    required this.openingTimes,
   }) : super(key: key);
 
   final String phoneNumer;
   final String address;
+  final String openingTimes;
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +45,10 @@ class StoreInformation extends StatelessWidget {
               ],
             ),
           ),
-          const StoreInformationItem(
+          StoreInformationItem(
             icon: 'assets/icons/clock-opening-times.svg',
             title: 'Opening times',
-            description: '11:00-22:00',
+            description: openingTimes,
           ),
           StoreInformationItem(
             icon: 'assets/icons/phone-store-address.svg',
