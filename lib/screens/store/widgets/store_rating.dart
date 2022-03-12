@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class StoreRating extends StatelessWidget {
-  const StoreRating({Key? key, required this.rating}) : super(key: key);
+  const StoreRating({
+    Key? key,
+    required this.rating,
+    required this.reviewCount,
+  }) : super(key: key);
 
   final String rating;
+  final String reviewCount;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class StoreRating extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 4),
           child: Text(
-            '(20 ratings)',
+            '($reviewCount ratings)',
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: AlpacaColor.darkGreyColor,
                 ),

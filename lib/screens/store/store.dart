@@ -46,74 +46,82 @@ class _StoreScreenState extends State<StoreScreen> {
       onModelReady: (model) {
         model.fetchRestaurant(widget.storeId);
       },
-      builder: (context, model, child) => model.state == ViewState.busy
-          ? Container(color: AlpacaColor.white100Color)
-          : PageWrapper(
-              floatingActionButtonWidget: Visibility(
-                visible: checkoutItems.isNotEmpty,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CheckoutButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        CheckoutScreen.route,
-                        arguments: CreateStoreData(
-                          checkoutItems: checkoutItems,
-                          storeName: '', //model.store.,
-                          googleMaps: '', //model.restaurant.googleMapsUrl,
-                        ),
-                      );
-                    },
-                    buttonText: '${checkoutItems.length} item in Cart ->',
-                    priceText: Utilities.currencyFormat(
-                      checkoutItems.getTotalPrice(),
-                    ),
-                    textColor: AlpacaColor.white100Color,
+      builder: (context, model, child) {
+        if (model.state == ViewState.busy) {
+          return Container(color: AlpacaColor.white100Color);
+        } else {
+          final menu = model.store.menu!;
+          return PageWrapper(
+            floatingActionButtonWidget: Visibility(
+              visible: checkoutItems.isNotEmpty,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: CheckoutButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      CheckoutScreen.route,
+                      arguments: CreateStoreData(
+                        checkoutItems: checkoutItems,
+                        storeName: menu.menu!, //model.store.,
+                        googleMaps: model.store
+                            .googleMapsLink!, //model.restaurant.googleMapsUrl,
+                      ),
+                    );
+                  },
+                  buttonText: '${checkoutItems.length} item in Cart ->',
+                  priceText: Utilities.currencyFormat(
+                    checkoutItems.getTotalPrice(),
                   ),
-                ),
-              ),
-              padding: EdgeInsets.zero,
-              backgroundColor: AlpacaColor.white100Color,
-              statusBarStyle: SystemUiOverlayStyle.dark,
-              child: AlpacaStretchyHeader(
-                image: model.store.menuImageUrl ?? '',
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      StoreOverview(
-                        name: model.store.menu ?? '',
-                        rating: '4.8',
-                        googleMaps: '', // model.restaurant.googleMapsUrl,
-                      ),
-                      const Divider(),
-                      StoreInformation(
-                        phoneNumer: '', // model.restaurant.phoneNumber,
-                        address: '',
-                        openingTimes: _getOpeningTimes(
-                          model.store.availabilities!,
-                        ), // model.restaurant.address,
-                      ),
-                      const Divider(),
-                      StoreMenueList(
-                        menueCategories: model.store.categories ?? [],
-                        onCheckoutChange: (list) {
-                          setState(() {
-                            checkoutItems = list;
-                          });
-                        },
-                        restaurantImage: model.store.menuImageUrl ?? '',
-                      ),
-                      if (checkoutItems.isNotEmpty)
-                        const SizedBox(
-                          height: 80,
-                        ),
-                    ],
-                  ),
+                  textColor: AlpacaColor.white100Color,
                 ),
               ),
             ),
+            padding: EdgeInsets.zero,
+            backgroundColor: AlpacaColor.white100Color,
+            statusBarStyle: SystemUiOverlayStyle.dark,
+            child: AlpacaStretchyHeader(
+              image: menu.menuImageUrl ?? '',
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    StoreOverview(
+                      name: menu.menu ?? '',
+                      rating: model.store.rating!.toString(),
+                      googleMaps: model.store.googleMapsLink ?? '',
+                      estimatedTime: model.store.averagePickUpTime ?? '20',
+                      reviewCount: model.store.reviewCount ?? '25',
+                    ),
+                    const Divider(),
+                    StoreInformation(
+                      phoneNumer: model.store.phoneNumber ?? '',
+                      address: model.store.address ?? '',
+                      openingTimes: _getOpeningTimes(
+                        menu.availabilities!,
+                      ),
+                    ),
+                    const Divider(),
+                    StoreMenueList(
+                      menueCategories: menu.categories ?? [],
+                      onCheckoutChange: (list) {
+                        setState(() {
+                          checkoutItems = list;
+                        });
+                      },
+                      restaurantImage: menu.menuImageUrl ?? '',
+                    ),
+                    if (checkoutItems.isNotEmpty)
+                      const SizedBox(
+                        height: 80,
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 

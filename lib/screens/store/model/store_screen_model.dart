@@ -13,7 +13,7 @@ class StoreScreenModel extends BaseModel {
   Future fetchRestaurant(String storeId) async {
     setState(ViewState.busy);
 
-    final response = await _hermesService.client.apiMenuMenuIdGet(
+    final response = await _hermesService.client.apiMenusMenuIdGet(
       menuId: storeId,
     );
 
