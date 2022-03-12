@@ -33,7 +33,10 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
 
   Widget _buildButton(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.only(
+        top: 20,
+        bottom: 30,
+      ),
       child: ActionButton(
         onPressed: () {
           context.read<StoreDetailCubit>().addToOrderOnClick();
@@ -70,13 +73,13 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
                     horizontal: 5,
                   ),
                   child: SizedBox(
-                    width: 40,
+                    width: 20,
                     child: Text(
                       context
                           .read<StoreDetailCubit>()
                           .amountOfProductsToAddToBasket
                           .toString(),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
                             color: AlpacaColor.darkNavyColor,
                           ),
                       textAlign: TextAlign.center,
@@ -93,12 +96,12 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
           ),
           Text(
             Utilities.currencyFormat(
-              context.read<StoreDetailCubit>().newTotalPrice,
+              context.read<StoreDetailCubit>().totalPrice,
             ),
             style: Theme.of(context).textTheme.headline2!.copyWith(
                   color: AlpacaColor.primary100,
                 ),
-          )
+          ),
         ],
       ),
     );
@@ -110,8 +113,8 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 11,
+        horizontal: 10,
+        vertical: 8,
       ),
       child: Bounceable(
         onTap: () {
@@ -120,8 +123,8 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
         },
         child: Container(
           alignment: Alignment.center,
-          width: 32,
-          height: 32,
+          width: 25,
+          height: 25,
           decoration: BoxDecoration(
             border: Border.all(
               width: 0.5,
@@ -132,6 +135,7 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
           child: SvgPicture.asset(
             imagePath,
             color: AlpacaColor.darkGreyColor,
+            width: 15,
           ),
         ),
       ),
