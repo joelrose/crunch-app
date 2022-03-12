@@ -179,33 +179,33 @@ class LocaleString {
 class CheckoutItemModel {
   CheckoutItemModel({
     required this.plu,
-    required this.itemOptionPlus,
+    required this.itemOptions,
     required this.price,
   });
   
   String plu;
-  List<CheckoutItemOptionsModel> itemOptionPlus;
-  num price;
+  List<CheckoutItemOptionsModel> itemOptions;
+  int price;
 }
 
 class CheckoutItemOptionsModel {
   CheckoutItemOptionsModel({
     required this.option,
-    required this.plu,
+    required this.categoryPlu,
   });
 
   CheckoutOptionForItemOptionsModel option;
-  String plu;
+  String categoryPlu;
 }
 
 class CheckoutOptionForItemOptionsModel {
   CheckoutOptionForItemOptionsModel({
     required this.plu,
     required this.price,
-    required this.title,
+    required this.name,
   });
 
   String plu;
-  num price;
-  String title;
+  int price;
+  String name;
 }

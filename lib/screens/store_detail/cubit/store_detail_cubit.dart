@@ -6,69 +6,76 @@ import 'package:sanity/sanity.dart';
 part 'store_detail_state.dart';
 
 class StoreDetailCubit extends Cubit<StoreDetailState> {
-  StoreDetailCubit(this.data) : super(StoreDetailReload(data, 0)) {
+  StoreDetailCubit(this.data) : super(StoreDetailReload(data, 0, 0)) {
     init();
   }
 
   final ProductDetailsData data;
 
+  // how many product should be added to the basket
   int amountOfProductsToAddToBasket = 1;
+
+  // how many product of this item are already in the basket
   int productAmountInBasket = 0;
-  double newTotalPrice = 0;
-  double defaultItemPrice = 0;
-  double totalItemPrice = 0;
-  late String priceAsString;
-  late List<CheckoutItemOptionsModel> itemTitleAndOptionsList;
-  late CheckoutItemOptionsModel itemTitleAndOptions;
-  late CheckoutOptionForItemOptionsModel itemOption;
+
+  int newTotalPrice = 0;
+  int totalItemPrice = 0;
+
+  late List<CheckoutItemOptionsModel> categoryList;
+  int reload = 0;
+  //late CheckoutOptionForItemOptionsModel itemOption;
 
   void init() {
-    productAmountInBasket = data.checkoutItems
-        .where(
-          (listItem) => data.item.plu == listItem.plu,
-        )
-        .length;
+    final isAlreadyInBasket = _isItemInBasket();
 
-    if (_isItemInBasket()) {
-      amountOfProductsToAddToBasket = productAmountInBasket;
+    // check wether there are items of this type already in the basket
+    if (isAlreadyInBasket) {
+      amountOfProductsToAddToBasket = data.checkoutItems
+          .where(
+            (listItem) => data.item.plu == listItem.plu,
+          )
+          .length;
     } else {
       amountOfProductsToAddToBasket = 1;
       productAmountInBasket = 0;
     }
 
-    defaultItemPrice = data.item.price!.toDouble();
-    totalItemPrice = defaultItemPrice;
+    final itemPrice = totalItemPrice = data.item.price!;
 
     final item = data.item;
 
-    itemTitleAndOptionsList = [];
-    if (data.item.childProducts != null) {
-      if (!_isItemInBasket()) {
+    categoryList = [];
+
+    if (item.childProducts != null) {
+      if (!isAlreadyInBasket) {
         for (final child in item.childProducts!) {
-          itemOption = CheckoutOptionForItemOptionsModel(
-            plu: child.childProduct!.plu!,
-            price: child.childProduct!.price!,
-            title: child.childProduct!.name!,
+          final firstOption =
+              child.childProduct!.childProducts![0].childProduct!;
+
+          final itemTitleAndOptions = CheckoutItemOptionsModel(
+            option: CheckoutOptionForItemOptionsModel(
+              plu: firstOption.plu!,
+              price: firstOption.price!,
+              name: firstOption.name!,
+            ),
+            categoryPlu: child.childProduct!.plu!,
           );
-          itemTitleAndOptions = CheckoutItemOptionsModel(
-            option: itemOption,
-            plu: child.childProduct!.plu!,
-          );
-          itemTitleAndOptionsList.add(itemTitleAndOptions);
+
+          categoryList.add(itemTitleAndOptions);
         }
       } else {
         final int itemIndexInBasket = data.checkoutItems.indexWhere(
           (checkoutItem) => checkoutItem.plu == data.item.plu,
         );
-        itemTitleAndOptionsList =
-            data.checkoutItems[itemIndexInBasket].itemOptionPlus;
 
-        double addOnPrice = 0;
-        for (final item in itemTitleAndOptionsList) {
-          final itemOptionPrice = item.option.price.toDouble();
+        final test = data.checkoutItems[itemIndexInBasket].itemOptions;
+
+        int addOnPrice = 0;
+        for (final item in test) {
+          final itemOptionPrice = item.option.price;
           addOnPrice += itemOptionPrice;
         }
-        totalItemPrice = defaultItemPrice + addOnPrice;
+        totalItemPrice = itemPrice + addOnPrice;
       }
     }
 
@@ -76,10 +83,10 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   }
 
   void changeItemPrice(
-    double singleProductPrice,
-    double addOnPrice,
+    int singleProductPrice,
+    int addOnPrice,
   ) {
-    final double newItemPrice = singleProductPrice + addOnPrice;
+    final newItemPrice = singleProductPrice + addOnPrice;
     totalItemPrice = newItemPrice;
     _calculateNewPrice(
       amountOfProductsToAddToBasket,
@@ -105,10 +112,11 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
     }
   }
 
-  void _calculateNewPrice(int amount, double price) {
+  void _calculateNewPrice(int amount, int price) {
     newTotalPrice = totalItemPrice * amount;
 
-    emit(StoreDetailReload(data, newTotalPrice));
+    reload++;
+    emit(StoreDetailReload(data, newTotalPrice, reload));
   }
 
   void addToOrderOnClick() {
@@ -130,7 +138,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
         data.checkoutItems.add(
           CheckoutItemModel(
             plu: item.plu!,
-            itemOptionPlus: itemTitleAndOptionsList,
+            itemOptions: categoryList,
             price: item.price!,
           ),
         );

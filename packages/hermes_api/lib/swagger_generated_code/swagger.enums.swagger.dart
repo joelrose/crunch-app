@@ -19,14 +19,15 @@ enum DeliverectDay {
   sunday
 }
 
+// TODO: fixed manually
 const $DeliverectDayMap = {
-  DeliverectDay.monday: 'Monday',
-  DeliverectDay.tuesday: 'Tuesday',
-  DeliverectDay.wednesday: 'Wednesday',
-  DeliverectDay.thursday: 'Thursday',
-  DeliverectDay.friday: 'Friday',
-  DeliverectDay.saturday: 'Saturday',
-  DeliverectDay.sunday: 'Sunday'
+  DeliverectDay.monday: '1',
+  DeliverectDay.tuesday: '2',
+  DeliverectDay.wednesday: '3',
+  DeliverectDay.thursday: '4',
+  DeliverectDay.friday: '5',
+  DeliverectDay.saturday: '6',
+  DeliverectDay.sunday: '7'
 };
 
 enum DeliverectOrderTypes {

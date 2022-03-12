@@ -496,6 +496,7 @@ extension $CreateUserRequestDtoExtension on CreateUserRequestDto {
   }
 }
 
+// TODO: fixed manually
 @JsonSerializable(explicitToJson: true)
 class DeliverectAvailabilityModel {
   DeliverectAvailabilityModel({

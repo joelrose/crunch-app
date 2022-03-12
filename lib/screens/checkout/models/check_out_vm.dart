@@ -35,7 +35,7 @@ class CheckOutVM {
 
   double calculateItemPrice(CheckoutItemModel item) {
     double price = item.price.toDouble();
-    for (final itemOption in item.itemOptionPlus) {
+    for (final itemOption in item.itemOptions) {
       price += itemOption.option.price;
     }
     return price;
