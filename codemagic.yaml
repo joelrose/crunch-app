@@ -22,6 +22,7 @@ workflows:
         - $HOME/Library/Caches/CocoaPods
         - $FLUTTER_ROOT/.pub-cache
     scripts:
+      - flutter pub get
       - keychain initialize
       - app-store-connect fetch-signing-files "tech.getcrunch.crunch.stg" --type IOS_APP_STORE
         --create
