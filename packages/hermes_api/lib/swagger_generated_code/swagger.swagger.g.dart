@@ -406,7 +406,8 @@ Map<String, dynamic> _$GetMenusResponseDtoToJson(GetMenusResponseDto instance) {
 GetOrderResponseDto _$GetOrderResponseDtoFromJson(Map<String, dynamic> json) =>
     GetOrderResponseDto(
       storeId: json['storeId'] as String?,
-      status: orderStatusFromJson(json['status'] as String?),
+      // TODO: manually edited
+      status: orderStatusFromJson((json['status'] as int) .toString()),
       price: (json['price'] as num?)?.toDouble(),
       items: (json['items'] as List<dynamic>?)
               ?.map((e) => OrderItemModel.fromJson(e as Map<String, dynamic>))
