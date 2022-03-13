@@ -9,12 +9,16 @@ class StoreOverview extends StatelessWidget {
     Key? key,
     required this.name,
     required this.rating,
+    required this.reviewCount,
     required this.googleMaps,
+    required this.estimatedTime,
   }) : super(key: key);
 
   final String name;
   final String rating;
+  final String reviewCount;
   final String googleMaps;
+  final String estimatedTime;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,7 @@ class StoreOverview extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '20 min',
+                      '$estimatedTime min',
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
@@ -81,7 +85,10 @@ class StoreOverview extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                StoreRating(rating: rating),
+                StoreRating(
+                  rating: rating,
+                  reviewCount: reviewCount,
+                ),
                 GestureDetector(
                   onTap: () async {
                     await launch(googleMaps);

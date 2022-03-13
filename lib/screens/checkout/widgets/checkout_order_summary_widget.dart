@@ -1,8 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
 import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
-import 'package:sanity/sanity.dart';
 
 class CheckoutOrderSummaryItem extends StatelessWidget {
   const CheckoutOrderSummaryItem({
@@ -47,7 +47,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
   const CheckoutOrderSummaryWidget({Key? key, required this.checkoutItems})
       : super(key: key);
 
-  final List<CheckoutItemModel> checkoutItems;
+  final List<CreateOrderItemDto> checkoutItems;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
             CheckoutOrderSummaryItem(
               labelText: 'Subtotal',
               price: Utilities.currencyFormat(
-                checkoutItems.getTotalPrice(),
+                PriceCalulcation.getPriceOfItems(checkoutItems),
               ),
             ),
             CheckoutOrderSummaryItem(

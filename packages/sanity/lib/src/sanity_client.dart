@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sanity/src/exception.dart';
 import 'package:sanity/src/http_client.dart';
-import 'package:sanity/src/model.dart';
 
 class SanityClient {
   SanityClient({

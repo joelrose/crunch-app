@@ -6,16 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/shared/utilities.dart';
 
-class ProductAmountAndAddToOrder extends StatefulWidget {
-  const ProductAmountAndAddToOrder({Key? key}) : super(key: key);
-
-  @override
-  _ProductAmountAndAddToOrderState createState() =>
-      _ProductAmountAndAddToOrderState();
-}
-
-class _ProductAmountAndAddToOrderState
-    extends State<ProductAmountAndAddToOrder> {
+class ProductAmountAndAddToOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<StoreDetailCubit, StoreDetailState>(
@@ -29,133 +20,155 @@ class _ProductAmountAndAddToOrderState
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 0.5,
-                              color: AlpacaColor.greyColor,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 14,
-                                  vertical: 11,
-                                ),
-                                child: Bounceable(
-                                  onTap: () {
-                                    HapticFeedback.mediumImpact();
-                                    context
-                                        .read<StoreDetailCubit>()
-                                        .decreaseItemAmount();
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    width: 32,
-                                    height: 32,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 0.5,
-                                        color: AlpacaColor.greyColor,
-                                      ),
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: SvgPicture.asset(
-                                      'assets/icons/minus.svg',
-                                      color: AlpacaColor.darkGreyColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 5,
-                                ),
-                                child: SizedBox(
-                                  width: 40,
-                                  child: Text(
-                                    context
-                                        .read<StoreDetailCubit>()
-                                        .amountOfProductsToAddToBasket
-                                        .toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .copyWith(
-                                          color: AlpacaColor.darkNavyColor,
-                                        ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 14,
-                                  vertical: 11,
-                                ),
-                                child: Bounceable(
-                                  onTap: () {
-                                    HapticFeedback.mediumImpact();
-                                    context
-                                        .read<StoreDetailCubit>()
-                                        .increaseItemAmount();
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    width: 32,
-                                    height: 32,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 0.5,
-                                        color: AlpacaColor.greyColor,
-                                      ),
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: SvgPicture.asset(
-                                      'assets/icons/plus.svg',
-                                      color: AlpacaColor.darkGreyColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          Utilities.currencyFormat(
-                            context.read<StoreDetailCubit>().newTotalPrice,
-                          ),
-                          style:
-                              Theme.of(context).textTheme.headline2!.copyWith(
-                                    color: AlpacaColor.primary100,
-                                  ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: ActionButton(
-                      onPressed: () {
-                        context.read<StoreDetailCubit>().addToOrderOnClick();
-                        Navigator.pop(context);
-                      },
-                      buttonText: 'Add to order',
-                    ),
-                  )
+                  _buildSelect(context),
+                  _buildButton(context),
                 ],
               ),
             ),
           ],
         );
       },
+    );
+  }
+
+  Widget _buildButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 20,
+        bottom: 30,
+      ),
+      child: ActionButton(
+        onPressed: () {
+          context.read<StoreDetailCubit>().addToOrderOnClick();
+          Navigator.pop(context);
+        },
+        buttonText: 'Add to order',
+      ),
+    );
+  }
+
+  Widget _buildSelect(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 8,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 0.5,
+                color: AlpacaColor.greyColor,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: AlpacaSelect(
+              amount: context
+                  .read<StoreDetailCubit>()
+                  .amountOfProductsToAddToBasket
+                  .toString(),
+              onDecrease: () =>
+                  context.read<StoreDetailCubit>().decreaseItemAmount(),
+              onIncrease: () =>
+                  context.read<StoreDetailCubit>().increaseItemAmount(),
+              textBoxHorizontalPadding: 5,
+              textBoxWidth: 30,
+              textStyle: Theme.of(context).textTheme.headline2!.copyWith(
+                    color: AlpacaColor.darkNavyColor,
+                  ),
+            ),
+          ),
+          Text(
+            Utilities.currencyFormat(
+              context.read<StoreDetailCubit>().totalPrice,
+            ),
+            style: Theme.of(context).textTheme.headline2!.copyWith(
+                  color: AlpacaColor.primary100,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AlpacaSelect extends StatelessWidget {
+  const AlpacaSelect({
+    Key? key,
+    required this.onDecrease,
+    required this.onIncrease,
+    required this.amount,
+    required this.textBoxWidth,
+    required this.textBoxHorizontalPadding,
+    required this.textStyle,
+  }) : super(key: key);
+
+  final void Function() onDecrease;
+  final void Function() onIncrease;
+  final String amount;
+
+  final double textBoxWidth;
+  final double textBoxHorizontalPadding;
+  final TextStyle textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _buildSelectButton(
+          onTap: onDecrease,
+          imagePath: 'assets/icons/minus.svg',
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: textBoxHorizontalPadding,
+          ),
+          child: SizedBox(
+            width: textBoxWidth,
+            child: Text(
+              amount,
+              style: textStyle,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        _buildSelectButton(
+          onTap: onIncrease,
+          imagePath: 'assets/icons/plus.svg',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSelectButton({
+    required void Function() onTap,
+    required String imagePath,
+  }) {
+    return Bounceable(
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onTap();
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: 25,
+        height: 25,
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 0.5,
+            color: AlpacaColor.greyColor,
+          ),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: SvgPicture.asset(
+          imagePath,
+          color: AlpacaColor.darkGreyColor,
+          width: 15,
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/store/model/store_screen_model.dart';
 import 'package:pickup/screens/store/widgets/store_information.dart';
@@ -11,18 +12,19 @@ import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/enum/viewstate.dart';
 import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
-import 'package:sanity/sanity.dart';
 
 class CreateStoreData {
   CreateStoreData({
     required this.checkoutItems,
     required this.storeName,
     required this.googleMaps,
+    required this.merchantId,
   });
 
-  final List<CheckoutItemModel> checkoutItems;
+  final List<CreateOrderItemDto> checkoutItems;
   final String storeName;
   final String googleMaps;
+  final String merchantId;
 }
 
 class StoreScreen extends StatefulWidget {
@@ -37,7 +39,7 @@ class StoreScreen extends StatefulWidget {
 
 class _StoreScreenState extends State<StoreScreen> {
   bool showCheckoutButton = false;
-  List<CheckoutItemModel> checkoutItems = [];
+  List<CreateOrderItemDto> checkoutItems = [];
 
   @override
   Widget build(BuildContext context) {
@@ -45,71 +47,110 @@ class _StoreScreenState extends State<StoreScreen> {
       onModelReady: (model) {
         model.fetchRestaurant(widget.storeId);
       },
-      builder: (context, model, child) => model.state == ViewState.busy
-          ? Container(color: AlpacaColor.white100Color)
-          : PageWrapper(
-              floatingActionButtonWidget: Visibility(
-                visible: checkoutItems.isNotEmpty,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CheckoutButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        CheckoutScreen.route,
-                        arguments: CreateStoreData(
-                          checkoutItems: checkoutItems,
-                          storeName: '', //model.store.,
-                          googleMaps: '', //model.restaurant.googleMapsUrl,
-                        ),
-                      );
-                    },
-                    buttonText: '${checkoutItems.length} item in Cart ->',
-                    priceText: Utilities.currencyFormat(
-                      checkoutItems.getTotalPrice(),
-                    ),
-                    textColor: AlpacaColor.white100Color,
+      builder: (context, model, child) {
+        if (model.state == ViewState.busy) {
+          return Container(color: AlpacaColor.white100Color);
+        } else {
+          final menu = model.store.menu!;
+          return PageWrapper(
+            floatingActionButtonWidget: Visibility(
+              visible: checkoutItems.isNotEmpty,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: CheckoutButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      CheckoutScreen.route,
+                      arguments: CreateStoreData(
+                        checkoutItems: checkoutItems,
+                        storeName: menu.menu!, //model.store.,
+                        googleMaps: model.store
+                            .googleMapsLink!, //model.restaurant.googleMapsUrl,
+                        merchantId: model.store.id!,
+                      ),
+                    );
+                  },
+                  buttonText: '${checkoutItems.length} item in Cart ->',
+                  priceText: Utilities.currencyFormat(
+                    PriceCalulcation.getPriceOfItems(checkoutItems),
                   ),
-                ),
-              ),
-              padding: EdgeInsets.zero,
-              backgroundColor: AlpacaColor.white100Color,
-              statusBarStyle: SystemUiOverlayStyle.dark,
-              child: AlpacaStretchyHeader(
-                image: model.store.menuImageUrl ?? '',
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      StoreOverview(
-                        name: model.store.menu ?? '',
-                        rating: '4.8',
-                        googleMaps: '', // model.restaurant.googleMapsUrl,
-                      ),
-                      const Divider(),
-                      StoreInformation(
-                        phoneNumer: '', // model.restaurant.phoneNumber,
-                        address: '', // model.restaurant.address,
-                      ),
-                      const Divider(),
-                      StoreMenueList(
-                        menueCategories: model.store.categories ?? [],
-                        onCheckoutChange: (list) {
-                          setState(() {
-                            checkoutItems = list;
-                          });
-                        },
-                        restaurantImage: model.store.menuImageUrl ?? '',
-                      ),
-                      if (checkoutItems.isNotEmpty)
-                        const SizedBox(
-                          height: 80,
-                        ),
-                    ],
-                  ),
+                  textColor: AlpacaColor.white100Color,
                 ),
               ),
             ),
+            padding: EdgeInsets.zero,
+            backgroundColor: AlpacaColor.white100Color,
+            statusBarStyle: SystemUiOverlayStyle.dark,
+            child: AlpacaStretchyHeader(
+              image: menu.menuImageUrl ?? '',
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    StoreOverview(
+                      name: menu.menu ?? '',
+                      rating: model.store.rating!.toString(),
+                      googleMaps: model.store.googleMapsLink ?? '',
+                      estimatedTime: model.store.averagePickUpTime ?? '20',
+                      reviewCount: model.store.reviewCount ?? '25',
+                    ),
+                    const Divider(),
+                    StoreInformation(
+                      phoneNumer: model.store.phoneNumber ?? '',
+                      address: model.store.address ?? '',
+                      openingTimes: _getOpeningTimes(
+                        menu.availabilities!,
+                      ),
+                    ),
+                    const Divider(),
+                    StoreMenueList(
+                      menueCategories: menu.categories ?? [],
+                      onCheckoutChange: (list) {
+                        setState(() {
+                          checkoutItems = list;
+                        });
+                      },
+                      restaurantImage: menu.menuImageUrl ?? '',
+                    ),
+                    if (checkoutItems.isNotEmpty)
+                      const SizedBox(
+                        height: 80,
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+      },
     );
+  }
+
+  String _getOpeningTimes(List<DeliverectAvailabilityModel> availabilities) {
+    final today = DateTime.now();
+
+    final todaysOpeningHours = availabilities
+        .where(
+          (element) => element.dayOfWeek!.index == today.weekday,
+        )
+        .toList();
+
+    String openingTimes = 'Closed';
+    for (final hour in todaysOpeningHours) {
+      final startTime = hour.startTime!.split(':');
+      // final endTime = hour.startTime!.split(':');
+
+      final startHour = int.parse(startTime[0]);
+      final startMinutes = int.parse(startTime[0]);
+
+      if (today.hour > startHour) {
+        openingTimes = '${hour.startTime!} - ${hour.endTime!}';
+      } else if (today.hour == startHour && today.minute < startMinutes) {
+        openingTimes = '${hour.startTime!} - ${hour.endTime!}';
+      }
+    }
+
+    return openingTimes;
   }
 }

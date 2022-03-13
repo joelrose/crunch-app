@@ -16,7 +16,7 @@ class DiscoverCubit extends Cubit<DiscoverState> {
     emit(state.copyWith(status: DiscoverStatus.loading));
 
     try {
-      final stores = await _hermesService.client.apiMenuGet();
+      final stores = await _hermesService.client.apiMenusGet();
 
       if (stores.isSuccessful) {
         emit(
