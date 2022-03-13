@@ -12,22 +12,22 @@ extension DiscoverStatusX on DiscoverStatus {
 class DiscoverState extends Equatable {
   DiscoverState({
     this.status = DiscoverStatus.initial,
-    List<RestaurantOverviewModel>? restaurants,
-  }) : restaurants = restaurants ?? [];
+    List<GetMenusResponseDto>? stores,
+  }) : stores = stores ?? [];
 
   final DiscoverStatus status;
-  final List<RestaurantOverviewModel> restaurants;
+  final List<GetMenusResponseDto> stores;
 
   DiscoverState copyWith({
     DiscoverStatus? status,
-    List<RestaurantOverviewModel>? restaurants,
+    List<GetMenusResponseDto>? stores,
   }) {
     return DiscoverState(
       status: status ?? this.status,
-      restaurants: restaurants ?? [],
+      stores: stores ?? [],
     );
   }
 
   @override
-  List<Object?> get props => [status, restaurants];
+  List<Object?> get props => [status, stores];
 }

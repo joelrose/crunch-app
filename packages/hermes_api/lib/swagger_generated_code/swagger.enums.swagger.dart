@@ -1,5 +1,35 @@
 import 'package:json_annotation/json_annotation.dart';
 
+enum DeliverectDay {
+  @JsonValue('swaggerGeneratedUnknown')
+  swaggerGeneratedUnknown,
+  @JsonValue('Monday')
+  monday,
+  @JsonValue('Tuesday')
+  tuesday,
+  @JsonValue('Wednesday')
+  wednesday,
+  @JsonValue('Thursday')
+  thursday,
+  @JsonValue('Friday')
+  friday,
+  @JsonValue('Saturday')
+  saturday,
+  @JsonValue('Sunday')
+  sunday
+}
+
+// FIXED MANUALLY
+const $DeliverectDayMap = {
+  DeliverectDay.monday: '1',
+  DeliverectDay.tuesday: '2',
+  DeliverectDay.wednesday: '3',
+  DeliverectDay.thursday: '4',
+  DeliverectDay.friday: '5',
+  DeliverectDay.saturday: '6',
+  DeliverectDay.sunday: '7'
+};
+
 enum OrderStatus {
   @JsonValue('swaggerGeneratedUnknown')
   swaggerGeneratedUnknown,
@@ -21,18 +51,4 @@ const $OrderStatusMap = {
   OrderStatus.declined: 'Declined',
   OrderStatus.confirmed: 'Confirmed',
   OrderStatus.done: 'Done'
-};
-
-enum TokenDevice {
-  @JsonValue('swaggerGeneratedUnknown')
-  swaggerGeneratedUnknown,
-  @JsonValue('IOS')
-  ios,
-  @JsonValue('Android')
-  android
-}
-
-const $TokenDeviceMap = {
-  TokenDevice.ios: 'IOS',
-  TokenDevice.android: 'Android'
 };

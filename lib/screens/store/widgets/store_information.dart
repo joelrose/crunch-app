@@ -8,10 +8,12 @@ class StoreInformation extends StatelessWidget {
     Key? key,
     required this.phoneNumer,
     required this.address,
+    required this.openingTimes,
   }) : super(key: key);
 
   final String phoneNumer;
   final String address;
+  final String openingTimes;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,26 @@ class StoreInformation extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> _buildInformationItems() {
+    return [
+      StoreInformationItem(
+        icon: 'assets/icons/clock-opening-times.svg',
+        title: 'Opening times',
+        description: openingTimes,
+      ),
+      StoreInformationItem(
+        icon: 'assets/icons/phone-store-address.svg',
+        title: 'Contact number',
+        description: phoneNumer,
+      ),
+      StoreInformationItem(
+        icon: 'assets/icons/location-store-address.svg',
+        title: 'Store address',
+        description: address,
+      ),
+    ];
   }
 
   Widget _buildInformation(BuildContext context) {
@@ -51,25 +73,5 @@ class StoreInformation extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  List<Widget> _buildInformationItems() {
-    return [
-      const StoreInformationItem(
-        icon: 'assets/icons/clock-opening-times.svg',
-        title: 'Opening times',
-        description: '11:00-22:00',
-      ),
-      StoreInformationItem(
-        icon: 'assets/icons/phone-store-address.svg',
-        title: 'Contact number',
-        description: phoneNumer,
-      ),
-      StoreInformationItem(
-        icon: 'assets/icons/location-store-address.svg',
-        title: 'Store address',
-        description: address,
-      ),
-    ];
   }
 }

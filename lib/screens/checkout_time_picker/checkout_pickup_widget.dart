@@ -359,7 +359,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
     final String pickupHourString = pickupHour.toString().padLeft(2, '0');
     final String pickupMinuteString = pickupMinute.toString().padLeft(2, '0');
-    if (DateTime.now().hour > openingTimes[DateTime.now().weekday].closing) {
+    if (DateTime.now().hour >
+        openingTimes[DateTime.now().weekday - 1].closing) {
       return CheckoutHeaderRowWidget(
         header: 'Pickup',
         buttonText: 'Closed',

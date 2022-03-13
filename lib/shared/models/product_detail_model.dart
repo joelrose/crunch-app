@@ -1,4 +1,4 @@
-import 'package:sanity/sanity.dart';
+import 'package:hermes_api/hermes_api.dart';
 
 class ProductDetailsData {
   ProductDetailsData({
@@ -7,8 +7,8 @@ class ProductDetailsData {
     required this.checkoutItems,
     required this.onCheckoutChange,
   });
-  final RestaurantMenueItemModel item;
+  final DeliverectProductModelDto item;
   final String restaurantImage;
-  List<CheckoutItemModel> checkoutItems;
-  void Function(List<CheckoutItemModel>) onCheckoutChange;
+  List<CreateOrderItemDto> checkoutItems;
+  void Function(List<CreateOrderItemDto>) onCheckoutChange;
 }

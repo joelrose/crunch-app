@@ -1,34 +1,45 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/screens/checkout/models/check_out_item_amount.dart';
-import 'package:pickup/screens/checkout/models/check_out_vm.dart';
+import 'package:hermes_api/hermes_api.dart';
+import 'package:pickup/screens/store_detail/widgets/product_amount_and_add_to_order.dart';
+import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
-import 'package:sanity/sanity.dart';
 
-class CheckOutItemsWidget extends StatelessWidget {
-  const CheckOutItemsWidget({Key? key, required this.checkoutItems})
+class CheckOutItemsWidget extends StatefulWidget {
+  CheckOutItemsWidget({Key? key, required this.checkoutItems})
       : super(key: key);
 
-  final List<CheckoutItemModel> checkoutItems;
+  List<CreateOrderItemDto> checkoutItems;
 
   @override
-  Widget build(BuildContext context) {
-    final CheckOutVM vm = CheckOutVM(checkoutItems);
-    final List<CheckoutItemAmount> checkoutSummaryList = vm.checkoutSummaryList;
+  State<CheckOutItemsWidget> createState() => _CheckOutItemsWidgetState();
+}
 
+class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 18),
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: checkoutSummaryList.length,
+            itemCount: widget.checkoutItems.length,
             shrinkWrap: true,
             itemBuilder: (context, itemIndex) {
-              final checkoutSummaryItem = checkoutSummaryList[itemIndex];
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 3),
-                child: _buildItem(checkoutSummaryItem, context),
+              final checkoutSummaryItem = widget.checkoutItems[itemIndex];
+              return TextButton(
+                style: TextButton.styleFrom(
+                  primary: AlpacaColor.primary100,
+                ),
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 3,
+                    horizontal: 18,
+                  ),
+                  child: _buildItem(context, checkoutSummaryItem, itemIndex),
+                ),
               );
             },
           ),
@@ -37,24 +48,94 @@ class CheckOutItemsWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(CheckoutItemAmount item, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildItem(
+    BuildContext context,
+    CreateOrderItemDto item,
+    int itemIndex,
+  ) {
+    return Column(
       children: [
-        Text(
-          '${item.amount}x ${item.checkoutItem.title.english}',
-          style: Theme.of(context).textTheme.headline4,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              item.name!,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            Text(
+              Utilities.currencyFormat(PriceCalulcation.getPriceOfItem(item)),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(color: AlpacaColor.darkNavyColor),
+            ),
+          ],
         ),
-        Text(
-          Utilities.currencyFormat(
-            item.totalPrice,
-          ),
-          style: Theme.of(context)
-              .textTheme
-              .headline4!
-              .copyWith(color: AlpacaColor.darkNavyColor),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildItemDescription(item),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: AlpacaSelect(
+                onDecrease: () {
+                  if (item.quantity == 1) {
+                    setState(() {
+                      widget.checkoutItems.removeAt(itemIndex);
+                    });
+                  } else {
+                    setState(() {
+                      widget.checkoutItems[itemIndex].quantity =
+                          widget.checkoutItems[itemIndex].quantity! - 1;
+                    });
+                  }
+                },
+                onIncrease: () {
+                  setState(() {
+                    widget.checkoutItems[itemIndex].quantity =
+                        widget.checkoutItems[itemIndex].quantity! + 1;
+                  });
+                },
+                amount: item.quantity!.toString(),
+                textBoxHorizontalPadding: 12,
+                textStyle: Theme.of(context).textTheme.headline4!.copyWith(
+                      color: AlpacaColor.darkNavyColor,
+                    ),
+              ),
+            ),
+          ],
         ),
       ],
+    );
+  }
+
+  String _getDescription(CreateOrderItemDto item) {
+    if (item.items != null) {
+      final buffer = StringBuffer();
+
+      for (final item in item.items!) {
+        buffer.write('${item.name!}, ');
+      }
+
+      return buffer.toString();
+    }
+
+    return '';
+  }
+
+  Widget _buildItemDescription(CreateOrderItemDto item) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 6,
+          right: 60,
+        ),
+        child: Text(
+          _getDescription(item),
+          style: Theme.of(context).textTheme.headline5,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
     );
   }
 }
