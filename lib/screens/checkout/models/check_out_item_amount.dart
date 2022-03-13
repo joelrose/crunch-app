@@ -1,5 +1,5 @@
 
-import 'package:sanity/sanity.dart';
+import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
 
 class CheckoutItemAmount {
   CheckoutItemAmount({
@@ -7,7 +7,7 @@ class CheckoutItemAmount {
     required this.amount,
     required this.totalPrice,
   });
-  CheckoutItemModel checkoutItem;
+  CreateOrderItemDto checkoutItem;
   int amount;
-  double totalPrice;
+  int totalPrice;
 }

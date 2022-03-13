@@ -89,19 +89,48 @@ class ProductRadioCheckbox extends StatelessWidget {
         final value =
             categoryOptions.elementAt(optionChoiceIndex).childProduct!;
 
+        final isRadio = item.min == 1 && item.max == 1;
+
         return GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () =>
-              onTapped(item, cubit, itemCategoryIndex, optionChoiceIndex),
+          onTap: () => isRadio
+              ? onTappedRadio(
+                  item,
+                  cubit,
+                  itemCategoryIndex,
+                  optionChoiceIndex,
+                )
+              : onTappedCheckBox(
+                  item,
+                  cubit,
+                  itemCategoryIndex,
+                  optionChoiceIndex,
+                ),
           child: Row(
             children: [
-              Radio(
-                value: value.plu!,
-                groupValue: cubit.categoryList[itemCategoryIndex].option.plu,
-                activeColor: AlpacaColor.primary100,
-                onChanged: (String? value) =>
-                    onTapped(item, cubit, itemCategoryIndex, optionChoiceIndex),
-              ),
+              if (isRadio) ...[
+                Radio(
+                  value: value.plu!,
+                  groupValue:
+                      cubit.orderDto[itemCategoryIndex].items!.indexWhere(
+                                (element) => element.plu == value.plu!,
+                              ) !=
+                              -1
+                          ? value.plu!
+                          : '',
+                  activeColor: AlpacaColor.primary100,
+                  onChanged: (String? value) => {},
+                ),
+              ] else ...[
+                Checkbox(
+                  value: cubit.orderDto[itemCategoryIndex].items!.indexWhere(
+                        (element) => element.plu == value.plu!,
+                      ) !=
+                      -1,
+                  activeColor: AlpacaColor.primary100,
+                  onChanged: (value) => {},
+                ),
+              ],
               _buildPriceText(context, value.name!, value.price)
             ],
           ),
@@ -136,7 +165,7 @@ class ProductRadioCheckbox extends StatelessWidget {
     );
   }
 
-  void onTapped(
+  void onTappedRadio(
     DeliverectProductModelDto item,
     StoreDetailCubit cubit,
     int itemCategoryIndex,
@@ -146,19 +175,49 @@ class ProductRadioCheckbox extends StatelessWidget {
       final value =
           item.childProducts!.elementAt(optionChoiceIndex).childProduct!;
 
-      cubit.categoryList[itemCategoryIndex].option =
-          CheckoutOptionForItemOptionsModel(
-        name: value.name!,
-        price: value.price!,
-        plu: value.plu!,
+      cubit.orderDto[itemCategoryIndex].items!.clear();
+
+      cubit.orderDto[itemCategoryIndex].items!.add(
+        CreateOrderItemDto(
+          name: value.name,
+          price: value.price,
+          plu: value.plu,
+        ),
       );
 
-      cubit.categoryList[itemCategoryIndex].option.plu = value.plu!;
+      cubit.changeItemPrice();
+    }
+  }
 
-      cubit.changeItemPrice(
-        cubit.data.item.price!,
-        value.price!,
+  void onTappedCheckBox(
+    DeliverectProductModelDto item,
+    StoreDetailCubit cubit,
+    int itemCategoryIndex,
+    int optionChoiceIndex,
+  ) {
+    {
+      final value =
+          item.childProducts!.elementAt(optionChoiceIndex).childProduct!;
+
+      final index = cubit.orderDto[itemCategoryIndex].items!.indexWhere(
+        (element) => element.plu == value.plu!,
       );
+
+      if (index != -1) {
+        cubit.orderDto[itemCategoryIndex].items!.removeAt(index);
+        cubit.changeItemPrice();
+        return;
+      }
+
+      cubit.orderDto[itemCategoryIndex].items!.add(
+        CreateOrderItemDto(
+          name: value.name,
+          price: value.price,
+          plu: value.plu,
+        ),
+      );
+
+      cubit.changeItemPrice();
     }
   }
 }

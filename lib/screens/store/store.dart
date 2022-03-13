@@ -12,7 +12,6 @@ import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/enum/viewstate.dart';
 import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
-import 'package:sanity/sanity.dart';
 
 class CreateStoreData {
   CreateStoreData({
@@ -21,7 +20,7 @@ class CreateStoreData {
     required this.googleMaps,
   });
 
-  final List<CheckoutItemModel> checkoutItems;
+  final List<CreateOrderItemDto> checkoutItems;
   final String storeName;
   final String googleMaps;
 }
@@ -38,7 +37,7 @@ class StoreScreen extends StatefulWidget {
 
 class _StoreScreenState extends State<StoreScreen> {
   bool showCheckoutButton = false;
-  List<CheckoutItemModel> checkoutItems = [];
+  List<CreateOrderItemDto> checkoutItems = [];
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
+import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_contact_details_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
@@ -50,17 +50,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Future<String?> _getPaymentIntent() async {
     final hermesService = locator<HermesService>();
 
-    // final response = await hermesService.client.apiOrdersPost(
-    //   body: CreateOrderRequestDto(
-    //     storeId: widget.data.storeName,
-    //     price: widget.data.checkoutItems.getTotalPrice().toDouble(),
-    //     items: [],
-    //   ),
-    // );
+    final response = await hermesService.client.apiOrdersPost(
+      body: CreateOrderRequestDto(
+        merchantId: '',
+        items: widget.data.checkoutItems,
+      ),
+    );
 
-    // if (response.isSuccessful) {
-    //   return response.body!.clientSecret!;
-    // }
+    if (response.isSuccessful) {
+      return response.body!.clientSecret!;
+    }
 
     return null;
   }

@@ -17,7 +17,7 @@ class StoreMenueList extends StatefulWidget {
   }) : super(key: key);
 
   final List<DeliverectCategoryModelDto> menueCategories;
-  final void Function(List<CheckoutItemModel>) onCheckoutChange;
+  final void Function(List<CreateOrderItemDto>) onCheckoutChange;
   final String restaurantImage;
 
   @override
@@ -26,7 +26,7 @@ class StoreMenueList extends StatefulWidget {
 
 class _StoreMenueListState extends State<StoreMenueList> {
   late final SlidableController slidableController;
-  List<CheckoutItemModel> checkoutItems = [];
+  List<CreateOrderItemDto> checkoutItems = [];
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           isScrollControlled: true,
                           builder: (context) {
                             return FractionallySizedBox(
-                              heightFactor: 0.9,
+                              heightFactor: 0.85,
                               child: StoreDetailPage(
                                 data: ProductDetailsData(
                                   item: item,
