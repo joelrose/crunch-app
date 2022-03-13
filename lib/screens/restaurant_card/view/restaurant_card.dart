@@ -4,7 +4,6 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/store/store.dart';
-import 'package:sanity/sanity.dart';
 
 class RestaurantCard extends StatelessWidget {
   const RestaurantCard({

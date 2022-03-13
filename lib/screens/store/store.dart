@@ -139,7 +139,7 @@ class _StoreScreenState extends State<StoreScreen> {
     String openingTimes = 'Closed';
     for (final hour in todaysOpeningHours) {
       final startTime = hour.startTime!.split(':');
-      final endTime = hour.startTime!.split(':');
+      // final endTime = hour.startTime!.split(':');
 
       final startHour = int.parse(startTime[0]);
       final startMinutes = int.parse(startTime[0]);
