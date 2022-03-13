@@ -22,7 +22,6 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 30,
@@ -32,110 +31,48 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
-            widget.isSignUp
-                ? 'onboarding.createAccount'.tr()
-                : 'onboarding.welcomeBack'.tr(),
-            style: theme.headline1!.copyWith(
-              color: AlpacaColor.white100Color,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              bottom: 30,
-              top: 10,
-              right: 40,
-            ),
-            child: Text(
-              widget.isSignUp
-                  ? 'onboarding.signUpCTA'.tr()
-                  : 'onboarding.signInCTA'.tr(),
-              style:
-                  theme.headline5!.copyWith(color: AlpacaColor.white100Color),
-            ),
-          ),
-          buildTextField(),
-          Row(
-            children: [
-              const Expanded(
-                child: Divider(
-                  color: AlpacaColor.white100Color,
-                  height: 40,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'or'.tr(),
-                  style: theme.headline5!
-                      .copyWith(color: AlpacaColor.white100Color),
-                ),
-              ),
-              const Expanded(
-                child: Divider(
-                  color: AlpacaColor.white100Color,
-                  height: 40,
-                ),
-              ),
-            ],
-          ),
+          _buildGreeting(),
+          _buildTextSignInOrUp(),
+          _buildTextField(),
+          _buildOrLine(),
           SocialOnboarding(isSignUp: widget.isSignUp),
-          buildAgreeToTerms()
+          _buildAgreeToTerms()
         ],
       ),
     );
   }
 
-  Widget buildAgreeToTerms() {
+  Widget _buildGreeting() {
+    return Text(
+      widget.isSignUp
+          ? 'onboarding.createAccount'.tr()
+          : 'onboarding.welcomeBack'.tr(),
+      style: Theme.of(context).textTheme.headline1!.copyWith(
+            color: AlpacaColor.white100Color,
+          ),
+    );
+  }
+
+  Widget _buildTextSignInOrUp() {
     return Padding(
       padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
+        bottom: 30,
         top: 10,
+        right: 40,
       ),
-      child: Container(
-        alignment: Alignment.center,
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.65,
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              text: 'By continuing, I agree to Crunch’s ',
-              children: [
-                TextSpan(
-                  text: 'Terms of service',
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => launch(
-                          'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
-                        ),
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-                const TextSpan(text: ' and'),
-                TextSpan(
-                  text: ' Privacy Policy.',
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => launch(
-                          'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
-                        ),
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ],
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2!
-                  .copyWith(color: AlpacaColor.white100Color),
-            ),
-          ),
-        ),
+      child: Text(
+        widget.isSignUp
+            ? 'onboarding.signUpCTA'.tr()
+            : 'onboarding.signInCTA'.tr(),
+        style: Theme.of(context)
+            .textTheme
+            .headline5!
+            .copyWith(color: AlpacaColor.white100Color),
       ),
     );
   }
 
-  Widget buildTextField() {
+  Widget _buildTextField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -213,6 +150,84 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildOrLine() {
+    return Row(
+      children: [
+        const Expanded(
+          child: Divider(
+            color: AlpacaColor.white100Color,
+            height: 40,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            'or'.tr(),
+            style: Theme.of(context)
+                .textTheme
+                .headline5!
+                .copyWith(color: AlpacaColor.white100Color),
+          ),
+        ),
+        const Expanded(
+          child: Divider(
+            color: AlpacaColor.white100Color,
+            height: 40,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAgreeToTerms() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: 10,
+      ),
+      child: Container(
+        alignment: Alignment.center,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.65,
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: 'By continuing, I agree to Crunch’s ',
+              children: [
+                TextSpan(
+                  text: 'Terms of service',
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => launch(
+                          'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
+                        ),
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                const TextSpan(text: ' and'),
+                TextSpan(
+                  text: ' Privacy Policy.',
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => launch(
+                          'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
+                        ),
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(color: AlpacaColor.white100Color),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
