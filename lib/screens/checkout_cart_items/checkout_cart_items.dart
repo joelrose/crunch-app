@@ -1,4 +1,3 @@
-import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/checkout/widgets/check_out_items_widget.dart';
@@ -22,7 +21,7 @@ class CheckoutCartItemsWidget extends StatelessWidget {
           buttonText: 'Edit',
         ),
         CheckOutItemsWidget(checkoutItems: checkoutItems),
-        const AlpacaDivider(),
+        const Divider(),
       ],
     );
   }

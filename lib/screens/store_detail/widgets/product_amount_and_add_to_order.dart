@@ -74,8 +74,7 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
                   context.read<StoreDetailCubit>().decreaseItemAmount(),
               onIncrease: () =>
                   context.read<StoreDetailCubit>().increaseItemAmount(),
-              textBoxHorizontalPadding: 5,
-              textBoxWidth: 30,
+              textBoxHorizontalPadding: 12,
               textStyle: Theme.of(context).textTheme.headline2!.copyWith(
                     color: AlpacaColor.darkNavyColor,
                   ),
@@ -101,7 +100,6 @@ class AlpacaSelect extends StatelessWidget {
     required this.onDecrease,
     required this.onIncrease,
     required this.amount,
-    required this.textBoxWidth,
     required this.textBoxHorizontalPadding,
     required this.textStyle,
   }) : super(key: key);
@@ -110,7 +108,6 @@ class AlpacaSelect extends StatelessWidget {
   final void Function() onIncrease;
   final String amount;
 
-  final double textBoxWidth;
   final double textBoxHorizontalPadding;
   final TextStyle textStyle;
 
@@ -126,13 +123,10 @@ class AlpacaSelect extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: textBoxHorizontalPadding,
           ),
-          child: SizedBox(
-            width: textBoxWidth,
-            child: Text(
-              amount,
-              style: textStyle,
-              textAlign: TextAlign.center,
-            ),
+          child: Text(
+            amount,
+            style: textStyle,
+            textAlign: TextAlign.center,
           ),
         ),
         _buildSelectButton(

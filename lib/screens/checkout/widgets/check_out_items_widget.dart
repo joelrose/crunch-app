@@ -6,25 +6,16 @@ import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class CheckOutItemsWidget extends StatefulWidget {
-  const CheckOutItemsWidget({Key? key, required this.checkoutItems})
+  CheckOutItemsWidget({Key? key, required this.checkoutItems})
       : super(key: key);
 
-  final List<CreateOrderItemDto> checkoutItems;
+  List<CreateOrderItemDto> checkoutItems;
 
   @override
   State<CheckOutItemsWidget> createState() => _CheckOutItemsWidgetState();
 }
 
 class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
-  late List<bool> showSelect;
-
-  @override
-  void initState() {
-    showSelect = List.generate(widget.checkoutItems.length, (index) => false);
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,17 +29,16 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
             itemBuilder: (context, itemIndex) {
               final checkoutSummaryItem = widget.checkoutItems[itemIndex];
               return TextButton(
-                onPressed: () {
-                  setState(() {
-                    showSelect[itemIndex] = !showSelect[itemIndex];
-                  });
-                },
+                style: TextButton.styleFrom(
+                  primary: AlpacaColor.primary100,
+                ),
+                onPressed: () {},
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 3,
                     horizontal: 18,
                   ),
-                  child: _buildItem(checkoutSummaryItem, showSelect[itemIndex]),
+                  child: _buildItem(context, checkoutSummaryItem, itemIndex),
                 ),
               );
             },
@@ -58,14 +48,18 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
     );
   }
 
-  Widget _buildItem(CreateOrderItemDto item, bool showSelect) {
+  Widget _buildItem(
+    BuildContext context,
+    CreateOrderItemDto item,
+    int itemIndex,
+  ) {
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${item.quantity}x ${item.name}',
+              item.name!,
               style: Theme.of(context).textTheme.headline4,
             ),
             Text(
@@ -80,49 +74,68 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: item.items?.length ?? 0,
-                shrinkWrap: true,
-                itemBuilder: (context, itemIndex) {
-                  final option = item.items![itemIndex];
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      top: 3,
-                      bottom: 3,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          option.name!,
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                      ],
-                    ),
-                  );
+            _buildItemDescription(item),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: AlpacaSelect(
+                onDecrease: () {
+                  if (item.quantity == 1) {
+                    setState(() {
+                      widget.checkoutItems.removeAt(itemIndex);
+                    });
+                  } else {
+                    setState(() {
+                      widget.checkoutItems[itemIndex].quantity =
+                          widget.checkoutItems[itemIndex].quantity! - 1;
+                    });
+                  }
                 },
+                onIncrease: () {
+                  setState(() {
+                    widget.checkoutItems[itemIndex].quantity =
+                        widget.checkoutItems[itemIndex].quantity! + 1;
+                  });
+                },
+                amount: item.quantity!.toString(),
+                textBoxHorizontalPadding: 12,
+                textStyle: Theme.of(context).textTheme.headline4!.copyWith(
+                      color: AlpacaColor.darkNavyColor,
+                    ),
               ),
             ),
-            if (showSelect)
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: AlpacaSelect(
-                  onDecrease: () {},
-                  onIncrease: () {},
-                  amount: '1',
-                  textBoxHorizontalPadding: 10,
-                  textBoxWidth: 5,
-                  textStyle: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: AlpacaColor.darkNavyColor,
-                      ),
-                ),
-              ),
           ],
         ),
       ],
+    );
+  }
+
+  String _getDescription(CreateOrderItemDto item) {
+    if (item.items != null) {
+      final buffer = StringBuffer();
+
+      for (final item in item.items!) {
+        buffer.write('${item.name!}, ');
+      }
+
+      return buffer.toString();
+    }
+
+    return '';
+  }
+
+  Widget _buildItemDescription(CreateOrderItemDto item) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 6,
+          right: 60,
+        ),
+        child: Text(
+          _getDescription(item),
+          style: Theme.of(context).textTheme.headline5,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
     );
   }
 }
