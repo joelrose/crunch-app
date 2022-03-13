@@ -6,7 +6,7 @@
     "version": "v1"
   },
   "paths": {
-    "/api/menu": {
+    "/api/menus": {
       "get": {
         "tags": [
           "Menu"
@@ -28,7 +28,7 @@
         }
       }
     },
-    "/api/menu/{menuId}": {
+    "/api/menus/{menuId}": {
       "get": {
         "tags": [
           "Menu"
@@ -50,49 +50,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetMenuResponseDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/merchants": {
-      "post": {
-        "tags": [
-          "Merchant"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMerchantRequestDto"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMerchantRequestDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMerchantRequestDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMerchantRequestDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateMerchantResponseDto"
                 }
               }
             }
@@ -234,110 +191,6 @@
         }
       }
     },
-    "/api/tokens": {
-      "post": {
-        "tags": [
-          "Token"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTokenRequestDto"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTokenRequestDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTokenRequestDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTokenRequestDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Token"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Token"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TokenModel"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/users": {
       "post": {
         "tags": [
@@ -427,39 +280,12 @@
         },
         "additionalProperties": false
       },
-      "CreateMerchantRequestDto": {
-        "type": "object",
-        "properties": {
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateMerchantResponseDto": {
-        "type": "object",
-        "properties": {
-          "merchantId": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateOrderItemDto": {
         "type": "object",
         "properties": {
           "plu": {
             "type": "string",
             "nullable": true
-          },
-          "orderType": {
-            "$ref": "#/components/schemas/DeliverectOrderTypes"
           },
           "name": {
             "type": "string",
@@ -472,6 +298,13 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateOrderItemDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -489,10 +322,6 @@
               "$ref": "#/components/schemas/CreateOrderItemDto"
             },
             "nullable": true
-          },
-          "stripeOrderId": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -503,19 +332,6 @@
           "clientSecret": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateTokenRequestDto": {
-        "type": "object",
-        "properties": {
-          "playerId": {
-            "type": "string",
-            "nullable": true
-          },
-          "device": {
-            "$ref": "#/components/schemas/TokenDevice"
           }
         },
         "additionalProperties": false
@@ -624,14 +440,88 @@
         ],
         "type": "string"
       },
-      "DeliverectOrderTypes": {
-        "enum": [
-          "PICKUP",
-          "DELIVERY",
-          "EAT_IN",
-          "CURBSIDE"
-        ],
-        "type": "string"
+      "DeliverectMenuDto": {
+        "type": "object",
+        "properties": {
+          "availabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliverectAvailabilityModel"
+            },
+            "nullable": true
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliverectCategoryModelDto"
+            },
+            "nullable": true
+          },
+          "channelLinkId": {
+            "type": "string",
+            "nullable": true
+          },
+          "currency": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "menu": {
+            "type": "string",
+            "nullable": true
+          },
+          "menuId": {
+            "type": "string",
+            "nullable": true
+          },
+          "menuImageUrl": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "menuType": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeliverectMenusDto": {
+        "type": "object",
+        "properties": {
+          "availabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliverectAvailabilityModel"
+            },
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "menu": {
+            "type": "string",
+            "nullable": true
+          },
+          "menuId": {
+            "type": "string",
+            "nullable": true
+          },
+          "menuImageUrl": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "menuType": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
       },
       "DeliverectProductModelDto": {
         "type": "object",
@@ -716,51 +606,36 @@
       "GetMenuResponseDto": {
         "type": "object",
         "properties": {
-          "availabilities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DeliverectAvailabilityModel"
-            },
-            "nullable": true
+          "id": {
+            "type": "string",
+            "format": "uuid"
           },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DeliverectCategoryModelDto"
-            },
-            "nullable": true
-          },
-          "channelLinkId": {
+          "phoneNumber": {
             "type": "string",
             "nullable": true
           },
-          "currency": {
-            "type": "integer",
-            "format": "int64"
+          "rating": {
+            "type": "number",
+            "format": "float"
           },
-          "description": {
+          "reviewCount": {
+            "type": "string",
+            "nullable": true
+          },
+          "averagePickUpTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "googleMapsLink": {
             "type": "string",
             "nullable": true
           },
           "menu": {
-            "type": "string",
-            "nullable": true
-          },
-          "menuId": {
-            "type": "string",
-            "nullable": true
-          },
-          "menuImageUrl": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "menuType": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "nestedModifiers": {
-            "type": "boolean"
+            "$ref": "#/components/schemas/DeliverectMenuDto"
           }
         },
         "additionalProperties": false
@@ -768,40 +643,24 @@
       "GetMenusResponseDto": {
         "type": "object",
         "properties": {
-          "availabilities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DeliverectAvailabilityModel"
-            },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "rating": {
+            "type": "number",
+            "format": "float"
+          },
+          "reviewCount": {
+            "type": "string",
             "nullable": true
           },
-          "currency": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "description": {
+          "averagePickUpTime": {
             "type": "string",
             "nullable": true
           },
           "menu": {
-            "type": "string",
-            "nullable": true
-          },
-          "menuId": {
-            "type": "string",
-            "nullable": true
-          },
-          "menuImageUrl": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "menuType": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "nestedModifiers": {
-            "type": "boolean"
+            "$ref": "#/components/schemas/DeliverectMenusDto"
           }
         },
         "additionalProperties": false
@@ -879,29 +738,20 @@
             "type": "integer",
             "format": "int32"
           },
-          "remark": {
+          "parent": {
+            "$ref": "#/components/schemas/OrderItemModel"
+          },
+          "parentId": {
             "type": "string",
+            "format": "uuid",
             "nullable": true
           },
-          "subItems": {
+          "items": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/OrderItemModel"
             },
             "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "imageUrl": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "productType": {
-            "type": "integer",
-            "format": "int64"
           }
         },
         "additionalProperties": false
@@ -921,37 +771,6 @@
         "properties": {
           "childProduct": {
             "$ref": "#/components/schemas/DeliverectProductModelDto"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TokenDevice": {
-        "enum": [
-          "IOS",
-          "Android"
-        ],
-        "type": "string"
-      },
-      "TokenModel": {
-        "required": [
-          "device",
-          "playerId"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "playerId": {
-            "type": "string"
-          },
-          "device": {
-            "$ref": "#/components/schemas/TokenDevice"
           }
         },
         "additionalProperties": false

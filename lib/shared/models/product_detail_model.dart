@@ -1,5 +1,4 @@
 import 'package:hermes_api/hermes_api.dart';
-import 'package:sanity/sanity.dart';
 
 class ProductDetailsData {
   ProductDetailsData({
@@ -10,6 +9,6 @@ class ProductDetailsData {
   });
   final DeliverectProductModelDto item;
   final String restaurantImage;
-  List<CheckoutItemModel> checkoutItems;
-  void Function(List<CheckoutItemModel>) onCheckoutChange;
+  List<CreateOrderItemDto> checkoutItems;
+  void Function(List<CreateOrderItemDto>) onCheckoutChange;
 }

@@ -16,16 +16,17 @@ class CheckoutPickupWidget extends StatefulWidget {
 }
 
 class OpeningTimesBreak {
+  OpeningTimesBreak(this.start, this.end);
   int start;
   int end;
-  OpeningTimesBreak(this.start, this.end);
 }
 
 class OpeningTimes {
+  OpeningTimes(this.opening, this.closing, this.breaks);
+
   num opening;
   num closing;
   OpeningTimesBreak breaks;
-  OpeningTimes(this.opening, this.closing, this.breaks);
 }
 
 class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
@@ -357,7 +358,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
 
     final String pickupHourString = pickupHour.toString().padLeft(2, '0');
     final String pickupMinuteString = pickupMinute.toString().padLeft(2, '0');
-    if (DateTime.now().hour > openingTimes[DateTime.now().weekday].closing) {
+    if (DateTime.now().hour >
+        openingTimes[DateTime.now().weekday - 1].closing) {
       return CheckoutHeaderRowWidget(
         header: 'Pickup',
         buttonText: 'Closed',

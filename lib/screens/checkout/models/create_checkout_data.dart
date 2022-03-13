@@ -1,5 +1,5 @@
 
-import 'package:sanity/sanity.dart';
+import 'package:hermes_api/hermes_api.dart';
 
 class CreateCheckoutData {
   CreateCheckoutData({
@@ -9,7 +9,7 @@ class CreateCheckoutData {
     required this.creationTime,
   });
 
-  final List<CheckoutItemModel> checkoutItems;
+  final List<CreateOrderItemDto> checkoutItems;
   final String googleMaps;
   final DateTime pickupTime;
   final DateTime creationTime;

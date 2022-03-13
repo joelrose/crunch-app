@@ -17,29 +17,19 @@ class _$Swagger extends Swagger {
   final definitionType = Swagger;
 
   @override
-  Future<Response<List<GetMenusResponseDto>>> apiMenuGet() {
-    final $url = '/api/menu';
+  Future<Response<List<GetMenusResponseDto>>> apiMenusGet() {
+    final $url = '/api/menus';
     final $request = Request('GET', $url, client.baseUrl);
     return client
         .send<List<GetMenusResponseDto>, GetMenusResponseDto>($request);
   }
 
   @override
-  Future<Response<GetMenuResponseDto>> apiMenuMenuIdGet(
+  Future<Response<GetMenuResponseDto>> apiMenusMenuIdGet(
       {required String? menuId}) {
-    final $url = '/api/menu/${menuId}';
+    final $url = '/api/menus/${menuId}';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<GetMenuResponseDto, GetMenuResponseDto>($request);
-  }
-
-  @override
-  Future<Response<CreateMerchantResponseDto>> apiMerchantsPost(
-      {required CreateMerchantRequestDto? body}) {
-    final $url = '/api/merchants';
-    final $body = body;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client
-        .send<CreateMerchantResponseDto, CreateMerchantResponseDto>($request);
   }
 
   @override
@@ -74,29 +64,6 @@ class _$Swagger extends Swagger {
     final $url = '/api/orders/${orderId}';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<GetOrderResponseDto, GetOrderResponseDto>($request);
-  }
-
-  @override
-  Future<Response<bool>> apiTokensPost({required CreateTokenRequestDto? body}) {
-    final $url = '/api/tokens';
-    final $body = body;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<bool, bool>($request);
-  }
-
-  @override
-  Future<Response<bool>> apiTokensDelete({required String? body}) {
-    final $url = '/api/tokens';
-    final $body = body;
-    final $request = Request('DELETE', $url, client.baseUrl, body: $body);
-    return client.send<bool, bool>($request);
-  }
-
-  @override
-  Future<Response<List<TokenModel>>> apiTokensGet() {
-    final $url = '/api/tokens';
-    final $request = Request('GET', $url, client.baseUrl);
-    return client.send<List<TokenModel>, TokenModel>($request);
   }
 
   @override

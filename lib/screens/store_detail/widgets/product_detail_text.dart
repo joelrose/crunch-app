@@ -17,36 +17,50 @@ class ProductBasicDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    data.item.name!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .merge(const TextStyle(fontSize: 22)),
-                  ),
-                  Text(
-                    Utilities.currencyFormat(data.item.price!),
-                    style: Theme.of(context).textTheme.headline2!.copyWith(
-                          color: AlpacaColor.primary100,
-                        ),
-                  )
-                ],
+              _buildHeader(
+                context,
+                name: data.item.name!,
+                price: data.item.price!,
               ),
               const SizedBox(
                 height: 5,
               ),
               Text(
-                data.item
-                    .description!,
+                data.item.description!,
                 style: Theme.of(context).textTheme.headline5,
               )
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildHeader(
+    BuildContext context, {
+    required String name,
+    required int price,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.7,
+          child: Text(
+            name,
+            style: Theme.of(context)
+                .textTheme
+                .headline2!
+                .merge(const TextStyle(fontSize: 22)),
+          ),
+        ),
+        Text(
+          Utilities.currencyFormat(price),
+          style: Theme.of(context).textTheme.headline2!.copyWith(
+                color: AlpacaColor.primary100,
+              ),
+        )
+      ],
     );
   }
 }
