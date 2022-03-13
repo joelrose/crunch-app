@@ -5,17 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
-import 'package:pickup/screens/checkout/widgets/checkout_contact_details_widget.dart';
-import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_widget.dart';
-import 'package:pickup/screens/checkout/widgets/checkout_order_summary_widget.dart';
-import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
+import 'package:pickup/screens/checkout/widgets/widgets.dart';
 import 'package:pickup/screens/checkout_cart_items/checkout_cart_items.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/checkout_time_picker/checkout_pickup_widget.dart';
 import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -52,7 +48,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     final response = await hermesService.client.apiOrdersPost(
       body: CreateOrderRequestDto(
-        merchantId: '',
+        merchantId: widget.data.merchantId,
         items: widget.data.checkoutItems,
       ),
     );
@@ -79,19 +75,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
-    await Stripe.instance.initPaymentSheet(
-      paymentSheetParameters: SetupPaymentSheetParameters(
-        applePay: true,
-        googlePay: true,
-        style: ThemeMode.light,
-        testEnv: true,
-        merchantCountryCode: 'DE',
-        merchantDisplayName: 'Crunch',
-        paymentIntentClientSecret: paymentIntentSecret,
-      ),
-    );
-
     try {
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          applePay: true,
+          googlePay: true,
+          style: ThemeMode.light,
+          testEnv: true,
+          merchantCountryCode: 'DE',
+          merchantDisplayName: 'Crunch',
+          paymentIntentClientSecret: paymentIntentSecret,
+        ),
+      );
+
       await Stripe.instance.presentPaymentSheet();
 
       if (mounted) {

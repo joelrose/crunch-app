@@ -18,11 +18,13 @@ class CreateStoreData {
     required this.checkoutItems,
     required this.storeName,
     required this.googleMaps,
+    required this.merchantId,
   });
 
   final List<CreateOrderItemDto> checkoutItems;
   final String storeName;
   final String googleMaps;
+  final String merchantId;
 }
 
 class StoreScreen extends StatefulWidget {
@@ -64,12 +66,13 @@ class _StoreScreenState extends State<StoreScreen> {
                         storeName: menu.menu!, //model.store.,
                         googleMaps: model.store
                             .googleMapsLink!, //model.restaurant.googleMapsUrl,
+                        merchantId: model.store.id!,
                       ),
                     );
                   },
                   buttonText: '${checkoutItems.length} item in Cart ->',
                   priceText: Utilities.currencyFormat(
-                    checkoutItems.getTotalPrice(),
+                    PriceCalulcation.getPriceOfItems(checkoutItems),
                   ),
                   textColor: AlpacaColor.white100Color,
                 ),
