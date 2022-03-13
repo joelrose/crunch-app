@@ -91,7 +91,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                           isScrollControlled: true,
                           builder: (context) {
                             return FractionallySizedBox(
-                              heightFactor: 0.85,
+                              heightFactor: 0.8,
                               child: StoreDetailPage(
                                 data: ProductDetailsData(
                                   item: item,
