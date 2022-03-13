@@ -14,7 +14,8 @@ class PriceCalulcation {
 
     var optionPrice = 0;
     for (final item in items) {
-      optionPrice += getPriceOfItems(item.items) + item.price!;
+      optionPrice +=
+          (item.quantity ?? 1) * (getPriceOfItems(item.items) + item.price!);
     }
 
     return optionPrice;

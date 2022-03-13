@@ -66,24 +66,33 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   void addToOrderOnClick() {
     final item = data.item;
 
-    data.checkoutItems.add(
-      CreateOrderItemDto(
-        plu: item.plu,
-        price: item.price,
-        name: item.name,
-        quantity: amountOfProductsToAddToBasket,
-        items: _convertToOrderList(),
-      ),
+    final newItem = CreateOrderItemDto(
+      plu: item.plu,
+      price: item.price,
+      name: item.name,
+      quantity: amountOfProductsToAddToBasket,
+      items: _convertToOrderDto(),
     );
+
+    try {
+      final items =
+          data.checkoutItems.firstWhere((listItem) => listItem == newItem);
+
+      items.quantity = items.quantity! + newItem.quantity!;
+    } catch (error) {
+      data.checkoutItems.add(newItem);
+    }
 
     data.onCheckoutChange(data.checkoutItems);
   }
 
-  List<CreateOrderItemDto> _convertToOrderList() {
+  List<CreateOrderItemDto> _convertToOrderDto() {
     List<CreateOrderItemDto> returnValue = [];
+
     for (final optionCategory in orderDto) {
-      if(optionCategory.items != null) {
-       returnValue.addAll(optionCategory.items!);
+      if (optionCategory.items != null) {
+        optionCategory.items!.sort((a, b) => a.name!.compareTo(b.name!));
+        returnValue.addAll(optionCategory.items!);
       }
     }
     return returnValue;

@@ -119,7 +119,12 @@ class ProductRadioCheckbox extends StatelessWidget {
                           ? value.plu!
                           : '',
                   activeColor: AlpacaColor.primary100,
-                  onChanged: (String? value) => {},
+                  onChanged: (String? value) => onTappedRadio(
+                    item,
+                    cubit,
+                    itemCategoryIndex,
+                    optionChoiceIndex,
+                  ),
                 ),
               ] else ...[
                 Checkbox(
@@ -128,7 +133,12 @@ class ProductRadioCheckbox extends StatelessWidget {
                       ) !=
                       -1,
                   activeColor: AlpacaColor.primary100,
-                  onChanged: (value) => {},
+                  onChanged: (value) => onTappedCheckBox(
+                    item,
+                    cubit,
+                    itemCategoryIndex,
+                    optionChoiceIndex,
+                  ),
                 ),
               ],
               _buildPriceText(context, value.name!, value.price)
@@ -214,6 +224,7 @@ class ProductRadioCheckbox extends StatelessWidget {
           name: value.name,
           price: value.price,
           plu: value.plu,
+          quantity: 1,
         ),
       );
 

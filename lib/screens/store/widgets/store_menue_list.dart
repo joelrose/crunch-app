@@ -6,7 +6,6 @@ import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/store_detail/view/store_detail.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/utilities.dart';
-import 'package:sanity/sanity.dart';
 
 class StoreMenueList extends StatefulWidget {
   const StoreMenueList({
@@ -142,10 +141,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                           padding:
                                               const EdgeInsets.only(left: 8),
                                           child: Text(
-                                            '${checkoutItems.where(
-                                                  (listItem) =>
-                                                      item.plu == listItem.plu,
-                                                ).length}x',
+                                            '${_amountInTheBasket(item.plu!)}x',
                                             overflow: TextOverflow.clip,
                                             style: Theme.of(context)
                                                 .textTheme
@@ -203,6 +199,17 @@ class _StoreMenueListState extends State<StoreMenueList> {
           },
         ),
       ],
+    );
+  }
+
+  int _amountInTheBasket(String plu) {
+    final items = checkoutItems.where(
+      (listItem) => plu == listItem.plu,
+    );
+
+    return items.fold(
+      0,
+      (previousValue, element) => previousValue + element.quantity!,
     );
   }
 }

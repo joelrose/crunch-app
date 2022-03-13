@@ -70,7 +70,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       ),
                     );
                   },
-                  buttonText: '${checkoutItems.length} item in Cart ->',
+                  buttonText:
+                      '${_getItemsInCart(checkoutItems)} item in Cart ->',
                   priceText: Utilities.currencyFormat(
                     PriceCalulcation.getPriceOfItems(checkoutItems),
                   ),
@@ -125,6 +126,10 @@ class _StoreScreenState extends State<StoreScreen> {
         }
       },
     );
+  }
+
+  int _getItemsInCart(List<CreateOrderItemDto>? checkoutItems) {
+    return checkoutItems!.fold(0, (p, c) => p + c.quantity!);
   }
 
   String _getOpeningTimes(List<DeliverectAvailabilityModel> availabilities) {
