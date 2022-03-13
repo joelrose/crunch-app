@@ -54,6 +54,10 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 8,
+            ),
             decoration: BoxDecoration(
               border: Border.all(
                 width: 0.5,
@@ -61,37 +65,20 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Row(
-              children: [
-                _buildSelectButton(
-                  onTap: () =>
-                      context.read<StoreDetailCubit>().decreaseItemAmount(),
-                  imagePath: 'assets/icons/minus.svg',
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
+            child: AlpacaSelect(
+              amount: context
+                  .read<StoreDetailCubit>()
+                  .amountOfProductsToAddToBasket
+                  .toString(),
+              onDecrease: () =>
+                  context.read<StoreDetailCubit>().decreaseItemAmount(),
+              onIncrease: () =>
+                  context.read<StoreDetailCubit>().increaseItemAmount(),
+              textBoxHorizontalPadding: 5,
+              textBoxWidth: 30,
+              textStyle: Theme.of(context).textTheme.headline2!.copyWith(
+                    color: AlpacaColor.darkNavyColor,
                   ),
-                  child: SizedBox(
-                    width: 20,
-                    child: Text(
-                      context
-                          .read<StoreDetailCubit>()
-                          .amountOfProductsToAddToBasket
-                          .toString(),
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
-                            color: AlpacaColor.darkNavyColor,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                _buildSelectButton(
-                  onTap: () =>
-                      context.read<StoreDetailCubit>().increaseItemAmount(),
-                  imagePath: 'assets/icons/plus.svg',
-                ),
-              ],
             ),
           ),
           Text(
@@ -106,37 +93,80 @@ class ProductAmountAndAddToOrder extends StatelessWidget {
       ),
     );
   }
+}
+
+class AlpacaSelect extends StatelessWidget {
+  const AlpacaSelect({
+    Key? key,
+    required this.onDecrease,
+    required this.onIncrease,
+    required this.amount,
+    required this.textBoxWidth,
+    required this.textBoxHorizontalPadding,
+    required this.textStyle,
+  }) : super(key: key);
+
+  final void Function() onDecrease;
+  final void Function() onIncrease;
+  final String amount;
+
+  final double textBoxWidth;
+  final double textBoxHorizontalPadding;
+  final TextStyle textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _buildSelectButton(
+          onTap: onDecrease,
+          imagePath: 'assets/icons/minus.svg',
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: textBoxHorizontalPadding,
+          ),
+          child: SizedBox(
+            width: textBoxWidth,
+            child: Text(
+              amount,
+              style: textStyle,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        _buildSelectButton(
+          onTap: onIncrease,
+          imagePath: 'assets/icons/plus.svg',
+        ),
+      ],
+    );
+  }
 
   Widget _buildSelectButton({
     required void Function() onTap,
     required String imagePath,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 8,
-      ),
-      child: Bounceable(
-        onTap: () {
-          HapticFeedback.mediumImpact();
-          onTap();
-        },
-        child: Container(
-          alignment: Alignment.center,
-          width: 25,
-          height: 25,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 0.5,
-              color: AlpacaColor.greyColor,
-            ),
-            borderRadius: BorderRadius.circular(6),
+    return Bounceable(
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onTap();
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: 25,
+        height: 25,
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 0.5,
+            color: AlpacaColor.greyColor,
           ),
-          child: SvgPicture.asset(
-            imagePath,
-            color: AlpacaColor.darkGreyColor,
-            width: 15,
-          ),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: SvgPicture.asset(
+          imagePath,
+          color: AlpacaColor.darkGreyColor,
+          width: 15,
         ),
       ),
     );
