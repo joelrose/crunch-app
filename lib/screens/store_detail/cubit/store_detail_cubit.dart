@@ -31,12 +31,14 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
           plu: product.plu,
           price: 0,
           name: product.name,
+          quantity: 1,
           items: child.childProduct!.min == 1
               ? [
                   CreateOrderItemDto(
                     plu: firstOption.plu,
                     price: firstOption.price,
                     name: firstOption.name,
+                    quantity: 1,
                   )
                 ]
               : [],

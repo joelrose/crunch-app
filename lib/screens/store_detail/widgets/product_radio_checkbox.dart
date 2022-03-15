@@ -192,6 +192,7 @@ class ProductRadioCheckbox extends StatelessWidget {
           name: value.name,
           price: value.price,
           plu: value.plu,
+          quantity: 1,
         ),
       );
 
