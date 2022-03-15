@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/shared/utilities.dart';
+import 'package:collection/collection.dart';
 
 class ProductRadioCheckbox extends StatelessWidget {
   const ProductRadioCheckbox({Key? key}) : super(key: key);
@@ -50,9 +51,23 @@ class ProductRadioCheckbox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            name,
-            style: Theme.of(context).textTheme.headline3,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              if (optionCategory.childProduct!.min! != 0 &&
+                  optionCategory.childProduct!.max! != 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    '(min: ${optionCategory.childProduct!.min!}, max: ${optionCategory.childProduct!.max!})',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+            ],
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 20),
@@ -100,6 +115,10 @@ class ProductRadioCheckbox extends StatelessWidget {
 
         final isRadio = item.min == 1 && item.max == 1;
         final isSnoozed = value.snoozed!;
+        final isSelected = cubit.orderDto[itemCategoryIndex].items!.indexWhere(
+              (element) => element.plu == value.plu!,
+            ) !=
+            -1;
 
         return Column(
           children: [
@@ -126,13 +145,7 @@ class ProductRadioCheckbox extends StatelessWidget {
                     Radio(
                       value: value.plu!,
                       toggleable: !isSnoozed,
-                      groupValue:
-                          cubit.orderDto[itemCategoryIndex].items!.indexWhere(
-                                    (element) => element.plu == value.plu!,
-                                  ) !=
-                                  -1
-                              ? value.plu!
-                              : '',
+                      groupValue: isSelected ? value.plu! : '',
                       activeColor: AlpacaColor.primary100,
                       onChanged: isSnoozed
                           ? null
@@ -145,11 +158,7 @@ class ProductRadioCheckbox extends StatelessWidget {
                     ),
                   ] else ...[
                     Checkbox(
-                      value:
-                          cubit.orderDto[itemCategoryIndex].items!.indexWhere(
-                                (element) => element.plu == value.plu!,
-                              ) !=
-                              -1,
+                      value: isSelected,
                       activeColor: AlpacaColor.primary100,
                       onChanged: isSnoozed
                           ? null
@@ -165,6 +174,54 @@ class ProductRadioCheckbox extends StatelessWidget {
                 ],
               ),
             ),
+            if ((item.multiMax ?? 1) > 1 && isSelected) ...[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    AlpacaSelect(
+                        onDecrease: () {
+                          final index = cubit.orderDto[itemCategoryIndex].items!
+                              .firstWhereOrNull(
+                            (element) => element.plu == value.plu!,
+                          );
+
+                          if (index != null && index.quantity != 1) {
+                            index.quantity = index.quantity! - 1;
+                          } else {
+                            cubit.orderDto[itemCategoryIndex].items!
+                                .remove(index);
+                          }
+
+                          cubit.changeItemPrice();
+                        },
+                        onIncrease: () {
+                          final index = cubit.orderDto[itemCategoryIndex].items!
+                              .firstWhereOrNull(
+                            (element) => element.plu == value.plu!,
+                          );
+
+                          if (index != null &&
+                              index.quantity! < item.multiMax!) {
+                            index.quantity = index.quantity! + 1;
+                          }
+
+                          cubit.changeItemPrice();
+                        },
+                        amount: cubit.orderDto[itemCategoryIndex].items!
+                                .firstWhereOrNull(
+                                  (element) => element.plu == value.plu!,
+                                )
+                                ?.quantity
+                                .toString() ??
+                            '1',
+                        textBoxHorizontalPadding: 12,
+                        textStyle: TextStyle()),
+                  ],
+                ),
+              ),
+            ],
             if (value.childProducts != null &&
                 value.childProducts!.isNotEmpty &&
                 cubit.orderDto[itemCategoryIndex].items!.indexWhere(
