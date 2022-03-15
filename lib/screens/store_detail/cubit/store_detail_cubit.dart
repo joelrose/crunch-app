@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
 import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
+import 'package:collection/collection.dart';
 
 part 'store_detail_state.dart';
 
@@ -25,19 +26,21 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
     final product = data.item;
     if (product.childProducts != null) {
       for (final child in product.childProducts!) {
-        final firstOption = child.childProduct!.childProducts![0].childProduct!;
+        final firstOption = child.childProduct!.childProducts!.firstWhereOrNull(
+          (element) => !element.childProduct!.snoozed!,
+        );
 
         final itemTitleAndOptions = CreateOrderItemDto(
           plu: product.plu,
           price: 0,
           name: product.name,
           quantity: 1,
-          items: child.childProduct!.min == 1
+          items: child.childProduct!.min == 1 && firstOption != null
               ? [
                   CreateOrderItemDto(
-                    plu: firstOption.plu,
-                    price: firstOption.price,
-                    name: firstOption.name,
+                    plu: firstOption.childProduct!.plu,
+                    price: firstOption.childProduct!.price,
+                    name: firstOption.childProduct!.name,
                     quantity: 1,
                   )
                 ]
