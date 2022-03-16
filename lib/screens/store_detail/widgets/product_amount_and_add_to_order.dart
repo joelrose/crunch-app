@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/shared/utilities.dart';
 
-class ProductAmountAndAddToOrder extends StatelessWidget {
+class ProductOrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<StoreDetailCubit, StoreDetailState>(
