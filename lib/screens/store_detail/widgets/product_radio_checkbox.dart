@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/shared/utilities.dart';
-import 'package:sanity/sanity.dart';
+import 'package:collection/collection.dart';
 
 class ProductRadioCheckbox extends StatelessWidget {
   const ProductRadioCheckbox({Key? key}) : super(key: key);
@@ -19,9 +19,9 @@ class ProductRadioCheckbox extends StatelessWidget {
         return ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: optionCategories?.length ?? 0,
+          itemCount: optionCategories!.length,
           itemBuilder: (context, optionCategoryIndex) {
-            final item = optionCategories![optionCategoryIndex];
+            final item = optionCategories[optionCategoryIndex];
 
             return _buildListView(
               context,
@@ -46,9 +46,23 @@ class ProductRadioCheckbox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            name,
-            style: Theme.of(context).textTheme.headline3,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              if (optionCategory.childProduct!.min! != 0 &&
+                  optionCategory.childProduct!.max! != 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    '(min: ${optionCategory.childProduct!.min!}, max: ${optionCategory.childProduct!.max!})',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+            ],
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 20),
@@ -90,66 +104,140 @@ class ProductRadioCheckbox extends StatelessWidget {
             categoryOptions.elementAt(optionChoiceIndex).childProduct!;
 
         final isRadio = item.min == 1 && item.max == 1;
+        final isSnoozed = value.snoozed!;
+        final isSelected = cubit.orderDto[itemCategoryIndex].items!.indexWhere(
+              (element) => element.plu == value.plu!,
+            ) !=
+            -1;
 
-        return GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => isRadio
-              ? onTappedRadio(
-                  item,
-                  cubit,
-                  itemCategoryIndex,
-                  optionChoiceIndex,
-                )
-              : onTappedCheckBox(
-                  item,
-                  cubit,
-                  itemCategoryIndex,
-                  optionChoiceIndex,
+        return Column(
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: !isSnoozed
+                  ? () => isRadio
+                      ? onTappedRadio(
+                          item,
+                          cubit,
+                          itemCategoryIndex,
+                          optionChoiceIndex,
+                        )
+                      : onTappedCheckBox(
+                          item,
+                          cubit,
+                          itemCategoryIndex,
+                          optionChoiceIndex,
+                        )
+                  : null,
+              child: Row(
+                children: [
+                  if (isRadio) ...[
+                    Radio(
+                      value: value.plu!,
+                      toggleable: !isSnoozed,
+                      groupValue: isSelected ? value.plu! : '',
+                      activeColor: AlpacaColor.primary100,
+                      onChanged: isSnoozed
+                          ? null
+                          : (String? value) => onTappedRadio(
+                                item,
+                                cubit,
+                                itemCategoryIndex,
+                                optionChoiceIndex,
+                              ),
+                    ),
+                  ] else ...[
+                    Checkbox(
+                      value: isSelected,
+                      activeColor: AlpacaColor.primary100,
+                      onChanged: isSnoozed
+                          ? null
+                          : (value) => onTappedCheckBox(
+                                item,
+                                cubit,
+                                itemCategoryIndex,
+                                optionChoiceIndex,
+                              ),
+                    ),
+                  ],
+                  _buildPriceText(context, value.name!, value.price, isSnoozed),
+                ],
+              ),
+            ),
+            if ((item.multiMax ?? 1) > 1 && isSelected) ...[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    AlpacaSelect(
+                        onDecrease: () {
+                          final index = cubit.orderDto[itemCategoryIndex].items!
+                              .firstWhereOrNull(
+                            (element) => element.plu == value.plu!,
+                          );
+
+                          if (index != null && index.quantity != 1) {
+                            index.quantity = index.quantity! - 1;
+                          } else {
+                            cubit.orderDto[itemCategoryIndex].items!
+                                .remove(index);
+                          }
+
+                          cubit.changeItemPrice();
+                        },
+                        onIncrease: () {
+                          final index = cubit.orderDto[itemCategoryIndex].items!
+                              .firstWhereOrNull(
+                            (element) => element.plu == value.plu!,
+                          );
+
+                          if (index != null &&
+                              index.quantity! < item.multiMax!) {
+                            index.quantity = index.quantity! + 1;
+                          }
+
+                          cubit.changeItemPrice();
+                        },
+                        amount: cubit.orderDto[itemCategoryIndex].items!
+                                .firstWhereOrNull(
+                                  (element) => element.plu == value.plu!,
+                                )
+                                ?.quantity
+                                .toString() ??
+                            '1',
+                        textBoxHorizontalPadding: 12,
+                        textStyle: TextStyle()),
+                  ],
                 ),
-          child: Row(
-            children: [
-              if (isRadio) ...[
-                Radio(
-                  value: value.plu!,
-                  groupValue:
-                      cubit.orderDto[itemCategoryIndex].items!.indexWhere(
-                                (element) => element.plu == value.plu!,
-                              ) !=
-                              -1
-                          ? value.plu!
-                          : '',
-                  activeColor: AlpacaColor.primary100,
-                  onChanged: (String? value) => onTappedRadio(
-                    item,
-                    cubit,
-                    itemCategoryIndex,
-                    optionChoiceIndex,
-                  ),
-                ),
-              ] else ...[
-                Checkbox(
-                  value: cubit.orderDto[itemCategoryIndex].items!.indexWhere(
-                        (element) => element.plu == value.plu!,
-                      ) !=
-                      -1,
-                  activeColor: AlpacaColor.primary100,
-                  onChanged: (value) => onTappedCheckBox(
-                    item,
-                    cubit,
-                    itemCategoryIndex,
-                    optionChoiceIndex,
-                  ),
-                ),
-              ],
-              _buildPriceText(context, value.name!, value.price)
+              ),
             ],
-          ),
+            if (value.childProducts != null &&
+                value.childProducts!.isNotEmpty &&
+                cubit.orderDto[itemCategoryIndex].items!.indexWhere(
+                      (element) => element.plu == value.plu!,
+                    ) !=
+                    -1) ...[
+              for (final item in value.childProducts!)
+                _buildListView(
+                  context,
+                  name: item.childProduct!.name!,
+                  index: itemCategoryIndex,
+                  optionCategory: item,
+                ),
+            ]
+          ],
         );
       },
     );
   }
 
-  Widget _buildPriceText(BuildContext context, String name, int? price) {
+  Widget _buildPriceText(
+    BuildContext context,
+    String name,
+    int? price,
+    bool isSnoozed,
+  ) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(right: 17),
@@ -160,6 +248,7 @@ class ProductRadioCheckbox extends StatelessWidget {
               name,
               style: Theme.of(context).textTheme.headline4!.copyWith(
                     color: AlpacaColor.darkNavyColor,
+                    decoration: isSnoozed ? TextDecoration.lineThrough : null,
                   ),
             ),
             if (price != 0)
@@ -167,6 +256,7 @@ class ProductRadioCheckbox extends StatelessWidget {
                 '+${Utilities.currencyFormat(price!)}',
                 style: Theme.of(context).textTheme.headline4!.copyWith(
                       color: AlpacaColor.primary100,
+                      decoration: isSnoozed ? TextDecoration.lineThrough : null,
                     ),
               ),
           ],

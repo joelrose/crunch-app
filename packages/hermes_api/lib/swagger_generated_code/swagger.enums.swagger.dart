@@ -30,25 +30,61 @@ const $DeliverectDayMap = {
   DeliverectDay.sunday: '7'
 };
 
-enum OrderStatus {
+enum DeliverectOrderStatus {
   @JsonValue('swaggerGeneratedUnknown')
   swaggerGeneratedUnknown,
-  @JsonValue('Ordered')
-  ordered,
-  @JsonValue('Paid')
-  paid,
-  @JsonValue('Declined')
-  declined,
-  @JsonValue('Confirmed')
-  confirmed,
-  @JsonValue('Done')
-  done
+  @JsonValue('PARSED')
+  parsed,
+  @JsonValue('RECEIVED')
+  received,
+  @JsonValue('NEW')
+  $new,
+  @JsonValue('ACCEPTED')
+  accepted,
+  @JsonValue('DUPLICATE')
+  duplicate,
+  @JsonValue('PRINTED')
+  printed,
+  @JsonValue('PREPARING')
+  preparing,
+  @JsonValue('PREPARED')
+  prepared,
+  @JsonValue('READY_FOR_PICKUP')
+  readyForPickup,
+  @JsonValue('INDELIVERY')
+  indelivery,
+  @JsonValue('FINALIZED')
+  finalized,
+  @JsonValue('AUTO_FINALIZED')
+  autoFinalized,
+  @JsonValue('CANCEL')
+  cancel,
+  @JsonValue('CANCELED')
+  canceled,
+  @JsonValue('FAILED')
+  failed,
+  @JsonValue('POS_RECEIVED_FAILED')
+  posReceivedFailed,
+  @JsonValue('PARSE_FAILED')
+  parseFailed
 }
 
-const $OrderStatusMap = {
-  OrderStatus.ordered: 'Ordered',
-  OrderStatus.paid: 'Paid',
-  OrderStatus.declined: 'Declined',
-  OrderStatus.confirmed: 'Confirmed',
-  OrderStatus.done: 'Done'
+const $DeliverectOrderStatusMap = {
+  DeliverectOrderStatus.parsed: '1',
+  DeliverectOrderStatus.received: '2',
+  DeliverectOrderStatus.$new: '10',
+  DeliverectOrderStatus.accepted: '20',
+  DeliverectOrderStatus.duplicate: '30',
+  DeliverectOrderStatus.printed: '40',
+  DeliverectOrderStatus.preparing: '50',
+  DeliverectOrderStatus.prepared: '60',
+  DeliverectOrderStatus.readyForPickup: '70',
+  DeliverectOrderStatus.indelivery: '80',
+  DeliverectOrderStatus.finalized: '90',
+  DeliverectOrderStatus.autoFinalized: '95',
+  DeliverectOrderStatus.cancel: '100',
+  DeliverectOrderStatus.canceled: '110',
+  DeliverectOrderStatus.failed: '120',
+  DeliverectOrderStatus.posReceivedFailed: '121',
+  DeliverectOrderStatus.parseFailed: '124'
 };
