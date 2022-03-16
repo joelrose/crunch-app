@@ -39,13 +39,13 @@ class StoreDetailView extends StatelessWidget {
             image: image,
             child: Column(
               children: const [
-                ProductBasicDetails(),
+                ProductDetailWidget(),
                 ProductRadioCheckbox(),
               ],
             ),
           ),
         ),
-        ProductAmountAndAddToOrder()
+        ProductOrderWidget()
       ],
     );
   }

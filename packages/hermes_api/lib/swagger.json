@@ -299,7 +299,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "items": {
+          "subItems": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CreateOrderItemDto"
@@ -418,6 +418,10 @@
             "type": "string",
             "nullable": true
           },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
           "products": {
             "type": "array",
             "items": {
@@ -522,6 +526,28 @@
           }
         },
         "additionalProperties": false
+      },
+      "DeliverectOrderStatus": {
+        "enum": [
+          "PARSED",
+          "RECEIVED",
+          "NEW",
+          "ACCEPTED",
+          "DUPLICATE",
+          "PRINTED",
+          "PREPARING",
+          "PREPARED",
+          "READY_FOR_PICKUP",
+          "INDELIVERY",
+          "FINALIZED",
+          "AUTO_FINALIZED",
+          "CANCEL",
+          "CANCELED",
+          "FAILED",
+          "POS_RECEIVED_FAILED",
+          "PARSE_FAILED"
+        ],
+        "type": "string"
       },
       "DeliverectProductModelDto": {
         "type": "object",
@@ -668,16 +694,23 @@
       "GetOrderResponseDto": {
         "type": "object",
         "properties": {
-          "storeId": {
+          "id": {
             "type": "string",
-            "nullable": true
+            "format": "uuid"
           },
           "status": {
-            "$ref": "#/components/schemas/OrderStatus"
+            "$ref": "#/components/schemas/DeliverectOrderStatus"
           },
           "price": {
             "type": "number",
             "format": "float"
+          },
+          "estimatedPickUpTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "merchant": {
+            "$ref": "#/components/schemas/MerchantModelDto"
           },
           "items": {
             "type": "array",
@@ -705,6 +738,40 @@
             "nullable": true
           },
           "lastName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MerchantModelDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "rating": {
+            "type": "number",
+            "format": "float"
+          },
+          "reviewCount": {
+            "type": "string",
+            "nullable": true
+          },
+          "averagePickUpTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "googleMapsLink": {
             "type": "string",
             "nullable": true
           }
@@ -756,16 +823,6 @@
         },
         "additionalProperties": false
       },
-      "OrderStatus": {
-        "enum": [
-          "Ordered",
-          "Paid",
-          "Declined",
-          "Confirmed",
-          "Done"
-        ],
-        "type": "string"
-      },
       "ProductRelationModelDto": {
         "type": "object",
         "properties": {
@@ -787,7 +844,7 @@
             "format": "uuid"
           },
           "orderStatus": {
-            "$ref": "#/components/schemas/OrderStatus"
+            "$ref": "#/components/schemas/DeliverectOrderStatus"
           }
         },
         "additionalProperties": false
