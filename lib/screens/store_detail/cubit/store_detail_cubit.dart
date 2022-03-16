@@ -23,6 +23,8 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   void init() {
     totalPrice = data.item.price!;
 
+    sortItems(data.item.childProducts);
+
     final product = data.item;
     if (product.childProducts != null) {
       for (final child in product.childProducts!) {
@@ -52,6 +54,21 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
     }
 
     _calculateNewPrice();
+  }
+
+  void sortItems(List<ProductRelationModelDto>? list) {
+    if (list == null) {
+      return;
+    }
+
+    list.sort(
+      (a, b) =>
+          a.childProduct!.sortOrder!.compareTo(b.childProduct!.sortOrder!),
+    );
+
+    for (final element in list) {
+      sortItems(element.childProduct!.childProducts);
+    }
   }
 
   void changeItemPrice() {

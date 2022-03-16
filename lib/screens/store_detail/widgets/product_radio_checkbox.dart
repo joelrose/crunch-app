@@ -16,15 +16,10 @@ class ProductRadioCheckbox extends StatelessWidget {
         final optionCategories =
             (state as StoreDetailReload).data.item.childProducts;
 
-        optionCategories!.sort(
-          (a, b) =>
-              a.childProduct!.sortOrder!.compareTo(b.childProduct!.sortOrder!),
-        );
-
         return ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: optionCategories.length,
+          itemCount: optionCategories!.length,
           itemBuilder: (context, optionCategoryIndex) {
             final item = optionCategories[optionCategoryIndex];
 
@@ -94,11 +89,6 @@ class ProductRadioCheckbox extends StatelessWidget {
     final cubit = context.read<StoreDetailCubit>();
 
     final categoryOptions = item.childProducts!;
-
-    categoryOptions.sort(
-      (a, b) =>
-          a.childProduct!.sortOrder!.compareTo(b.childProduct!.sortOrder!),
-    );
 
     return ListView.separated(
       itemCount: categoryOptions.length,
