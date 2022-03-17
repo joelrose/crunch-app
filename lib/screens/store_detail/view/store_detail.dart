@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/screens/store_detail/widgets/product_amount_and_add_to_order.dart';
-import 'package:pickup/screens/store_detail/widgets/product_detail_text.dart';
+import 'package:pickup/screens/store_detail/widgets/product_detail.dart';
 import 'package:pickup/screens/store_detail/widgets/product_radio_checkbox.dart';
 import 'package:pickup/shared/alpaca_stretchy_header.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
