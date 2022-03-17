@@ -6,8 +6,8 @@ import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/shared/utilities.dart';
 import 'package:collection/collection.dart';
 
-class ProductRadioCheckbox extends StatelessWidget {
-  const ProductRadioCheckbox({Key? key}) : super(key: key);
+class ProductOptionWidget extends StatelessWidget {
+  const ProductOptionWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,7 @@ class ProductRadioCheckbox extends StatelessWidget {
           itemBuilder: (context, optionCategoryIndex) {
             final item = optionCategories[optionCategoryIndex];
 
-            return _buildListView(
-              context,
+            return ProductOptionListView(
               name: item.childProduct!.name!,
               index: optionCategoryIndex,
               optionCategory: item,
@@ -34,13 +33,24 @@ class ProductRadioCheckbox extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _buildListView(
-    BuildContext context, {
-    required String name,
-    required int index,
-    required ProductRelationModelDto optionCategory,
-  }) {
+class ProductOptionListView extends StatelessWidget {
+  const ProductOptionListView({
+    Key? key,
+    required this.name,
+    required this.index,
+    required this.optionCategory,
+    this.itemOptionIndex = -1,
+  }) : super(key: key);
+
+  final String name;
+  final int index;
+  final ProductRelationModelDto optionCategory;
+  final int itemOptionIndex;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -58,7 +68,8 @@ class ProductRadioCheckbox extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
-                    '(min: ${optionCategory.childProduct!.min!}, max: ${optionCategory.childProduct!.max!})',
+                    '(min: ${optionCategory.childProduct!.min!}, '
+                    'max: ${optionCategory.childProduct!.max!})',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -74,20 +85,32 @@ class ProductRadioCheckbox extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: _buildOptions(context, optionCategory.childProduct!, index),
+            child: ProductOptionEntry(
+              item: optionCategory.childProduct!,
+              itemCategoryIndex: index,
+              itemOptionIndex: itemOptionIndex,
+            ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildOptions(
-    BuildContext context,
-    DeliverectProductModelDto item,
-    int itemCategoryIndex,
-  ) {
-    final cubit = context.read<StoreDetailCubit>();
+class ProductOptionEntry extends StatelessWidget {
+  const ProductOptionEntry({
+    Key? key,
+    required this.item,
+    required this.itemCategoryIndex,
+    this.itemOptionIndex = 1,
+  }) : super(key: key);
 
+  final DeliverectProductModelDto item;
+  final int itemCategoryIndex;
+  final int itemOptionIndex;
+
+  @override
+  Widget build(BuildContext context) {
     final categoryOptions = item.childProducts!;
 
     return ListView.separated(
@@ -103,9 +126,29 @@ class ProductRadioCheckbox extends StatelessWidget {
         final value =
             categoryOptions.elementAt(optionChoiceIndex).childProduct!;
 
+        final cubit = context.read<StoreDetailCubit>();
+
+        CreateOrderItemDto orderDto;
+
+        if (itemOptionIndex == -1) {
+          orderDto = cubit.orderDto[itemCategoryIndex];
+        } else {
+          if (cubit.orderDto[itemCategoryIndex].items == null) {
+            orderDto =
+                cubit.orderDto[itemCategoryIndex].items![itemOptionIndex];
+          } else if (cubit.orderDto[itemCategoryIndex].items!.length == 1) {
+            orderDto =
+                cubit.orderDto[itemCategoryIndex].items![itemOptionIndex];
+          } else {
+            orderDto =
+                cubit.orderDto[itemCategoryIndex].items![itemOptionIndex];
+            orderDto.items ??= [];
+          }
+        }
+
         final isRadio = item.min == 1 && item.max == 1;
         final isSnoozed = value.snoozed!;
-        final isSelected = cubit.orderDto[itemCategoryIndex].items!.indexWhere(
+        final isSelected = orderDto.items!.indexWhere(
               (element) => element.plu == value.plu!,
             ) !=
             -1;
@@ -121,12 +164,14 @@ class ProductRadioCheckbox extends StatelessWidget {
                           cubit,
                           itemCategoryIndex,
                           optionChoiceIndex,
+                          orderDto,
                         )
                       : onTappedCheckBox(
                           item,
                           cubit,
                           itemCategoryIndex,
                           optionChoiceIndex,
+                          orderDto,
                         )
                   : null,
               child: Row(
@@ -144,6 +189,7 @@ class ProductRadioCheckbox extends StatelessWidget {
                                 cubit,
                                 itemCategoryIndex,
                                 optionChoiceIndex,
+                                orderDto,
                               ),
                     ),
                   ] else ...[
@@ -157,10 +203,15 @@ class ProductRadioCheckbox extends StatelessWidget {
                                 cubit,
                                 itemCategoryIndex,
                                 optionChoiceIndex,
+                                orderDto,
                               ),
                     ),
                   ],
-                  _buildPriceText(context, value.name!, value.price, isSnoozed),
+                  ProductOptionPrice(
+                    name: value.name!,
+                    price: value.price!,
+                    isSnoozed: isSnoozed,
+                  ),
                 ],
               ),
             ),
@@ -172,23 +223,20 @@ class ProductRadioCheckbox extends StatelessWidget {
                   children: [
                     AlpacaSelect(
                         onDecrease: () {
-                          final index = cubit.orderDto[itemCategoryIndex].items!
-                              .firstWhereOrNull(
+                          final index = orderDto.items!.firstWhereOrNull(
                             (element) => element.plu == value.plu!,
                           );
 
                           if (index != null && index.quantity != 1) {
                             index.quantity = index.quantity! - 1;
                           } else {
-                            cubit.orderDto[itemCategoryIndex].items!
-                                .remove(index);
+                            orderDto.items!.remove(index);
                           }
 
                           cubit.changeItemPrice();
                         },
                         onIncrease: () {
-                          final index = cubit.orderDto[itemCategoryIndex].items!
-                              .firstWhereOrNull(
+                          final index = orderDto.items!.firstWhereOrNull(
                             (element) => element.plu == value.plu!,
                           );
 
@@ -199,7 +247,7 @@ class ProductRadioCheckbox extends StatelessWidget {
 
                           cubit.changeItemPrice();
                         },
-                        amount: cubit.orderDto[itemCategoryIndex].items!
+                        amount: orderDto.items!
                                 .firstWhereOrNull(
                                   (element) => element.plu == value.plu!,
                                 )
@@ -214,16 +262,16 @@ class ProductRadioCheckbox extends StatelessWidget {
             ],
             if (value.childProducts != null &&
                 value.childProducts!.isNotEmpty &&
-                cubit.orderDto[itemCategoryIndex].items!.indexWhere(
+                orderDto.items!.indexWhere(
                       (element) => element.plu == value.plu!,
                     ) !=
                     -1) ...[
-              for (final item in value.childProducts!)
-                _buildListView(
-                  context,
-                  name: item.childProduct!.name!,
+              for (final childItem in value.childProducts!)
+                ProductOptionListView(
+                  name: childItem.childProduct!.name!,
                   index: itemCategoryIndex,
-                  optionCategory: item,
+                  optionCategory: childItem,
+                  itemOptionIndex: optionChoiceIndex,
                 ),
             ]
           ],
@@ -232,12 +280,82 @@ class ProductRadioCheckbox extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceText(
-    BuildContext context,
-    String name,
-    int? price,
-    bool isSnoozed,
+  void onTappedRadio(
+    DeliverectProductModelDto item,
+    StoreDetailCubit cubit,
+    int itemCategoryIndex,
+    int optionChoiceIndex,
+    CreateOrderItemDto orderDto,
   ) {
+    {
+      final value =
+          item.childProducts!.elementAt(optionChoiceIndex).childProduct!;
+
+      orderDto.items!.clear();
+
+      orderDto.items!.add(
+        CreateOrderItemDto(
+          name: value.name,
+          price: value.price,
+          plu: value.plu,
+          quantity: 1,
+        ),
+      );
+
+      cubit.changeItemPrice();
+    }
+  }
+
+  void onTappedCheckBox(
+    DeliverectProductModelDto item,
+    StoreDetailCubit cubit,
+    int itemCategoryIndex,
+    int optionChoiceIndex,
+    CreateOrderItemDto orderDto,
+  ) {
+    {
+      final value =
+          item.childProducts!.elementAt(optionChoiceIndex).childProduct!;
+
+      final index = orderDto.items!.indexWhere(
+        (element) => element.plu == value.plu!,
+      );
+
+      if (index != -1) {
+        orderDto.items!.removeAt(index);
+        cubit.changeItemPrice();
+        return;
+      }
+
+      orderDto.items!.add(
+        CreateOrderItemDto(
+          name: value.name,
+          price: value.price,
+          plu: value.plu,
+          quantity: 1,
+          items: [],
+        ),
+      );
+
+      cubit.changeItemPrice();
+    }
+  }
+}
+
+class ProductOptionPrice extends StatelessWidget {
+  const ProductOptionPrice({
+    Key? key,
+    required this.name,
+    required this.price,
+    required this.isSnoozed,
+  }) : super(key: key);
+
+  final String name;
+  final int price;
+  final bool isSnoozed;
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(right: 17),
@@ -263,63 +381,5 @@ class ProductRadioCheckbox extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void onTappedRadio(
-    DeliverectProductModelDto item,
-    StoreDetailCubit cubit,
-    int itemCategoryIndex,
-    int optionChoiceIndex,
-  ) {
-    {
-      final value =
-          item.childProducts!.elementAt(optionChoiceIndex).childProduct!;
-
-      cubit.orderDto[itemCategoryIndex].items!.clear();
-
-      cubit.orderDto[itemCategoryIndex].items!.add(
-        CreateOrderItemDto(
-          name: value.name,
-          price: value.price,
-          plu: value.plu,
-          quantity: 1,
-        ),
-      );
-
-      cubit.changeItemPrice();
-    }
-  }
-
-  void onTappedCheckBox(
-    DeliverectProductModelDto item,
-    StoreDetailCubit cubit,
-    int itemCategoryIndex,
-    int optionChoiceIndex,
-  ) {
-    {
-      final value =
-          item.childProducts!.elementAt(optionChoiceIndex).childProduct!;
-
-      final index = cubit.orderDto[itemCategoryIndex].items!.indexWhere(
-        (element) => element.plu == value.plu!,
-      );
-
-      if (index != -1) {
-        cubit.orderDto[itemCategoryIndex].items!.removeAt(index);
-        cubit.changeItemPrice();
-        return;
-      }
-
-      cubit.orderDto[itemCategoryIndex].items!.add(
-        CreateOrderItemDto(
-          name: value.name,
-          price: value.price,
-          plu: value.plu,
-          quantity: 1,
-        ),
-      );
-
-      cubit.changeItemPrice();
-    }
   }
 }
