@@ -14,7 +14,7 @@ class ProductOptionListView extends StatelessWidget {
 
   final String name;
   final int index;
-  final ProductRelationModelDto optionCategory;
+  final DeliverectProductModelDto optionCategory;
   final int itemOptionIndex;
 
   @override
@@ -24,25 +24,7 @@ class ProductOptionListView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: Theme.of(context).textTheme.headline3,
-              ),
-              if (optionCategory.childProduct!.min! != 0 &&
-                  optionCategory.childProduct!.max! != 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    '(min: ${optionCategory.childProduct!.min!}, '
-                    'max: ${optionCategory.childProduct!.max!})',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
-            ],
-          ),
+          _buildRestrictionText(context),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 20),
             width: MediaQuery.of(context).size.width,
@@ -54,13 +36,36 @@ class ProductOptionListView extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: ProductOptionEntry(
-              item: optionCategory.childProduct!,
+              item: optionCategory,
               itemCategoryIndex: index,
               itemOptionIndex: itemOptionIndex,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildRestrictionText(BuildContext context) {
+    final min = optionCategory.min!;
+    final max = optionCategory.max!;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          name,
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        if (min != 0 && max != 0)
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              '(min: $min, max: $max)',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ),
+      ],
     );
   }
 }

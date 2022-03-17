@@ -180,7 +180,7 @@ class ProductOptionEntry extends StatelessWidget {
                 ProductOptionListView(
                   name: childItem.childProduct!.name!,
                   index: itemCategoryIndex,
-                  optionCategory: childItem,
+                  optionCategory: childItem.childProduct!,
                   itemOptionIndex: optionChoiceIndex,
                 ),
             ]

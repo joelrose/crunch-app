@@ -18,10 +18,10 @@ class ProductOptionWidget extends StatelessWidget {
           shrinkWrap: true,
           itemCount: optionCategories!.length,
           itemBuilder: (context, optionCategoryIndex) {
-            final item = optionCategories[optionCategoryIndex];
+            final item = optionCategories[optionCategoryIndex].childProduct!;
 
             return ProductOptionListView(
-              name: item.childProduct!.name!,
+              name: item.name!,
               index: optionCategoryIndex,
               optionCategory: item,
             );
