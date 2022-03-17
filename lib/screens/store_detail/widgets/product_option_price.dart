@@ -21,25 +21,31 @@ class ProductOptionPrice extends StatelessWidget {
         padding: const EdgeInsets.only(right: 17),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              name,
-              style: Theme.of(context).textTheme.headline4!.copyWith(
-                    color: AlpacaColor.darkNavyColor,
-                    decoration: isSnoozed ? TextDecoration.lineThrough : null,
-                  ),
-            ),
-            if (price != 0)
-              Text(
-                '+${Utilities.currencyFormat(price)}',
-                style: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: AlpacaColor.primary100,
-                      decoration: isSnoozed ? TextDecoration.lineThrough : null,
-                    ),
-              ),
-          ],
+          children: _buildItem(context),
         ),
       ),
     );
+  }
+
+  List<Widget> _buildItem(BuildContext context) {
+    final textDecoration = isSnoozed ? TextDecoration.lineThrough : null;
+
+    return [
+      Text(
+        name,
+        style: Theme.of(context).textTheme.headline4!.copyWith(
+              color: AlpacaColor.darkNavyColor,
+              decoration: textDecoration,
+            ),
+      ),
+      if (price != 0)
+        Text(
+          '+${Utilities.currencyFormat(price)}',
+          style: Theme.of(context).textTheme.headline4!.copyWith(
+                color: AlpacaColor.primary100,
+                decoration: textDecoration,
+              ),
+        ),
+    ];
   }
 }
