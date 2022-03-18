@@ -51,33 +51,7 @@ class ProductOrderWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 8,
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 0.5,
-                color: AlpacaColor.greyColor,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: AlpacaSelect(
-              amount: context
-                  .read<StoreDetailCubit>()
-                  .amountOfProductsToAddToBasket
-                  .toString(),
-              onDecrease: () =>
-                  context.read<StoreDetailCubit>().decreaseItemAmount(),
-              onIncrease: () =>
-                  context.read<StoreDetailCubit>().increaseItemAmount(),
-              textBoxHorizontalPadding: 12,
-              textStyle: Theme.of(context).textTheme.headline2!.copyWith(
-                    color: AlpacaColor.darkNavyColor,
-                  ),
-            ),
-          ),
+          _buildAlpacaSelect(context),
           Text(
             Utilities.currencyFormat(
               context.read<StoreDetailCubit>().totalPrice,
@@ -87,6 +61,33 @@ class ProductOrderWidget extends StatelessWidget {
                 ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAlpacaSelect(BuildContext context) {
+    final cubit = context.read<StoreDetailCubit>();
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 8,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 0.5,
+          color: AlpacaColor.greyColor,
+        ),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: AlpacaSelect(
+        amount: cubit.amountOfProductsToAddToBasket.toString(),
+        onDecrease: () => cubit.decreaseItemAmount(),
+        onIncrease: () => cubit.increaseItemAmount(),
+        textBoxHorizontalPadding: 12,
+        textStyle: Theme.of(context).textTheme.headline2!.copyWith(
+              color: AlpacaColor.darkNavyColor,
+            ),
       ),
     );
   }
