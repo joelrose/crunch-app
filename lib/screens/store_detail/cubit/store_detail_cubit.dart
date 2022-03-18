@@ -23,7 +23,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   void init() {
     totalPrice = data.item.price!;
 
-    sortItems(data.item.childProducts);
+    _sortItems(data.item.childProducts);
 
     final product = data.item;
     if (product.childProducts != null) {
@@ -56,7 +56,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
     _calculateNewPrice();
   }
 
-  void sortItems(List<ProductRelationModelDto>? list) {
+  void _sortItems(List<ProductRelationModelDto>? list) {
     if (list == null) {
       return;
     }
@@ -67,7 +67,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
     );
 
     for (final element in list) {
-      sortItems(element.childProduct!.childProducts);
+      _sortItems(element.childProduct!.childProducts);
     }
   }
 

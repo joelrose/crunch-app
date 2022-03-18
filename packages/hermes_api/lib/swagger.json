@@ -589,6 +589,10 @@
             "type": "integer",
             "format": "int64"
           },
+          "multiMax": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
             "type": "string",
             "nullable": true
