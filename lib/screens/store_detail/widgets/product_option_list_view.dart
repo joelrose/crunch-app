@@ -10,11 +10,13 @@ class ProductOptionListView extends StatelessWidget {
     required this.index,
     required this.optionCategory,
     this.itemOptionIndex = -1,
+    this.optionalParentPlu = '',
   }) : super(key: key);
 
   final String name;
   final int index;
   final DeliverectProductModelDto optionCategory;
+  final String optionalParentPlu;
   final int itemOptionIndex;
 
   @override
@@ -36,9 +38,10 @@ class ProductOptionListView extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: ProductOptionEntry(
-              item: optionCategory,
+              optionCategory: optionCategory,
               itemCategoryIndex: index,
               itemOptionIndex: itemOptionIndex,
+              optionalParentPlu: optionalParentPlu,
             ),
           ),
         ],

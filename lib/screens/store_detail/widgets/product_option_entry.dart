@@ -10,18 +10,22 @@ import 'package:pickup/screens/store_detail/widgets/product_option_price.dart';
 class ProductOptionEntry extends StatelessWidget {
   const ProductOptionEntry({
     Key? key,
-    required this.item,
+    required this.optionCategory,
     required this.itemCategoryIndex,
-    this.itemOptionIndex = 1,
+    this.itemOptionIndex = -1,
+    this.optionalParentPlu = '',
   }) : super(key: key);
 
-  final DeliverectProductModelDto item;
+  final DeliverectProductModelDto optionCategory;
+  final String optionalParentPlu;
   final int itemCategoryIndex;
   final int itemOptionIndex;
 
   @override
   Widget build(BuildContext context) {
-    final categoryOptions = item.childProducts!;
+    final categoryOptions = optionCategory.childProducts!;
+
+    final cubit = context.read<StoreDetailCubit>();
 
     return ListView.separated(
       itemCount: categoryOptions.length,
@@ -36,29 +40,21 @@ class ProductOptionEntry extends StatelessWidget {
         final value =
             categoryOptions.elementAt(optionChoiceIndex).childProduct!;
 
-        final cubit = context.read<StoreDetailCubit>();
+        List<CreateOrderItemDto> orderDto;
 
-        CreateOrderItemDto orderDto;
+        final _orderDto = cubit.orderDto;
 
-        if (itemOptionIndex == -1) {
-          orderDto = cubit.orderDto[itemCategoryIndex];
-        } else {
-          if (cubit.orderDto[itemCategoryIndex].items == null) {
-            orderDto =
-                cubit.orderDto[itemCategoryIndex].items![itemOptionIndex];
-          } else if (cubit.orderDto[itemCategoryIndex].items!.length == 1) {
-            orderDto =
-                cubit.orderDto[itemCategoryIndex].items![itemOptionIndex];
-          } else {
-            orderDto =
-                cubit.orderDto[itemCategoryIndex].items![itemOptionIndex];
-            orderDto.items ??= [];
-          }
+        orderDto = _orderDto[itemCategoryIndex].items!;
+
+        if (itemOptionIndex != -1) {
+          orderDto = orderDto
+              .firstWhere((element) => element.plu == optionalParentPlu)
+              .items!;
         }
 
-        final isRadio = item.min == 1 && item.max == 1;
+        final isRadio = optionCategory.min == 1 && optionCategory.max == 1;
         final isSnoozed = value.snoozed!;
-        final isSelected = orderDto.items!.indexWhere(
+        final isSelected = orderDto.indexWhere(
               (element) => element.plu == value.plu!,
             ) !=
             -1;
@@ -70,14 +66,14 @@ class ProductOptionEntry extends StatelessWidget {
               onTap: !isSnoozed
                   ? () => isRadio
                       ? onTappedRadio(
-                          item,
+                          optionCategory,
                           cubit,
                           itemCategoryIndex,
                           optionChoiceIndex,
                           orderDto,
                         )
                       : onTappedCheckBox(
-                          item,
+                          optionCategory,
                           cubit,
                           itemCategoryIndex,
                           optionChoiceIndex,
@@ -95,7 +91,7 @@ class ProductOptionEntry extends StatelessWidget {
                       onChanged: isSnoozed
                           ? null
                           : (String? value) => onTappedRadio(
-                                item,
+                                optionCategory,
                                 cubit,
                                 itemCategoryIndex,
                                 optionChoiceIndex,
@@ -109,7 +105,7 @@ class ProductOptionEntry extends StatelessWidget {
                       onChanged: isSnoozed
                           ? null
                           : (value) => onTappedCheckBox(
-                                item,
+                                optionCategory,
                                 cubit,
                                 itemCategoryIndex,
                                 optionChoiceIndex,
@@ -125,63 +121,62 @@ class ProductOptionEntry extends StatelessWidget {
                 ],
               ),
             ),
-            if ((item.multiMax ?? 1) > 1 && isSelected) ...[
+            if ((optionCategory.multiMax ?? 1) > 1 && isSelected) ...[
               Padding(
                 padding: const EdgeInsets.only(bottom: 10, right: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     AlpacaSelect(
-                        onDecrease: () {
-                          final index = orderDto.items!.firstWhereOrNull(
-                            (element) => element.plu == value.plu!,
-                          );
+                      onDecrease: () {
+                        final index = orderDto.firstWhereOrNull(
+                          (element) => element.plu == value.plu!,
+                        );
 
-                          if (index != null && index.quantity != 1) {
-                            index.quantity = index.quantity! - 1;
-                          } else {
-                            orderDto.items!.remove(index);
-                          }
+                        if (index != null && index.quantity != 1) {
+                          index.quantity = index.quantity! - 1;
+                        } else {
+                          orderDto.remove(index);
+                        }
 
-                          cubit.changeItemPrice();
-                        },
-                        onIncrease: () {
-                          final index = orderDto.items!.firstWhereOrNull(
-                            (element) => element.plu == value.plu!,
-                          );
+                        cubit.changeItemPrice();
+                      },
+                      onIncrease: () {
+                        final index = orderDto.firstWhereOrNull(
+                          (element) => element.plu == value.plu!,
+                        );
 
-                          if (index != null &&
-                              index.quantity! < item.multiMax!) {
-                            index.quantity = index.quantity! + 1;
-                          }
+                        if (index != null &&
+                            index.quantity! < optionCategory.multiMax!) {
+                          index.quantity = index.quantity! + 1;
+                        }
 
-                          cubit.changeItemPrice();
-                        },
-                        amount: orderDto.items!
-                                .firstWhereOrNull(
-                                  (element) => element.plu == value.plu!,
-                                )
-                                ?.quantity
-                                .toString() ??
-                            '1',
-                        textBoxHorizontalPadding: 12,
-                        textStyle: TextStyle()),
+                        cubit.changeItemPrice();
+                      },
+                      amount: orderDto
+                              .firstWhereOrNull(
+                                (element) => element.plu == value.plu!,
+                              )
+                              ?.quantity
+                              .toString() ??
+                          '1',
+                      textBoxHorizontalPadding: 12,
+                      textStyle: const TextStyle(),
+                    ),
                   ],
                 ),
               ),
             ],
             if (value.childProducts != null &&
                 value.childProducts!.isNotEmpty &&
-                orderDto.items!.indexWhere(
-                      (element) => element.plu == value.plu!,
-                    ) !=
-                    -1) ...[
+                isSelected) ...[
               for (final childItem in value.childProducts!)
                 ProductOptionListView(
                   name: childItem.childProduct!.name!,
                   index: itemCategoryIndex,
                   optionCategory: childItem.childProduct!,
                   itemOptionIndex: optionChoiceIndex,
+                  optionalParentPlu: value.plu!,
                 ),
             ]
           ],
@@ -195,15 +190,15 @@ class ProductOptionEntry extends StatelessWidget {
     StoreDetailCubit cubit,
     int itemCategoryIndex,
     int optionChoiceIndex,
-    CreateOrderItemDto orderDto,
+    List<CreateOrderItemDto> orderDto,
   ) {
     {
       final value =
           item.childProducts!.elementAt(optionChoiceIndex).childProduct!;
 
-      orderDto.items!.clear();
+      orderDto.clear();
 
-      orderDto.items!.add(
+      orderDto.add(
         CreateOrderItemDto(
           name: value.name,
           price: value.price,
@@ -221,23 +216,23 @@ class ProductOptionEntry extends StatelessWidget {
     StoreDetailCubit cubit,
     int itemCategoryIndex,
     int optionChoiceIndex,
-    CreateOrderItemDto orderDto,
+    List<CreateOrderItemDto> orderDto,
   ) {
     {
       final value =
           item.childProducts!.elementAt(optionChoiceIndex).childProduct!;
 
-      final index = orderDto.items!.indexWhere(
+      final index = orderDto.indexWhere(
         (element) => element.plu == value.plu!,
       );
 
       if (index != -1) {
-        orderDto.items!.removeAt(index);
+        orderDto.removeAt(index);
         cubit.changeItemPrice();
         return;
       }
 
-      orderDto.items!.add(
+      orderDto.add(
         CreateOrderItemDto(
           name: value.name,
           price: value.price,
