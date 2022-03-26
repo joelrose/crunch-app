@@ -54,6 +54,7 @@ dependencies:
 dev_dependencies:
   bloc_test: ^9.0.3
   build_runner: ^2.1.7
+  fake_async: ^1.2.0
   firebase_auth_mocks: ^0.8.2
   flutter_launcher_icons: "^0.9.2"
   flutter_test:
