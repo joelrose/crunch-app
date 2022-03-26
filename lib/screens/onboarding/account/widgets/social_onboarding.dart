@@ -8,19 +8,13 @@ import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:pickup/shared/models.dart';
+import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 
-class SocialOnboarding extends StatefulWidget {
-  const SocialOnboarding({Key? key, required this.isSignUp}) : super(key: key);
+class SocialOnboarding extends StatelessWidget {
+  SocialOnboarding({Key? key, required this.isSignUp}) : super(key: key);
 
   final bool isSignUp;
-
-  @override
-  State<SocialOnboarding> createState() => _SocialOnboardingState();
-}
-
-class _SocialOnboardingState extends State<SocialOnboarding> {
   final AuthService auth = locator<AuthService>();
 
   @override
@@ -28,7 +22,7 @@ class _SocialOnboardingState extends State<SocialOnboarding> {
     return Column(
       children: [
         getSocialButton(
-          widget.isSignUp
+          isSignUp
               ? 'onboarding.signUpWithGoogle'.tr()
               : 'onboarding.signInWithGoogle'.tr(),
           MediaQuery.of(context).size.width,
@@ -43,7 +37,7 @@ class _SocialOnboardingState extends State<SocialOnboarding> {
           },
         ),
         getSocialButton(
-          widget.isSignUp
+          isSignUp
               ? 'onboarding.signUpWithApple'.tr()
               : 'onboarding.signInWithApple'.tr(),
           MediaQuery.of(context).size.width,
@@ -75,22 +69,18 @@ class _SocialOnboardingState extends State<SocialOnboarding> {
       final account = await hermesService.client.apiUsersGet();
 
       if (account.statusCode == 200) {
-        if (mounted) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            HomePage.route,
-            (route) => false,
-          );
-        }
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          HomePage.route,
+          (route) => false,
+        );
       } else {
-        if (mounted) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            OnboardingCreateAccountScreen.route,
-            (route) => false,
-            arguments: CreateAccountData(
-              isSocialLogin: true,
-            ),
-          );
-        }
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          OnboardingCreateAccountScreen.route,
+          (route) => false,
+          arguments: CreateAccountData(
+            isSocialLogin: true,
+          ),
+        );
       }
     }
   }
