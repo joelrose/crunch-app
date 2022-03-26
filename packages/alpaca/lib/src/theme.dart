@@ -2,7 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-ThemeData getThemeData(BuildContext context) {
+ThemeData getThemeData() {
   return ThemeData(
     brightness: Brightness.light,
     fontFamily: GoogleFonts.inter().fontFamily,

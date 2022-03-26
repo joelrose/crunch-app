@@ -28,7 +28,7 @@ class _MainAppState extends State<MainApp> {
       debugShowCheckedModeBanner: false,
       onGenerateRoute: routes.Router.generateRoute,
       initialRoute: LoadingScreen.route,
-      theme: getThemeData(context),
+      theme: getThemeData(),
       navigatorObservers: <NavigatorObserver>[observer],
       builder: EasyLoading.init(),
     );
