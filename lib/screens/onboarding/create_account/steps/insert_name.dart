@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/show_async_loading.dart';
 
 class StepInsertName extends StatefulWidget {
   const StepInsertName({Key? key, required this.whichStepInCreateAccount})
@@ -87,14 +88,25 @@ class _StepInsertNameState extends State<StepInsertName> {
                 final hermesService = locator<HermesService>();
 
                 // TODO: validate response
-                await hermesService.client.apiUsersPost(
-                  body: CreateUserRequestDto(
-                    firstName: _firstNameController.text,
-                    lastName: _lastNameController.text,
+                final response = await showAsyncLoading<Response<bool>>(
+                  context,
+                  hermesService.client.apiUsersPost(
+                    body: CreateUserRequestDto(
+                      firstName: _firstNameController.text,
+                      lastName: _lastNameController.text,
+                    ),
                   ),
                 );
 
-                widget.whichStepInCreateAccount();
+                if (response.isSuccessful) {
+                  widget.whichStepInCreateAccount();
+                } else {
+                  const snackBar = SnackBar(
+                    content: Text('Unable to connect to backend!'),
+                  );
+
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
               }
             },
           ),

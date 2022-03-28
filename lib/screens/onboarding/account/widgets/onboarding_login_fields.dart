@@ -4,7 +4,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/screens/onboarding/account/widgets/social_onboarding.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
-import 'package:pickup/shared/models.dart';
+import 'package:pickup/shared/country_emoji.dart';
+import 'package:pickup/shared/models/create_account_model.dart';
+import 'package:pickup/shared/phone_number_verification.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OnboardingLoginFields extends StatefulWidget {
@@ -20,11 +22,18 @@ class OnboardingLoginFields extends StatefulWidget {
 class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
   final TextEditingController _textController = TextEditingController();
 
+  String selectedPhoneCode = '+49';
+  String selectedCountryCode = 'DE';
+
+  bool isValidPhoneNumber = false;
+
+  final _form = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: 30,
+        vertical: 20,
         horizontal: 15,
       ),
       child: Column(
@@ -79,77 +88,134 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         Padding(
           padding: const EdgeInsets.only(bottom: 6),
           child: Text(
-            'Phone number',
+            'Mobile number',
             style: Theme.of(context)
                 .textTheme
                 .headline4!
                 .copyWith(color: AlpacaColor.white100Color),
           ),
         ),
-        TextField(
-          controller: _textController,
-          style: Theme.of(context).textTheme.headline5!.copyWith(
-                color: AlpacaColor.white100Color,
-              ),
-          textInputAction: TextInputAction.done,
-          keyboardType: TextInputType.phone,
-          autocorrect: false,
-          cursorColor: AlpacaColor.white100Color,
-          scrollPadding: const EdgeInsets.only(bottom: 30),
-          decoration: InputDecoration(
-            suffixIcon: GestureDetector(
-              onTap: () async {
-                // TODO: Validation
-                Navigator.of(context).pushNamed(
-                  OnboardingCreateAccountScreen.route,
-                  arguments: CreateAccountData(
-                    phoneNumber: _textController.text,
-                    isSocialLogin: false,
-                  ),
-                );
-              },
-              child: ClipRRect(
-                borderRadius:
-                    const BorderRadius.horizontal(right: Radius.circular(8)),
-                child: Container(
+        Form(
+          key: _form,
+          child: TextFormField(
+            controller: _textController,
+            style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: AlpacaColor.white100Color,
-                  child: const Icon(
-                    Icons.arrow_forward,
-                    color: AlpacaColor.primary100,
-                    size: 15,
-                  ),
+                ),
+            textInputAction: TextInputAction.done,
+            keyboardType: TextInputType.phone,
+            autocorrect: false,
+            cursorColor: AlpacaColor.white100Color,
+            scrollPadding: const EdgeInsets.only(bottom: 30),
+            onChanged: (text) async {
+              final phoneNumber = selectedPhoneCode + text;
+
+              isValidPhoneNumber = await phoneNumber.isValidPhoneNumber();
+            },
+            validator: (text) {
+              if (!isValidPhoneNumber) {
+                return 'Please enter a valid german mobile number!';
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+              prefixIconConstraints: BoxConstraints(
+                maxWidth: 40 + selectedPhoneCode.length * 10,
+              ),
+              prefixIcon: _buildTextFieldPrefix(),
+              suffixIcon: _buildTextFieldSuffix(),
+              contentPadding: EdgeInsets.zero,
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AlpacaColor.primary80,
                 ),
               ),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 15.0,
-            ),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AlpacaColor.primary80,
+              fillColor: AlpacaColor.primary80,
+              hintText: 'Mobile number',
+              filled: true,
+              hintStyle: const TextStyle(
+                color: AlpacaColor.white80Color,
               ),
-            ),
-            fillColor: AlpacaColor.primary80,
-            hintText: 'Phone number',
-            filled: true,
-            hintStyle: const TextStyle(
-              color: AlpacaColor.white80Color,
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: AlpacaColor.primary80,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: AlpacaColor.primary80,
+                ),
+                borderRadius: BorderRadius.circular(8),
               ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: AlpacaColor.primary80,
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: AlpacaColor.primary80,
+                ),
+                borderRadius: BorderRadius.circular(8),
               ),
-              borderRadius: BorderRadius.circular(8),
+              errorStyle: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(color: AlpacaColor.white100Color),
             ),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildTextFieldSuffix() {
+    return GestureDetector(
+      onTap: () async {
+        final phoneNumber = selectedPhoneCode + _textController.text;
+
+        if (_form.currentState!.validate()) {
+          Navigator.of(context).pushNamed(
+            OnboardingCreateAccountScreen.route,
+            arguments: CreateAccountData(
+              phoneNumber: phoneNumber,
+              isSocialLogin: false,
+            ),
+          );
+        } else {}
+      },
+      child: ClipRRect(
+        borderRadius: const BorderRadius.horizontal(right: Radius.circular(8)),
+        child: Container(
+          color: AlpacaColor.white100Color,
+          child: const Icon(
+            Icons.arrow_forward,
+            color: AlpacaColor.primary100,
+            size: 15,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextFieldPrefix() {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () async {},
+      child: ClipRRect(
+        borderRadius: const BorderRadius.horizontal(left: Radius.circular(8)),
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(bottom: 2),
+          child: Row(
+            children: [
+              Container(width: 8),
+              Text(
+                Utils.countryCodeToEmoji(selectedCountryCode),
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              Container(width: 6),
+              Text(
+                selectedPhoneCode,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5!
+                    .copyWith(color: AlpacaColor.white100Color),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

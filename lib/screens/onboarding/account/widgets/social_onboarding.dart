@@ -32,7 +32,7 @@ class SocialOnboarding extends StatelessWidget {
           () async {
             showAsyncLoading(
               context,
-              socialSignUp(context, appleLogin: false),
+              _socialSignUp(context, appleLogin: false),
             );
           },
         ),
@@ -47,7 +47,7 @@ class SocialOnboarding extends StatelessWidget {
           () async {
             showAsyncLoading(
               context,
-              socialSignUp(context),
+              _socialSignUp(context),
             );
           },
           backgroundWhite: false,
@@ -56,7 +56,7 @@ class SocialOnboarding extends StatelessWidget {
     );
   }
 
-  Future<void> socialSignUp(
+  Future<void> _socialSignUp(
     BuildContext context, {
     bool appleLogin = true,
   }) async {
