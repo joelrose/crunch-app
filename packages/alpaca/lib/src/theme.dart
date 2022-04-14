@@ -37,7 +37,7 @@ ThemeData getThemeData() {
           fontWeight: FontWeight.w400,
           fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 15,
-          letterSpacing: -0.02,
+          height: 1.4,
           color: AlpacaColor.greyColor80),
       subtitle1: TextStyle(
         fontSize: 24,
