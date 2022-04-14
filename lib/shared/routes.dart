@@ -73,7 +73,7 @@ class Router {
           builder: (context) => RestaurantDetailView(),
         );
       default:
-        return MaterialPageRoute(
+        return CupertinoPageRoute(
           builder: (_) => Scaffold(
             body: Center(
               child: Text('No route defined for ${settings.name}'),
