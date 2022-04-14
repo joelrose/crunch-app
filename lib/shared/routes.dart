@@ -13,7 +13,7 @@ import 'package:pickup/screens/profile/profile.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
-import 'package:pickup/shared/models.dart';
+import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 
 class Router {

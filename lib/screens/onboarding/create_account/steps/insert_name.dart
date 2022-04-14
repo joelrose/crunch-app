@@ -88,8 +88,8 @@ class _StepInsertNameState extends State<StepInsertName> {
                 final hermesService = locator<HermesService>();
 
                 // TODO: validate response
-                final response = await showAsyncLoading<Response<bool>>(
-                  context,
+                final response =
+                    await LoadingUtils.asyncLoading<Response<bool>>(
                   hermesService.client.apiUsersPost(
                     body: CreateUserRequestDto(
                       firstName: _firstNameController.text,

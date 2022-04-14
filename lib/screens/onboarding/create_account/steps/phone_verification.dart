@@ -6,6 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/show_async_loading.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class StepPhoneVerification extends StatefulWidget {
@@ -71,11 +72,14 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   }
 
   Future<void> _sendVerification() async {
-    startTimer();
     await auth.firebaseAuth.verifyPhoneNumber(
       phoneNumber: widget.phoneNumber,
       codeSent: (String verificationId, int? resendToken) async {
         _verificationId = verificationId;
+
+        startTimer();
+
+        LoadingUtils.hide();
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
       verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},

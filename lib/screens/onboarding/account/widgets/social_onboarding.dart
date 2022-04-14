@@ -30,8 +30,7 @@ class SocialOnboarding extends StatelessWidget {
             'assets/google-logo.svg',
           ),
           () async {
-            showAsyncLoading(
-              context,
+            LoadingUtils.asyncLoading(
               _socialSignUp(context, appleLogin: false),
             );
           },
@@ -45,8 +44,7 @@ class SocialOnboarding extends StatelessWidget {
             'assets/apple-logo.svg',
           ),
           () async {
-            showAsyncLoading(
-              context,
+            LoadingUtils.asyncLoading(
               _socialSignUp(context),
             );
           },

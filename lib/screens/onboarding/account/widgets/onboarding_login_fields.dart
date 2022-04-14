@@ -7,6 +7,7 @@ import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/shared/country_emoji.dart';
 import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/phone_number_verification.dart';
+import 'package:pickup/shared/show_async_loading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OnboardingLoginFields extends StatefulWidget {
@@ -165,6 +166,8 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         final phoneNumber = selectedPhoneCode + _textController.text;
 
         if (_form.currentState!.validate()) {
+          LoadingUtils.show();
+
           Navigator.of(context).pushNamed(
             OnboardingCreateAccountScreen.route,
             arguments: CreateAccountData(
