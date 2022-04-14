@@ -28,7 +28,7 @@ class _OnboardingCreateAccountScreenState
   int step = 0;
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     return PageWrapper(
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,

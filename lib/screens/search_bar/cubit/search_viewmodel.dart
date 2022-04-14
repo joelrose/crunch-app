@@ -1,7 +1,6 @@
 import 'package:sanity/sanity.dart';
 
 class DiscoverySearchBarViewModel {
-
   dynamic fetchRestaurants() {
     return [];
   }
@@ -59,7 +58,10 @@ class DiscoverySearchBarViewModel {
     }
   }
 
-  void addSearchTerm({required String term, required List<String> list,}) {
+  void addSearchTerm({
+    required String term,
+    required List<String> list,
+  }) {
     if (list.contains(term)) {
       putSearchTermFirst(
         term: term,

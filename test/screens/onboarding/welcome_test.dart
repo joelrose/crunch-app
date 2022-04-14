@@ -31,7 +31,7 @@ void main() {
 
       when(() => navigator.pushNamed<Object?>(any())).thenAnswer((_) async {});
     });
-    
+
     testWidgets('welcome screen loaded', (tester) async {
       await tester.pumpWidget(createWelcomeScreen());
 

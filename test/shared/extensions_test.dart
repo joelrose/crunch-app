@@ -14,7 +14,10 @@ void main() {
     expect(DeliverectOrderStatus.indelivery.string, 'In Delivery');
     expect(DeliverectOrderStatus.parseFailed.string, 'Parse Failed');
     expect(DeliverectOrderStatus.parsed.string, 'Parsed');
-    expect(DeliverectOrderStatus.posReceivedFailed.string, 'Pos Received Failed');
+    expect(
+      DeliverectOrderStatus.posReceivedFailed.string,
+      'Pos Received Failed',
+    );
     expect(DeliverectOrderStatus.prepared.string, 'Prepared');
     expect(DeliverectOrderStatus.printed.string, 'Printed');
     expect(DeliverectOrderStatus.readyForPickup.string, 'Ready for Pickup');

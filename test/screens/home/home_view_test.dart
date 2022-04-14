@@ -37,7 +37,7 @@ void main() {
       () => MockHermesService('[]', 200),
     );
   });
-  
+
   group('App Bottom Nav WidgetTest', () {
     testWidgets('Testing Bottom Navigation Bar loaded', (tester) async {
       await mockNetworkImages(() async {
