@@ -2,32 +2,36 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mockingjay/mockingjay.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/shared/routes.dart' as routes;
 
+import '../../helpers/pump_app.dart';
 import '../../test_helper.dart';
-import '../../test_helper.mocks.dart';
-
-final mockObserver = MockNavigatorObserver();
 
 Widget createWelcomeScreen() => MaterialApp(
       home: const OnboardingWelcomeScreen(),
-      navigatorObservers: [mockObserver],
       onGenerateRoute: routes.Router.generateRoute,
       theme: getThemeData(),
     );
 
 void main() {
-  setUp(() async {
-    final GetIt locator = GetIt.instance;
-    locator.allowReassignment = true;
+  late MockNavigator navigator;
 
-    TestHelper.registerMockAuthService(locator);
-  });
   group('Onboarding welcome widget test', () {
+    setUpAll(() async {
+      final GetIt locator = GetIt.instance;
+      locator.allowReassignment = true;
+
+      TestHelper.registerMockAuthService(locator);
+
+      navigator = MockNavigator();
+
+      when(() => navigator.pushNamed<Object?>(any())).thenAnswer((_) async {});
+    });
+    
     testWidgets('welcome screen loaded', (tester) async {
       await tester.pumpWidget(createWelcomeScreen());
 
@@ -37,7 +41,10 @@ void main() {
 
     testWidgets('SignIn button is present and triggers navigation after tapped',
         (WidgetTester tester) async {
-      await tester.pumpWidget(createWelcomeScreen());
+      await tester.pumpApp(
+        const OnboardingWelcomeScreen(),
+        navigator: navigator,
+      );
 
       final primaryButton = find.byKey(
         const Key('onboarding_welcome.primary'),
@@ -47,26 +54,34 @@ void main() {
       await tester.tap(primaryButton);
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
-
-      expect(find.byType(OnboardingExplanationScreen), findsOneWidget);
+      verify(
+        () => navigator.pushNamed<Object?>(
+          OnboardingExplanationScreen.route,
+        ),
+      ).called(1);
     });
 
     testWidgets('SignUp button is present and triggers navigation after tapped',
         (WidgetTester tester) async {
-      await tester.pumpWidget(createWelcomeScreen());
+      await tester.pumpApp(
+        const OnboardingWelcomeScreen(),
+        navigator: navigator,
+      );
 
       final secondaryButton = find.byKey(
         const Key('onboarding_welcome.secondary'),
       );
 
       expect(secondaryButton, findsOneWidget);
+
       await tester.tap(secondaryButton);
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
-
-      expect(find.byType(OnboardingAccountScreen), findsOneWidget);
+      verify(
+        () => navigator.pushNamed<Object?>(
+          OnboardingAccountScreen.route,
+        ),
+      ).called(1);
     });
   });
 }

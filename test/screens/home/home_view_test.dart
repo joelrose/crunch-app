@@ -10,10 +10,8 @@ import 'package:pickup/screens/home/view/home_view.dart';
 import 'package:pickup/screens/orders/orders.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
-import 'package:sanity/sanity.dart';
 
 import '../../mock/mock_hermes_service.dart';
-import '../../mock/mock_sanity_cms.dart';
 
 Widget createHomeScreen() => MultiBlocProvider(
       providers: [
@@ -37,9 +35,6 @@ void main() {
     locator.allowReassignment = true;
     locator.registerLazySingleton<HermesService>(
       () => MockHermesService('[]', 200),
-    );
-    locator.registerLazySingleton<SanityService>(
-      () => MockSanityCms(),
     );
   });
   
