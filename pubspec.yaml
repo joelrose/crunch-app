@@ -64,6 +64,7 @@ dev_dependencies:
     sdk: flutter
   google_sign_in_mocks: ^0.2.1
   lint: ^1.7.2
+  mockingjay: ^0.3.0
   mockito: ^5.1.0
   mocktail_image_network: ^0.3.0
   test: any
