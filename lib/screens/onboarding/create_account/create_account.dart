@@ -28,7 +28,7 @@ class _OnboardingCreateAccountScreenState
   int step = 0;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return PageWrapper(
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,
@@ -38,7 +38,7 @@ class _OnboardingCreateAccountScreenState
         },
         child: Column(
           children: [
-            CreateAccountStatusBar(
+            _CreateAccountStatusBar(
               isSocialLogin: widget.data.isSocialLogin,
               maxSteps: widget.maxSteps,
               onBack: previousStep,
@@ -106,8 +106,8 @@ class _OnboardingCreateAccountScreenState
   }
 }
 
-class CreateAccountStatusBar extends StatelessWidget {
-  const CreateAccountStatusBar({
+class _CreateAccountStatusBar extends StatelessWidget {
+  const _CreateAccountStatusBar({
     Key? key,
     required this.step,
     required this.maxSteps,

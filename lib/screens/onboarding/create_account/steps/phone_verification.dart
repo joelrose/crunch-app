@@ -102,6 +102,8 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
       setState(() {
         _hasError = true;
       });
+
+      _textController.clear();
     }
   }
 
@@ -177,7 +179,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
                   ),
                 ),
                 Text(
-                  _start != 0 ? 'Resend code! ($_start)' : 'Resend code!',
+                  _start != 0 ? 'Resend code ($_start)' : 'Resend code',
                   style: theme.headline4!.copyWith(
                     color: _start != 0
                         ? AlpacaColor.darkGreyColor
@@ -215,7 +217,6 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
       ),
       cursorColor: AlpacaColor.blackColor,
       textStyle: Theme.of(context).textTheme.headline2,
-      animationDuration: const Duration(milliseconds: 300),
       enableActiveFill: true,
       onCompleted: (v) {
         _verifyNumber(v);

@@ -22,7 +22,7 @@ class OnboardingWelcomeScreen extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
+                horizontal: 18.0,
               ),
               child: _buildContent(context),
             ),
