@@ -7,10 +7,9 @@ import 'package:pickup/screens/store/model/store_screen_model.dart';
 import 'package:pickup/screens/store/widgets/store_information.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
-import 'package:pickup/shared/alpaca_stretchy_header.dart';
 import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/enum/viewstate.dart';
-import 'package:pickup/shared/extensions.dart';
+import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class CreateStoreData {
