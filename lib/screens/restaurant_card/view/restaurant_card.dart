@@ -19,7 +19,7 @@ class RestaurantCard extends StatelessWidget {
       onTap: () => {
         Navigator.of(context).pushNamed(
           StoreScreen.route,
-          arguments: restaurant.menu!.menuId,
+          arguments: restaurant.id,
         )
       },
       child: Material(
