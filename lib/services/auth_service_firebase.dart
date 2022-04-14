@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
@@ -105,7 +106,9 @@ class AuthServiceFirebase implements AuthService {
         verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
         verificationFailed: (FirebaseAuthException error) {},
       );
-    } catch (e) {}
+    } catch (exception, stack) {
+      FirebaseCrashlytics.instance.recordError(exception, stack);
+    }
   }
 
   @override
