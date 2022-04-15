@@ -7,14 +7,9 @@ import 'package:pickup/screens/loading/loading.dart';
 
 import 'package:pickup/shared/routes.dart' as routes;
 
-class MainApp extends StatefulWidget {
-  const MainApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
-  @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
@@ -28,7 +23,7 @@ class _MainAppState extends State<MainApp> {
       debugShowCheckedModeBanner: false,
       onGenerateRoute: routes.Router.generateRoute,
       initialRoute: LoadingScreen.route,
-      theme: getThemeData(context),
+      theme: getThemeData(),
       navigatorObservers: <NavigatorObserver>[observer],
       builder: EasyLoading.init(),
     );

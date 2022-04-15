@@ -32,6 +32,24 @@ class DiscoverySearchBarViewModel {
     }
   }
 
+  void addSearchTerm({
+    required String term,
+    required List<String> list,
+  }) {
+    if (list.contains(term)) {
+      putSearchTermFirst(
+        term: term,
+        list: list,
+      );
+      return;
+    }
+    list.add(term);
+    if (list.length > historyLenght) {
+      list.removeRange(0, list.length - historyLenght);
+    }
+    filteredSearchHistory = filterSearchTerms(filter: query, list: list);
+  }
+  
   bool _identicalStart(String restaurantName) {
     return restaurantName[query.length].toLowerCase() == query.toLowerCase();
   }

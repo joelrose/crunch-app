@@ -25,6 +25,8 @@ class _LoadingScreenState extends State<LoadingScreen>
   late Animation<double> heightSequence;
   late Animation<double> widthSequence;
 
+  late Timer? _timer;
+
   bool isLogoVisible = true;
 
   @override
@@ -88,9 +90,17 @@ class _LoadingScreenState extends State<LoadingScreen>
     _loadWidget();
   }
 
+  @override
+  void dispose() {
+    _timer?.cancel();
+    animationController.dispose();
+    super.dispose();
+  }
+
   Future<Timer> _loadWidget() async {
     const _duration = Duration(milliseconds: 1600);
-    return Timer(_duration, navigationPage);
+    _timer = Timer(_duration, navigationPage);
+    return _timer!;
   }
 
   void navigationPage() {

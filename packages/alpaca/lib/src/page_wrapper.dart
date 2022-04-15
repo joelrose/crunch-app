@@ -8,6 +8,7 @@ class PageWrapper extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
     this.statusBarStyle = SystemUiOverlayStyle.light,
     this.floatingActionButtonWidget,
+    this.appBar = null,
     required this.backgroundColor,
   }) : super(key: key);
 
@@ -16,12 +17,14 @@ class PageWrapper extends StatelessWidget {
   final SystemUiOverlayStyle statusBarStyle;
   final Color backgroundColor;
   final Widget? floatingActionButtonWidget;
+  final PreferredSizeWidget? appBar;
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: statusBarStyle,
       child: Scaffold(
+          appBar: appBar,
           backgroundColor: backgroundColor,
           body: SafeArea(
             child: Padding(

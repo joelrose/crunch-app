@@ -22,7 +22,7 @@ class OnboardingWelcomeScreen extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
+                horizontal: 18.0,
               ),
               child: _buildContent(context),
             ),
@@ -55,6 +55,7 @@ class OnboardingWelcomeScreen extends StatelessWidget {
           ),
         ),
         ActionButton(
+          key: const Key('onboarding_welcome.primary'),
           buttonText: 'onboarding_welcome.primaryButtonText'.tr(),
           onPressed: () => Navigator.of(context).pushNamed(
             OnboardingExplanationScreen.route,
@@ -62,10 +63,10 @@ class OnboardingWelcomeScreen extends StatelessWidget {
           isPrimaryButton: false,
         ),
         ActionButton(
+          key: const Key('onboarding_welcome.secondary'),
           buttonText: 'onboarding_welcome.secondaryButtonText'.tr(),
           onPressed: () => Navigator.of(context).pushNamed(
             OnboardingAccountScreen.route,
-            arguments: false,
           ),
         ),
       ],
@@ -75,7 +76,7 @@ class OnboardingWelcomeScreen extends StatelessWidget {
   Widget _buildImage(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.60,
+      height: MediaQuery.of(context).size.height * 0.50,
       child: Image.asset(
         'assets/onboarding/splash-graphic.png',
         fit: BoxFit.cover,

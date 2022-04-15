@@ -18,5 +18,13 @@ void main() {
       expect: () => const [HomeState(tab: HomeTab.friends)],
       verify: (b) => b.state.tab == HomeTab.friends,
     );
+
+    blocTest<HomeCubit, HomeState>(
+      'emits HomeTab when emit is called',
+      build: () => HomeCubit(),
+      act: (cubit) => cubit.setTab(HomeTab.vouchers),
+      expect: () => const [HomeState(tab: HomeTab.vouchers)],
+      verify: (b) => b.state.tab == HomeTab.vouchers,
+    );
   });
 }

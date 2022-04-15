@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/shared/show_async_loading.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class StepPhoneVerification extends StatefulWidget {
@@ -23,21 +25,21 @@ class StepPhoneVerification extends StatefulWidget {
 
 class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   AuthService auth = locator<AuthService>();
-  late String _verificationId;
+  String? _verificationId;
 
   final TextEditingController _textController = TextEditingController();
 
-  late bool _hasError = false;
-  late StreamController<ErrorAnimationType> _errorController;
+  bool _hasError = false;
+  final StreamController<ErrorAnimationType> _errorController =
+      StreamController<ErrorAnimationType>();
 
-  late Timer _timer;
-  late int _start;
+  int _start = 0;
+
+  late Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-
-    _errorController = StreamController<ErrorAnimationType>();
 
     _sendVerification();
   }
@@ -45,7 +47,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   @override
   void dispose() {
     _errorController.close();
-    _timer.cancel();
+    _timer?.cancel();
 
     super.dispose();
   }
@@ -70,21 +72,26 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   }
 
   Future<void> _sendVerification() async {
-    startTimer();
     await auth.firebaseAuth.verifyPhoneNumber(
       phoneNumber: widget.phoneNumber,
       codeSent: (String verificationId, int? resendToken) async {
         _verificationId = verificationId;
+
+        startTimer();
+
+        LoadingUtils.hide();
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
       verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
-      verificationFailed: (FirebaseAuthException error) {},
+      verificationFailed: (FirebaseAuthException error) {
+        FirebaseCrashlytics.instance.recordError(error, null);
+      },
     );
   }
 
   Future<void> _verifyNumber(String code) async {
     final credential = PhoneAuthProvider.credential(
-      verificationId: _verificationId,
+      verificationId: _verificationId ?? '',
       smsCode: code,
     );
 
@@ -99,6 +106,8 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
       setState(() {
         _hasError = true;
       });
+
+      _textController.clear();
     }
   }
 
@@ -137,36 +146,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
             style: theme.headline5,
           ),
         ),
-        PinCodeTextField(
-          length: 6,
-          animationType: AnimationType.scale,
-          keyboardType: TextInputType.number,
-          controller: _textController,
-          errorAnimationController: _errorController,
-          autoFocus: true,
-          pinTheme: PinTheme(
-            shape: PinCodeFieldShape.box,
-            borderRadius: BorderRadius.circular(5),
-            fieldHeight: 60,
-            fieldWidth: size.width * 0.13,
-            fieldOuterPadding: EdgeInsets.zero,
-            activeFillColor: AlpacaColor.white100Color,
-            selectedColor: const Color(0xffE8E8E8),
-            selectedFillColor: AlpacaColor.white100Color,
-            inactiveFillColor: AlpacaColor.white100Color,
-            inactiveColor: const Color(0xffE8E8E8),
-            activeColor: const Color(0xffE8E8E8),
-          ),
-          cursorColor: AlpacaColor.blackColor,
-          textStyle: Theme.of(context).textTheme.headline2,
-          animationDuration: const Duration(milliseconds: 300),
-          enableActiveFill: true,
-          onCompleted: (v) {
-            _verifyNumber(v);
-          },
-          appContext: context,
-          onChanged: (String value) {},
-        ),
+        _buildPinCodeTextField(context, size.width),
         if (_hasError)
           Padding(
             padding: const EdgeInsets.only(bottom: 10, top: 10),
@@ -180,7 +160,12 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
         GestureDetector(
           onTap: () {
             if (_start == 0) {
+              _textController.clear();
               _sendVerification();
+
+              setState(() {
+                _hasError = false;
+              });
             }
           },
           child: Padding(
@@ -198,7 +183,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
                   ),
                 ),
                 Text(
-                  _start != 0 ? 'Resend code! ($_start)' : 'Resend code!',
+                  _start != 0 ? 'Resend code ($_start)' : 'Resend code',
                   style: theme.headline4!.copyWith(
                     color: _start != 0
                         ? AlpacaColor.darkGreyColor
@@ -210,6 +195,38 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildPinCodeTextField(BuildContext context, double width) {
+    return PinCodeTextField(
+      length: 6,
+      animationType: AnimationType.scale,
+      keyboardType: TextInputType.number,
+      controller: _textController,
+      errorAnimationController: _errorController,
+      autoFocus: true,
+      pinTheme: PinTheme(
+        shape: PinCodeFieldShape.box,
+        borderRadius: BorderRadius.circular(5),
+        fieldHeight: 60,
+        fieldWidth: width * 0.13,
+        fieldOuterPadding: EdgeInsets.zero,
+        activeFillColor: AlpacaColor.white100Color,
+        selectedColor: const Color(0xffE8E8E8),
+        selectedFillColor: AlpacaColor.white100Color,
+        inactiveFillColor: AlpacaColor.white100Color,
+        inactiveColor: const Color(0xffE8E8E8),
+        activeColor: const Color(0xffE8E8E8),
+      ),
+      cursorColor: AlpacaColor.blackColor,
+      textStyle: Theme.of(context).textTheme.headline2,
+      enableActiveFill: true,
+      onCompleted: (v) {
+        _verifyNumber(v);
+      },
+      appContext: context,
+      onChanged: (String value) {},
     );
   }
 }
