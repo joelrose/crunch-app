@@ -27,7 +27,7 @@ class RestaurantCard extends StatelessWidget {
         elevation: 2,
         borderRadius: BorderRadius.circular(10),
         child: SizedBox(
-          height: 200,
+          height: 190,
           width: 250,
           child: Column(
             children: [
