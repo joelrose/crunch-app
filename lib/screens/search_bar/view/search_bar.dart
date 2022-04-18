@@ -19,13 +19,14 @@ class _SearchBarState extends State<SearchBar> {
   @override
   void initState() {
     super.initState();
+    controller = FloatingSearchBarController();
     /*searchVM.fetchRestaurants();
     searchVM.filteredSearchHistory = searchVM.filterSearchTerms(
       filter: '',
       list: searchVM.searchHistory,
     );
     searchVM.filteredRestaurants = [];
-    controller = FloatingSearchBarController();*/
+    */
   }
 
   void onQueryChanged(String query) {
