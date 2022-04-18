@@ -71,7 +71,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     );
                   },
                   buttonText:
-                      '${context.l10n.itemCount(_getItemsInCart(checkoutItems))} in Cart ->',
+                      '${context.l10n.storeFloatingButtonText(_getItemsInCart(checkoutItems))} in Cart ->',
 
                   //   '${_getItemsInCart(checkoutItems)} ${context.l10n.itemCount(_getItemsInCart(checkoutItems))},
                   priceText: Utilities.currencyFormat(

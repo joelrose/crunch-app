@@ -77,10 +77,11 @@
    "menu": "Menu",
    "ratings": "Ratings",
    "closed": "Geschlossen",
-   "itemCount": "{itemCount,plural, =1{{itemCount} item}other{ {itemCount} items}}",
-   "@itemCount": {
+   "storeFloatingButtonText": "{itemCount,plural, =1{{itemCount} item}other{ {itemCount} items}}",
+   "@storeFloatingButtonText": {
       "placeholders": {
          "itemCount": {}
       }
-   }
+   },
+   "addToOrder": "Hinzufügen"
 }

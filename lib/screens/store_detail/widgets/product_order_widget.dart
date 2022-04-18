@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/shared/utilities.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class ProductOrderWidget extends StatelessWidget {
   @override
@@ -40,7 +41,7 @@ class ProductOrderWidget extends StatelessWidget {
           context.read<StoreDetailCubit>().addToOrderOnClick();
           Navigator.pop(context);
         },
-        buttonText: 'Add to order',
+        buttonText: context.l10n.addToOrder,
       ),
     );
   }
