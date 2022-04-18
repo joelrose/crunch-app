@@ -16,6 +16,7 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Bounceable(
+      key: const Key('restaurant_card'),
       onTap: () => {
         Navigator.of(context).pushNamed(
           StoreScreen.route,
@@ -27,7 +28,7 @@ class RestaurantCard extends StatelessWidget {
         elevation: 2,
         borderRadius: BorderRadius.circular(10),
         child: SizedBox(
-          height: 190,
+          height: 210,
           width: 250,
           child: Column(
             children: [
@@ -42,7 +43,7 @@ class RestaurantCard extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage(
-                                restaurant.menu!.menuImageUrl ?? '',
+                                restaurant.menu?.menuImageUrl ?? '',
                               ),
                               fit: BoxFit.cover,
                             ),
