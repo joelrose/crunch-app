@@ -4,6 +4,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/show_async_loading.dart';
@@ -124,7 +125,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
             top: size.height * 0.03,
           ),
           child: Text(
-            "We've sent a verification Code to",
+            context.l10n.phoneVerificationTitle,
             style: theme.headline1!.copyWith(
               color: AlpacaColor.blackColor,
             ),
@@ -142,7 +143,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
         Padding(
           padding: const EdgeInsets.only(bottom: 40, top: 10),
           child: Text(
-            'Please check your messages and enter the code in the boxes below.',
+            context.l10n.phoneVerificationDescription,
             style: theme.headline5,
           ),
         ),
@@ -151,7 +152,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
           Padding(
             padding: const EdgeInsets.only(bottom: 10, top: 10),
             child: Text(
-              'The entered code is not valid, please try again!',
+              context.l10n.phoneVerificationFailed,
               style: theme.headline4!.copyWith(
                 color: Colors.red,
               ),
@@ -183,7 +184,9 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
                   ),
                 ),
                 Text(
-                  _start != 0 ? 'Resend code ($_start)' : 'Resend code',
+                  _start != 0
+                      ? '${context.l10n.resendCode} ($_start)'
+                      : context.l10n.resendCode,
                   style: theme.headline4!.copyWith(
                     color: _start != 0
                         ? AlpacaColor.darkGreyColor

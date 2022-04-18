@@ -37,5 +37,19 @@
    "directionsButtonLabel": "Navigieren ->",
    "connectionPaymentFail": "Verbindung zum Zahlungs Dienstleister nicht möglich",
    "buttonPayLabel": "Bezahlen",
-   "orderOverview": "Bestellungen"
+   "orderOverview": "Bestellungen",
+   "phoneVerificationTitle": "Wir haben den Verifizierungscode an ",
+   "phoneVerificationDescription": "Bitte gib den Verifizierungscode ein, den du erhalten hast.",
+   "phoneVerificationFailed": "Der eingegebene Code ist nicht korrekt.",
+   "resendCode": "Code erneut senden",
+   "onboardingPasswordTitle": "Woohoo, du bist kein Roboter!",
+   "onboardingPasswordDescription": "Wir brauchen noch ein wenig mehr Informationen. Bitte setze ein Passwort!",
+   "onboardingPasswordNotValid": "Bitte gib ein gültiges Passwort ein.",
+   "onboardingPasswordNotMatching": "Passwörter stimmen nicht überein",
+   "password": "Passwort",
+   "repeatPassword": "Passwort bestätigen",
+   "onboardingNameTitle": "Woo, du bist kein Roboter!",
+   "onboardingNameDescription": "Wir brauchen ein wenig mehr Informationen. Bitte gib deinen Namen ein.",
+   "onboardingNameNotValid": "Bitte gib einen gültigen Namen ein.",
+   "unknownAPIError": "Wir können uns aktuell nicht mit unserem Server verbinden. Bitte versuche es später noch einmal."
 }

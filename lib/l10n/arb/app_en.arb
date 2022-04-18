@@ -37,5 +37,19 @@
   "directionsButtonLabel": "Get directions ->",
   "connectionPaymentFail": "Unable to connect to payment provider!",
   "buttonPayLabel": "Pay now",
-  "orderOverview": "Order Overview"
+  "orderOverview": "Order Overview",
+  "phoneVerificationTitle": "We've sent a verification Code to",
+  "phoneVerificationDescription": "Please check your messages and enter the code in the boxes below.",
+  "phoneVerificationFailed": "The entered code is not valid, please try again!",
+  "resendCode": "Resend code",
+  "onboardingPasswordTitle": "Woo, you're not a robot!",
+  "onboardingPasswordDescription": "We need a little more information from you? Please set your password!",
+  "onboardingPasswordNotValid": "Please enter a valid password. Password must be at least 6 characters long.",
+  "onboardingPasswordNotMatching": "Passwords don't match",
+  "onboardingNameTitle": "Woo, you're not a robot!",
+  "onboardingNameDescription": "We need a little more information from you? What can we call you?",
+  "onboardingNameNotValid": "Please enter a valid password. Password must be at least 6 characters long.",
+  "password": "Password",
+  "repeatPassword": "Repeat password",
+  "unknownAPIError": "We can't connect to the server right now. Please try again later."
 }
