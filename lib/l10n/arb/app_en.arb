@@ -26,5 +26,13 @@
   "lastName": "Last name",
   "firstName": "First name",
   "mobileNumber": "Mobile number",
-  "mobileNumberValidationError": "Please enter a valid german mobile number!"
+  "mobileNumberValidationError": "Please enter a valid german mobile number!",
+  "orderSummary": "Order summary",
+  "subtotal": "Subtotal",
+  "discount": "discount",
+  "store": "store",
+  "directionsButtonLabel": "Get directions ->",
+  "connectionPaymentFail": "Unable to connect to payment provider!",
+  "buttonPayLabel": "Pay now",
+  "orderOverview": "Order Overview"
 }

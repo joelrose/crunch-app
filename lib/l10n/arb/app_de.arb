@@ -26,5 +26,13 @@
    "lastName": "Nachname",
    "firstName": "Vorname",
    "mobileNumber": "Telefonnummer",
-   "mobileNumberValidationError": "Bitte gib eine gültige deutsche Telefonnummer ein!"
+   "mobileNumberValidationError": "Bitte gib eine gültige deutsche Telefonnummer ein!",
+   "orderSummary": "Zusammenfassung",
+   "subtotal": "Zwischensumme",
+   "discount": "Rabatt",
+   "store": "Restaurant",
+   "directionsButtonLabel": "Navigieren ->",
+   "connectionPaymentFail": "Verbindung zum Zahlungs Dienstleister nicht möglich",
+   "buttonPayLabel": "Bezahlen",
+   "orderOverview": "Bestellungen"
 }
