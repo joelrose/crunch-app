@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/discover.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/orders/orders.dart';
 import 'package:pickup/shared/construction.dart';
 
 class HomeView extends StatelessWidget {
-  static final bottomNavigationBar = _bottomNavigationBar();
-  static final highlitedBottomNavigationBar = _bottomNavigationBar(
-    highlited: true,
-  );
-
   @override
   Widget build(BuildContext context) {
+    final bottomNavigationBar = _bottomNavigationBar(context);
+    final highlitedBottomNavigationBar = _bottomNavigationBar(
+      context,
+      highlited: true,
+    );
+
     final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -24,11 +26,15 @@ class HomeView extends StatelessWidget {
         backgroundColor: AlpacaColor.white100Color,
         body: IndexedStack(
           index: selectedTab.index,
-          children: const [
-            SafeArea(child: DiscoverPage()),
-            SafeArea(child: OrdersPage()),
-            SafeArea(child: ConstructionScreen(title: 'Vouchers')),
-            SafeArea(child: ConstructionScreen(title: 'Friends')),
+          children: [
+            const SafeArea(child: DiscoverPage()),
+            const SafeArea(child: OrdersPage()),
+            SafeArea(
+              child: ConstructionScreen(title: context.l10n.navigationVouchers),
+            ),
+            SafeArea(
+              child: ConstructionScreen(title: context.l10n.navigationFriends),
+            ),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -55,7 +61,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  static List<BottomNavigationBarItem> _bottomNavigationBar({
+  List<BottomNavigationBarItem> _bottomNavigationBar(
+    BuildContext context, {
     bool highlited = false,
   }) {
     final color = highlited ? AlpacaColor.primary100 : AlpacaColor.greyColor;
@@ -65,28 +72,28 @@ class HomeView extends StatelessWidget {
           'assets/icons/compass.svg',
           color: color,
         ),
-        label: 'Discover',
+        label: context.l10n.navigationDiscover,
       ),
       BottomNavigationBarItem(
         icon: SvgPicture.asset(
           'assets/icons/collection.svg',
           color: color,
         ),
-        label: 'Orders',
+        label: context.l10n.navigationOrders,
       ),
       BottomNavigationBarItem(
         icon: SvgPicture.asset(
           'assets/icons/receipt-tax.svg',
           color: color,
         ),
-        label: 'Vouchers',
+        label: context.l10n.navigationVouchers,
       ),
       BottomNavigationBarItem(
         icon: SvgPicture.asset(
           'assets/icons/users.svg',
           color: color,
         ),
-        label: 'Friends',
+        label: context.l10n.navigationFriends,
       ),
     ];
   }

@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/restaurant_overview_list/restaurant_overview_list.dart';
 
@@ -34,7 +35,7 @@ class RestaurantListSection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      'View all',
+                      context.l10n.viewAll,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2!

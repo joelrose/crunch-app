@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class ConstructionScreen extends StatelessWidget {
   const ConstructionScreen({
@@ -42,7 +43,7 @@ class ConstructionScreen extends StatelessWidget {
                   vertical: 40,
                 ),
                 child: Text(
-                  'Hey, we are building something great here. Stay tuned!',
+                  context.l10n.constructionTitle,
                   style: Theme.of(context).textTheme.bodyText1!.merge(
                         const TextStyle(
                           color: AlpacaColor.darkGreyColor,

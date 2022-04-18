@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class DiscoverNews extends StatelessWidget {
   const DiscoverNews({
@@ -36,14 +37,14 @@ class DiscoverNews extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Welcome to Crunch',
+                  context.l10n.discoverTitle,
                   overflow: TextOverflow.fade,
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 SizedBox(
                   width: 200,
                   child: Text(
-                    'Ordering takeout has never been easier',
+                   context.l10n.discoverSubtitle,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText2!

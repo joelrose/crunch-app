@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/widgets/profile_tile.dart';
 import 'package:pickup/services/auth_service.dart';
@@ -56,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: ActionButton(
-                    buttonText: 'Logout',
+                    buttonText: context.l10n.logout,
                     isPrimaryButton: false,
                     textColor: AlpacaColor.redColor,
                     onPressed: () async {

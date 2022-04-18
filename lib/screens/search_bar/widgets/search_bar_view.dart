@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/widgets/widgets.dart';
 import 'package:pickup/screens/search_bar/widgets/search_results_widget.dart';
 import 'package:sanity/sanity.dart';
@@ -62,7 +63,7 @@ class SearchBarView extends StatelessWidget {
               ),
               controller: controller,
               transition: CircularFloatingSearchBarTransition(),
-              hint: 'Search for food, store, or tags',
+              hint: context.l10n.searchBarHint,
               hintStyle: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,

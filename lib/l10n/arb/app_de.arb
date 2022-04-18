@@ -58,5 +58,16 @@
    "ready": "bereit",
    "orderStatus": "Order status",
    "orderInPreperation": "Your order is being prepared...",
-   "orderDetails": "Bestell Details"
+   "orderDetails": "Bestell Details",
+   "navigationDiscover": "Entdecken",
+   "navigationOrders": "Bestellungen",
+   "navigationVouchers": "Gutscheine",
+   "navigationFriends": "Freunde",
+   "myOrders": "Meine Bestellungen",
+   "constructionTitle": "Hey, wir bauen hier etwas tolles. Bleib gespannt!",
+   "discoverSubtitle": "Essen mitnehmen war noch nie so einfach!",
+   "discoverTitle": "Willkommen bei Crunch",
+   "viewAll": "Alle anzeigen",
+   "searchBarHint": "Suche nach Restaurants oder Kategorien",
+   "logout": "Ausloggen"
 }
