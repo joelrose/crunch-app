@@ -83,5 +83,9 @@
          "itemCount": {}
       }
    },
-   "addToOrder": "Hinzufügen"
+   "addToOrder": "Hinzufügen",
+   "cancel": "abbrechen",
+   "startSearch": "Suchen...",
+   "noRestaurantsFound": "Keine Restaurt gefunden"
+
 }

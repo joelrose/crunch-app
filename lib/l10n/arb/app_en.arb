@@ -83,5 +83,8 @@
       "itemCount": {}
     }
   },
-  "addToOrder": "Add to order"
+  "addToOrder": "Add to order",
+  "cancel": "cancel",
+  "startSearch": "Start search",
+  "noRestaurantsFound": "No matching restaurant found..."
 }

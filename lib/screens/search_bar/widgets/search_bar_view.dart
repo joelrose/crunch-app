@@ -6,6 +6,7 @@ import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/widgets/widgets.dart';
 import 'package:pickup/screens/search_bar/widgets/search_results_widget.dart';
 import 'package:sanity/sanity.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class SearchBarView extends StatelessWidget {
   const SearchBarView({
@@ -100,7 +101,7 @@ class SearchBarView extends StatelessWidget {
                   showIfClosed: false,
                   child: TextButton(
                     child: Text(
-                      'Cancel',
+                      context.l10n.cancel,
                       style: Theme.of(context).textTheme.bodyText2!.copyWith(
                             color: AlpacaColor.darkGreyColor,
                           ),
