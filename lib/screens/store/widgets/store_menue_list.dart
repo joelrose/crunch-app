@@ -6,6 +6,7 @@ import 'package:hermes_api/hermes_api.dart';
 import 'package:pickup/screens/store_detail/view/store_detail.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/utilities.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class StoreMenueList extends StatefulWidget {
   const StoreMenueList({
@@ -55,7 +56,7 @@ class _StoreMenueListState extends State<StoreMenueList> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Menu',
+                      context.l10n.menu,
                       style: Theme.of(context).textTheme.headline3!.copyWith(
                             color: AlpacaColor.darkNavyColor,
                           ),

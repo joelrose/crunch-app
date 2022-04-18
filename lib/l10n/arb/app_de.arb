@@ -41,5 +41,18 @@
    "ready": "bereit",
    "orderStatus": "Order status",
    "orderInPreperation": "Your order is being prepared...",
-   "orderDetails": "Bestell Details"
+   "orderDetails": "Bestell Details",
+   "storeInformation": "Store information",
+   "storeOpenTimes": "Opening",
+   "storeContactNumber": "contact number",
+   "storeAddress": "Store address",
+   "menu": "Menu",
+   "ratings": "Ratings",
+   "closed": "Geschlossen",
+   "itemCount": "{itemCount,plural, =1{{itemCount} item}other{ {itemCount} items}}",
+   "@itemCount": {
+     "placeholders": {
+       "itemCount": {}
+     }
+   }
 }

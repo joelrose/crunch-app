@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:sanity/sanity.dart';
 
 class DiscoverySearchBarViewModel {
