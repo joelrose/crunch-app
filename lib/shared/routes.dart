@@ -11,7 +11,8 @@ import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
-import 'package:pickup/screens/store/store.dart';
+import 'package:pickup/screens/store/model/create_store_data.dart';
+import 'package:pickup/screens/store/view/store.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
 import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
@@ -46,10 +47,10 @@ class Router {
         return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomePage());
       case ProfileScreen.route:
         return CupertinoPageRoute(builder: (_) => ProfileScreen());
-      case StoreScreen.route:
+      case StorePage.route:
         final args = settings.arguments! as String;
         return CupertinoPageRoute(
-          builder: (_) => StoreScreen(storeId: args),
+          builder: (_) => StorePage(storeId: args),
         );
       case CheckoutScreen.route:
         final args = settings.arguments! as CreateStoreData;

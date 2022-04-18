@@ -11,6 +11,7 @@ import 'package:pickup/screens/orders/orders.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
 
+import '../../helpers/pump_app.dart';
 import '../../mock/mock_hermes_service.dart';
 
 Widget createHomeScreen() => MultiBlocProvider(
@@ -43,6 +44,13 @@ void main() {
       await mockNetworkImages(() async {
         await tester.pumpWidget(createHomeScreen());
         await tester.pumpAndSettle();
+
+        await tester.pumpApp(
+          BlocProvider(
+            create: (_) => HomeCubit(),
+            child: HomeView(),
+          ),
+        );
 
         expect(find.byType(BottomNavigationBar), findsOneWidget);
 

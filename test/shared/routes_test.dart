@@ -12,7 +12,8 @@ import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
-import 'package:pickup/screens/store/store.dart';
+import 'package:pickup/screens/store/model/create_store_data.dart';
+import 'package:pickup/screens/store/view/store.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
 import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
@@ -30,7 +31,7 @@ final List<RouteSettings> routeList = [
       isSocialLogin: false,
     ),
   ),
-  const RouteSettings(name: StoreScreen.route, arguments: ''),
+  const RouteSettings(name: StorePage.route, arguments: ''),
   RouteSettings(
     name: CheckoutScreen.route,
     arguments: CreateStoreData(

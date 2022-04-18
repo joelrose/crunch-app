@@ -18,7 +18,7 @@ class RestaurantCard extends StatelessWidget {
     return Bounceable(
       onTap: () => {
         Navigator.of(context).pushNamed(
-          StoreScreen.route,
+          StorePage.route,
           arguments: restaurant.id,
         )
       },
