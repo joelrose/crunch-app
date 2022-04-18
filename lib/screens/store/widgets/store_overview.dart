@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pickup/screens/store/widgets/store_rating.dart';
 import 'package:pickup/screens/store/widgets/store_tag.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class StoreOverview extends StatelessWidget {
   const StoreOverview({
@@ -58,7 +59,7 @@ class StoreOverview extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '$estimatedTime min',
+                      '$estimatedTime ${context.l10n.min}',
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
@@ -75,9 +76,9 @@ class StoreOverview extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              StoreTag(name: 'Chinese'),
+              StoreTag(name: 'Florian'),
               SizedBox(width: 6),
-              StoreTag(name: 'Noodles'),
+              StoreTag(name: 'Grollich'),
             ],
           ),
           Padding(
@@ -96,7 +97,7 @@ class StoreOverview extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        'Get directions',
+                        context.l10n.directionsButtonLabel,
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
                               color: AlpacaColor.primary100,
                             ),

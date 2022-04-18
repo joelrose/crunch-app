@@ -69,5 +69,18 @@
   "discoverTitle": "Welcome to Crunch",
   "viewAll": "View all",
   "searchBarHint": "Search for food, store, or tags",
-  "logout": "Logout"
+  "logout": "Logout",
+  "storeInformation": "Store information",
+  "storeOpenTimes": "Opening",
+  "storeContactNumber": "contact number",
+  "storeAddress": "Store address",
+  "menu": "Menü",
+  "ratings": "ratings",
+  "closed": "geschlossen",
+  "itemCount": "{itemCount,plural, =1{Item}other{Items}}",
+  "@itemCount": {
+    "placeholders": {
+      "itemCount": {}
+    }
+  }
 }
