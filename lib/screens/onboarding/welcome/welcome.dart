@@ -67,6 +67,7 @@ class OnboardingWelcomeScreen extends StatelessWidget {
           buttonText: context.l10n.welcomeSecondaryButtonText,
           onPressed: () => Navigator.of(context).pushNamed(
             OnboardingAccountScreen.route,
+            arguments: false,
           ),
         ),
       ],
