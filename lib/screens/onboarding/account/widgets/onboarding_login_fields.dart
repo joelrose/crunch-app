@@ -257,14 +257,14 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
       child: Container(
         alignment: Alignment.center,
         child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.65,
+          width: MediaQuery.of(context).size.width * 0.8,
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: 'By continuing, I agree to Crunch’s ',
+              text: context.l10n.agreeToTerms,
               children: [
                 TextSpan(
-                  text: 'Terms of service',
+                  text: ' ${context.l10n.termsOfService}',
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => launch(
                           'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
@@ -273,9 +273,9 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
                     decoration: TextDecoration.underline,
                   ),
                 ),
-                const TextSpan(text: ' and'),
+                TextSpan(text: ' ${context.l10n.and} '),
                 TextSpan(
-                  text: ' Privacy Policy.',
+                  text: context.l10n.privacyPolicy,
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => launch(
                           'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
@@ -284,6 +284,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
                     decoration: TextDecoration.underline,
                   ),
                 ),
+                TextSpan(text: context.l10n.agreeToTermsEnd),
               ],
               style: Theme.of(context)
                   .textTheme
