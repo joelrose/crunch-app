@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hermes_api/hermes_api.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:sanity/sanity.dart';
 
 part 'search_bar_state.dart';
 
@@ -10,12 +10,12 @@ class SearchBarCubit extends Cubit<StoreBarState> {
     init();
   }
 
-  final List<RestaurantOverviewModel> data;
+  final List<GetMenusResponseDto> data;
 
   void init() {}
 
-  List<RestaurantOverviewModel> _restaurants = [];
-  List<RestaurantOverviewModel> filteredRestaurant = [];
+  List<GetMenusResponseDto> _restaurants = [];
+  List<GetMenusResponseDto> filteredRestaurant = [];
   late FloatingSearchBarController controller;
 
   List<String> searchHistory = ['test 1'];
@@ -34,7 +34,7 @@ class SearchBarCubit extends Cubit<StoreBarState> {
   void search() {
     filteredRestaurant = [];
     for (final restaurant in _restaurants) {
-      if (_containsQuery(restaurant.name)) {
+      if (_containsQuery(restaurant.menu!.menu!)) {
         filteredRestaurant.add(restaurant);
       }
     }

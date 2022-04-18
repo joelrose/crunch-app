@@ -5,7 +5,6 @@ import 'package:pickup/screens/store/model/store_screen_model.dart';
 import 'package:pickup/services/auth_service.dart';
 import 'package:pickup/services/auth_service_firebase.dart';
 import 'package:pickup/services/hermes_service.dart';
-import 'package:sanity/sanity.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -16,15 +15,6 @@ Future<void> setupServiceLocator() async {
         FirebaseAuth.instance,
         GoogleSignIn(),
         GoogleHelper(),
-      ),
-    );
-  }
-
-  if (!locator.isRegistered<SanityService>()) {
-    locator.registerLazySingleton<SanityService>(
-      () => SanityCms(
-        projectId: 'd9v945zu',
-        dataset: 'production',
       ),
     );
   }

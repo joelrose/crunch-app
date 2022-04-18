@@ -1,12 +1,12 @@
-import 'package:sanity/sanity.dart';
+import 'package:hermes_api/hermes_api.dart';
 
 class DiscoverySearchBarViewModel {
   DiscoverySearchBarViewModel() {
     restaurants = [];
   }
 
-  List<RestaurantOverviewModel> restaurants = [];
-  List<RestaurantOverviewModel> filteredRestaurant = [];
+  List<GetMenusResponseDto> restaurants = [];
+  List<GetMenusResponseDto> filteredRestaurant = [];
 
   List<String> searchHistory = ['test 1'];
 
@@ -24,7 +24,7 @@ class DiscoverySearchBarViewModel {
   void search() {
     filteredRestaurant = [];
     for (final restaurant in restaurants) {
-      if (_identicalStart(restaurant.name)) {
+      if (_identicalStart(restaurant.menu!.menu!)) {
         filteredRestaurant.add(restaurant);
       }
     }
