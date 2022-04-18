@@ -39,18 +39,15 @@ class OnboardingExplanationScreen extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.65,
-              child: PageView.builder(
-                itemCount: _pages.length,
-                controller: _controller,
-                physics: const ClampingScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return _pages[index % _pages.length];
-                },
-              ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.65,
+            child: PageView.builder(
+              itemCount: _pages.length,
+              controller: _controller,
+              physics: const ClampingScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return _pages[index % _pages.length];
+              },
             ),
           ),
           DotsIndicator(
@@ -65,7 +62,7 @@ class OnboardingExplanationScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 25,
+              horizontal: 18,
             ),
             child: ActionButton(
               buttonText: 'continue'.tr(),

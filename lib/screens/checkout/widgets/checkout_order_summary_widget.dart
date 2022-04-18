@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
-import 'package:pickup/shared/extensions.dart';
+import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class CheckoutOrderSummaryItem extends StatelessWidget {

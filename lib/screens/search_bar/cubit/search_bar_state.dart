@@ -10,10 +10,5 @@ abstract class StoreBarState extends Equatable {
 }
 
 class SearchBarReload extends StoreBarState {
-  const SearchBarReload(this.data) : super(data);
-
-  final List<RestaurantOverviewModel> data;
-
-  @override
-  List<Object> get props => [data];
+  const SearchBarReload(List<RestaurantOverviewModel> data) : super(data);
 }

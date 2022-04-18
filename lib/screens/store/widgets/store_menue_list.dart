@@ -28,6 +28,10 @@ class _StoreMenueListState extends State<StoreMenueList> {
 
   @override
   Widget build(BuildContext context) {
+    widget.menueCategories.sort(
+      (a, b) => a.sortOrder!.compareTo(b.sortOrder!),
+    );
+
     return Column(
       children: [
         _buildHeader(context),
@@ -36,7 +40,11 @@ class _StoreMenueListState extends State<StoreMenueList> {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, j) {
-            final category = menueCategories[j];
+            final category = widget.menueCategories[j];
+            category.products!.sort(
+              (a, b) => a.product!.sortOrder!.compareTo(b.product!.sortOrder!),
+            );
+            
             return Column(
               children: [
                 ListTile(
@@ -48,35 +56,34 @@ class _StoreMenueListState extends State<StoreMenueList> {
                 ),
                 const AlpacaDivider(),
                 ListView.separated(
-                  itemCount: category.products?.length ?? 0,
+                  itemCount: category.products!.length,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final item = category.products![i].product!;
                     return TextButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) {
-                            return FractionallySizedBox(
-                              heightFactor: 0.85,
-                              child: StoreDetailPage(
-                                data: ProductDetailsData(
-                                  item: item,
-                                  restaurantImage: widget.restaurantImage,
-                                  checkoutItems: checkoutItems,
-                                  onCheckoutChange: widget.onCheckoutChange,
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                        // Navigator.of(context).pushNamed(
-                        //   StoreDetailPage.route,
-                        //   arguments:
-                        // );
-                      },
+                      onPressed: item.snoozed!
+                          ? null
+                          : () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) {
+                                  return FractionallySizedBox(
+                                    heightFactor: 0.8,
+                                    child: StoreDetailPage(
+                                      data: ProductDetailsData(
+                                        item: item,
+                                        restaurantImage: widget.restaurantImage,
+                                        checkoutItems: checkoutItems,
+                                        onCheckoutChange:
+                                            widget.onCheckoutChange,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                       style: TextButton.styleFrom(
                         primary: AlpacaColor.primary100,
                       ),
@@ -98,7 +105,12 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                           maxLines: 2,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline3,
+                                              .headline3!
+                                              .copyWith(
+                                                decoration: item.snoozed!
+                                                    ? TextDecoration.lineThrough
+                                                    : null,
+                                              ),
                                         ),
                                       ),
                                       if ((checkoutItems.indexWhere(
@@ -129,8 +141,14 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                       item.description != '') ...[
                                     Text(
                                       item.description!,
-                                      style:
-                                          Theme.of(context).textTheme.headline5,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5!
+                                          .copyWith(
+                                            decoration: item.snoozed!
+                                                ? TextDecoration.lineThrough
+                                                : null,
+                                          ),
                                     ),
                                     Container(
                                       height: 10,
@@ -141,7 +159,12 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline4!
-                                        .copyWith(color: AlpacaColor.primary80),
+                                        .copyWith(
+                                          color: AlpacaColor.primary80,
+                                          decoration: item.snoozed!
+                                              ? TextDecoration.lineThrough
+                                              : null,
+                                        ),
                                   ),
                                 ],
                               ),

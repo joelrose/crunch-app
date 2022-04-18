@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
         .then((accepted) async {
       final auth = locator<AuthService>();
       final user = await auth.getUser;
+
       if (user != null) {
         OneSignal.shared.setExternalUserId(user.uid);
 

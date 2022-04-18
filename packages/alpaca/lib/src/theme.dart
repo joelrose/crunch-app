@@ -2,7 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-ThemeData getThemeData(BuildContext context) {
+ThemeData getThemeData() {
   return ThemeData(
     brightness: Brightness.light,
     fontFamily: GoogleFonts.inter().fontFamily,
@@ -37,7 +37,7 @@ ThemeData getThemeData(BuildContext context) {
           fontWeight: FontWeight.w400,
           fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 15,
-          letterSpacing: -0.02,
+          height: 1.4,
           color: AlpacaColor.greyColor80),
       subtitle1: TextStyle(
         fontSize: 24,

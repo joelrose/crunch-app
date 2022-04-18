@@ -87,6 +87,7 @@ final Map<Type, Object Function(Map<String, dynamic>)>
   GetMenusResponseDto: GetMenusResponseDto.fromJsonFactory,
   GetOrderResponseDto: GetOrderResponseDto.fromJsonFactory,
   GetUserResponseDto: GetUserResponseDto.fromJsonFactory,
+  MerchantModelDto: MerchantModelDto.fromJsonFactory,
   OrderItemModel: OrderItemModel.fromJsonFactory,
   ProductRelationModelDto: ProductRelationModelDto.fromJsonFactory,
   UpdateStatusOrderModel: UpdateStatusOrderModel.fromJsonFactory,
@@ -149,11 +150,10 @@ class CreateOrderItemDto {
   int? quantity;
   @JsonKey(
       name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[])
-  List<CreateOrderItemDto>? items;
+  final List<CreateOrderItemDto>? items;
   static const fromJsonFactory = _$CreateOrderItemDtoFromJson;
   static const toJsonFactory = _$CreateOrderItemDtoToJson;
   Map<String, dynamic> toJson() => _$CreateOrderItemDtoToJson(this);
-
 
   // TODO: remove quantity check
   @override
@@ -420,6 +420,7 @@ class DeliverectCategoryModelDto {
     this.level,
     this.menu,
     this.name,
+    this.sortOrder,
     this.products,
   });
 
@@ -444,6 +445,8 @@ class DeliverectCategoryModelDto {
   final String? menu;
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
+  @JsonKey(name: 'sortOrder', includeIfNull: false)
+  final int? sortOrder;
   @JsonKey(
       name: 'products',
       includeIfNull: false,
@@ -480,6 +483,9 @@ class DeliverectCategoryModelDto {
                 const DeepCollectionEquality().equals(other.menu, menu)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.sortOrder, sortOrder) ||
+                const DeepCollectionEquality()
+                    .equals(other.sortOrder, sortOrder)) &&
             (identical(other.products, products) ||
                 const DeepCollectionEquality()
                     .equals(other.products, products)));
@@ -496,6 +502,7 @@ class DeliverectCategoryModelDto {
       const DeepCollectionEquality().hash(level) ^
       const DeepCollectionEquality().hash(menu) ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(sortOrder) ^
       const DeepCollectionEquality().hash(products) ^
       runtimeType.hashCode;
 }
@@ -511,6 +518,7 @@ extension $DeliverectCategoryModelDtoExtension on DeliverectCategoryModelDto {
       int? level,
       String? menu,
       String? name,
+      int? sortOrder,
       List<CategoryRelationModelDto>? products}) {
     return DeliverectCategoryModelDto(
         id: id ?? this.id,
@@ -522,6 +530,7 @@ extension $DeliverectCategoryModelDtoExtension on DeliverectCategoryModelDto {
         level: level ?? this.level,
         menu: menu ?? this.menu,
         name: name ?? this.name,
+        sortOrder: sortOrder ?? this.sortOrder,
         products: products ?? this.products);
   }
 }
@@ -736,6 +745,7 @@ class DeliverectProductModelDto {
     this.max,
     this.min,
     this.multiply,
+    this.multiMax,
     this.name,
     this.plu,
     this.price,
@@ -768,6 +778,8 @@ class DeliverectProductModelDto {
   final int? min;
   @JsonKey(name: 'multiply', includeIfNull: false)
   final int? multiply;
+  @JsonKey(name: 'multiMax', includeIfNull: false)
+  final int? multiMax;
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(name: 'plu', includeIfNull: false)
@@ -822,6 +834,9 @@ class DeliverectProductModelDto {
             (identical(other.multiply, multiply) ||
                 const DeepCollectionEquality()
                     .equals(other.multiply, multiply)) &&
+            (identical(other.multiMax, multiMax) ||
+                const DeepCollectionEquality()
+                    .equals(other.multiMax, multiMax)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.plu, plu) ||
@@ -859,6 +874,7 @@ class DeliverectProductModelDto {
       const DeepCollectionEquality().hash(max) ^
       const DeepCollectionEquality().hash(min) ^
       const DeepCollectionEquality().hash(multiply) ^
+      const DeepCollectionEquality().hash(multiMax) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(plu) ^
       const DeepCollectionEquality().hash(price) ^
@@ -882,6 +898,7 @@ extension $DeliverectProductModelDtoExtension on DeliverectProductModelDto {
       int? max,
       int? min,
       int? multiply,
+      int? multiMax,
       String? name,
       String? plu,
       int? price,
@@ -901,6 +918,7 @@ extension $DeliverectProductModelDtoExtension on DeliverectProductModelDto {
         max: max ?? this.max,
         min: min ?? this.min,
         multiply: multiply ?? this.multiply,
+        multiMax: multiMax ?? this.multiMax,
         name: name ?? this.name,
         plu: plu ?? this.plu,
         price: price ?? this.price,
@@ -1085,25 +1103,31 @@ extension $GetMenusResponseDtoExtension on GetMenusResponseDto {
 @JsonSerializable(explicitToJson: true)
 class GetOrderResponseDto {
   GetOrderResponseDto({
-    this.storeId,
+    this.id,
     this.status,
     this.price,
+    this.estimatedPickUpTime,
+    this.merchant,
     this.items,
   });
 
   factory GetOrderResponseDto.fromJson(Map<String, dynamic> json) =>
       _$GetOrderResponseDtoFromJson(json);
 
-  @JsonKey(name: 'storeId', includeIfNull: false)
-  final String? storeId;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
   @JsonKey(
       name: 'status',
       includeIfNull: false,
-      toJson: orderStatusToJson,
-      fromJson: orderStatusFromJson)
-  final enums.OrderStatus? status;
+      toJson: deliverectOrderStatusToJson,
+      fromJson: deliverectOrderStatusFromJson)
+  final enums.DeliverectOrderStatus? status;
   @JsonKey(name: 'price', includeIfNull: false)
   final double? price;
+  @JsonKey(name: 'estimatedPickUpTime', includeIfNull: false)
+  final DateTime? estimatedPickUpTime;
+  @JsonKey(name: 'merchant', includeIfNull: false)
+  final MerchantModelDto? merchant;
   @JsonKey(
       name: 'items', includeIfNull: false, defaultValue: <OrderItemModel>[])
   final List<OrderItemModel>? items;
@@ -1115,36 +1139,47 @@ class GetOrderResponseDto {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is GetOrderResponseDto &&
-            (identical(other.storeId, storeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.storeId, storeId)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.price, price) ||
                 const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.estimatedPickUpTime, estimatedPickUpTime) ||
+                const DeepCollectionEquality()
+                    .equals(other.estimatedPickUpTime, estimatedPickUpTime)) &&
+            (identical(other.merchant, merchant) ||
+                const DeepCollectionEquality()
+                    .equals(other.merchant, merchant)) &&
             (identical(other.items, items) ||
                 const DeepCollectionEquality().equals(other.items, items)));
   }
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(storeId) ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(estimatedPickUpTime) ^
+      const DeepCollectionEquality().hash(merchant) ^
       const DeepCollectionEquality().hash(items) ^
       runtimeType.hashCode;
 }
 
 extension $GetOrderResponseDtoExtension on GetOrderResponseDto {
   GetOrderResponseDto copyWith(
-      {String? storeId,
-      enums.OrderStatus? status,
+      {String? id,
+      enums.DeliverectOrderStatus? status,
       double? price,
+      DateTime? estimatedPickUpTime,
+      MerchantModelDto? merchant,
       List<OrderItemModel>? items}) {
     return GetOrderResponseDto(
-        storeId: storeId ?? this.storeId,
+        id: id ?? this.id,
         status: status ?? this.status,
         price: price ?? this.price,
+        estimatedPickUpTime: estimatedPickUpTime ?? this.estimatedPickUpTime,
+        merchant: merchant ?? this.merchant,
         items: items ?? this.items);
   }
 }
@@ -1207,6 +1242,96 @@ extension $GetUserResponseDtoExtension on GetUserResponseDto {
         createdAt: createdAt ?? this.createdAt,
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName);
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class MerchantModelDto {
+  MerchantModelDto({
+    this.name,
+    this.phoneNumber,
+    this.rating,
+    this.reviewCount,
+    this.averagePickUpTime,
+    this.address,
+    this.googleMapsLink,
+  });
+
+  factory MerchantModelDto.fromJson(Map<String, dynamic> json) =>
+      _$MerchantModelDtoFromJson(json);
+
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String? name;
+  @JsonKey(name: 'phoneNumber', includeIfNull: false)
+  final String? phoneNumber;
+  @JsonKey(name: 'rating', includeIfNull: false)
+  final double? rating;
+  @JsonKey(name: 'reviewCount', includeIfNull: false)
+  final String? reviewCount;
+  @JsonKey(name: 'averagePickUpTime', includeIfNull: false)
+  final String? averagePickUpTime;
+  @JsonKey(name: 'address', includeIfNull: false)
+  final String? address;
+  @JsonKey(name: 'googleMapsLink', includeIfNull: false)
+  final String? googleMapsLink;
+  static const fromJsonFactory = _$MerchantModelDtoFromJson;
+  static const toJsonFactory = _$MerchantModelDtoToJson;
+  Map<String, dynamic> toJson() => _$MerchantModelDtoToJson(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is MerchantModelDto &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                const DeepCollectionEquality()
+                    .equals(other.phoneNumber, phoneNumber)) &&
+            (identical(other.rating, rating) ||
+                const DeepCollectionEquality().equals(other.rating, rating)) &&
+            (identical(other.reviewCount, reviewCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.reviewCount, reviewCount)) &&
+            (identical(other.averagePickUpTime, averagePickUpTime) ||
+                const DeepCollectionEquality()
+                    .equals(other.averagePickUpTime, averagePickUpTime)) &&
+            (identical(other.address, address) ||
+                const DeepCollectionEquality()
+                    .equals(other.address, address)) &&
+            (identical(other.googleMapsLink, googleMapsLink) ||
+                const DeepCollectionEquality()
+                    .equals(other.googleMapsLink, googleMapsLink)));
+  }
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(phoneNumber) ^
+      const DeepCollectionEquality().hash(rating) ^
+      const DeepCollectionEquality().hash(reviewCount) ^
+      const DeepCollectionEquality().hash(averagePickUpTime) ^
+      const DeepCollectionEquality().hash(address) ^
+      const DeepCollectionEquality().hash(googleMapsLink) ^
+      runtimeType.hashCode;
+}
+
+extension $MerchantModelDtoExtension on MerchantModelDto {
+  MerchantModelDto copyWith(
+      {String? name,
+      String? phoneNumber,
+      double? rating,
+      String? reviewCount,
+      String? averagePickUpTime,
+      String? address,
+      String? googleMapsLink}) {
+    return MerchantModelDto(
+        name: name ?? this.name,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        rating: rating ?? this.rating,
+        reviewCount: reviewCount ?? this.reviewCount,
+        averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
+        address: address ?? this.address,
+        googleMapsLink: googleMapsLink ?? this.googleMapsLink);
   }
 }
 
@@ -1366,9 +1491,9 @@ class UpdateStatusOrderModel {
   @JsonKey(
       name: 'orderStatus',
       includeIfNull: false,
-      toJson: orderStatusToJson,
-      fromJson: orderStatusFromJson)
-  final enums.OrderStatus? orderStatus;
+      toJson: deliverectOrderStatusToJson,
+      fromJson: deliverectOrderStatusFromJson)
+  final enums.DeliverectOrderStatus? orderStatus;
   static const fromJsonFactory = _$UpdateStatusOrderModelFromJson;
   static const toJsonFactory = _$UpdateStatusOrderModelToJson;
   Map<String, dynamic> toJson() => _$UpdateStatusOrderModelToJson(this);
@@ -1394,7 +1519,7 @@ class UpdateStatusOrderModel {
 
 extension $UpdateStatusOrderModelExtension on UpdateStatusOrderModel {
   UpdateStatusOrderModel copyWith(
-      {String? orderId, enums.OrderStatus? orderStatus}) {
+      {String? orderId, enums.DeliverectOrderStatus? orderStatus}) {
     return UpdateStatusOrderModel(
         orderId: orderId ?? this.orderId,
         orderStatus: orderStatus ?? this.orderStatus);
@@ -1435,37 +1560,47 @@ List<enums.DeliverectDay> deliverectDayListFromJson(List? deliverectDay) {
   return deliverectDay.map((e) => deliverectDayFromJson(e.toString())).toList();
 }
 
-String? orderStatusToJson(enums.OrderStatus? orderStatus) {
-  return enums.$OrderStatusMap[orderStatus];
+String? deliverectOrderStatusToJson(
+    enums.DeliverectOrderStatus? deliverectOrderStatus) {
+  return enums.$DeliverectOrderStatusMap[deliverectOrderStatus];
 }
 
-enums.OrderStatus orderStatusFromJson(String? orderStatus) {
-  if (orderStatus == null) {
-    return enums.OrderStatus.swaggerGeneratedUnknown;
+enums.DeliverectOrderStatus deliverectOrderStatusFromJson(
+    String? deliverectOrderStatus) {
+  if (deliverectOrderStatus == null) {
+    return enums.DeliverectOrderStatus.swaggerGeneratedUnknown;
   }
 
-  return enums.$OrderStatusMap.entries
+  return enums.$DeliverectOrderStatusMap.entries
       .firstWhere(
-          (element) => element.value.toLowerCase() == orderStatus.toLowerCase(),
-          orElse: () =>
-              const MapEntry(enums.OrderStatus.swaggerGeneratedUnknown, ''))
+          (element) =>
+              element.value.toLowerCase() ==
+              deliverectOrderStatus.toLowerCase(),
+          orElse: () => const MapEntry(
+              enums.DeliverectOrderStatus.$new, '10'))
       .key;
 }
 
-List<String> orderStatusListToJson(List<enums.OrderStatus>? orderStatus) {
-  if (orderStatus == null) {
+List<String> deliverectOrderStatusListToJson(
+    List<enums.DeliverectOrderStatus>? deliverectOrderStatus) {
+  if (deliverectOrderStatus == null) {
     return [];
   }
 
-  return orderStatus.map((e) => enums.$OrderStatusMap[e]!).toList();
+  return deliverectOrderStatus
+      .map((e) => enums.$DeliverectOrderStatusMap[e]!)
+      .toList();
 }
 
-List<enums.OrderStatus> orderStatusListFromJson(List? orderStatus) {
-  if (orderStatus == null) {
+List<enums.DeliverectOrderStatus> deliverectOrderStatusListFromJson(
+    List? deliverectOrderStatus) {
+  if (deliverectOrderStatus == null) {
     return [];
   }
 
-  return orderStatus.map((e) => orderStatusFromJson(e.toString())).toList();
+  return deliverectOrderStatus
+      .map((e) => deliverectOrderStatusFromJson(e.toString()))
+      .toList();
 }
 
 typedef $JsonFactory<T> = T Function(Map<String, dynamic> json);

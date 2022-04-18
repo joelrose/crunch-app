@@ -43,7 +43,7 @@ class _CheckoutContactDetailsWidgetState
                   textColor: AlpacaColor.darkNavyColor,
                   hintText: 'Phone Number',
                   textController: _phoneNumberController,
-                  validator: (value) {},
+                  validator: (value) => null,
                 ),
               ),
               Text(

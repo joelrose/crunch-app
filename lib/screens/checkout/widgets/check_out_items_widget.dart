@@ -1,8 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
-import 'package:pickup/screens/store_detail/widgets/product_amount_and_add_to_order.dart';
-import 'package:pickup/shared/extensions.dart';
+import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class CheckOutItemsWidget extends StatefulWidget {
@@ -20,6 +19,7 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const Divider(),
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 0, 0, 18),
           child: ListView.builder(
@@ -44,6 +44,7 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
             },
           ),
         ),
+        const Divider(),
       ],
     );
   }

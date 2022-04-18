@@ -116,8 +116,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: ActionButton(
           onPressed: () {
-            showAsyncLoading(
-              context,
+            LoadingUtils.asyncLoading(
               _checkout(),
             );
           },
