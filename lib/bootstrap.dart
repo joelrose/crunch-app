@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +26,6 @@ Future<void> bootstrap(
 
   await Firebase.initializeApp();
 
-  await EasyLocalization.ensureInitialized();
-
   await dotenv.load(
     fileName:
         'assets/enviroments/.env.${enviroment.toString().split('.').last}',
@@ -42,24 +39,15 @@ Future<void> bootstrap(
 
   runZonedGuarded(
     () async => runApp(
-      EasyLocalization(
-        supportedLocales: const [
-          Locale('en', 'US'),
-          Locale('de', 'DE'),
-        ],
-        path: 'assets/translations',
-        fallbackLocale: const Locale('en', 'US'),
-        useOnlyLangCode: true,
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (_) => DiscoverCubit(
-                locator<HermesService>(),
-              ),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => DiscoverCubit(
+              locator<HermesService>(),
             ),
-          ],
-          child: await builder(),
-        ),
+          ),
+        ],
+        child: await builder(),
       ),
     ),
     (error, stackTrace) =>

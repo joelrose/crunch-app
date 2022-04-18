@@ -1,6 +1,6 @@
 import 'package:alpaca/alpaca.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 
@@ -39,7 +39,7 @@ class OnboardingWelcomeScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'onboarding_welcome.title'.tr(),
+          context.l10n.welcomeTitle,
           style: theme.headline1!.copyWith(
             fontSize: 36,
             color: AlpacaColor.white100Color,
@@ -48,7 +48,7 @@ class OnboardingWelcomeScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 40, top: 10),
           child: Text(
-            'onboarding_welcome.subtitle'.tr(),
+            context.l10n.welcomeSubtitle,
             style: theme.headline5!.copyWith(
               color: AlpacaColor.white100Color,
             ),
@@ -56,7 +56,7 @@ class OnboardingWelcomeScreen extends StatelessWidget {
         ),
         ActionButton(
           key: const Key('onboarding_welcome.primary'),
-          buttonText: 'onboarding_welcome.primaryButtonText'.tr(),
+          buttonText: context.l10n.welcomePrimaryButtonText,
           onPressed: () => Navigator.of(context).pushNamed(
             OnboardingExplanationScreen.route,
           ),
@@ -64,7 +64,7 @@ class OnboardingWelcomeScreen extends StatelessWidget {
         ),
         ActionButton(
           key: const Key('onboarding_welcome.secondary'),
-          buttonText: 'onboarding_welcome.secondaryButtonText'.tr(),
+          buttonText: context.l10n.welcomeSecondaryButtonText,
           onPressed: () => Navigator.of(context).pushNamed(
             OnboardingAccountScreen.route,
           ),

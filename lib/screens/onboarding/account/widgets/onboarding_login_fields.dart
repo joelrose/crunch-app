@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding/account/widgets/social_onboarding.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/shared/country_emoji.dart';
@@ -54,9 +54,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
 
   Widget _buildGreeting() {
     return Text(
-      widget.isSignUp
-          ? 'onboarding.createAccount'.tr()
-          : 'onboarding.welcomeBack'.tr(),
+      widget.isSignUp ? context.l10n.createAccount : context.l10n.welcomeBack,
       style: Theme.of(context).textTheme.headline1!.copyWith(
             color: AlpacaColor.white100Color,
           ),
@@ -71,9 +69,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         right: 40,
       ),
       child: Text(
-        widget.isSignUp
-            ? 'onboarding.signUpCTA'.tr()
-            : 'onboarding.signInCTA'.tr(),
+        widget.isSignUp ? context.l10n.signUpCTA : context.l10n.signInCTA,
         style: Theme.of(context)
             .textTheme
             .headline5!
@@ -234,7 +230,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'or'.tr(),
+            context.l10n.or,
             style: Theme.of(context)
                 .textTheme
                 .headline5!

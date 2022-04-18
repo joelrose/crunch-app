@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/show_async_loading.dart';
@@ -82,7 +83,7 @@ class _StepInsertNameState extends State<StepInsertName> {
           ),
           Expanded(child: Container()),
           ActionButton(
-            buttonText: 'Continue',
+            buttonText: context.l10n.next,
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 final hermesService = locator<HermesService>();
