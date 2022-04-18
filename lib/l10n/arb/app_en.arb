@@ -23,5 +23,13 @@
   "signUpCTA": "Let’s get started by choosing one of the ways to sign up below.",
   "signInCTA": "Please enter your phone number to log in again!",
   "lastName": "Last name",
-  "firstName": "First name"
+  "firstName": "First name",
+  "orderSummary": "Order summary",
+  "subtotal": "Subtotal",
+  "discount": "discount",
+  "store": "store",
+  "directionsButtonLabel": "Get directions ->",
+  "connectionPaymentFail": "Unable to connect to payment provider!",
+  "buttonPayLabel": "Pay now",
+  "orderOverview": "Order Overview"
 }

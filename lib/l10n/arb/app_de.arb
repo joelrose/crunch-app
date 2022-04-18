@@ -23,5 +23,13 @@
    "signUpCTA": "Let’s get started by choosing one of the ways to sign up below.",
    "signInCTA": "Please enter your phone number to log in again!",
    "lastName": "Last name",
-   "firstName": "First name"
+   "firstName": "First name",
+   "orderSummary": "Zusammenfassung",
+   "subtotal": "Zwischensumme",
+   "discount": "Rabatt",
+   "store": "Restaurant",
+   "directionsButtonLabel": "Navigieren ->",
+   "connectionPaymentFail": "Verbindung zum Zahlungs Dienstleister nicht möglich",
+   "buttonPayLabel": "Bezahlen",
+   "orderOverview": "Bestellungen"
 }

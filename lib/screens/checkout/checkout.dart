@@ -13,6 +13,7 @@ import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/show_async_loading.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({
@@ -64,8 +65,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final paymentIntentSecret = await _getPaymentIntent();
 
     if (paymentIntentSecret == null) {
-      const snackBar = SnackBar(
-        content: Text('Unable to connect to payment provider!'),
+      final snackBar = SnackBar(
+        content: Text(context.l10n.connectionPaymentFail),
       );
 
       if (!mounted) {
@@ -120,7 +121,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               _checkout(),
             );
           },
-          buttonText: 'Pay now',
+          buttonText: context.l10n.buttonPayLabel,
         ),
       ),
       child: _buildContent(),
@@ -132,7 +133,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       children: [
         CheckoutOrderNavbarWidget(
           storeName: widget.data.storeName,
-          pageOverviewName: 'Order Overview',
+          pageOverviewName: context.l10n.orderOverview,
         ),
         Flexible(
           child: ListView(
