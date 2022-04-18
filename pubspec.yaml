@@ -45,8 +45,6 @@ dependencies:
   platform_maps_flutter: ^1.0.2
   provider: ^6.0.2
   rxdart: ^0.27.2
-  sanity: 
-    path: packages/sanity
   shared_preferences: ^2.0.11
   skeleton_loader: ^2.0.0+4
   stretchy_header: ^2.0.0
