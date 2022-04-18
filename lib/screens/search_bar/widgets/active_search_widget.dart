@@ -4,6 +4,7 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/screens/search_bar/widgets/matching_restaurants_widget.dart';
 import 'package:pickup/screens/search_bar/widgets/recent_search_widget.dart';
 import 'package:sanity/sanity.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class ActiveSearchWidget extends StatelessWidget {
   const ActiveSearchWidget({
@@ -41,7 +42,7 @@ class ActiveSearchWidget extends StatelessWidget {
           ),
         if (controller.query.isNotEmpty && filteredRestaurants.isEmpty)
           Text(
-            'No matching restaurant found...',
+            context.l10n.noRestaurantsFound,
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: AlpacaColor.darkGreyColor,
                 ),

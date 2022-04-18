@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class StepSetPassword extends StatefulWidget {
   const StepSetPassword({Key? key, required this.whichStepInCreateAccount})
@@ -34,15 +35,15 @@ class _StepSetPasswordState extends State<StepSetPassword> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Woo, you're not a robot!",
+            context.l10n.onboardingPasswordTitle,
             style: theme.headline1!.copyWith(
               color: AlpacaColor.blackColor,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 40, top: 10),
+            padding: const EdgeInsets.only(bottom: 10, top: 10),
             child: Text(
-              'We need a little more information from you? Please set your password!',
+              context.l10n.onboardingPasswordDescription,
               style: theme.headline5,
             ),
           ),
@@ -50,13 +51,13 @@ class _StepSetPasswordState extends State<StepSetPassword> {
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: AlpacaTextField(
               key: const Key('onboarding_password_textfield'),
-              hintText: 'Password',
+              hintText: context.l10n.password,
               textController: _passwordController,
               obscureText: true,
               textInputType: TextInputType.visiblePassword,
               validator: (value) {
                 if (value!.isEmpty || value.length < 6) {
-                  return 'Please enter a valid password';
+                  return context.l10n.onboardingPasswordNotValid;
                 }
                 return null;
               },
@@ -66,14 +67,14 @@ class _StepSetPasswordState extends State<StepSetPassword> {
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: AlpacaTextField(
               key: const Key('onboarding_repeat_password_textfield'),
-              hintText: 'Repeat password',
+              hintText: context.l10n.repeatPassword,
               textController: _passwordRepeatController,
               obscureText: true,
               textInputType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
               validator: (value) {
                 if (value!.isEmpty || _passwordController.text != value) {
-                  return "Passwords don't match";
+                  return context.l10n.onboardingPasswordNotMatching;
                 }
                 return null;
               },
@@ -83,7 +84,7 @@ class _StepSetPasswordState extends State<StepSetPassword> {
             child: Container(),
           ),
           ActionButton(
-            buttonText: 'Continue',
+            buttonText: context.l10n.next,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 widget.whichStepInCreateAccount();

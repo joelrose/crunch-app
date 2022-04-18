@@ -11,6 +11,7 @@ import 'package:pickup/shared/base_screen.dart';
 import 'package:pickup/shared/enum/viewstate.dart';
 import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class CreateStoreData {
   CreateStoreData({
@@ -70,7 +71,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     );
                   },
                   buttonText:
-                      '${_getItemsInCart(checkoutItems)} item in Cart ->',
+                      '${context.l10n.storeFloatingButtonText(_getItemsInCart(checkoutItems))} in Cart ->',
+
+                  //   '${_getItemsInCart(checkoutItems)} ${context.l10n.itemCount(_getItemsInCart(checkoutItems))},
                   priceText: Utilities.currencyFormat(
                     PriceCalulcation.getPriceOfItems(checkoutItems),
                   ),
@@ -140,7 +143,7 @@ class _StoreScreenState extends State<StoreScreen> {
         )
         .toList();
 
-    String openingTimes = 'Closed';
+    String openingTimes = context.l10n.closed;
     for (final hour in todaysOpeningHours) {
       final startTime = hour.startTime!.split(':');
       // final endTime = hour.startTime!.split(':');

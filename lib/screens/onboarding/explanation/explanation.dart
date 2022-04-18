@@ -1,6 +1,6 @@
 import 'package:alpaca/alpaca.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/explanation/widgets/dots_indicator.dart';
 import 'package:pickup/screens/onboarding/explanation/widgets/slide_widget.dart';
@@ -10,17 +10,26 @@ class OnboardingExplanationScreen extends StatelessWidget {
 
   final PageController _controller = PageController();
 
-  final List<Widget> _pages = [
-    for (int i = 1; i <= 3; i++)
-      SlideWidget(
-        title: 'onboarding_explanation.title_$i'.tr(),
-        description: 'onboarding_explanation.description_$i'.tr(),
-        image: 'assets/onboarding/step-$i.png',
-      )
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      SlideWidget(
+        title: context.l10n.explanationTitle1,
+        description: context.l10n.explanationDescription1,
+        image: 'assets/onboarding/step-1.png',
+      ),
+      SlideWidget(
+        title: context.l10n.explanationTitle2,
+        description: context.l10n.explanationDescription2,
+        image: 'assets/onboarding/step-1.png',
+      ),
+      SlideWidget(
+        title: context.l10n.explanationTitle3,
+        description: context.l10n.explanationDescription3,
+        image: 'assets/onboarding/step-1.png',
+      ),
+    ];
+
     return PageWrapper(
       padding: EdgeInsets.zero,
       backgroundColor: AlpacaColor.primary100,
@@ -65,7 +74,7 @@ class OnboardingExplanationScreen extends StatelessWidget {
               horizontal: 18,
             ),
             child: ActionButton(
-              buttonText: 'continue'.tr(),
+              buttonText: context.l10n.next,
               onPressed: () => Navigator.of(context).pushNamed(
                 OnboardingAccountScreen.route,
                 arguments: true,

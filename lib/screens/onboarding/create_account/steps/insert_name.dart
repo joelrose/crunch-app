@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/services/hermes_service.dart';
 import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/show_async_loading.dart';
@@ -38,7 +39,7 @@ class _StepInsertNameState extends State<StepInsertName> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Woo, you're not a robot!",
+            context.l10n.onboardingNameTitle,
             style: theme.headline1!.copyWith(
               color: AlpacaColor.blackColor,
             ),
@@ -46,7 +47,7 @@ class _StepInsertNameState extends State<StepInsertName> {
           Padding(
             padding: const EdgeInsets.only(bottom: 20, top: 10),
             child: Text(
-              'We need a little more information from you? What can we call you?',
+              context.l10n.onboardingNameDescription,
               style: theme.headline5,
             ),
           ),
@@ -54,12 +55,12 @@ class _StepInsertNameState extends State<StepInsertName> {
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: AlpacaTextField(
               key: const Key('onboarding_firstname_textfield'),
-              hintText: 'First name',
+              hintText: context.l10n.firstName,
               textController: _firstNameController,
               textInputAction: TextInputAction.done,
               validator: (value) {
                 if (value!.isEmpty || value.length < 3) {
-                  return 'Please enter a valid name';
+                  return context.l10n.onboardingNameNotValid;
                 }
                 return null;
               },
@@ -69,12 +70,12 @@ class _StepInsertNameState extends State<StepInsertName> {
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: AlpacaTextField(
               key: const Key('onboarding_lastname_textfield'),
-              hintText: 'Last name',
+              hintText: context.l10n.lastName,
               textController: _lastNameController,
               textInputAction: TextInputAction.done,
               validator: (value) {
                 if (value!.isEmpty || value.length < 3) {
-                  return 'Please enter a valid name';
+                  return context.l10n.onboardingNameNotValid;
                 }
                 return null;
               },
@@ -82,7 +83,7 @@ class _StepInsertNameState extends State<StepInsertName> {
           ),
           Expanded(child: Container()),
           ActionButton(
-            buttonText: 'Continue',
+            buttonText: context.l10n.next,
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 final hermesService = locator<HermesService>();
@@ -101,8 +102,8 @@ class _StepInsertNameState extends State<StepInsertName> {
                 if (response.isSuccessful) {
                   widget.whichStepInCreateAccount();
                 } else {
-                  const snackBar = SnackBar(
-                    content: Text('Unable to connect to backend!'),
+                  final snackBar = SnackBar(
+                    content: Text(context.l10n.unknownAPIError),
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);

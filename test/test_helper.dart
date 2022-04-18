@@ -1,10 +1,5 @@
-import 'dart:convert';
-
-import 'package:easy_localization/src/localization.dart';
-import 'package:easy_localization/src/translations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
 import 'package:pickup/services/auth_service.dart';
@@ -29,7 +24,7 @@ class TestHelper {
     return mockAuthService;
   }
 
-  static Future<bool> registerEasyLocalization() async {
+ /* static Future<bool> registerEasyLocalization() async {
     final content = await rootBundle.loadString('assets/translations/en.json');
     final data = jsonDecode(content) as Map<String, dynamic>;
 
@@ -37,5 +32,5 @@ class TestHelper {
       const Locale('en'),
       translations: Translations(data),
     );
-  }
+  }*/
 }

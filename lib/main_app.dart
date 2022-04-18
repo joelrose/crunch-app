@@ -1,10 +1,9 @@
 import 'package:alpaca/alpaca.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/loading/loading.dart';
-
 import 'package:pickup/shared/routes.dart' as routes;
 
 class App extends StatelessWidget {
@@ -17,9 +16,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
+  localizationsDelegates: AppLocalizations.localizationsDelegates,
+  supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: routes.Router.generateRoute,
       initialRoute: LoadingScreen.route,

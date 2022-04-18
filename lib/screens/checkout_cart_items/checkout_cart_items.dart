@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hermes_api/hermes_api.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/widgets/check_out_items_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 
@@ -14,11 +15,11 @@ class CheckoutCartItemsWidget extends StatelessWidget {
     return Column(
       children: [
         CheckoutHeaderRowWidget(
-          header: 'Cart items',
+          header: context.l10n.checkoutCartItems,
           onPressed: () {
             Navigator.of(context).pop();
           },
-          buttonText: 'Edit',
+          buttonText: context.l10n.edit,
         ),
         CheckOutItemsWidget(checkoutItems: checkoutItems),
         const Divider(),

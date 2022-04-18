@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hermes_api/hermes_api.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/orders/cubit/orders_cubit.dart';
 import 'package:pickup/screens/orders/widgets/widgets.dart';
 
@@ -17,7 +18,7 @@ class OrdersView extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(20),
           child: Text(
-            'My orders',
+            context.l10n.myOrders,
             style: Theme.of(context).textTheme.headline1!.merge(
                   const TextStyle(
                     color: AlpacaColor.blackColor,

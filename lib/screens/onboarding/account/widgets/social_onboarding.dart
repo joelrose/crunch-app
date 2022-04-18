@@ -1,8 +1,8 @@
 import 'package:alpaca/alpaca.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/services/auth_service.dart';
@@ -23,8 +23,8 @@ class SocialOnboarding extends StatelessWidget {
       children: [
         getSocialButton(
           isSignUp
-              ? 'onboarding.signUpWithGoogle'.tr()
-              : 'onboarding.signInWithGoogle'.tr(),
+              ? context.l10n.signUpWithGoogle
+              : context.l10n.signInWithGoogle,
           MediaQuery.of(context).size.width,
           SvgPicture.asset(
             'assets/google-logo.svg',
@@ -37,8 +37,8 @@ class SocialOnboarding extends StatelessWidget {
         ),
         getSocialButton(
           isSignUp
-              ? 'onboarding.signUpWithApple'.tr()
-              : 'onboarding.signInWithApple'.tr(),
+              ? context.l10n.signUpWithApple
+              : context.l10n.signInWithApple,
           MediaQuery.of(context).size.width,
           SvgPicture.asset(
             'assets/apple-logo.svg',

@@ -6,16 +6,9 @@ import 'package:mockingjay/mockingjay.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
-import 'package:pickup/shared/routes.dart' as routes;
 
 import '../../helpers/pump_app.dart';
 import '../../test_helper.dart';
-
-Widget createWelcomeScreen() => MaterialApp(
-      home: const OnboardingWelcomeScreen(),
-      onGenerateRoute: routes.Router.generateRoute,
-      theme: getThemeData(),
-    );
 
 void main() {
   late MockNavigator navigator;
@@ -33,7 +26,7 @@ void main() {
     });
 
     testWidgets('welcome screen loaded', (tester) async {
-      await tester.pumpWidget(createWelcomeScreen());
+      await tester.pumpApp(const OnboardingWelcomeScreen());
 
       expect(find.byType(ActionButton), findsNWidgets(2));
       expect(find.byType(Image), findsOneWidget);

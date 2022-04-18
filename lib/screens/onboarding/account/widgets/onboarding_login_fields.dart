@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding/account/widgets/social_onboarding.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/shared/country_emoji.dart';
@@ -54,9 +54,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
 
   Widget _buildGreeting() {
     return Text(
-      widget.isSignUp
-          ? 'onboarding.createAccount'.tr()
-          : 'onboarding.welcomeBack'.tr(),
+      widget.isSignUp ? context.l10n.createAccount : context.l10n.welcomeBack,
       style: Theme.of(context).textTheme.headline1!.copyWith(
             color: AlpacaColor.white100Color,
           ),
@@ -71,9 +69,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         right: 40,
       ),
       child: Text(
-        widget.isSignUp
-            ? 'onboarding.signUpCTA'.tr()
-            : 'onboarding.signInCTA'.tr(),
+        widget.isSignUp ? context.l10n.signUpCTA : context.l10n.signInCTA,
         style: Theme.of(context)
             .textTheme
             .headline5!
@@ -89,7 +85,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         Padding(
           padding: const EdgeInsets.only(bottom: 6),
           child: Text(
-            'Mobile number',
+            context.l10n.mobileNumber,
             style: Theme.of(context)
                 .textTheme
                 .headline4!
@@ -115,7 +111,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
             },
             validator: (text) {
               if (!isValidPhoneNumber) {
-                return 'Please enter a valid german mobile number!';
+                return context.l10n.mobileNumberValidationError;
               }
               return null;
             },
@@ -132,7 +128,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
                 ),
               ),
               fillColor: AlpacaColor.primary80,
-              hintText: 'Mobile number',
+              hintText: context.l10n.mobileNumber,
               filled: true,
               hintStyle: const TextStyle(
                 color: AlpacaColor.white80Color,
@@ -234,7 +230,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'or'.tr(),
+            context.l10n.or,
             style: Theme.of(context)
                 .textTheme
                 .headline5!
@@ -261,14 +257,14 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
       child: Container(
         alignment: Alignment.center,
         child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.65,
+          width: MediaQuery.of(context).size.width * 0.8,
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: 'By continuing, I agree to Crunch’s ',
+              text: context.l10n.agreeToTerms,
               children: [
                 TextSpan(
-                  text: 'Terms of service',
+                  text: ' ${context.l10n.termsOfService}',
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => launch(
                           'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
@@ -277,9 +273,9 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
                     decoration: TextDecoration.underline,
                   ),
                 ),
-                const TextSpan(text: ' and'),
+                TextSpan(text: ' ${context.l10n.and} '),
                 TextSpan(
-                  text: ' Privacy Policy.',
+                  text: context.l10n.privacyPolicy,
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => launch(
                           'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
@@ -288,6 +284,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
                     decoration: TextDecoration.underline,
                   ),
                 ),
+                TextSpan(text: context.l10n.agreeToTermsEnd),
               ],
               style: Theme.of(context)
                   .textTheme
