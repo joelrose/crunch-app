@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class CheckoutConfirmationTime extends StatefulWidget {
   const CheckoutConfirmationTime({Key? key, required this.pickupTime})
@@ -40,9 +41,9 @@ class _CheckoutConfirmationTimeState extends State<CheckoutConfirmationTime> {
   Widget build(BuildContext context) {
     String waitTimeText = '';
     if (minutesToPickupOrder > 0) {
-      waitTimeText = '${minutesToPickupOrder.toString()} min';
+      waitTimeText = '${minutesToPickupOrder.toString()} ${context.l10n.min}';
     } else {
-      waitTimeText = 'Ready';
+      waitTimeText = context.l10n.ready;
     }
     return Text(
       waitTimeText,

@@ -34,5 +34,12 @@
    "directionsButtonLabel": "Navigieren ->",
    "connectionPaymentFail": "Verbindung zum Zahlungs Dienstleister nicht möglich",
    "buttonPayLabel": "Bezahlen",
-   "orderOverview": "Bestellungen"
+   "orderOverview": "Bestellungen",
+   "checkoutCartItems": "Einkaufswagen",
+   "edit": "Bearbeiten",
+   "min": "minuten",
+   "ready": "bereit",
+   "orderStatus": "Order status",
+   "orderInPreperation": "Your order is being prepared...",
+   "orderDetails": "Bestell Details"
 }

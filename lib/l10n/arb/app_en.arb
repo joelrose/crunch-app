@@ -34,5 +34,12 @@
   "directionsButtonLabel": "Get directions ->",
   "connectionPaymentFail": "Unable to connect to payment provider!",
   "buttonPayLabel": "Pay now",
-  "orderOverview": "Order Overview"
+  "orderOverview": "Order Overview",
+  "checkoutCartItems": "Cart items",
+  "edit": "edit",
+  "min": "min",
+  "ready": "ready",
+  "orderStatus": "Bestell status",
+  "orderInPreperation": "Deine Bestellung wird zubereitet...",
+  "orderDetails": "Order details"
 }
