@@ -78,7 +78,6 @@ flutter:
     - assets/
     - assets/onboarding/
     - assets/placeholder/
-    - assets/translations/
     - assets/logo/
     - assets/icons/
     - assets/enviroments/
