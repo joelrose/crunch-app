@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "or": "or",
+  "and": "and",
   "step": "Step",
   "next": "Continue",
   "welcomeTitle": "Welcome aboard!",
@@ -23,5 +24,7 @@
   "signUpCTA": "Let’s get started by choosing one of the ways to sign up below.",
   "signInCTA": "Please enter your phone number to log in again!",
   "lastName": "Last name",
-  "firstName": "First name"
+  "firstName": "First name",
+  "mobileNumber": "Mobile number",
+  "mobileNumberValidationError": "Please enter a valid german mobile number!"
 }

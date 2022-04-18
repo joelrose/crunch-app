@@ -85,7 +85,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         Padding(
           padding: const EdgeInsets.only(bottom: 6),
           child: Text(
-            'Mobile number',
+            context.l10n.mobileNumber,
             style: Theme.of(context)
                 .textTheme
                 .headline4!
@@ -111,7 +111,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
             },
             validator: (text) {
               if (!isValidPhoneNumber) {
-                return 'Please enter a valid german mobile number!';
+                return context.l10n.mobileNumberValidationError;
               }
               return null;
             },
@@ -128,7 +128,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
                 ),
               ),
               fillColor: AlpacaColor.primary80,
-              hintText: 'Mobile number',
+              hintText: context.l10n.mobileNumber,
               filled: true,
               hintStyle: const TextStyle(
                 color: AlpacaColor.white80Color,

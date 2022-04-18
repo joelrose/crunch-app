@@ -24,7 +24,7 @@ class OnboardingExplanationScreen extends StatelessWidget {
         image: 'assets/onboarding/step-1.png',
       ),
       SlideWidget(
-        title: context.l10n.explanationTitle2,
+        title: context.l10n.explanationTitle3,
         description: context.l10n.explanationDescription3,
         image: 'assets/onboarding/step-1.png',
       ),
