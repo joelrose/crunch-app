@@ -51,5 +51,12 @@
    "onboardingNameTitle": "Woo, du bist kein Roboter!",
    "onboardingNameDescription": "Wir brauchen ein wenig mehr Informationen. Bitte gib deinen Namen ein.",
    "onboardingNameNotValid": "Bitte gib einen gültigen Namen ein.",
-   "unknownAPIError": "Wir können uns aktuell nicht mit unserem Server verbinden. Bitte versuche es später noch einmal."
+   "unknownAPIError": "Wir können uns aktuell nicht mit unserem Server verbinden. Bitte versuche es später noch einmal.",
+   "checkoutCartItems": "Einkaufswagen",
+   "edit": "Bearbeiten",
+   "min": "minuten",
+   "ready": "bereit",
+   "orderStatus": "Order status",
+   "orderInPreperation": "Your order is being prepared...",
+   "orderDetails": "Bestell Details"
 }

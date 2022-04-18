@@ -8,6 +8,7 @@ import 'package:pickup/screens/checkout/widgets/checkout_order_overview_navbar_w
 import 'package:pickup/screens/checkout/widgets/checkout_store_widget.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation_time.dart';
 import 'package:pickup/screens/home/home.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class CheckoutConfirmationScreen extends StatelessWidget {
   const CheckoutConfirmationScreen({Key? key, required this.data})
@@ -25,8 +26,8 @@ class CheckoutConfirmationScreen extends StatelessWidget {
       statusBarStyle: SystemUiOverlayStyle.dark,
       child: Column(
         children: [
-          const CheckoutOrderNavbarWidget(
-            pageOverviewName: 'Order status',
+          CheckoutOrderNavbarWidget(
+            pageOverviewName: context.l10n.orderStatus,
             showBackButton: false,
           ),
           Flexible(
@@ -44,7 +45,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                         child: SizedBox(
                           width: 230,
                           child: Text(
-                            'Your order is being prepared...',
+                            context.l10n.orderInPreperation,
                             style: Theme.of(context).textTheme.headline2,
                           ),
                         ),
@@ -64,7 +65,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                       ),
                     ),
                     CheckoutHeaderRowWidget(
-                      header: 'Order details',
+                      header: context.l10n.orderDetails,
                       onPressed: () {},
                       buttonText: '',
                       disableButton: true,
@@ -83,7 +84,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                             (Route<dynamic> route) => false,
                           );
                         },
-                        buttonText: 'Continue',
+                        buttonText: context.l10n.next,
                       ),
                     ),
                   ],

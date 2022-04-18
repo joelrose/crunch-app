@@ -51,5 +51,12 @@
   "onboardingNameNotValid": "Please enter a valid password. Password must be at least 6 characters long.",
   "password": "Password",
   "repeatPassword": "Repeat password",
-  "unknownAPIError": "We can't connect to the server right now. Please try again later."
+  "unknownAPIError": "We can't connect to the server right now. Please try again later.",
+  "checkoutCartItems": "Cart items",
+  "edit": "edit",
+  "min": "min",
+  "ready": "ready",
+  "orderStatus": "Bestell status",
+  "orderInPreperation": "Deine Bestellung wird zubereitet...",
+  "orderDetails": "Order details"
 }
