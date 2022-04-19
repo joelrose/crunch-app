@@ -8,6 +8,15 @@ class DiscoverPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return const DiscoverView();
+  }
+}
+
+class DiscoverView extends StatelessWidget {
+  const DiscoverView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return SearchBar(
       child: Column(
         children: [
