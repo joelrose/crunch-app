@@ -76,9 +76,9 @@ class StoreOverview extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              StoreTag(name: 'Florian'),
+              StoreTag(name: 'Vegan'),
               SizedBox(width: 6),
-              StoreTag(name: 'Grollich'),
+              StoreTag(name: 'Pasta'),
             ],
           ),
           Padding(

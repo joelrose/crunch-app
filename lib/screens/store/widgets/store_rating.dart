@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/l10n/l10n.dart';
 
-
 class StoreRating extends StatelessWidget {
   const StoreRating({
     Key? key,

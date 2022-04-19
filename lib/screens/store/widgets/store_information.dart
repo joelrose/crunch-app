@@ -1,8 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pickup/screens/store/widgets/store_information_item.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/store/widgets/store_information_item.dart';
 
 class StoreInformation extends StatelessWidget {
   const StoreInformation({

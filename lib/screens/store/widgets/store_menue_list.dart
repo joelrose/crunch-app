@@ -7,33 +7,23 @@ import 'package:pickup/screens/store_detail/store_detail.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/utilities.dart';
 
-class StoreMenueList extends StatefulWidget {
-  const StoreMenueList({
+class StoreMenueList extends StatelessWidget {
+  StoreMenueList({
     Key? key,
     required this.menueCategories,
     required this.onCheckoutChange,
     required this.restaurantImage,
   }) : super(key: key);
 
+  List<CreateOrderItemDto> checkoutItems = [];
+
   final List<DeliverectCategoryModelDto> menueCategories;
   final void Function(List<CreateOrderItemDto>) onCheckoutChange;
   final String restaurantImage;
 
   @override
-  State<StoreMenueList> createState() => _StoreMenueListState();
-}
-
-class _StoreMenueListState extends State<StoreMenueList> {
-  List<CreateOrderItemDto> checkoutItems = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    widget.menueCategories.sort(
+    menueCategories.sort(
       (a, b) => a.sortOrder!.compareTo(b.sortOrder!),
     );
 
@@ -65,11 +55,11 @@ class _StoreMenueListState extends State<StoreMenueList> {
           ),
         ),
         ListView.builder(
-          itemCount: widget.menueCategories.length,
+          itemCount: menueCategories.length,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, j) {
-            final category = widget.menueCategories[j];
+            final category = menueCategories[j];
             category.products!.sort(
               (a, b) => a.product!.sortOrder!.compareTo(b.product!.sortOrder!),
             );
@@ -103,10 +93,10 @@ class _StoreMenueListState extends State<StoreMenueList> {
                                     child: StoreDetailPage(
                                       data: ProductDetailsData(
                                         item: item,
-                                        restaurantImage: widget.restaurantImage,
+                                        restaurantImage: restaurantImage,
                                         checkoutItems: checkoutItems,
                                         onCheckoutChange:
-                                            widget.onCheckoutChange,
+                                            onCheckoutChange,
                                       ),
                                     ),
                                   );

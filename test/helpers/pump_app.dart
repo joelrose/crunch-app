@@ -8,6 +8,7 @@ import 'package:hermes_repository/hermes_repository.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
@@ -23,6 +24,7 @@ extension PumpApp on WidgetTester {
     AuthenticationRepository? authenticationRepository,
     OneSignalRepository? oneSignalRepository,
     HermesRepository? hermesRepository,
+    DiscoverCubit? discoverCubit,
   }) {
     final innerChild = Scaffold(
       body: widget,
@@ -45,19 +47,23 @@ extension PumpApp on WidgetTester {
             value: hermesRepository ?? _hermesRepository,
           ),
         ],
-        child: MaterialApp(
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-          theme: getThemeData(),
-          home: navigator == null
-              ? innerChild
-              : MockNavigatorProvider(
-                  navigator: navigator,
-                  child: innerChild,
-                ),
+        child: BlocProvider(
+          create: (context) =>
+              discoverCubit ?? DiscoverCubit(_hermesRepository),
+          child: MaterialApp(
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: getThemeData(),
+            home: navigator == null
+                ? innerChild
+                : MockNavigatorProvider(
+                    navigator: navigator,
+                    child: innerChild,
+                  ),
+          ),
         ),
       ),
     );

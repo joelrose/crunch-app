@@ -2,7 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/store/cubit/store_cubit.dart';
@@ -35,9 +35,9 @@ class StoreView extends StatelessWidget {
                       CheckoutScreen.route,
                       arguments: CreateStoreData(
                         checkoutItems: state.checkoutItems!,
-                        storeName: model.menu!.menu!, //model.store.,
+                        storeName: model.menu!.menu!,
                         googleMaps: model
-                            .googleMapsLink!, //model.restaurant.googleMapsUrl,
+                            .googleMapsLink!,
                         merchantId: model.id!,
                       ),
                     );
