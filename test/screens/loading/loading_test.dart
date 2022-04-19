@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
-import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 
 import '../../helpers/helpers.dart';
 
@@ -39,7 +38,7 @@ void main() {
         (_) => Future.value(null),
       );
 
-      when(() => navigator.pushNamedAndRemoveUntil<Object?>(any(), any()))
+      when(() => navigator.pushAndRemoveUntil<void>(any(), any()))
           .thenAnswer((_) async {});
 
       FakeAsync().run((fakeAsync) {
@@ -51,12 +50,9 @@ void main() {
         fakeAsync.flushTimers();
       });
 
-      verify(
-        () => navigator.pushNamedAndRemoveUntil<Object?>(
-          OnboardingWelcomeScreen.route,
-          any(),
-        ),
-      ).called(1);
+      verify(() =>
+              navigator.pushAndRemoveUntil<void>(any(that: isRoute<void>()), any()))
+          .called(1);
     });
 
     testWidgets('loading screen loaded authenticated', (tester) async {

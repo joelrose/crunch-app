@@ -8,10 +8,8 @@ import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
-import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
-import 'package:pickup/screens/store/model/create_store_data.dart';
 import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
 import 'package:pickup/shared/models/create_account_model.dart';
@@ -23,10 +21,6 @@ class Router {
       case LoadingScreen.route:
         return CupertinoPageRoute(
           builder: (_) => const LoadingScreen(),
-        );
-      case OnboardingWelcomeScreen.route:
-        return CupertinoPageRoute(
-          builder: (_) => const OnboardingWelcomeScreen(),
         );
       case OnboardingExplanationScreen.route:
         return CupertinoPageRoute(

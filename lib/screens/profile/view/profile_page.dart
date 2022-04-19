@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/onboarding/welcome/welcome.dart';
+import 'package:pickup/screens/onboarding_welcome/onboarding_welcome.dart';
 import 'package:pickup/screens/profile/widgets/profile_tile.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -66,8 +66,8 @@ class ProfilePage extends StatelessWidget {
 
                       await authenticationRepository.signOut();
 
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        OnboardingWelcomeScreen.route,
+                      Navigator.of(context).pushAndRemoveUntil(
+                        OnboardingWelcomePage.route(),
                         (route) => false,
                       );
                     },

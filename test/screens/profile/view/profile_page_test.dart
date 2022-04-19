@@ -2,7 +2,6 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
-import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/view/profile_page.dart';
 import 'package:pickup/screens/profile/widgets/profile_tile.dart';
 
@@ -28,7 +27,7 @@ void main() {
 
         when(() => authenticationRepository.signOut()).thenAnswer((_) async {});
 
-        when(() => navigator.pushNamedAndRemoveUntil<Object?>(any(), any()))
+        when(() => navigator.pushAndRemoveUntil<void>(any(), any()))
             .thenAnswer((_) async {});
 
         await tester.pumpApp(
@@ -51,8 +50,8 @@ void main() {
         ).called(1);
 
         verify(
-          () => navigator.pushNamedAndRemoveUntil<Object?>(
-            OnboardingWelcomeScreen.route,
+          () => navigator.pushAndRemoveUntil<void>(
+            any(that: isRoute<void>()),
             any(),
           ),
         ).called(1);

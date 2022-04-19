@@ -4,10 +4,23 @@ import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 
-class OnboardingWelcomeScreen extends StatelessWidget {
-  const OnboardingWelcomeScreen({Key? key}) : super(key: key);
+class OnboardingWelcomePage extends StatelessWidget {
+  const OnboardingWelcomePage({Key? key}) : super(key: key);
 
-  static const route = '/onboarding/welcome';
+  static Route<void> route() {
+    return MaterialPageRoute(
+      builder: (_) => const OnboardingWelcomePage(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const OnboardingWelcomeView();
+  }
+}
+
+class OnboardingWelcomeView extends StatelessWidget {
+  const OnboardingWelcomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +30,27 @@ class OnboardingWelcomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildImage(context),
+          const _Image(),
           Container(
             alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
+            child: const Padding(
+              padding: EdgeInsets.symmetric(
                 horizontal: 18.0,
               ),
-              child: _buildContent(context),
+              child: _Content(),
             ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildContent(BuildContext context) {
+class _Content extends StatelessWidget {
+  const _Content({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
 
     return Column(
@@ -73,8 +91,13 @@ class OnboardingWelcomeScreen extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildImage(BuildContext context) {
+class _Image extends StatelessWidget {
+  const _Image({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.50,
