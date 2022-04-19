@@ -1,7 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/store_detail/view/store_detail.dart';
@@ -25,12 +24,10 @@ class StoreMenueList extends StatefulWidget {
 }
 
 class _StoreMenueListState extends State<StoreMenueList> {
-  late final SlidableController slidableController;
   List<CreateOrderItemDto> checkoutItems = [];
 
   @override
   void initState() {
-    slidableController = SlidableController();
     super.initState();
   }
 
