@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:pickup/l10n/l10n.dart';
 
 class CheckoutStoreDirectionWidget extends StatelessWidget {
   const CheckoutStoreDirectionWidget({

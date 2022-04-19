@@ -2,8 +2,9 @@ import 'package:alpaca/alpaca.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout/widgets/widgets.dart';
@@ -11,8 +12,6 @@ import 'package:pickup/screens/checkout_cart_items/checkout_cart_items.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/checkout_time_picker/checkout_pickup_widget.dart';
 import 'package:pickup/screens/store/model/model.dart';
-import 'package:pickup/services/hermes_service.dart';
-import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -45,7 +44,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   Future<String?> _getPaymentIntent() async {
-    final hermesService = locator<HermesService>();
+    final hermesService = context.read<HermesRepository>();
 
     final response = await hermesService.client.apiOrdersPost(
       body: CreateOrderRequestDto(

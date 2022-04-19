@@ -1,25 +1,18 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 
 import '../../helpers/pump_app.dart';
-import '../../test_helper.dart';
 
 void main() {
   late MockNavigator navigator;
 
   group('Onboarding welcome widget test', () {
     setUpAll(() async {
-      final GetIt locator = GetIt.instance;
-      locator.allowReassignment = true;
-
-      TestHelper.registerMockAuthService(locator);
-
       navigator = MockNavigator();
 
       when(() => navigator.pushNamed<Object?>(any())).thenAnswer((_) async {});
@@ -44,6 +37,7 @@ void main() {
       );
 
       expect(primaryButton, findsOneWidget);
+
       await tester.tap(primaryButton);
       await tester.pumpAndSettle();
 

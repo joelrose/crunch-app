@@ -2,11 +2,11 @@ import 'package:alpaca/alpaca.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/store_detail/view/store_detail.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/utilities.dart';
-import 'package:pickup/l10n/l10n.dart';
 
 class StoreMenueList extends StatefulWidget {
   const StoreMenueList({

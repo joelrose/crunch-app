@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/store/cubit/store_cubit.dart';
 import 'package:pickup/screens/store/view/store_view.dart';
-import 'package:pickup/services/hermes_service.dart';
-import 'package:pickup/services/service_locator.dart';
 
 class StorePage extends StatelessWidget {
   const StorePage({Key? key, required this.storeId}) : super(key: key);
@@ -16,7 +15,7 @@ class StorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => StoreCubit(
-        locator<HermesService>(),
+        context.read<HermesRepository>(),
       )..fetchRestaurant(storeId),
       child: const StoreView(),
     );

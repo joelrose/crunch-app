@@ -43,7 +43,7 @@ class StoreView extends StatelessWidget {
                     );
                   },
                   buttonText:
-                      '${context.l10n.storeFloatingButtonText(_getItemsInCart(state.checkoutItems!))} in Cart ->',
+                      '${context.l10n.storeFloatingButtonText(_getItemsInCart(state.checkoutItems))} in Cart ->',
                   priceText: Utilities.currencyFormat(
                     PriceCalulcation.getPriceOfItems(state.checkoutItems!),
                   ),

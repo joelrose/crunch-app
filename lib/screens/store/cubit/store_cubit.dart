@@ -1,20 +1,19 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hermes_api/hermes_api.dart';
-import 'package:pickup/services/hermes_service.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 
 part 'store_state.dart';
 
 class StoreCubit extends Cubit<StoreState> {
-  StoreCubit(this._hermesService) : super(const StoreState());
+  StoreCubit(this._hermesRepository) : super(const StoreState());
 
-  final HermesService _hermesService;
+  final HermesRepository _hermesRepository;
 
   Future<void> fetchRestaurant(String storeId) async {
     emit(state.copyWith(status: StoreStatus.loading));
 
     try {
-      final menuRequest = await _hermesService.client.apiMenusMenuIdGet(
+      final menuRequest = await _hermesRepository.client.apiMenusMenuIdGet(
         menuId: storeId,
       );
 

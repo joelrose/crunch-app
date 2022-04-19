@@ -1,15 +1,14 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/widgets/profile_tile.dart';
-import 'package:pickup/services/auth_service.dart';
-import 'package:pickup/services/service_locator.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const route = '/profile';
-  final AuthService auth = locator<AuthService>();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,10 @@ class ProfileScreen extends StatelessWidget {
                     isPrimaryButton: false,
                     textColor: AlpacaColor.redColor,
                     onPressed: () async {
-                      await auth.signOut();
+                      final authenticationRepository =
+                          context.read<AuthenticationRepository>();
+
+                      await authenticationRepository.signOut();
 
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         OnboardingWelcomeScreen.route,

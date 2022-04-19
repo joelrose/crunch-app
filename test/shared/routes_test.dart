@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
@@ -31,11 +31,18 @@ final List<RouteSettings> routeList = [
       isSocialLogin: false,
     ),
   ),
-  const RouteSettings(name: StorePage.route, arguments: ''),
+  const RouteSettings(
+    name: StorePage.route,
+    arguments: '',
+  ),
   RouteSettings(
     name: CheckoutScreen.route,
     arguments: CreateStoreData(
-        checkoutItems: [], googleMaps: '', merchantId: '', storeName: ''),
+      checkoutItems: [],
+      googleMaps: '',
+      merchantId: '',
+      storeName: '',
+    ),
   ),
   RouteSettings(
     name: CheckoutConfirmationScreen.route,

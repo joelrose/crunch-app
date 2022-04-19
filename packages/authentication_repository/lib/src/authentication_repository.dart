@@ -1,40 +1,33 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:pickup/services/auth_service.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
-class AuthServiceFirebase implements AuthService {
-  AuthServiceFirebase(
-    FirebaseAuth firebaseAuth,
-    GoogleSignIn googleSignIn,
-    GoogleHelper googleHelper,
-  ) {
-    _firebaseAuth = firebaseAuth;
-    _googleSignIn = googleSignIn;
-    _googleHelper = googleHelper;
+class AuthenticationRepository {
+  AuthenticationRepository({
+    FirebaseAuth? firebaseAuth,
+    GoogleSignIn? googleSignIn,
+    GoogleHelper? googleHelper,
+  }) {
+    _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+    _googleSignIn = googleSignIn ?? GoogleSignIn();
+    _googleHelper = googleHelper ?? GoogleHelper();
   }
 
   late FirebaseAuth _firebaseAuth;
   late GoogleSignIn _googleSignIn;
   late GoogleHelper _googleHelper;
 
-  @override
   Future<User?> get getUser => Future<User?>.value(_firebaseAuth.currentUser);
 
-  @override
   Stream<User?> get user => _firebaseAuth.authStateChanges();
 
-  @override
   Future<bool> get appleSignInAvailable => TheAppleSignIn.isAvailable();
 
-  @override
   FirebaseAuth get firebaseAuth => _firebaseAuth;
 
   // Signin with google
-  @override
   Future<User?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
@@ -60,7 +53,6 @@ class AuthServiceFirebase implements AuthService {
     }
   }
 
-  @override
   Future<User?> signInWithApple() async {
     try {
       final AuthorizationResult appleResult =
@@ -91,7 +83,6 @@ class AuthServiceFirebase implements AuthService {
     }
   }
 
-  @override
   Future<void> verifyNumber(
     String number,
     void Function(String) verifyCallback,
@@ -104,14 +95,15 @@ class AuthServiceFirebase implements AuthService {
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
         verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
-        verificationFailed: (FirebaseAuthException error) {},
+        verificationFailed: (FirebaseAuthException error) {
+          throw error;
+        },
       );
-    } catch (exception, stack) {
-      FirebaseCrashlytics.instance.recordError(exception, stack);
+    } catch (exception) {
+      throw exception;
     }
   }
 
-  @override
   Future<void> signOut() {
     return _firebaseAuth.signOut();
   }

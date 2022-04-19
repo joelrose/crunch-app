@@ -1,14 +1,13 @@
 import 'dart:async';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:hermes_api/hermes_api.dart';
-import 'package:pickup/services/auth_service.dart';
-import 'package:pickup/services/service_locator.dart';
 
-class HermesService {
-  HermesService() {
+class HermesRepository {
+  HermesRepository(
+      {required String apiUrl, required this.authenticationRepository}) {
     _chopperClient = ChopperClient(
-      baseUrl: dotenv.get('API_URL'),
+      baseUrl: apiUrl,
       services: [Swagger.create(ChopperClient())],
       converter: JsonSerializableConverter(SwaggerJsonDecoderMappings),
       interceptors: [_authHeader],
@@ -16,7 +15,7 @@ class HermesService {
   }
 
   late ChopperClient _chopperClient;
-  final AuthService _authService = locator<AuthService>();
+  final AuthenticationRepository authenticationRepository;
 
   Swagger get client => _chopperClient.getService<Swagger>();
 
@@ -24,7 +23,8 @@ class HermesService {
     final Map<String, String> updatedHeaders =
         Map<String, String>.of(request.headers);
 
-    final token = await _authService.firebaseAuth.currentUser!.getIdToken();
+    final token =
+        await authenticationRepository.firebaseAuth.currentUser!.getIdToken();
     updatedHeaders.putIfAbsent(
       'Authorization',
       () => 'Bearer $token',

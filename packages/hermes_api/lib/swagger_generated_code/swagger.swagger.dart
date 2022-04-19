@@ -166,6 +166,8 @@ class CreateOrderItemDto {
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.price, price) ||
                 const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.quantity, quantity) ||
+                const DeepCollectionEquality().equals(other.quantity, quantity)) &&
             (identical(other.items, items) ||
                 const DeepCollectionEquality().equals(other.items, items)));
   }

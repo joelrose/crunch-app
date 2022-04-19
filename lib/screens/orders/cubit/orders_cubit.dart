@@ -1,22 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hermes_api/hermes_api.dart';
-import 'package:pickup/services/hermes_service.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 
 part 'orders_state.dart';
 
 class OrdersCubit extends Cubit<OrdersState> {
-  OrdersCubit(this._hermesService) : super(OrdersState()) {
+  OrdersCubit(this._hermesRepository) : super(OrdersState()) {
     fetchOrders();
   }
 
-  final HermesService _hermesService;
+  final HermesRepository _hermesRepository;
 
   Future<void> fetchOrders() async {
     emit(state.copyWith(status: OrdersStatus.loading));
 
     try {
-      final orders = await _hermesService.client.apiOrdersGet();
+      final orders = await _hermesRepository.client.apiOrdersGet();
 
       if (orders.isSuccessful) {
         emit(

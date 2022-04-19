@@ -1,6 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/screens/search_bar/widgets/active_search_widget.dart';
 import 'package:pickup/screens/search_bar/widgets/start_searching_widget.dart';
