@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/services/auth_service.dart';
-import 'package:pickup/services/service_locator.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -25,7 +24,6 @@ class StepPhoneVerification extends StatefulWidget {
 }
 
 class _StepPhoneVerificationState extends State<StepPhoneVerification> {
-  AuthService auth = locator<AuthService>();
   String? _verificationId;
 
   final TextEditingController _textController = TextEditingController();
@@ -73,21 +71,24 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   }
 
   Future<void> _sendVerification() async {
-    await auth.firebaseAuth.verifyPhoneNumber(
-      phoneNumber: widget.phoneNumber,
-      codeSent: (String verificationId, int? resendToken) async {
-        _verificationId = verificationId;
+    await context
+        .read<AuthenticationRepository>()
+        .firebaseAuth
+        .verifyPhoneNumber(
+          phoneNumber: widget.phoneNumber,
+          codeSent: (String verificationId, int? resendToken) async {
+            _verificationId = verificationId;
 
-        startTimer();
+            startTimer();
 
-        LoadingUtils.hide();
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-      verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
-      verificationFailed: (FirebaseAuthException error) {
-        FirebaseCrashlytics.instance.recordError(error, null);
-      },
-    );
+            LoadingUtils.hide();
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {},
+          verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
+          verificationFailed: (FirebaseAuthException error) {
+            FirebaseCrashlytics.instance.recordError(error, null);
+          },
+        );
   }
 
   Future<void> _verifyNumber(String code) async {
@@ -97,7 +98,10 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
     );
 
     try {
-      await auth.firebaseAuth.signInWithCredential(credential);
+      await context
+          .read<AuthenticationRepository>()
+          .firebaseAuth
+          .signInWithCredential(credential);
 
       widget.onFinish();
     } catch (exception) {

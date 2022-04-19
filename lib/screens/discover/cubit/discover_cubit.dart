@@ -1,22 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hermes_api/hermes_api.dart';
-import 'package:pickup/services/hermes_service.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 
 part 'discover_state.dart';
 
 class DiscoverCubit extends Cubit<DiscoverState> {
-  DiscoverCubit(this._hermesService) : super(DiscoverState()) {
+  DiscoverCubit(this._hermesRepository) : super(DiscoverState()) {
     fetchRestaurants();
   }
 
-  final HermesService _hermesService;
+  final HermesRepository _hermesRepository;
 
   Future<void> fetchRestaurants() async {
     emit(state.copyWith(status: DiscoverStatus.loading));
 
     try {
-      final stores = await _hermesService.client.apiMenusGet();
+      final stores = await _hermesRepository.client.apiMenusGet();
 
       if (stores.isSuccessful) {
         emit(

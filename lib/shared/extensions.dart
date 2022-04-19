@@ -1,4 +1,4 @@
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 
 extension DeliverectOrderStatusExtension on DeliverectOrderStatus {
   String get string {

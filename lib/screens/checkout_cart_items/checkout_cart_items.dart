@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/widgets/check_out_items_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';

@@ -15,7 +15,7 @@ class NotActiveSearchWidget extends StatelessWidget {
         context.l10n.startSearch,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: AlpacaColor.darkNavyColor),
+        style: const TextStyle(color: AlpacaColor.darkNavyColor),
       ),
     );
   }

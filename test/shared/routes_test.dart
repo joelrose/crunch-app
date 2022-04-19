@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
@@ -12,7 +12,8 @@ import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
-import 'package:pickup/screens/store/store.dart';
+import 'package:pickup/screens/store/model/create_store_data.dart';
+import 'package:pickup/screens/store/view/store.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
 import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
@@ -30,11 +31,18 @@ final List<RouteSettings> routeList = [
       isSocialLogin: false,
     ),
   ),
-  const RouteSettings(name: StoreScreen.route, arguments: ''),
+  const RouteSettings(
+    name: StorePage.route,
+    arguments: '',
+  ),
   RouteSettings(
     name: CheckoutScreen.route,
     arguments: CreateStoreData(
-        checkoutItems: [], googleMaps: '', merchantId: '', storeName: ''),
+      checkoutItems: [],
+      googleMaps: '',
+      merchantId: '',
+      storeName: '',
+    ),
   ),
   RouteSettings(
     name: CheckoutConfirmationScreen.route,

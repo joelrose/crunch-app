@@ -1,17 +1,15 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:fake_async/fake_async.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/screens/onboarding/welcome/welcome.dart';
-import 'package:pickup/services/auth_service.dart';
 
 import '../../helpers/helpers.dart';
 
-class MockAuthService extends Mock implements AuthService {}
+class MockAuthService extends Mock implements AuthenticationRepository {}
 
 class MockUser extends Mock implements User {}
 
@@ -23,12 +21,7 @@ void main() {
   setUp(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
 
-    final GetIt locator = GetIt.instance;
-    locator.allowReassignment = true;
-
     mockAuthService = MockAuthService();
-
-    locator.registerSingleton<AuthService>(mockAuthService);
 
     navigator = MockNavigator();
   });
@@ -53,6 +46,7 @@ void main() {
         tester.pumpApp(
           const LoadingScreen(),
           navigator: navigator,
+          authenticationRepository: mockAuthService,
         );
         fakeAsync.flushTimers();
       });
@@ -76,6 +70,7 @@ void main() {
         tester.pumpApp(
           const LoadingScreen(),
           navigator: navigator,
+          authenticationRepository: mockAuthService,
         );
         fakeAsync.flushTimers();
       });

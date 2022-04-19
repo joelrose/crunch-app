@@ -1,9 +1,9 @@
-import 'package:hermes_api/hermes_api.dart';
+import 'package:authentication_repository/src/authentication_repository.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:pickup/services/hermes_service.dart';
 
-class MockHermesService implements HermesService {
+class MockHermesService implements HermesRepository {
   MockHermesService(
     String response,
     int statusCode, {
@@ -25,4 +25,8 @@ class MockHermesService implements HermesService {
 
   @override
   Swagger get client => _chopperClient.getService<Swagger>();
+
+  @override
+  // TODO: implement authenticationRepository
+  AuthenticationRepository get authenticationRepository => throw UnimplementedError();
 }

@@ -2,7 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/orders/cubit/orders_cubit.dart';
 import 'package:pickup/screens/orders/widgets/widgets.dart';
