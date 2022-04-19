@@ -9,8 +9,6 @@ import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
-import 'package:pickup/screens/onboarding/explanation/explanation.dart';
-import 'package:pickup/screens/onboarding_welcome/view/onboarding_welcome_page.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/store/model/create_store_data.dart';
 import 'package:pickup/screens/store/view/store.dart';
@@ -22,7 +20,6 @@ import 'package:test/test.dart';
 
 final List<RouteSettings> routeList = [
   const RouteSettings(name: LoadingScreen.route),
-  const RouteSettings(name: OnboardingExplanationScreen.route),
   const RouteSettings(name: OnboardingAccountScreen.route, arguments: true),
   RouteSettings(
     name: OnboardingCreateAccountScreen.route,

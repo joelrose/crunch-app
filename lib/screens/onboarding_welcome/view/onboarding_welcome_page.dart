@@ -2,7 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding/account/account.dart';
-import 'package:pickup/screens/onboarding/explanation/explanation.dart';
+import 'package:pickup/screens/onboarding_explanation/onboarding_explanation.dart';
 
 class OnboardingWelcomePage extends StatelessWidget {
   const OnboardingWelcomePage({Key? key}) : super(key: key);
@@ -75,8 +75,8 @@ class _Content extends StatelessWidget {
         ActionButton(
           key: const Key('onboarding_welcome.primary'),
           buttonText: context.l10n.welcomePrimaryButtonText,
-          onPressed: () => Navigator.of(context).pushNamed(
-            OnboardingExplanationScreen.route,
+          onPressed: () => Navigator.of(context).push(
+            OnboardingExplanationPage.route(),
           ),
           isPrimaryButton: false,
         ),
