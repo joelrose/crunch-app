@@ -62,7 +62,7 @@ final List<RouteSettings> routeList = [
       restaurantImage: '',
     ),
   ),
-  const RouteSettings(name: RestaurantDetailView.route),
+  const RouteSettings(name: RestaurantDetailPage.route),
 ];
 
 void main() {

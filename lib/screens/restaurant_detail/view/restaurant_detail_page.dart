@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickup/screens/restaurant_overview_list/restaurant_overview_list.dart';
 
-class RestaurantDetailView extends StatelessWidget {
+class RestaurantDetailPage extends StatelessWidget {
   static const route = '/discover/list';
 
   @override
