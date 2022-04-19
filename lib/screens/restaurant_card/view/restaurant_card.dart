@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/store/store.dart';
 
 class RestaurantCard extends StatelessWidget {

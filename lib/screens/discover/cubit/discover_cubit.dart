@@ -5,9 +5,7 @@ import 'package:hermes_repository/hermes_repository.dart';
 part 'discover_state.dart';
 
 class DiscoverCubit extends Cubit<DiscoverState> {
-  DiscoverCubit(this._hermesRepository) : super(DiscoverState()) {
-    fetchRestaurants();
-  }
+  DiscoverCubit(this._hermesRepository) : super(DiscoverState());
 
   final HermesRepository _hermesRepository;
 

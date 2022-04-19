@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 
@@ -41,7 +42,7 @@ class _CheckoutContactDetailsWidgetState
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                 child: AlpacaTextField(
                   textColor: AlpacaColor.darkNavyColor,
-                  hintText: 'Phone Number',
+                  hintText: context.l10n.mobileNumber,
                   textController: _phoneNumberController,
                   validator: (value) => null,
                 ),

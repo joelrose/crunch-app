@@ -51,7 +51,7 @@ class AppView extends StatelessWidget {
         BlocProvider(
           create: (_) => DiscoverCubit(
             context.read<HermesRepository>(),
-          ),
+          )..fetchRestaurants(),
         ),
       ],
       child: MaterialApp(

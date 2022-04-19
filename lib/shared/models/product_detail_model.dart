@@ -1,4 +1,3 @@
-
 import 'package:hermes_repository/hermes_repository.dart';
 
 class ProductDetailsData {
