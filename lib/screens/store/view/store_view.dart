@@ -38,7 +38,7 @@ class StoreView extends StatelessWidget {
                         storeName: model.menu!.menu!, //model.store.,
                         googleMaps: model
                             .googleMapsLink!, //model.restaurant.googleMapsUrl,
-                        merchantId: model.menu!.menuId!,
+                        merchantId: model.id!,
                       ),
                     );
                   },
