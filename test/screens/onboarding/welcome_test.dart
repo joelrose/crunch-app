@@ -14,8 +14,6 @@ void main() {
   group('Onboarding welcome widget test', () {
     setUpAll(() async {
       navigator = MockNavigator();
-
-      when(() => navigator.pushNamed<Object?>(any())).thenAnswer((_) async {});
     });
 
     testWidgets('welcome screen loaded', (tester) async {
@@ -27,6 +25,8 @@ void main() {
 
     testWidgets('SignIn button is present and triggers navigation after tapped',
         (WidgetTester tester) async {
+      when(() => navigator.pushNamed<Object?>(any())).thenAnswer((_) async {});
+
       await tester.pumpApp(
         const OnboardingWelcomeScreen(),
         navigator: navigator,
@@ -50,6 +50,9 @@ void main() {
 
     testWidgets('SignUp button is present and triggers navigation after tapped',
         (WidgetTester tester) async {
+      when(() => navigator.pushNamed<Object?>(any(), arguments: false))
+          .thenAnswer((_) async {});
+
       await tester.pumpApp(
         const OnboardingWelcomeScreen(),
         navigator: navigator,
@@ -67,6 +70,7 @@ void main() {
       verify(
         () => navigator.pushNamed<Object?>(
           OnboardingAccountScreen.route,
+          arguments: false,
         ),
       ).called(1);
     });
