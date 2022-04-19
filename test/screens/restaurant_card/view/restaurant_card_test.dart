@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
 import 'package:mockingjay/mockingjay.dart';
-import 'package:pickup/screens/restaurant_card/restaurant_card.dart';
 import 'package:network_image_mock/network_image_mock.dart';
+import 'package:pickup/screens/restaurant_card/restaurant_card.dart';
 import 'package:pickup/screens/store/store.dart';
 
 import '../../../helpers/pump_app.dart';
@@ -12,7 +12,9 @@ import '../../../helpers/pump_app.dart';
 final GetMenusResponseDto mockRestaurantModel = GetMenusResponseDto(
   averagePickUpTime: '15',
   menu: DeliverectMenusDto(
-      menuImageUrl: 'https://picsum.photos/250?image=9', menu: 'test'),
+    menuImageUrl: 'https://picsum.photos/250?image=9',
+    menu: 'test',
+  ),
   id: '879398514',
   rating: 4.5,
   reviewCount: '10',
@@ -37,7 +39,12 @@ void main() {
   testWidgets('restaurant card navigates on tap', (WidgetTester tester) async {
     final navigator = MockNavigator();
 
-    when(() => navigator.pushNamed<Object?>(any())).thenAnswer((_) async {});
+    when(
+      () => navigator.pushNamed<Object?>(
+        any(),
+        arguments: mockRestaurantModel.id,
+      ),
+    ).thenAnswer((_) async {});
 
     await mockNetworkImagesFor(
       () => tester.pumpApp(
@@ -58,9 +65,8 @@ void main() {
     await tester.pumpAndSettle();
 
     verify(
-      () => navigator.pushNamed<Object?>(
-        StoreScreen.route,
-      ),
+      () => navigator.pushNamed<Object?>(StoreScreen.route,
+          arguments: mockRestaurantModel.id),
     ).called(1);
   });
 }
