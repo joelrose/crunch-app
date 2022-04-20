@@ -1,9 +1,11 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/onboarding/account/widgets/social_onboarding.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
+import 'package:pickup/screens/onboarding_account/cubit/onboarding_account_cubit.dart';
+import 'package:pickup/screens/onboarding_account/widgets/widgets.dart';
 import 'package:pickup/shared/country_emoji.dart';
 import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/phone_number_verification.dart';
@@ -11,10 +13,7 @@ import 'package:pickup/shared/show_async_loading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OnboardingLoginFields extends StatefulWidget {
-  const OnboardingLoginFields({Key? key, required this.isSignUp})
-      : super(key: key);
-
-  final bool isSignUp;
+  const OnboardingLoginFields({Key? key}) : super(key: key);
 
   @override
   _OnboardingInputFieldsState createState() => _OnboardingInputFieldsState();
@@ -32,6 +31,9 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
 
   @override
   Widget build(BuildContext context) {
+    final isSignUp =
+        context.select((OnboardingAccountCubit cubit) => cubit.state.isSignUp);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 20,
@@ -41,39 +43,31 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          _buildGreeting(),
-          _buildTextSignInOrUp(),
+          Text(
+            isSignUp ? context.l10n.createAccount : context.l10n.welcomeBack,
+            style: Theme.of(context).textTheme.headline1!.copyWith(
+                  color: AlpacaColor.white100Color,
+                ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: 30,
+              top: 10,
+              right: 40,
+            ),
+            child: Text(
+              isSignUp ? context.l10n.signUpCTA : context.l10n.signInCTA,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(color: AlpacaColor.white100Color),
+            ),
+          ),
           _buildTextField(),
           _buildOrLine(),
-          SocialOnboarding(isSignUp: widget.isSignUp),
-          _buildAgreeToTerms()
+          const SocialOnboarding(),
+          const _AgreeToTerms(),
         ],
-      ),
-    );
-  }
-
-  Widget _buildGreeting() {
-    return Text(
-      widget.isSignUp ? context.l10n.createAccount : context.l10n.welcomeBack,
-      style: Theme.of(context).textTheme.headline1!.copyWith(
-            color: AlpacaColor.white100Color,
-          ),
-    );
-  }
-
-  Widget _buildTextSignInOrUp() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        bottom: 30,
-        top: 10,
-        right: 40,
-      ),
-      child: Text(
-        widget.isSignUp ? context.l10n.signUpCTA : context.l10n.signInCTA,
-        style: Theme.of(context)
-            .textTheme
-            .headline5!
-            .copyWith(color: AlpacaColor.white100Color),
       ),
     );
   }
@@ -246,8 +240,13 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
       ],
     );
   }
+}
 
-  Widget _buildAgreeToTerms() {
+class _AgreeToTerms extends StatelessWidget {
+  const _AgreeToTerms({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
         left: 20,

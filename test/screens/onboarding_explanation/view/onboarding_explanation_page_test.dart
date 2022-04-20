@@ -46,8 +46,7 @@ void main() {
     testWidgets(
         'navigates to OnboardingAccountScreen when next button is pressed',
         (WidgetTester tester) async {
-      when(() => navigator.pushNamed<Object?>(any(), arguments: true))
-          .thenAnswer((_) async {});
+      when(() => navigator.push<void>(any())).thenAnswer((_) async {});
 
       await tester.pumpApp(
         const OnboardingExplanationView(),
@@ -64,9 +63,8 @@ void main() {
       await tester.pumpAndSettle();
 
       verify(
-        () => navigator.pushNamed<Object?>(
-          any(),
-          arguments: true,
+        () => navigator.push<void>(
+          any(that: isRoute<void>()),
         ),
       ).called(1);
     });

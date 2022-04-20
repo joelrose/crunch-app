@@ -5,7 +5,6 @@ import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
-import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/profile/profile.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
@@ -20,12 +19,6 @@ class Router {
       case LoadingScreen.route:
         return CupertinoPageRoute(
           builder: (_) => const LoadingScreen(),
-        );
-      case OnboardingAccountScreen.route:
-        final args = settings.arguments! as bool;
-
-        return CupertinoPageRoute(
-          builder: (_) => OnboardingAccountScreen(isSignUp: args),
         );
       case OnboardingCreateAccountScreen.route:
         final args = settings.arguments! as CreateAccountData;

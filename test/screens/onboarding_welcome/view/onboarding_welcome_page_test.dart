@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
-import 'package:pickup/screens/onboarding/account/account.dart';
-import 'package:pickup/screens/onboarding/explanation/explanation.dart';
 import 'package:pickup/screens/onboarding_welcome/onboarding_welcome.dart';
 
 import '../../../helpers/helpers.dart';
@@ -63,10 +61,7 @@ void main() {
     testWidgets(
         'navigates to OnboardingAccountPage when SignUp button is pressed',
         (WidgetTester tester) async {
-      when(() => navigator.pushNamed<Object?>(any(), arguments: false))
-          .thenAnswer(
-        (_) async {},
-      );
+      when(() => navigator.push<void>(any())).thenAnswer((_) async {});
 
       await tester.pumpApp(
         const OnboardingWelcomeView(),
@@ -83,9 +78,8 @@ void main() {
       await tester.pumpAndSettle();
 
       verify(
-        () => navigator.pushNamed<Object?>(
-          OnboardingAccountScreen.route,
-          arguments: false,
+        () => navigator.push<void>(
+          any(that: isRoute<void>()),
         ),
       ).called(1);
     });

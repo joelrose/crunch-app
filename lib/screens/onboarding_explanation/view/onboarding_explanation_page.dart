@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/onboarding/account/account.dart';
+import 'package:pickup/screens/onboarding_account/onboarding_account.dart';
 import 'package:pickup/screens/onboarding_explanation/widgets/widgets.dart';
 
 class OnboardingExplanationPage extends StatelessWidget {
@@ -51,9 +51,8 @@ class OnboardingExplanationView extends StatelessWidget {
             child: ActionButton(
               key: const Key('onboarding_explanation.next'),
               buttonText: context.l10n.next,
-              onPressed: () => Navigator.of(context).pushNamed(
-                OnboardingAccountScreen.route,
-                arguments: true,
+              onPressed: () => Navigator.of(context).push(
+                OnboardingAccountPage.route(isSignUp: true),
               ),
               isPrimaryButton: false,
             ),

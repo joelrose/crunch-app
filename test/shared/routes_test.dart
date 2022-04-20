@@ -7,7 +7,6 @@ import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
-import 'package:pickup/screens/onboarding/account/account.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/store/model/create_store_data.dart';
@@ -20,7 +19,6 @@ import 'package:test/test.dart';
 
 final List<RouteSettings> routeList = [
   const RouteSettings(name: LoadingScreen.route),
-  const RouteSettings(name: OnboardingAccountScreen.route, arguments: true),
   RouteSettings(
     name: OnboardingCreateAccountScreen.route,
     arguments: CreateAccountData(

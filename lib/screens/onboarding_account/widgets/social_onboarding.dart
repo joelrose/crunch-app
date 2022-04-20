@@ -7,16 +7,18 @@ import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/onboarding/create_account/create_account.dart';
+import 'package:pickup/screens/onboarding_account/cubit/onboarding_account_cubit.dart';
 import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 
 class SocialOnboarding extends StatelessWidget {
-  const SocialOnboarding({Key? key, required this.isSignUp}) : super(key: key);
-
-  final bool isSignUp;
+  const SocialOnboarding({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final isSignUp =
+        context.select((OnboardingAccountCubit cubit) => cubit.state.isSignUp);
+
     return Column(
       children: [
         getSocialButton(
@@ -66,7 +68,7 @@ class SocialOnboarding extends StatelessWidget {
 
       final account = await hermesRepository.client.apiUsersGet();
 
-      if (account.statusCode == 200) {
+      if (account.isSuccessful) {
         Navigator.of(context).pushNamedAndRemoveUntil(
           HomePage.route,
           (route) => false,

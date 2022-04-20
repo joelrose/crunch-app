@@ -1,14 +1,42 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:pickup/screens/onboarding/account/widgets/onboarding_login_fields.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickup/screens/onboarding_account/cubit/onboarding_account_cubit.dart';
+import 'package:pickup/screens/onboarding_account/widgets/widgets.dart';
 
-class OnboardingAccountScreen extends StatelessWidget {
-  OnboardingAccountScreen({Key? key, required this.isSignUp}) : super(key: key);
+class OnboardingAccountPage extends StatelessWidget {
+  const OnboardingAccountPage({Key? key}) : super(key: key);
 
-  static const route = '/onboarding/account';
+  static Route<void> route({required bool isSignUp}) {
+    return MaterialPageRoute(
+      builder: (_) => BlocProvider(
+        create: (_) => OnboardingAccountCubit(isSignUp: isSignUp),
+        child: const OnboardingAccountPage(),
+      ),
+    );
+  }
 
-  final bool isSignUp;
+  @override
+  Widget build(BuildContext context) {
+    return const OnboardingAccountView();
+  }
+}
+
+class OnboardingAccountView extends StatefulWidget {
+  const OnboardingAccountView({Key? key}) : super(key: key);
+
+  @override
+  State<OnboardingAccountView> createState() => _OnboardingAccountViewState();
+}
+
+class _OnboardingAccountViewState extends State<OnboardingAccountView> {
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +68,23 @@ class OnboardingAccountScreen extends StatelessWidget {
     return Stack(
       children: [
         Column(
-          children: [
-            _buildHeader(context),
-            const Spacer(),
-            OnboardingLoginFields(isSignUp: isSignUp),
+          children: const [
+            _Header(),
+            Spacer(),
+            OnboardingLoginFields(),
           ],
         ),
-        _buildPositionedImage(context),
+        const _Image(),
       ],
     );
   }
+}
 
-  Widget _buildHeader(BuildContext context) {
+class _Header extends StatelessWidget {
+  const _Header({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.topLeft,
       padding: const EdgeInsets.symmetric(
@@ -72,8 +105,13 @@ class OnboardingAccountScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildPositionedImage(BuildContext context) {
+class _Image extends StatelessWidget {
+  const _Image({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Positioned(
       right: -70,
       top: -15,
