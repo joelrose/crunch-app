@@ -89,5 +89,6 @@
   "noRestaurantsFound": "No matching restaurant found...",
   "contactDetails": "Contact details",
   "contactDetailsDescription": "Providing a phone number allows the restaurant to contact you easily in case there is an issue with your order.",
-  "pickupTime": "Pickup Time"
+  "pickupTime": "Pickup Time",
+  "notOnWhitelist": "You are not on the whitelist, you'll get access soon."
 }

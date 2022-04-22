@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding_account/cubit/onboarding_account_cubit.dart';
 import 'package:pickup/screens/onboarding_account/widgets/widgets.dart';
@@ -157,15 +158,34 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         if (_form.currentState!.validate()) {
           LoadingUtils.show();
 
-          Navigator.of(context).pushAndRemoveUntil(
-            OnboardingCreateAccountPage.route(
-              data: CreateAccountData(
-                phoneNumber: phoneNumber,
-                isSocialLogin: false,
+          final hermesRepository = context.read<HermesRepository>();
+
+          final response = await hermesRepository.client
+              .apiWhitelistuserPost(body: phoneNumber);
+
+          if (response.isSuccessful && response.body == true) {
+            Navigator.of(context).pushAndRemoveUntil(
+              OnboardingCreateAccountPage.route(
+                data: CreateAccountData(
+                  phoneNumber: phoneNumber,
+                  isSocialLogin: false,
+                ),
               ),
-            ),
-            (route) => false,
-          );
+              (route) => false,
+            );
+          } else {
+            final snackBar = SnackBar(
+              content: Text(context.l10n.notOnWhitelist),
+            );
+
+            if (!mounted) {
+              return;
+            }
+
+            LoadingUtils.hide();
+
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         } else {}
       },
       child: ClipRRect(

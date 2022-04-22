@@ -1,13 +1,13 @@
 part of 'onboarding_create_account_cubit.dart';
 
-enum OnboardingStep { phoneVerification, password, name, placeholder }
+enum OnboardingStep { phoneVerification, name, placeholder }
 
 class OnboardingCreateAccountState extends Equatable {
   OnboardingCreateAccountState({
     OnboardingStep? step,
     required this.data,
   }) {
-    maxSteps = data.isSocialLogin ? 2 : 4;
+    maxSteps = data.isSocialLogin ? 2 : 3;
     this.step = step ??
         (data.isSocialLogin
             ? OnboardingStep.name

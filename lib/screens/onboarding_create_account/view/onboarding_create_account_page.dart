@@ -176,7 +176,6 @@ class _Stack extends StatelessWidget {
                   StepPhoneVerification(
                     phoneNumber: state.data.phoneNumber!,
                   ),
-                  const StepSetPassword(),
                 ],
                 const StepInsertName(),
                 const StepPlaceholder(),

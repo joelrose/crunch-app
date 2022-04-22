@@ -24,7 +24,7 @@ class HermesRepository {
         Map<String, String>.of(request.headers);
 
     final token =
-        await authenticationRepository.firebaseAuth.currentUser!.getIdToken();
+        await authenticationRepository.firebaseAuth.currentUser?.getIdToken();
     updatedHeaders.putIfAbsent(
       'Authorization',
       () => 'Bearer $token',

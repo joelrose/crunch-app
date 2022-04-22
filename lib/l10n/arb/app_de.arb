@@ -89,5 +89,6 @@
    "noRestaurantsFound": "Keine Restaurt gefunden",
    "contactDetails": "Kontaktdaten",
    "contactDetailsDescription": "Wenn du eine Telefonnummer angibts, kann das Restaurant dich im Fall von Problemen mit deiner Bestellung anrufen.",
-   "pickupTime": "Abholzeit"
+   "pickupTime": "Abholzeit",
+   "notOnWhitelist": "Du musst dich leider noch ein wenig gedulden, bevor Du die App nutzen kannst."
 }

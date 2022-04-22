@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:alpaca/alpaca.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
@@ -65,22 +67,35 @@ class SocialOnboarding extends StatelessWidget {
     if (user != null) {
       final hermesRepository = context.read<HermesRepository>();
 
-      final account = await hermesRepository.client.apiUsersGet();
+      final response =
+          await hermesRepository.client.apiWhitelistuserPost(body: user.email);
 
-      if (account.isSuccessful) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          HomePage.route,
-          (route) => false,
-        );
-      } else {
-        Navigator.of(context).pushAndRemoveUntil(
-          OnboardingCreateAccountPage.route(
-            data: CreateAccountData(
-              isSocialLogin: true,
+      if (response.isSuccessful && response.body == true) {
+        final account = await hermesRepository.client.apiUsersGet();
+
+        if (account.isSuccessful) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            HomePage.route,
+            (route) => false,
+          );
+        } else {
+          Navigator.of(context).pushAndRemoveUntil(
+            OnboardingCreateAccountPage.route(
+              data: const CreateAccountData(
+                isSocialLogin: true,
+              ),
             ),
-          ),
-          (route) => false,
+            (route) => false,
+          );
+        }
+      } else {
+        final snackBar = SnackBar(
+          content: Text(context.l10n.notOnWhitelist),
         );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+        await authenticationRepository.signOut();
       }
     }
   }

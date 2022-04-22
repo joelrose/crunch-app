@@ -5,7 +5,9 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/onboarding_create_account/cubit/onboarding_create_account_cubit.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -46,8 +48,6 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   void dispose() {
     _errorController.close();
     _timer?.cancel();
-
-    _textController.dispose();
 
     super.dispose();
   }
@@ -106,7 +106,19 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
 
       if (!mounted) return;
 
-      context.read<OnboardingCreateAccountCubit>().nextStep();
+      final account =
+          await context.read<HermesRepository>().client.apiUsersGet();
+
+      if (!mounted) return;
+
+      if (account.isSuccessful) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          HomePage.route,
+          (route) => false,
+        );
+      } else {
+        context.read<OnboardingCreateAccountCubit>().nextStep();
+      }
     } catch (exception) {
       _errorController.add(
         ErrorAnimationType.shake,
