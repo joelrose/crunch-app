@@ -1,14 +1,12 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pickup/screens/home/home.dart';
 
 class StepPlaceholder extends StatelessWidget {
   const StepPlaceholder({
     Key? key,
-    required this.onFinish,
   }) : super(key: key);
-
-  final void Function() onFinish;
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +42,13 @@ class StepPlaceholder extends StatelessWidget {
           'assets/onboarding/placeholder.svg',
           height: 250,
         ),
-        Expanded(
-          child: Container(),
-        ),
+        Container(height: 40),
         ActionButton(
           buttonText: 'Start exploring',
-          onPressed: onFinish,
+          onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+            HomePage.route,
+            (route) => false,
+          ),
         ),
       ],
     );

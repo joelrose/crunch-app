@@ -6,9 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/home/home.dart';
-import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/onboarding_account/cubit/onboarding_account_cubit.dart';
-import 'package:pickup/shared/models/create_account_model.dart';
+import 'package:pickup/screens/onboarding_create_account/onboarding_create_account.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 
 class SocialOnboarding extends StatelessWidget {
@@ -74,12 +73,13 @@ class SocialOnboarding extends StatelessWidget {
           (route) => false,
         );
       } else {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          OnboardingCreateAccountScreen.route,
-          (route) => false,
-          arguments: CreateAccountData(
-            isSocialLogin: true,
+        Navigator.of(context).pushAndRemoveUntil(
+          OnboardingCreateAccountPage.route(
+            data: CreateAccountData(
+              isSocialLogin: true,
+            ),
           ),
+          (route) => false,
         );
       }
     }

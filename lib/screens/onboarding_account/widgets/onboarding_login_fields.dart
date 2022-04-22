@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding_account/cubit/onboarding_account_cubit.dart';
 import 'package:pickup/screens/onboarding_account/widgets/widgets.dart';
+import 'package:pickup/screens/onboarding_create_account/onboarding_create_account.dart';
 import 'package:pickup/shared/country_emoji.dart';
-import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/phone_number_verification.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -157,12 +157,14 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
         if (_form.currentState!.validate()) {
           LoadingUtils.show();
 
-          Navigator.of(context).pushNamed(
-            OnboardingCreateAccountScreen.route,
-            arguments: CreateAccountData(
-              phoneNumber: phoneNumber,
-              isSocialLogin: false,
+          Navigator.of(context).pushAndRemoveUntil(
+            OnboardingCreateAccountPage.route(
+              data: CreateAccountData(
+                phoneNumber: phoneNumber,
+                isSocialLogin: false,
+              ),
             ),
+            (route) => false,
           );
         } else {}
       },

@@ -5,12 +5,10 @@ import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
-import 'package:pickup/screens/onboarding/create_account/create_account.dart';
 import 'package:pickup/screens/profile/profile.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
-import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 
 class Router {
@@ -19,11 +17,6 @@ class Router {
       case LoadingScreen.route:
         return CupertinoPageRoute(
           builder: (_) => const LoadingScreen(),
-        );
-      case OnboardingCreateAccountScreen.route:
-        final args = settings.arguments! as CreateAccountData;
-        return CupertinoPageRoute(
-          builder: (_) => OnboardingCreateAccountScreen(data: args),
         );
       case HomePage.route:
         return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomePage());

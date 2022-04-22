@@ -1,17 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pickup/shared/models/create_account_model.dart';
+import 'package:pickup/screens/onboarding_create_account/onboarding_create_account.dart';
 
 void main() {
   group('Create Account Data Model', () {
     test('without phone number', () {
-      final data = CreateAccountData(isSocialLogin: true);
+      const data = CreateAccountData(isSocialLogin: true);
 
       expect(data.isSocialLogin, true);
       expect(data.phoneNumber, null);
     });
 
     test('with phone number', () {
-      final data = CreateAccountData(
+      const data = CreateAccountData(
         isSocialLogin: true,
         phoneNumber: '03012345',
       );

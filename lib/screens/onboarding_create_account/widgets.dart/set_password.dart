@@ -1,28 +1,28 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/onboarding_create_account/cubit/onboarding_create_account_cubit.dart';
 
 class StepSetPassword extends StatefulWidget {
-  const StepSetPassword({Key? key, required this.whichStepInCreateAccount})
-      : super(key: key);
-
-  final void Function() whichStepInCreateAccount;
+  const StepSetPassword({Key? key}) : super(key: key);
 
   @override
   _StepSetPasswordState createState() => _StepSetPasswordState();
 }
 
 class _StepSetPasswordState extends State<StepSetPassword> {
-  late TextEditingController _passwordController;
-  late TextEditingController _passwordRepeatController;
+  final _passwordController = TextEditingController();
+  final _passwordRepeatController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-    _passwordController = TextEditingController();
-    _passwordRepeatController = TextEditingController();
+  void dispose() {
+    _passwordController.dispose();
+    _passwordRepeatController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -80,14 +80,14 @@ class _StepSetPasswordState extends State<StepSetPassword> {
               },
             ),
           ),
-          Expanded(
-            child: Container(),
-          ),
+          // TODO: fix bottom button
+          Container(height: 20),
+          //Expanded(child: Container()),
           ActionButton(
             buttonText: context.l10n.next,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                widget.whichStepInCreateAccount();
+                context.read<OnboardingCreateAccountCubit>().nextStep();
               }
             },
           ),

@@ -3,29 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/onboarding_create_account/cubit/onboarding_create_account_cubit.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 
 class StepInsertName extends StatefulWidget {
-  const StepInsertName({Key? key, required this.whichStepInCreateAccount})
-      : super(key: key);
-
-  final void Function() whichStepInCreateAccount;
+  const StepInsertName({Key? key}) : super(key: key);
 
   @override
   _StepInsertNameState createState() => _StepInsertNameState();
 }
 
 class _StepInsertNameState extends State<StepInsertName> {
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -80,38 +79,43 @@ class _StepInsertNameState extends State<StepInsertName> {
               },
             ),
           ),
-          Expanded(child: Container()),
+          // TODO: fix bottom button
+          Container(height: 20),
+          //Expanded(child: Container()),
           ActionButton(
             buttonText: context.l10n.next,
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                final hermesRepository = context.read<HermesRepository>();
-
-                // TODO: validate response
-                final response =
-                    await LoadingUtils.asyncLoading<Response<bool>>(
-                  hermesRepository.client.apiUsersPost(
-                    body: CreateUserRequestDto(
-                      firstName: _firstNameController.text,
-                      lastName: _lastNameController.text,
-                    ),
-                  ),
-                );
-
-                if (response.isSuccessful) {
-                  widget.whichStepInCreateAccount();
-                } else {
-                  final snackBar = SnackBar(
-                    content: Text(context.l10n.unknownAPIError),
-                  );
-
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-              }
-            },
+            onPressed: () async => _onSubmit(),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _onSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      final hermesRepository = context.read<HermesRepository>();
+
+      // TODO: validate response
+      final response = await LoadingUtils.asyncLoading<Response<bool>>(
+        hermesRepository.client.apiUsersPost(
+          body: CreateUserRequestDto(
+            firstName: _firstNameController.text,
+            lastName: _lastNameController.text,
+          ),
+        ),
+      );
+
+      if (!mounted) return;
+
+      if (response.isSuccessful) {
+        context.read<OnboardingCreateAccountCubit>().nextStep();
+      } else {
+        final snackBar = SnackBar(
+          content: Text(context.l10n.unknownAPIError),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    }
   }
 }

@@ -1,21 +1,21 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/home/home.dart';
-import 'package:pickup/screens/onboarding_create_account/widgets.dart/insert_name.dart';
-import 'package:pickup/screens/onboarding_create_account/widgets.dart/phone_verification.dart';
-import 'package:pickup/screens/onboarding_create_account/widgets.dart/placeholder.dart';
-import 'package:pickup/screens/onboarding_create_account/widgets.dart/set_password.dart';
-import 'package:pickup/shared/models/create_account_model.dart';
+import 'package:pickup/screens/onboarding_create_account/cubit/onboarding_create_account_cubit.dart';
+import 'package:pickup/screens/onboarding_create_account/models/models.dart';
+import 'package:pickup/screens/onboarding_create_account/widgets.dart/widgets.dart';
 
 class OnboardingCreateAccountPage extends StatelessWidget {
   const OnboardingCreateAccountPage({Key? key}) : super(key: key);
 
-  static Route<void> route({required CreateAccountData data, }) {
+  static Route<void> route({
+    required CreateAccountData data,
+  }) {
     return MaterialPageRoute(
       builder: (_) => BlocProvider(
-        create: (_) => OnboardingCreateAccountCubit(isSignUp: isSignUp),
+        create: (_) => OnboardingCreateAccountCubit(data: data),
         child: const OnboardingCreateAccountPage(),
       ),
     );
@@ -23,27 +23,12 @@ class OnboardingCreateAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OnboardingCreateAccountView();
+    return const OnboardingCreateAccountView();
   }
 }
 
-class OnboardingCreateAccountScreen extends StatefulWidget {
-  const OnboardingCreateAccountScreen({Key? key, required this.data})
-      : super(key: key);
-
-  static const route = '/onboarding/account/create';
-
-  final CreateAccountData data;
-  int get maxSteps => data.isSocialLogin ? 2 : 4;
-
-  @override
-  _OnboardingCreateAccountScreenState createState() =>
-      _OnboardingCreateAccountScreenState();
-}
-
-class _OnboardingCreateAccountScreenState
-    extends State<OnboardingCreateAccountScreen> {
-  int step = 0;
+class OnboardingCreateAccountView extends StatelessWidget {
+  const OnboardingCreateAccountView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,69 +40,10 @@ class _OnboardingCreateAccountScreenState
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: Column(
-          children: [
-            _CreateAccountStatusBar(
-              isSocialLogin: widget.data.isSocialLogin,
-              maxSteps: widget.maxSteps,
-              onBack: previousStep,
-              step: step,
-            ),
-            _buildStack(),
+          children: const [
+            _CreateAccountStatusBar(),
+            _Stack(),
           ],
-        ),
-      ),
-    );
-  }
-
-  void nextStep() {
-    setState(() {
-      step++;
-    });
-  }
-
-  void previousStep() {
-    setState(() {
-      step--;
-    });
-  }
-
-  Widget _buildStack() {
-    final media = MediaQuery.of(context);
-
-    return Flexible(
-      child: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(
-          parent: NeverScrollableScrollPhysics(),
-        ),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: media.size.width,
-            minHeight: media.size.height -
-                140 -
-                media.viewPadding.bottom -
-                media.viewPadding.top,
-          ),
-          child: IntrinsicHeight(
-            child: IndexedStack(
-              index: step,
-              children: [
-                if (!widget.data.isSocialLogin) ...[
-                  StepPhoneVerification(
-                    phoneNumber: widget.data.phoneNumber!,
-                    onFinish: nextStep,
-                  ),
-                  StepSetPassword(whichStepInCreateAccount: nextStep),
-                ],
-                StepInsertName(whichStepInCreateAccount: nextStep),
-                StepPlaceholder(
-                  onFinish: () => Navigator.of(context).pushNamedAndRemoveUntil(
-                    HomePage.route,
-                    (route) => false,
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );
@@ -127,19 +53,15 @@ class _OnboardingCreateAccountScreenState
 class _CreateAccountStatusBar extends StatelessWidget {
   const _CreateAccountStatusBar({
     Key? key,
-    required this.step,
-    required this.maxSteps,
-    required this.isSocialLogin,
-    required this.onBack,
   }) : super(key: key);
-
-  final int step;
-  final int maxSteps;
-  final bool isSocialLogin;
-  final void Function() onBack;
 
   @override
   Widget build(BuildContext context) {
+    final state =
+        context.select((OnboardingCreateAccountCubit cubit) => cubit.state);
+
+    final step = state.step.index;
+
     return Column(
       children: [
         Stack(
@@ -148,18 +70,22 @@ class _CreateAccountStatusBar extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               child: Text(
-                '${context.l10n.step} ${step + 1}/$maxSteps',
+                '${context.l10n.step} ${step + 1}/${state.maxSteps}',
                 style: Theme.of(context).textTheme.headline4!.copyWith(
                       color: AlpacaColor.darkNavyColor,
                     ),
               ),
             ),
-            if (!(step == 0 && !isSocialLogin) && (step != 1 && !isSocialLogin))
+            if (!(step == 0 && !state.data.isSocialLogin) &&
+                (step != 1 && !state.data.isSocialLogin))
               Positioned(
                 left: 0,
                 child: GestureDetector(
-                  onTap: () =>
-                      step == 0 ? Navigator.of(context).pop() : onBack(),
+                  onTap: () => step == 0
+                      ? Navigator.of(context).pop()
+                      : context
+                          .read<OnboardingCreateAccountCubit>()
+                          .previousStep(),
                   child: const Icon(
                     Icons.arrow_back_ios,
                     size: 20,
@@ -180,18 +106,18 @@ class _CreateAccountStatusBar extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: maxSteps,
+                  itemCount: state.maxSteps,
                   itemBuilder: (context, index) {
                     return Container(
                       decoration: BoxDecoration(
-                        borderRadius: _getBorderRadius(index),
+                        borderRadius: _getBorderRadius(index, state.maxSteps),
                         color: (step - index) >= 0
                             ? AlpacaColor.primary100
                             : AlpacaColor.lightGreyColor90,
                       ),
                       margin: EdgeInsets.zero,
                       width: MediaQuery.of(context).size.width *
-                          (isSocialLogin ? 0.445 : 0.21),
+                          (state.data.isSocialLogin ? 0.445 : 0.21),
                       height: 8,
                     );
                   },
@@ -204,7 +130,7 @@ class _CreateAccountStatusBar extends StatelessWidget {
     );
   }
 
-  BorderRadius _getBorderRadius(int index) {
+  BorderRadius _getBorderRadius(int index, int maxSteps) {
     if (index == 0) {
       return const BorderRadius.horizontal(
         left: Radius.circular(20),
@@ -216,5 +142,49 @@ class _CreateAccountStatusBar extends StatelessWidget {
     }
 
     return BorderRadius.zero;
+  }
+}
+
+class _Stack extends StatelessWidget {
+  const _Stack({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+
+    final state =
+        context.select((OnboardingCreateAccountCubit cubit) => cubit.state);
+
+    return Flexible(
+      child: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(
+          parent: NeverScrollableScrollPhysics(),
+        ),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: media.size.width,
+            minHeight: media.size.height -
+                140 -
+                media.viewPadding.bottom -
+                media.viewPadding.top,
+          ),
+          child: IntrinsicHeight(
+            child: IndexedStack(
+              index: state.step.index,
+              children: [
+                if (!state.data.isSocialLogin) ...[
+                  StepPhoneVerification(
+                    phoneNumber: state.data.phoneNumber!,
+                  ),
+                  const StepSetPassword(),
+                ],
+                const StepInsertName(),
+                const StepPlaceholder(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

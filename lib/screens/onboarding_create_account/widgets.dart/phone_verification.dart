@@ -6,17 +6,16 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/onboarding_create_account/cubit/onboarding_create_account_cubit.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class StepPhoneVerification extends StatefulWidget {
   const StepPhoneVerification({
     Key? key,
-    required this.onFinish,
     required this.phoneNumber,
   }) : super(key: key);
 
-  final void Function() onFinish;
   final String phoneNumber;
 
   @override
@@ -24,15 +23,15 @@ class StepPhoneVerification extends StatefulWidget {
 }
 
 class _StepPhoneVerificationState extends State<StepPhoneVerification> {
-  String? _verificationId;
-
   final TextEditingController _textController = TextEditingController();
 
-  bool _hasError = false;
   final StreamController<ErrorAnimationType> _errorController =
       StreamController<ErrorAnimationType>();
 
+  bool _hasError = false;
   int _start = 0;
+
+  String? _verificationId;
 
   late Timer? _timer;
 
@@ -47,6 +46,8 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   void dispose() {
     _errorController.close();
     _timer?.cancel();
+
+    _textController.dispose();
 
     super.dispose();
   }
@@ -103,7 +104,9 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
           .firebaseAuth
           .signInWithCredential(credential);
 
-      widget.onFinish();
+      if (!mounted) return;
+
+      context.read<OnboardingCreateAccountCubit>().nextStep();
     } catch (exception) {
       _errorController.add(
         ErrorAnimationType.shake,
