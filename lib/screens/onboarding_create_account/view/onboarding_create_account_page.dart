@@ -3,11 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/home/home.dart';
-import 'package:pickup/screens/onboarding/create_account/steps/insert_name.dart';
-import 'package:pickup/screens/onboarding/create_account/steps/phone_verification.dart';
-import 'package:pickup/screens/onboarding/create_account/steps/placeholder.dart';
-import 'package:pickup/screens/onboarding/create_account/steps/set_password.dart';
+import 'package:pickup/screens/onboarding_create_account/widgets.dart/insert_name.dart';
+import 'package:pickup/screens/onboarding_create_account/widgets.dart/phone_verification.dart';
+import 'package:pickup/screens/onboarding_create_account/widgets.dart/placeholder.dart';
+import 'package:pickup/screens/onboarding_create_account/widgets.dart/set_password.dart';
 import 'package:pickup/shared/models/create_account_model.dart';
+
+class OnboardingCreateAccountPage extends StatelessWidget {
+  const OnboardingCreateAccountPage({Key? key}) : super(key: key);
+
+  static Route<void> route({required CreateAccountData data, }) {
+    return MaterialPageRoute(
+      builder: (_) => BlocProvider(
+        create: (_) => OnboardingCreateAccountCubit(isSignUp: isSignUp),
+        child: const OnboardingCreateAccountPage(),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return OnboardingCreateAccountView();
+  }
+}
 
 class OnboardingCreateAccountScreen extends StatefulWidget {
   const OnboardingCreateAccountScreen({Key? key, required this.data})
