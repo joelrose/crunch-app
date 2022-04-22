@@ -69,6 +69,11 @@ abstract class Swagger extends ChopperService {
   ///
   @Get(path: '/api/users')
   Future<chopper.Response<GetUserResponseDto>> apiUsersGet();
+
+  ///
+  @Post(path: '/api/whitelistuser')
+  Future<chopper.Response<bool>> apiWhitelistuserPost(
+      {@Body() required String? body});
 }
 
 final Map<Type, Object Function(Map<String, dynamic>)>

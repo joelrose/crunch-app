@@ -3,8 +3,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout/widgets/widgets.dart';
@@ -13,6 +11,7 @@ import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart'
 import 'package:pickup/screens/checkout_time_picker/checkout_pickup_widget.dart';
 import 'package:pickup/screens/store/model/model.dart';
 import 'package:pickup/shared/show_async_loading.dart';
+import 'package:stripe_repository/stripe_repository.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({
@@ -29,13 +28,7 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  late DateTime pickupTime;
-
-  @override
-  void initState() {
-    super.initState();
-    pickupTime = DateTime.now().add(const Duration(minutes: 20));
-  }
+  DateTime pickupTime = DateTime.now().add(const Duration(minutes: 20));
 
   void getPickupTime(DateTime newPickupTime) {
     setState(() {
@@ -43,52 +36,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     });
   }
 
-  Future<String?> _getPaymentIntent() async {
-    final hermesService = context.read<HermesRepository>();
-
-    final response = await hermesService.client.apiOrdersPost(
-      body: CreateOrderRequestDto(
-        merchantId: widget.data.merchantId,
-        items: widget.data.checkoutItems,
-      ),
-    );
-
-    if (response.isSuccessful) {
-      return response.body!.clientSecret!;
-    }
-
-    return null;
-  }
-
   Future<void> _checkout() async {
-    final paymentIntentSecret = await _getPaymentIntent();
-
-    if (paymentIntentSecret == null) {
-      final snackBar = SnackBar(
-        content: Text(context.l10n.connectionPaymentFail),
-      );
-
-      if (!mounted) {
-        return;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+    final stripeRepository = context.read<StripeRepository>();
 
     try {
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          applePay: true,
-          googlePay: true,
-          style: ThemeMode.light,
-          testEnv: true,
-          merchantCountryCode: 'DE',
-          merchantDisplayName: 'Crunch',
-          paymentIntentClientSecret: paymentIntentSecret,
-        ),
+      await stripeRepository.presentPaymentSheet(
+        merchantId: widget.data.merchantId,
+        checkoutItems: widget.data.checkoutItems,
       );
-
-      await Stripe.instance.presentPaymentSheet();
 
       if (mounted) {
         Navigator.of(context).pushNamed(
@@ -102,6 +57,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         );
       }
     } catch (exception, stack) {
+      final snackBar = SnackBar(
+        content: Text(context.l10n.connectionPaymentFail),
+      );
+
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
       FirebaseCrashlytics.instance.recordError(exception, stack);
     }
   }

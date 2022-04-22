@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ../core/hermes_api
+cd packages/hermes_api
 
 curl http://localhost:80/swagger/v1/swagger.json --output lib/swagger.json
 

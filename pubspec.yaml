@@ -18,15 +18,14 @@ dependencies:
   collection: ^1.15.0
   cupertino_icons: ^1.0.4
   equatable: ^2.0.3
-  firebase_analytics: ^9.1.0
-  firebase_core: ^1.12.0
-  firebase_crashlytics: ^2.5.1
+  firebase_analytics: ^9.1.5
+  firebase_core: ^1.14.1
+  firebase_crashlytics: ^2.6.2
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_dotenv: ^5.0.2
   flutter_easyloading: ^3.0.3
-  flutter_stripe: ^2.1.1
   flutter_svg: ^1.0.3
   hermes_repository: 
     path: packages/hermes_repository
@@ -36,9 +35,11 @@ dependencies:
   onesignal_repository: 
     path: packages/onesignal_repository
   phone_number: ^0.12.0+1
-  pin_code_fields: ^7.3.0
+  pin_code_fields: ^7.4.0
   skeleton_loader: ^2.0.0+4
-  url_launcher: ^6.0.12
+  stripe_repository: 
+    path: packages/stripe_repository
+  url_launcher: ^6.0.20
 
 dev_dependencies:
   bloc_test: ^9.0.3

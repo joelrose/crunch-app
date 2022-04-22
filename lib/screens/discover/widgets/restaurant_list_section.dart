@@ -26,7 +26,7 @@ class RestaurantListSection extends StatelessWidget {
                 Bounceable(
                   duration: const Duration(milliseconds: 100),
                   onTap: () => Navigator.of(context)
-                      .pushNamed(RestaurantDetailView.route),
+                      .pushNamed(RestaurantDetailPage.route),
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

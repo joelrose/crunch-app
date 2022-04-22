@@ -5,20 +5,10 @@ import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/screens/home/cubit/home_cubit.dart';
 import 'package:pickup/screens/home/view/home_view.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   static const route = '/home';
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

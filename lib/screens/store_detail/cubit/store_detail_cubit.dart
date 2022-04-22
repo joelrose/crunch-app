@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/price_calculation.dart';
 
