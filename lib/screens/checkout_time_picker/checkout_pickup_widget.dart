@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 
@@ -361,8 +362,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     if (DateTime.now().hour >
         openingTimes[DateTime.now().weekday - 1].closing) {
       return CheckoutHeaderRowWidget(
-        header: 'Pickup',
-        buttonText: 'Closed',
+        header: context.l10n.pickupTime,
+        buttonText: context.l10n.closed,
         onPressed: () {},
       );
     } else {
@@ -370,7 +371,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
         children: [
           const DividerWidget(),
           CheckoutHeaderRowWidget(
-            header: 'Pickup',
+            header: context.l10n.pickupTime,
             buttonText: '$pickupHourString:$pickupMinuteString ($waitTime min)',
             icon: SvgPicture.asset(
               'assets/icons/editPen.svg',

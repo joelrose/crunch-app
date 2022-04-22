@@ -34,10 +34,10 @@
    "subtotal": "Zwischensumme",
    "discount": "Rabatt",
    "store": "Restaurant",
-   "directionsButtonLabel": "Navigieren ->",
+   "directionsButtonLabel": "Navigieren",
    "connectionPaymentFail": "Verbindung zum Zahlungs Dienstleister nicht möglich",
-   "buttonPayLabel": "Bezahlen",
-   "orderOverview": "Bestellungen",
+   "buttonPayLabel": "Jetzt bestellen",
+   "orderOverview": "Bestellung",
    "phoneVerificationTitle": "Wir haben den Verifizierungscode an ",
    "phoneVerificationDescription": "Bitte gib den Verifizierungscode ein, den du erhalten hast.",
    "phoneVerificationFailed": "Der eingegebene Code ist nicht korrekt.",
@@ -70,12 +70,12 @@
    "viewAll": "Alle anzeigen",
    "searchBarHint": "Suche nach Restaurants oder Kategorien",
    "logout": "Ausloggen",
-   "storeInformation": "Store information",
-   "storeOpenTimes": "Opening",
-   "storeContactNumber": "contact number",
-   "storeAddress": "Store address",
-   "menu": "Menu",
-   "ratings": "Ratings",
+   "storeInformation": "Informationen",
+   "storeOpenTimes": "Öffnungszeiten",
+   "storeContactNumber": "Telefonnummer",
+   "storeAddress": "Adresse",
+   "menu": "Menü",
+   "ratings": "Bewertungen",
    "closed": "Geschlossen",
    "storeFloatingButtonText": "{itemCount,plural, =1{{itemCount} item}other{ {itemCount} items}}",
    "@storeFloatingButtonText": {
@@ -86,6 +86,8 @@
    "addToOrder": "Hinzufügen",
    "cancel": "abbrechen",
    "startSearch": "Suchen...",
-   "noRestaurantsFound": "Keine Restaurt gefunden"
-
+   "noRestaurantsFound": "Keine Restaurt gefunden",
+   "contactDetails": "Kontaktdaten",
+   "contactDetailsDescription": "Wenn du eine Telefonnummer angibts, kann das Restaurant dich im Fall von Problemen mit deiner Bestellung anrufen.",
+   "pickupTime": "Abholzeit"
 }

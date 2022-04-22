@@ -14,13 +14,13 @@ class CheckoutContactDetailsWidget extends StatefulWidget {
 
 class _CheckoutContactDetailsWidgetState
     extends State<CheckoutContactDetailsWidget> {
-  late TextEditingController _phoneNumberController;
+  final _phoneNumberController = TextEditingController();
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _phoneNumberController = TextEditingController();
+  void dispose() {
+    _phoneNumberController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -29,7 +29,7 @@ class _CheckoutContactDetailsWidgetState
       children: [
         const DividerWidget(),
         CheckoutHeaderRowWidget(
-          header: 'Contact details',
+          header: context.l10n.contactDetails,
           onPressed: () {},
           buttonText: '',
           disableButton: true,
@@ -48,7 +48,7 @@ class _CheckoutContactDetailsWidgetState
                 ),
               ),
               Text(
-                'Providing a phone number allows the restaurant to contact you easily in case there is an issue with your order.',
+                context.l10n.contactDetailsDescription,
                 style: Theme.of(context).textTheme.bodyText2,
               )
             ],
