@@ -9,6 +9,7 @@ import 'package:mockingjay/mockingjay.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
+import 'package:stripe_repository/stripe_repository.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
@@ -17,6 +18,8 @@ class MockHermesRepository extends Mock implements HermesRepository {}
 
 class MockOneSignalRepository extends Mock implements OneSignalRepository {}
 
+class MockStripeRepository extends Mock implements StripeRepository {}
+
 extension PumpApp on WidgetTester {
   Future<void> pumpApp(
     Widget widget, {
@@ -24,6 +27,7 @@ extension PumpApp on WidgetTester {
     AuthenticationRepository? authenticationRepository,
     OneSignalRepository? oneSignalRepository,
     HermesRepository? hermesRepository,
+    StripeRepository? stripeRepository,
     DiscoverCubit? discoverCubit,
   }) {
     final innerChild = Scaffold(
@@ -33,6 +37,7 @@ extension PumpApp on WidgetTester {
     final _authenticationRepository = MockAuthenticationRepository();
     final _oneSignalRepository = MockOneSignalRepository();
     final _hermesRepository = MockHermesRepository();
+    final _stripeRepository = MockStripeRepository();
 
     return pumpWidget(
       MultiRepositoryProvider(
@@ -45,6 +50,9 @@ extension PumpApp on WidgetTester {
           ),
           RepositoryProvider.value(
             value: hermesRepository ?? _hermesRepository,
+          ),
+          RepositoryProvider.value(
+            value: stripeRepository ?? _stripeRepository,
           ),
         ],
         child: BlocProvider(

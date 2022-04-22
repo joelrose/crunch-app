@@ -11,6 +11,7 @@ import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/shared/routes.dart' as routes;
+import 'package:stripe_repository/stripe_repository.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -25,12 +26,21 @@ class App extends StatelessWidget {
       apiUrl: dotenv.get('API_URL'),
       authenticationRepository: _authenticationRepository,
     );
+    final _stripeRepository = StripeRepository(
+      hermesRepository: _hermesRepository,
+    );
+
+    _stripeRepository.setupStripe(
+      merchantIdentifier: dotenv.env['STRIPE_MERCHANT_IDENTIFIER']!,
+      stripeKey: dotenv.env['STRIPE_KEY']!,
+    );
 
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider.value(value: _authenticationRepository),
         RepositoryProvider.value(value: _oneSignalRepository),
         RepositoryProvider.value(value: _hermesRepository),
+        RepositoryProvider.value(value: _stripeRepository),
       ],
       child: const AppView(),
     );
