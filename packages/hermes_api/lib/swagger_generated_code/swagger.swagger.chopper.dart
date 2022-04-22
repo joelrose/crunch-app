@@ -87,4 +87,12 @@ class _$Swagger extends Swagger {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<GetUserResponseDto, GetUserResponseDto>($request);
   }
+
+  @override
+  Future<Response<bool>> apiWhitelistuserPost({required String? body}) {
+    final $url = '/api/whitelistuser';
+    final $body = body;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<bool, bool>($request);
+  }
 }
