@@ -20,7 +20,7 @@ class RestaurantListView extends StatelessWidget {
             padding: isHorizontal
                 ? const EdgeInsets.symmetric(horizontal: 20)
                 : EdgeInsets.zero,
-            height: 190,
+            height: 195,
             child: ListView.separated(
               clipBehavior: Clip.none,
               scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,

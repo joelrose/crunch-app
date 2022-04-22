@@ -6,7 +6,7 @@ class CheckoutItemModel {
     required this.itemOptions,
     required this.price,
   });
-  
+
   String plu;
   List<CheckoutItemOptionsModel> itemOptions;
   int price;

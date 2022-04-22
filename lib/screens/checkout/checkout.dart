@@ -2,17 +2,16 @@ import 'package:alpaca/alpaca.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout/widgets/widgets.dart';
 import 'package:pickup/screens/checkout_cart_items/checkout_cart_items.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/checkout_time_picker/checkout_pickup_widget.dart';
-import 'package:pickup/screens/store/store.dart';
-import 'package:pickup/services/hermes_service.dart';
-import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/screens/store/model/model.dart';
 import 'package:pickup/shared/show_async_loading.dart';
+import 'package:stripe_repository/stripe_repository.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({
@@ -29,13 +28,7 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  late DateTime pickupTime;
-
-  @override
-  void initState() {
-    super.initState();
-    pickupTime = DateTime.now().add(const Duration(minutes: 20));
-  }
+  DateTime pickupTime = DateTime.now().add(const Duration(minutes: 20));
 
   void getPickupTime(DateTime newPickupTime) {
     setState(() {
@@ -43,52 +36,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     });
   }
 
-  Future<String?> _getPaymentIntent() async {
-    final hermesService = locator<HermesService>();
-
-    final response = await hermesService.client.apiOrdersPost(
-      body: CreateOrderRequestDto(
-        merchantId: widget.data.merchantId,
-        items: widget.data.checkoutItems,
-      ),
-    );
-
-    if (response.isSuccessful) {
-      return response.body!.clientSecret!;
-    }
-
-    return null;
-  }
-
   Future<void> _checkout() async {
-    final paymentIntentSecret = await _getPaymentIntent();
-
-    if (paymentIntentSecret == null) {
-      const snackBar = SnackBar(
-        content: Text('Unable to connect to payment provider!'),
-      );
-
-      if (!mounted) {
-        return;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+    final stripeRepository = context.read<StripeRepository>();
 
     try {
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          applePay: true,
-          googlePay: true,
-          style: ThemeMode.light,
-          testEnv: true,
-          merchantCountryCode: 'DE',
-          merchantDisplayName: 'Crunch',
-          paymentIntentClientSecret: paymentIntentSecret,
-        ),
+      await stripeRepository.presentPaymentSheet(
+        merchantId: widget.data.merchantId,
+        checkoutItems: widget.data.checkoutItems,
       );
-
-      await Stripe.instance.presentPaymentSheet();
 
       if (mounted) {
         Navigator.of(context).pushNamed(
@@ -102,6 +57,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         );
       }
     } catch (exception, stack) {
+      final snackBar = SnackBar(
+        content: Text(context.l10n.connectionPaymentFail),
+      );
+
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
       FirebaseCrashlytics.instance.recordError(exception, stack);
     }
   }
@@ -116,12 +81,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: ActionButton(
           onPressed: () {
-            showAsyncLoading(
-              context,
+            LoadingUtils.asyncLoading(
               _checkout(),
             );
           },
-          buttonText: 'Pay now',
+          buttonText: context.l10n.buttonPayLabel,
         ),
       ),
       child: _buildContent(),
@@ -133,7 +97,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       children: [
         CheckoutOrderNavbarWidget(
           storeName: widget.data.storeName,
-          pageOverviewName: 'Order Overview',
+          pageOverviewName: context.l10n.orderOverview,
         ),
         Flexible(
           child: ListView(

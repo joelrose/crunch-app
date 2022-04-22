@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pickup/l10n/l10n.dart';
 
 class StoreRating extends StatelessWidget {
   const StoreRating({
@@ -35,7 +36,7 @@ class StoreRating extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 4),
           child: Text(
-            '($reviewCount ratings)',
+            '($reviewCount ${context.l10n.ratings})',
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: AlpacaColor.darkGreyColor,
                 ),

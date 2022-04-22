@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout/widgets/check_out_items_widget.dart';
 import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
@@ -25,8 +26,8 @@ class CheckoutConfirmationScreen extends StatelessWidget {
       statusBarStyle: SystemUiOverlayStyle.dark,
       child: Column(
         children: [
-          const CheckoutOrderNavbarWidget(
-            pageOverviewName: 'Order status',
+          CheckoutOrderNavbarWidget(
+            pageOverviewName: context.l10n.orderStatus,
             showBackButton: false,
           ),
           Flexible(
@@ -44,7 +45,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                         child: SizedBox(
                           width: 230,
                           child: Text(
-                            'Your order is being prepared...',
+                            context.l10n.orderInPreperation,
                             style: Theme.of(context).textTheme.headline2,
                           ),
                         ),
@@ -64,7 +65,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                       ),
                     ),
                     CheckoutHeaderRowWidget(
-                      header: 'Order details',
+                      header: context.l10n.orderDetails,
                       onPressed: () {},
                       buttonText: '',
                       disableButton: true,
@@ -83,7 +84,7 @@ class CheckoutConfirmationScreen extends StatelessWidget {
                             (Route<dynamic> route) => false,
                           );
                         },
-                        buttonText: 'Continue',
+                        buttonText: context.l10n.next,
                       ),
                     ),
                   ],

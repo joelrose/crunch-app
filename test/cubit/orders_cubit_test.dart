@@ -1,12 +1,12 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/orders/cubit/orders_cubit.dart';
-import 'package:pickup/services/hermes_service.dart';
 
 import '../mock/mock_hermes_service.dart';
 
 void main() {
-  late HermesService hermesService;
+  late HermesRepository hermesService;
 
   group('OrdersCubit', () {
     blocTest<OrdersCubit, OrdersState>(

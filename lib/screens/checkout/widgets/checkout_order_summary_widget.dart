@@ -1,7 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
-import 'package:pickup/shared/extensions.dart';
+import 'package:hermes_repository/hermes_repository.dart';
+import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class CheckoutOrderSummaryItem extends StatelessWidget {
@@ -65,7 +66,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Order summary',
+                  context.l10n.orderSummary,
                   style: Theme.of(context).textTheme.headline3?.copyWith(
                         color: AlpacaColor.darkNavyColor,
                       ),
@@ -73,13 +74,13 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
               ),
             ),
             CheckoutOrderSummaryItem(
-              labelText: 'Subtotal',
+              labelText: context.l10n.subtotal,
               price: Utilities.currencyFormat(
                 PriceCalulcation.getPriceOfItems(checkoutItems),
               ),
             ),
             CheckoutOrderSummaryItem(
-              labelText: 'Discount',
+              labelText: context.l10n.discount,
               price: Utilities.currencyFormat(
                 0.0,
               ),

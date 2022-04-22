@@ -1,0 +1,14 @@
+name: onesignal_repository
+description: A dart package for the OneSignal Integration
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  onesignal_flutter: ^3.2.8
+  authentication_repository: 
+    path: ../authentication_repository

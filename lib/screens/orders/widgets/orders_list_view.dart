@@ -1,51 +1,9 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:intl/intl.dart';
+import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
-
-extension DeliverectOrderStatusExtension on DeliverectOrderStatus {
-  String get string {
-    switch (this) {
-      case DeliverectOrderStatus.accepted:
-        return 'Accepted';
-      case DeliverectOrderStatus.autoFinalized:
-        return 'Auto Finalized';
-      case DeliverectOrderStatus.cancel:
-        return 'Cancel';
-      case DeliverectOrderStatus.canceled:
-        return 'Canceled';
-      case DeliverectOrderStatus.duplicate:
-        return 'Duplicate';
-      case DeliverectOrderStatus.failed:
-        return 'Failed';
-      case DeliverectOrderStatus.finalized:
-        return 'Finalized';
-      case DeliverectOrderStatus.indelivery:
-        return 'In Delivery';
-      case DeliverectOrderStatus.parseFailed:
-        return 'Parse Failed';
-      case DeliverectOrderStatus.parsed:
-        return 'Parsed';
-      case DeliverectOrderStatus.posReceivedFailed:
-        return 'Pos Received Failed';
-      case DeliverectOrderStatus.prepared:
-        return 'Prepared';
-      case DeliverectOrderStatus.preparing:
-        return 'Preparing';
-      case DeliverectOrderStatus.printed:
-        return 'Printed';
-      case DeliverectOrderStatus.readyForPickup:
-        return 'Ready for Pickup';
-      case DeliverectOrderStatus.received:
-        return 'Received';
-      case DeliverectOrderStatus.$new:
-        return 'New';
-      case DeliverectOrderStatus.swaggerGeneratedUnknown:
-        return 'Undefined';
-    }
-  }
-}
 
 class OrdersListView extends StatelessWidget {
   const OrdersListView({Key? key, required this.order}) : super(key: key);
@@ -57,7 +15,7 @@ class OrdersListView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return InkWell(
-      onTap: () {},
+      onTap: () => Navigator.of(context).pushNamed('/detail', arguments: order),
       splashColor: AlpacaColor.primary20,
       child: Column(
         children: [
@@ -109,7 +67,7 @@ class OrdersListView extends StatelessWidget {
                     const Icon(
                       Icons.arrow_forward_ios,
                       size: 20,
-                      color: Color(0xff7D8589),
+                      color: AlpacaColor.lightGreyColor100,
                     ),
                   ],
                 ),

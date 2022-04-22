@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/store/widgets/store_information_item.dart';
 
 class StoreInformation extends StatelessWidget {
@@ -31,7 +32,7 @@ class StoreInformation extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Store information',
+                  context.l10n.storeInformation,
                   style: Theme.of(context).textTheme.headline3!.copyWith(
                         color: AlpacaColor.darkNavyColor,
                       ),
@@ -47,17 +48,17 @@ class StoreInformation extends StatelessWidget {
           ),
           StoreInformationItem(
             icon: 'assets/icons/clock-opening-times.svg',
-            title: 'Opening times',
+            title: context.l10n.storeOpenTimes,
             description: openingTimes,
           ),
           StoreInformationItem(
             icon: 'assets/icons/phone-store-address.svg',
-            title: 'Contact number',
+            title: context.l10n.storeContactNumber,
             description: phoneNumer,
           ),
           StoreInformationItem(
             icon: 'assets/icons/location-store-address.svg',
-            title: 'Store address',
+            title: context.l10n.storeAddress,
             description: address,
           ),
         ],

@@ -1,1 +1,1 @@
-export 'view/restaurant_detail.dart';
+export 'view/restaurant_detail_page.dart';

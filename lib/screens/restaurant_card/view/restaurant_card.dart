@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/store/store.dart';
 
 class RestaurantCard extends StatelessWidget {
@@ -18,8 +18,8 @@ class RestaurantCard extends StatelessWidget {
     return Bounceable(
       onTap: () => {
         Navigator.of(context).pushNamed(
-          StoreScreen.route,
-          arguments: restaurant.menu!.menuId,
+          StorePage.route,
+          arguments: restaurant.id,
         )
       },
       child: Material(
@@ -27,7 +27,7 @@ class RestaurantCard extends StatelessWidget {
         elevation: 2,
         borderRadius: BorderRadius.circular(10),
         child: SizedBox(
-          height: 200,
+          height: 190,
           width: 250,
           child: Column(
             children: [

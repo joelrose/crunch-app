@@ -19,17 +19,18 @@ class _SearchBarState extends State<SearchBar> {
   @override
   void initState() {
     super.initState();
-    searchVM.fetchRestaurants();
+    controller = FloatingSearchBarController();
+    /*searchVM.fetchRestaurants();
     searchVM.filteredSearchHistory = searchVM.filterSearchTerms(
       filter: '',
       list: searchVM.searchHistory,
     );
     searchVM.filteredRestaurants = [];
-    controller = FloatingSearchBarController();
+    */
   }
 
   void onQueryChanged(String query) {
-    searchVM.query = query;
+    /*searchVM.query = query;
     setState(() {
       searchVM.filteredSearchHistory = searchVM.filterSearchTerms(
         filter: query,
@@ -40,7 +41,7 @@ class _SearchBarState extends State<SearchBar> {
         restaurants: searchVM.getRestaurants(),
       );
       searchVM.updateRecentSearchVisibilty();
-    });
+    });*/
   }
 
   void onFocusChanged() {
@@ -63,12 +64,12 @@ class _SearchBarState extends State<SearchBar> {
   void deleteSearchTerm({
     String term = '',
   }) {
-    setState(() {
+    /*setState(() {
       searchVM.deleteSearchTerm(
         term: term,
         list: searchVM.searchHistory,
       );
-    });
+    });*/
   }
 
   @override
@@ -82,8 +83,8 @@ class _SearchBarState extends State<SearchBar> {
       onSubmitted: onSubmitted,
       deleteSearchTerm: deleteSearchTerm,
       addSearchTerm: searchVM.addSearchTerm,
-      filteredSearchHistory: searchVM.filteredSearchHistory!,
-      filteredRestaurants: searchVM.filteredRestaurants!,
+      filteredSearchHistory: [],
+      filteredRestaurants: searchVM.filteredRestaurant,
       child: child,
     );
   }

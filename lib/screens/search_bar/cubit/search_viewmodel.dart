@@ -1,106 +1,67 @@
-import 'package:sanity/sanity.dart';
+import 'package:hermes_api/hermes_api.dart';
 
 class DiscoverySearchBarViewModel {
+  DiscoverySearchBarViewModel() {
+    restaurants = [];
+  }
+
+  List<GetMenusResponseDto> restaurants = [];
+  List<GetMenusResponseDto> filteredRestaurant = [];
+
+  List<String> searchHistory = ['test 1'];
+
+  bool isAppBarVisible = false;
+  bool isRecentSearchVisible = true;
+
+  String query = '';
+
+  void newQuery(String newQuery) {
+    query = newQuery;
+    search();
+    updateRecentSearchVisibilty();
+  }
+
+  void search() {
+    filteredRestaurant = [];
+    for (final restaurant in restaurants) {
+      if (_identicalStart(restaurant.menu!.menu!)) {
+        filteredRestaurant.add(restaurant);
+      }
+    }
+  }
 
   dynamic fetchRestaurants() {
     return [];
   }
 
-  List<RestaurantOverviewModel> getRestaurants() {
-    return List.empty();
-  }
-
-  static const historyLenght = 5;
-  final List<String> searchHistory = ['Flutter', 'Future'];
-  List<String>? filteredSearchHistory;
-
-  bool isAppBarVisible = false;
-  bool isRecentSearchVisible = true;
-
-  late List<RestaurantOverviewModel>? filteredRestaurants;
-
-  String query = '';
-
-  List<String> filterSearchTerms({
-    required String filter,
+  void addSearchTerm({
+    required String term,
     required List<String> list,
   }) {
-    final List<String> listReversed = list.reversed.toList();
-    final List<String> listOfFilteredRecentSearch = listReversed
-        .where(
-          (recentSearch) =>
-              recentSearch.toLowerCase().startsWith(filter.toLowerCase()) &&
-              recentSearch.toLowerCase() != filter.toLowerCase(),
-        )
-        .toList();
-
-    if (filter != '' && filter.isNotEmpty) {
-      return listOfFilteredRecentSearch;
-    } else {
-      return listReversed;
-    }
-  }
-
-  List<RestaurantOverviewModel> filterRestaurants({
-    List<RestaurantOverviewModel> restaurants = const [],
-    String filter = '',
-  }) {
-    final List<RestaurantOverviewModel> listOfFilteredRestaurants = restaurants
-        .where(
-          (restaurant) => restaurant.name.toLowerCase().contains(
-                filter.toLowerCase(),
-              ),
-        )
-        .toList();
-    if (filter != '' && filter.isNotEmpty) {
-      return listOfFilteredRestaurants;
-    } else {
-      return restaurants;
-    }
-  }
-
-  void addSearchTerm({required String term, required List<String> list,}) {
-    if (list.contains(term)) {
-      putSearchTermFirst(
-        term: term,
-        list: list,
-      );
+    /*if (list.contains(term)) {
+      list.insert(0, term);
       return;
     }
     list.add(term);
     if (list.length > historyLenght) {
       list.removeRange(0, list.length - historyLenght);
     }
-    filteredSearchHistory = filterSearchTerms(filter: query, list: list);
+    filteredSearchHistory = filterSearchTerms(filter: query, list: list);*/
   }
 
-  void deleteSearchTerm({
-    required String term,
-    required List<String> list,
-  }) {
-    list.removeWhere((recentSearchedTerms) => recentSearchedTerms == term);
-    filteredSearchHistory = filterSearchTerms(filter: query, list: list);
+  bool _identicalStart(String restaurantName) {
+    return restaurantName[query.length].toLowerCase() == query.toLowerCase();
   }
 
-  void putSearchTermFirst({
-    required String term,
-    required List<String> list,
-  }) {
-    deleteSearchTerm(
-      term: term,
-      list: list,
-    );
-    addSearchTerm(
-      term: term,
-      list: list,
-    );
+  void addQuerry(String querry) {
+    searchHistory.insert(0, querry);
+  }
+
+  void deleteQuerry(String querry) {
+    searchHistory.remove(querry);
   }
 
   void updateRecentSearchVisibilty() {
-    if (filteredSearchHistory!.isNotEmpty) {
-      isRecentSearchVisible = true;
-    } else {
-      isRecentSearchVisible = false;
-    }
+    isRecentSearchVisible = searchHistory.isNotEmpty;
   }
 }

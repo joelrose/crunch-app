@@ -1,23 +1,44 @@
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 
-class PriceCalulcation {
-  // TODO: write tests
-  static int getPriceOfItem(CreateOrderItemDto item) {
-    return item.quantity! * (getPriceOfItems(item.items) + item.price!);
-  }
-
-  // TODO: check and write tests - watch out for the quantity
-  static int getPriceOfItems(List<CreateOrderItemDto>? items) {
-    if (items == null || items.isEmpty) {
-      return 0;
+extension DeliverectOrderStatusExtension on DeliverectOrderStatus {
+  String get string {
+    switch (this) {
+      case DeliverectOrderStatus.accepted:
+        return 'Accepted';
+      case DeliverectOrderStatus.autoFinalized:
+        return 'Auto Finalized';
+      case DeliverectOrderStatus.cancel:
+        return 'Cancel';
+      case DeliverectOrderStatus.canceled:
+        return 'Canceled';
+      case DeliverectOrderStatus.duplicate:
+        return 'Duplicate';
+      case DeliverectOrderStatus.failed:
+        return 'Failed';
+      case DeliverectOrderStatus.finalized:
+        return 'Finalized';
+      case DeliverectOrderStatus.indelivery:
+        return 'In Delivery';
+      case DeliverectOrderStatus.parseFailed:
+        return 'Parse Failed';
+      case DeliverectOrderStatus.parsed:
+        return 'Parsed';
+      case DeliverectOrderStatus.posReceivedFailed:
+        return 'Pos Received Failed';
+      case DeliverectOrderStatus.prepared:
+        return 'Prepared';
+      case DeliverectOrderStatus.preparing:
+        return 'Preparing';
+      case DeliverectOrderStatus.printed:
+        return 'Printed';
+      case DeliverectOrderStatus.readyForPickup:
+        return 'Ready for Pickup';
+      case DeliverectOrderStatus.received:
+        return 'Received';
+      case DeliverectOrderStatus.$new:
+        return 'New';
+      case DeliverectOrderStatus.swaggerGeneratedUnknown:
+        return 'Undefined';
     }
-
-    var optionPrice = 0;
-    for (final item in items) {
-      optionPrice +=
-          (item.quantity ?? 1) * (getPriceOfItems(item.items) + item.price!);
-    }
-
-    return optionPrice;
   }
 }
