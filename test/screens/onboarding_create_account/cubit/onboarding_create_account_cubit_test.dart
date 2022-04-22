@@ -58,7 +58,7 @@ void main() {
       },
       expect: () => [
         OnboardingCreateAccountState(
-          step: OnboardingStep.password,
+          step: OnboardingStep.name,
           data: dataPhoneNumber,
         ),
         OnboardingCreateAccountState(
@@ -66,7 +66,7 @@ void main() {
         ),
       ],
       verify: (cubit) {
-        expect(cubit.state.maxSteps, 4);
+        expect(cubit.state.maxSteps, 3);
       },
     );
   });
