@@ -6,17 +6,28 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/widgets/widgets.dart';
 import 'package:pickup/screens/search_bar/cubit/search_bar_cubit.dart';
-import 'package:pickup/screens/search_bar/widgets/search_results_widget.dart';
+import 'package:pickup/screens/search_bar/widgets/widgets.dart';
 
-class SearchBarView extends StatelessWidget {
+class SearchBarView extends StatefulWidget {
   const SearchBarView({
     Key? key,
-    required this.controller,
     required this.child,
   }) : super(key: key);
 
-  final FloatingSearchBarController controller;
   final Widget child;
+
+  @override
+  State<SearchBarView> createState() => _SearchBarViewState();
+}
+
+class _SearchBarViewState extends State<SearchBarView> {
+  final controller = FloatingSearchBarController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +55,15 @@ class SearchBarView extends StatelessWidget {
               iconColor: AlpacaColor.darkGreyColor,
               queryStyle: const TextStyle(
                 fontSize: 15,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w300,
                 color: AlpacaColor.darkNavyColor,
               ),
               controller: controller,
-              transition: CircularFloatingSearchBarTransition(),
+              transition: SlideFadeFloatingSearchBarTransition(),
               hint: context.l10n.searchBarHint,
               hintStyle: const TextStyle(
                 fontSize: 15,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w300,
                 color: AlpacaColor.greyColor80,
               ),
               automaticallyImplyBackButton: false,
@@ -67,7 +78,7 @@ class SearchBarView extends StatelessWidget {
                 ),
               ],
               actions: [
-                if (controller.query.isNotEmpty)
+                if (controller.query.isNotEmpty) ...[
                   FloatingSearchBarAction(
                     showIfOpened: true,
                     showIfClosed: false,
@@ -78,24 +89,24 @@ class SearchBarView extends StatelessWidget {
                       ),
                       onPressed: () {
                         controller.query = '';
+                        context.read<SearchBarCubit>().clearSearch();
                       },
                     ),
                   ),
-                FloatingSearchBarAction(
-                  showIfOpened: true,
-                  showIfClosed: false,
-                  child: TextButton(
-                    child: Text(
-                      context.l10n.cancel,
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: AlpacaColor.darkGreyColor,
-                          ),
+                ] else
+                  FloatingSearchBarAction(
+                    showIfOpened: true,
+                    showIfClosed: false,
+                    child: TextButton(
+                      child: Text(
+                        context.l10n.cancel,
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: AlpacaColor.darkGreyColor,
+                            ),
+                      ),
+                      onPressed: () => controller.close(),
                     ),
-                    onPressed: () {
-                      controller.close();
-                    },
-                  ),
-                )
+                  )
               ],
               onQueryChanged: context.read<SearchBarCubit>().newQuery,
               onFocusChanged: (v) =>
@@ -104,7 +115,7 @@ class SearchBarView extends StatelessWidget {
               builder: (context, transition) {
                 return const SearchResultsWidget();
               },
-              body: child,
+              body: widget.child,
             ),
           ),
         ],

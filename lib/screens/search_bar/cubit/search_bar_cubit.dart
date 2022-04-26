@@ -13,49 +13,38 @@ class SearchBarCubit extends Cubit<SearchBarState> {
   List<GetMenusResponseDto> initialStores = [];
 
   void newQuery(String newQuery) {
-    final restaurants = _search(newQuery);
+    List<GetMenusResponseDto> restaurants;
+
+    if (newQuery.isEmpty) {
+      restaurants = initialStores;
+    } else {
+      restaurants = initialStores
+          .where(
+            (restaurant) => restaurant.menu!.menu!
+                .toLowerCase()
+                .contains(newQuery.toLowerCase()),
+          )
+          .toList();
+    }
 
     emit(
       state.copyWith(
         query: newQuery,
         stores: restaurants,
-        isRecentSearchVisible: state.searchHistory.isNotEmpty,
       ),
     );
-  }
-
-  List<GetMenusResponseDto> _search(String query) {
-    final List<GetMenusResponseDto> filteredRestaurant = [];
-    for (final restaurant in initialStores) {
-      if (_containsQuery(restaurant.menu!.menu!, query)) {
-        filteredRestaurant.add(restaurant);
-      }
-    }
-
-    return filteredRestaurant;
-  }
-
-  bool _containsQuery(String restaurantName, String query) {
-    return restaurantName.toLowerCase().contains(query.toLowerCase());
   }
 
   void clearSearch() {
     emit(state.copyWith(query: '', stores: initialStores));
   }
 
-  void addQuery(String query) {
-    state.searchHistory.insert(0, query);
-
-    emit(state.copyWith(searchHistory: state.searchHistory));
-  }
-
-  void deleteQuery(String query) {
-    state.searchHistory.remove(query);
-
-    emit(state.copyWith(searchHistory: state.searchHistory));
-  }
-
   void onFocusChanged() {
     emit(state.copyWith(isAppBarVisible: !state.isAppBarVisible));
+  }
+
+  void setStores(List<GetMenusResponseDto> stores) {
+    initialStores = stores;
+    emit(state.copyWith(stores: stores));
   }
 }
