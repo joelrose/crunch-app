@@ -1,42 +1,39 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hermes_repository/hermes_repository.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/widgets/widgets.dart';
-import 'package:pickup/screens/search_bar/widgets/search_results_widget.dart';
+import 'package:pickup/screens/search_bar/cubit/search_bar_cubit.dart';
+import 'package:pickup/screens/search_bar/widgets/widgets.dart';
 
-class SearchBarView extends StatelessWidget {
+class SearchBarView extends StatefulWidget {
   const SearchBarView({
     Key? key,
-    required this.controller,
-    required this.isAppBarVisible,
-    required this.isRecentSearchVisible,
-    required this.onQueryChanged,
-    required this.onFocusChanged,
-    required this.onSubmitted,
-    required this.deleteSearchTerm,
-    required this.addSearchTerm,
-    required this.filteredSearchHistory,
-    required this.filteredRestaurants,
     required this.child,
   }) : super(key: key);
 
-  final FloatingSearchBarController controller;
-  final bool isAppBarVisible;
-  final bool isRecentSearchVisible;
-  final Function onQueryChanged;
-  final Function onFocusChanged;
-  final Function onSubmitted;
-  final Function deleteSearchTerm;
-  final Function addSearchTerm;
-  final List<String> filteredSearchHistory;
-  final List<GetMenusResponseDto> filteredRestaurants;
   final Widget child;
 
   @override
+  State<SearchBarView> createState() => _SearchBarViewState();
+}
+
+class _SearchBarViewState extends State<SearchBarView> {
+  final controller = FloatingSearchBarController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final isAppBarVisible =
+        context.select((SearchBarCubit cubit) => cubit.state.isAppBarVisible);
+
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverAppBar(
@@ -58,15 +55,15 @@ class SearchBarView extends StatelessWidget {
               iconColor: AlpacaColor.darkGreyColor,
               queryStyle: const TextStyle(
                 fontSize: 15,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w300,
                 color: AlpacaColor.darkNavyColor,
               ),
               controller: controller,
-              transition: CircularFloatingSearchBarTransition(),
+              transition: SlideFadeFloatingSearchBarTransition(),
               hint: context.l10n.searchBarHint,
               hintStyle: const TextStyle(
                 fontSize: 15,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w300,
                 color: AlpacaColor.greyColor80,
               ),
               automaticallyImplyBackButton: false,
@@ -81,7 +78,7 @@ class SearchBarView extends StatelessWidget {
                 ),
               ],
               actions: [
-                if (controller.query.isNotEmpty)
+                if (controller.query.isNotEmpty) ...[
                   FloatingSearchBarAction(
                     showIfOpened: true,
                     showIfClosed: false,
@@ -92,39 +89,33 @@ class SearchBarView extends StatelessWidget {
                       ),
                       onPressed: () {
                         controller.query = '';
+                        context.read<SearchBarCubit>().clearSearch();
                       },
                     ),
                   ),
-                FloatingSearchBarAction(
-                  showIfOpened: true,
-                  showIfClosed: false,
-                  child: TextButton(
-                    child: Text(
-                      context.l10n.cancel,
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: AlpacaColor.darkGreyColor,
-                          ),
+                ] else
+                  FloatingSearchBarAction(
+                    showIfOpened: true,
+                    showIfClosed: false,
+                    child: TextButton(
+                      child: Text(
+                        context.l10n.cancel,
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: AlpacaColor.darkGreyColor,
+                            ),
+                      ),
+                      onPressed: () => controller.close(),
                     ),
-                    onPressed: () {
-                      controller.close();
-                    },
-                  ),
-                )
+                  )
               ],
-              onQueryChanged: (query) => onQueryChanged(query),
-              onFocusChanged: (v) => onFocusChanged(),
-              onSubmitted: (query) => onSubmitted(query),
+              onQueryChanged: context.read<SearchBarCubit>().search,
+              onFocusChanged: (v) =>
+                  context.read<SearchBarCubit>().onFocusChanged(),
+              onSubmitted: context.read<SearchBarCubit>().search,
               builder: (context, transition) {
-                return SearchResultsWidget(
-                  controller: controller,
-                  filteredSearchHistory: filteredSearchHistory,
-                  filteredRestaurants: filteredRestaurants,
-                  isRecentSearchVisible: isRecentSearchVisible,
-                  deleteSearchTerm: deleteSearchTerm,
-                  addSearchTerm: addSearchTerm,
-                );
+                return const SearchResultsWidget();
               },
-              body: child,
+              body: widget.child,
             ),
           ),
         ],
