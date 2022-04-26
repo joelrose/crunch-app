@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:pickup/screens/restaurant_card/restaurant_card.dart';
@@ -65,8 +65,10 @@ void main() {
     await tester.pumpAndSettle();
 
     verify(
-      () => navigator.pushNamed<Object?>(StoreScreen.route,
-          arguments: mockRestaurantModel.id),
+      () => navigator.pushNamed<Object?>(
+        StorePage.route,
+        arguments: mockRestaurantModel.id,
+      ),
     ).called(1);
   });
 }
