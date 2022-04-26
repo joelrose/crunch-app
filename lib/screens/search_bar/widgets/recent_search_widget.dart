@@ -1,21 +1,17 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickup/screens/search_bar/cubit/search_bar_cubit.dart';
 
 class RecentSearchWidget extends StatelessWidget {
   const RecentSearchWidget({
     Key? key,
-    required this.controller,
-    required this.filteredSearchHistory,
-    required this.deleteSearchTerm,
   }) : super(key: key);
-
-  final FloatingSearchBarController controller;
-  final List<String> filteredSearchHistory;
-  final Function deleteSearchTerm;
 
   @override
   Widget build(BuildContext context) {
+    final state = context.select((SearchBarCubit cubit) => cubit.state);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -30,11 +26,10 @@ class RecentSearchWidget extends StatelessWidget {
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
-          children: filteredSearchHistory
+          children: state.searchHistory
               .where(
                 (recentSearch) =>
-                    recentSearch.toLowerCase() !=
-                    controller.query.toLowerCase(),
+                    recentSearch.toLowerCase() != state.query.toLowerCase(),
               )
               .map(
                 (recentSearch) => Padding(
@@ -44,7 +39,7 @@ class RecentSearchWidget extends StatelessWidget {
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         onTap: () {
-                          controller.query = recentSearch;
+                          //controller.query = recentSearch;
                         },
                         title: Text(
                           recentSearch,
@@ -59,9 +54,9 @@ class RecentSearchWidget extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           icon: const Icon(Icons.clear),
                           onPressed: () {
-                            deleteSearchTerm(
+                            /*deleteSearchTerm(
                               term: recentSearch,
-                            );
+                            );*/
                           },
                         ),
                       ),

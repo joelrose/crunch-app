@@ -1,98 +1,61 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hermes_api/hermes_api.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 
 part 'search_bar_state.dart';
 
-class SearchBarCubit extends Cubit<StoreBarState> {
-  SearchBarCubit(this.data) : super(SearchBarReload(data)) {
-    init();
+class SearchBarCubit extends Cubit<SearchBarState> {
+  SearchBarCubit(List<GetMenusResponseDto> stores)
+      : super(SearchBarState(stores: stores)) {
+    initialStores = stores;
   }
 
-  final List<GetMenusResponseDto> data;
-
-  void init() {}
-
-  List<GetMenusResponseDto> _restaurants = [];
-  List<GetMenusResponseDto> filteredRestaurant = [];
-  late FloatingSearchBarController controller;
-
-  List<String> searchHistory = ['test 1'];
-
-  bool isAppBarVisible = false;
-  bool isRecentSearchVisible = true;
-
-  String query = '';
+  List<GetMenusResponseDto> initialStores = [];
 
   void newQuery(String newQuery) {
-    query = newQuery;
-    search();
-    updateRecentSearchVisibilty();
+    final restaurants = _search(newQuery);
+
+    emit(
+      state.copyWith(
+        query: newQuery,
+        stores: restaurants,
+        isRecentSearchVisible: state.searchHistory.isNotEmpty,
+      ),
+    );
   }
 
-  void search() {
-    filteredRestaurant = [];
-    for (final restaurant in _restaurants) {
-      if (_containsQuery(restaurant.menu!.menu!)) {
+  List<GetMenusResponseDto> _search(String query) {
+    final List<GetMenusResponseDto> filteredRestaurant = [];
+    for (final restaurant in initialStores) {
+      if (_containsQuery(restaurant.menu!.menu!, query)) {
         filteredRestaurant.add(restaurant);
       }
     }
+
+    return filteredRestaurant;
   }
 
-  void clearSearch() {
-    query = '';
-    filteredRestaurant = _restaurants;
-  }
-
-  bool _containsQuery(String restaurantName) {
+  bool _containsQuery(String restaurantName, String query) {
     return restaurantName.toLowerCase().contains(query.toLowerCase());
   }
 
-  void addQuery() {
-    searchHistory.insert(0, query);
+  void clearSearch() {
+    emit(state.copyWith(query: '', stores: initialStores));
+  }
+
+  void addQuery(String query) {
+    state.searchHistory.insert(0, query);
+
+    emit(state.copyWith(searchHistory: state.searchHistory));
   }
 
   void deleteQuery(String query) {
-    searchHistory.remove(query);
+    state.searchHistory.remove(query);
+
+    emit(state.copyWith(searchHistory: state.searchHistory));
   }
 
-  void updateRecentSearchVisibilty() {
-    isRecentSearchVisible = searchHistory.isNotEmpty;
+  void onFocusChanged() {
+    emit(state.copyWith(isAppBarVisible: !state.isAppBarVisible));
   }
-
-  // void onQueryChanged(String query) {
-  //   searchVM.query = query;
-  //   setState(() {
-  //     searchVM.filteredSearchHistory = searchVM.filterSearchTerms(
-  //       filter: query,
-  //       list: searchVM.searchHistory,
-  //     );
-  //     searchVM.filteredRestaurants = searchVM.filterRestaurants(
-  //       filter: query,
-  //       restaurants: searchVM.getRestaurants(),
-  //     );
-  //     searchVM.updateRecentSearchVisibilty();
-  //   });
-  // }
-
-  // void onFocusChanged() {
-  //     searchVM.isAppBarVisible = !searchVM.isAppBarVisible;
-  //   });
-  // }
-
-  // void onSubmitted(String query) {
-  //   if (query != '') {
-  //     setState(() {
-  //       addSearchTerm(
-  //         term: query,
-  //         list: searchHistory,
-  //       );
-  //     });
-  //   }
-  // }
-
-  // void setRestaurants(List<RestaurantOverviewModel> restaurants) {
-  //   data = restaurants;
-  // }
 }

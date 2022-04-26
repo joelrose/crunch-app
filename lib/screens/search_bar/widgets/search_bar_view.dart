@@ -1,42 +1,28 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hermes_repository/hermes_repository.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/widgets/widgets.dart';
+import 'package:pickup/screens/search_bar/cubit/search_bar_cubit.dart';
 import 'package:pickup/screens/search_bar/widgets/search_results_widget.dart';
 
 class SearchBarView extends StatelessWidget {
   const SearchBarView({
     Key? key,
     required this.controller,
-    required this.isAppBarVisible,
-    required this.isRecentSearchVisible,
-    required this.onQueryChanged,
-    required this.onFocusChanged,
-    required this.onSubmitted,
-    required this.deleteSearchTerm,
-    required this.addSearchTerm,
-    required this.filteredSearchHistory,
-    required this.filteredRestaurants,
     required this.child,
   }) : super(key: key);
 
   final FloatingSearchBarController controller;
-  final bool isAppBarVisible;
-  final bool isRecentSearchVisible;
-  final Function onQueryChanged;
-  final Function onFocusChanged;
-  final Function onSubmitted;
-  final Function deleteSearchTerm;
-  final Function addSearchTerm;
-  final List<String> filteredSearchHistory;
-  final List<GetMenusResponseDto> filteredRestaurants;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final isAppBarVisible =
+        context.select((SearchBarCubit cubit) => cubit.state.isAppBarVisible);
+
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverAppBar(
@@ -111,18 +97,12 @@ class SearchBarView extends StatelessWidget {
                   ),
                 )
               ],
-              onQueryChanged: (query) => onQueryChanged(query),
-              onFocusChanged: (v) => onFocusChanged(),
-              onSubmitted: (query) => onSubmitted(query),
+              onQueryChanged: context.read<SearchBarCubit>().newQuery,
+              onFocusChanged: (v) =>
+                  context.read<SearchBarCubit>().onFocusChanged(),
+              onSubmitted: context.read<SearchBarCubit>().newQuery,
               builder: (context, transition) {
-                return SearchResultsWidget(
-                  controller: controller,
-                  filteredSearchHistory: filteredSearchHistory,
-                  filteredRestaurants: filteredRestaurants,
-                  isRecentSearchVisible: isRecentSearchVisible,
-                  deleteSearchTerm: deleteSearchTerm,
-                  addSearchTerm: addSearchTerm,
-                );
+                return const SearchResultsWidget();
               },
               body: child,
             ),
