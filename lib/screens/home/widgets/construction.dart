@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/l10n/l10n.dart';
 
-class ConstructionScreen extends StatelessWidget {
-  const ConstructionScreen({
+class ConstructionWidget extends StatelessWidget {
+  const ConstructionWidget({
     Key? key,
     required this.title,
   }) : super(key: key);
