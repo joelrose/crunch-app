@@ -86,5 +86,9 @@
   "addToOrder": "Add to order",
   "cancel": "cancel",
   "startSearch": "Start search",
-  "noRestaurantsFound": "No matching restaurant found..."
+  "noRestaurantsFound": "No matching restaurant found...",
+  "contactDetails": "Contact details",
+  "contactDetailsDescription": "Providing a phone number allows the restaurant to contact you easily in case there is an issue with your order.",
+  "pickupTime": "Pickup Time",
+  "notOnWhitelist": "You are not on the whitelist, you'll get access soon."
 }

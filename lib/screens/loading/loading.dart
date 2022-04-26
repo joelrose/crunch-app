@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/screens/home/home.dart';
-import 'package:pickup/screens/onboarding/welcome/welcome.dart';
-import 'package:pickup/services/auth_service.dart';
-import 'package:pickup/services/service_locator.dart';
+import 'package:pickup/screens/onboarding_welcome/view/onboarding_welcome_page.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -19,8 +19,6 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
-  AuthService auth = locator<AuthService>();
-
   late AnimationController animationController;
   late Animation<double> heightSequence;
   late Animation<double> widthSequence;
@@ -104,7 +102,7 @@ class _LoadingScreenState extends State<LoadingScreen>
   }
 
   void navigationPage() {
-    auth.getUser.then(
+    context.read<AuthenticationRepository>().getUser.then(
       (user) {
         if (user != null) {
           Navigator.of(context).pushNamedAndRemoveUntil(
@@ -112,8 +110,8 @@ class _LoadingScreenState extends State<LoadingScreen>
             (route) => false,
           );
         } else {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            OnboardingWelcomeScreen.route,
+          Navigator.of(context).pushAndRemoveUntil(
+            OnboardingWelcomePage.route(),
             (route) => false,
           );
         }

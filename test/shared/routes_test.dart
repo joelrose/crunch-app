@@ -1,40 +1,34 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:hermes_api/hermes_api.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
-import 'package:pickup/screens/onboarding/account/account.dart';
-import 'package:pickup/screens/onboarding/create_account/create_account.dart';
-import 'package:pickup/screens/onboarding/explanation/explanation.dart';
-import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
-import 'package:pickup/screens/store/store.dart';
+import 'package:pickup/screens/store/model/create_store_data.dart';
+import 'package:pickup/screens/store/view/store.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
-import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/routes.dart' as routes;
 import 'package:test/test.dart';
 
 final List<RouteSettings> routeList = [
   const RouteSettings(name: LoadingScreen.route),
-  const RouteSettings(name: OnboardingWelcomeScreen.route),
-  const RouteSettings(name: OnboardingExplanationScreen.route),
-  const RouteSettings(name: OnboardingAccountScreen.route, arguments: true),
-  RouteSettings(
-    name: OnboardingCreateAccountScreen.route,
-    arguments: CreateAccountData(
-      isSocialLogin: false,
-    ),
+  const RouteSettings(
+    name: StorePage.route,
+    arguments: '',
   ),
-  const RouteSettings(name: StoreScreen.route, arguments: ''),
   RouteSettings(
     name: CheckoutScreen.route,
     arguments: CreateStoreData(
-        checkoutItems: [], googleMaps: '', merchantId: '', storeName: ''),
+      checkoutItems: [],
+      googleMaps: '',
+      merchantId: '',
+      storeName: '',
+    ),
   ),
   RouteSettings(
     name: CheckoutConfirmationScreen.route,
@@ -54,7 +48,7 @@ final List<RouteSettings> routeList = [
       restaurantImage: '',
     ),
   ),
-  const RouteSettings(name: RestaurantDetailView.route),
+  const RouteSettings(name: RestaurantDetailPage.route),
 ];
 
 void main() {

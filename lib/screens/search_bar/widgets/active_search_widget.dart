@@ -1,10 +1,10 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/search_bar/widgets/matching_restaurants_widget.dart';
 import 'package:pickup/screens/search_bar/widgets/recent_search_widget.dart';
-import 'package:sanity/sanity.dart';
-import 'package:pickup/l10n/l10n.dart';
 
 class ActiveSearchWidget extends StatelessWidget {
   const ActiveSearchWidget({
@@ -19,7 +19,7 @@ class ActiveSearchWidget extends StatelessWidget {
 
   final FloatingSearchBarController controller;
   final List<String> filteredSearchHistory;
-  final List<RestaurantOverviewModel> filteredRestaurants;
+  final List<GetMenusResponseDto> filteredRestaurants;
   final bool isRecentSearchVisible;
   final Function deleteSearchTerm;
   final Function addSearchTerm;

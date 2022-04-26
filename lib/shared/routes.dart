@@ -5,15 +5,10 @@ import 'package:pickup/screens/checkout/models/models.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
-import 'package:pickup/screens/onboarding/account/account.dart';
-import 'package:pickup/screens/onboarding/create_account/create_account.dart';
-import 'package:pickup/screens/onboarding/explanation/explanation.dart';
-import 'package:pickup/screens/onboarding/welcome/welcome.dart';
 import 'package:pickup/screens/profile/profile.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
 import 'package:pickup/screens/store/store.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
-import 'package:pickup/shared/models/create_account_model.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 
 class Router {
@@ -23,33 +18,14 @@ class Router {
         return CupertinoPageRoute(
           builder: (_) => const LoadingScreen(),
         );
-      case OnboardingWelcomeScreen.route:
-        return CupertinoPageRoute(
-          builder: (_) => const OnboardingWelcomeScreen(),
-        );
-      case OnboardingExplanationScreen.route:
-        return CupertinoPageRoute(
-          builder: (_) => OnboardingExplanationScreen(),
-        );
-      case OnboardingAccountScreen.route:
-        final args = settings.arguments! as bool;
-
-        return CupertinoPageRoute(
-          builder: (_) => OnboardingAccountScreen(isSignUp: args),
-        );
-      case OnboardingCreateAccountScreen.route:
-        final args = settings.arguments! as CreateAccountData;
-        return CupertinoPageRoute(
-          builder: (_) => OnboardingCreateAccountScreen(data: args),
-        );
       case HomePage.route:
         return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomePage());
-      case ProfileScreen.route:
-        return CupertinoPageRoute(builder: (_) => ProfileScreen());
-      case StoreScreen.route:
+      case ProfilePage.route:
+        return CupertinoPageRoute(builder: (_) => ProfilePage());
+      case StorePage.route:
         final args = settings.arguments! as String;
         return CupertinoPageRoute(
-          builder: (_) => StoreScreen(storeId: args),
+          builder: (_) => StorePage(storeId: args),
         );
       case CheckoutScreen.route:
         final args = settings.arguments! as CreateStoreData;
@@ -68,9 +44,9 @@ class Router {
             data: args,
           ),
         );
-      case RestaurantDetailView.route:
+      case RestaurantDetailPage.route:
         return CupertinoPageRoute(
-          builder: (context) => RestaurantDetailView(),
+          builder: (context) => RestaurantDetailPage(),
         );
       default:
         return CupertinoPageRoute(

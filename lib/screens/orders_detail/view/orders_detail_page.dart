@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 
 class OrdersDetailPage extends StatelessWidget {
   const OrdersDetailPage({
