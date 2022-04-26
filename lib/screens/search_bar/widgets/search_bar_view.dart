@@ -108,10 +108,10 @@ class _SearchBarViewState extends State<SearchBarView> {
                     ),
                   )
               ],
-              onQueryChanged: context.read<SearchBarCubit>().newQuery,
+              onQueryChanged: context.read<SearchBarCubit>().search,
               onFocusChanged: (v) =>
                   context.read<SearchBarCubit>().onFocusChanged(),
-              onSubmitted: context.read<SearchBarCubit>().newQuery,
+              onSubmitted: context.read<SearchBarCubit>().search,
               builder: (context, transition) {
                 return const SearchResultsWidget();
               },

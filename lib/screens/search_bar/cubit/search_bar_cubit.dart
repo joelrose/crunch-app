@@ -12,24 +12,24 @@ class SearchBarCubit extends Cubit<SearchBarState> {
 
   List<GetMenusResponseDto> initialStores = [];
 
-  void newQuery(String newQuery) {
+  void search(String query) {
     List<GetMenusResponseDto> restaurants;
 
-    if (newQuery.isEmpty) {
+    if (query.isEmpty) {
       restaurants = initialStores;
     } else {
       restaurants = initialStores
           .where(
             (restaurant) => restaurant.menu!.menu!
                 .toLowerCase()
-                .contains(newQuery.toLowerCase()),
+                .contains(query.toLowerCase()),
           )
           .toList();
     }
 
     emit(
       state.copyWith(
-        query: newQuery,
+        query: query,
         stores: restaurants,
       ),
     );
