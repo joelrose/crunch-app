@@ -10,7 +10,7 @@ import 'package:pickup/screens/onboarding_create_account/onboarding_create_accou
 import 'package:pickup/shared/country_emoji.dart';
 import 'package:pickup/shared/phone_number_verification.dart';
 import 'package:pickup/shared/show_async_loading.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class OnboardingLoginFields extends StatefulWidget {
   const OnboardingLoginFields({Key? key}) : super(key: key);
@@ -286,7 +286,7 @@ class _AgreeToTerms extends StatelessWidget {
                 TextSpan(
                   text: ' ${context.l10n.termsOfService}',
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => launch(
+                    ..onTap = () => launchUrlString(
                           'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
                         ),
                   style: const TextStyle(
@@ -297,7 +297,7 @@ class _AgreeToTerms extends StatelessWidget {
                 TextSpan(
                   text: context.l10n.privacyPolicy,
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => launch(
+                    ..onTap = () => launchUrlString(
                           'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
                         ),
                   style: const TextStyle(

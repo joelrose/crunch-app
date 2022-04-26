@@ -1,6 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfileTile extends StatelessWidget {
   const ProfileTile({
@@ -22,7 +22,7 @@ class ProfileTile extends StatelessWidget {
             padding: EdgeInsets.zero,
             primary: AlpacaColor.primary100,
           ),
-          onPressed: () => launch(link),
+          onPressed: () => launchUrlString(link),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: _buildTileContent(context),
