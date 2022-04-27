@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hermes_api/hermes_api.dart';
-import 'package:mockito/mockito.dart';
+import 'package:hermes_repository/hermes_repository.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:pickup/shared/models/product_detail_model.dart';
 
 abstract class MyFunction {
@@ -26,8 +26,9 @@ void main() {
 
       data.onCheckoutChange(checkoutItems);
 
-      verify(mock(checkoutItems)).called(1);
+      verify(() => mock(checkoutItems)).called(1);
     });
+
     test('fields', () {
       final mock = MyFunctionMock();
 

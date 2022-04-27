@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:mockingjay/mockingjay.dart';
-import 'package:network_image_mock/network_image_mock.dart';
+import 'package:mocktail_image_network/mocktail_image_network.dart';
 import 'package:pickup/screens/restaurant_card/restaurant_card.dart';
 import 'package:pickup/screens/store/store.dart';
 
@@ -23,7 +23,7 @@ final GetMenusResponseDto mockRestaurantModel = GetMenusResponseDto(
 void main() {
   testWidgets('restaurant card widget loads', (WidgetTester tester) async {
     // renders
-    await mockNetworkImagesFor(
+    await mockNetworkImages(
       () => tester.pumpApp(
         RestaurantCard(restaurant: mockRestaurantModel),
       ),
@@ -46,7 +46,7 @@ void main() {
       ),
     ).thenAnswer((_) async {});
 
-    await mockNetworkImagesFor(
+    await mockNetworkImages(
       () => tester.pumpApp(
         RestaurantCard(restaurant: mockRestaurantModel),
         navigator: navigator,
