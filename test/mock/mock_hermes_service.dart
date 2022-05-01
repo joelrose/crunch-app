@@ -28,5 +28,12 @@ class MockHermesService implements HermesRepository {
 
   @override
   // TODO: implement authenticationRepository
-  AuthenticationRepository get authenticationRepository => throw UnimplementedError();
+  AuthenticationRepository get authenticationRepository =>
+      throw UnimplementedError();
+
+  @override
+  Future<GetMenuResponseDto> apiMenusMenuIdGet({required String storeId}) {
+    // TODO: implement apiMenusMenuIdGet
+    throw UnimplementedError();
+  }
 }
