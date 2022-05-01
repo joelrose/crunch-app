@@ -1,5 +1,5 @@
 name: checkout_repository
-description: A Flutter implementation of the TodosApi that uses local storage.
+description: A Flutter implementation of the CheckoutApi that uses local storage.
 version: 1.0.0+1
 publish_to: none
 
