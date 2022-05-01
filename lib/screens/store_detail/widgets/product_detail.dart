@@ -9,30 +9,27 @@ class ProductDetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StoreDetailCubit, StoreDetailState>(
-      builder: (context, state) {
-        final data = (state as StoreDetailReload).data;
-        return Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(
-                context,
-                name: data.item.name!,
-                price: data.item.price!,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                data.item.description!,
-                style: Theme.of(context).textTheme.headline5,
-              )
-            ],
+    final item = context.select((StoreDetailCubit cubit) => cubit.state.item);
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildHeader(
+            context,
+            name: item.name!,
+            price: item.price!,
           ),
-        );
-      },
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            item.description!,
+            style: Theme.of(context).textTheme.headline5,
+          )
+        ],
+      ),
     );
   }
 

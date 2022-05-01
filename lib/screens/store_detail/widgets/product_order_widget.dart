@@ -37,10 +37,7 @@ class ProductOrderWidget extends StatelessWidget {
         bottom: 30,
       ),
       child: ActionButton(
-        onPressed: () {
-          context.read<StoreDetailCubit>().addToOrderOnClick();
-          Navigator.pop(context);
-        },
+        onPressed: () => context.read<StoreDetailCubit>().addToOrderOnClick(),
         buttonText: context.l10n.addToOrder,
       ),
     );
