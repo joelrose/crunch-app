@@ -74,9 +74,9 @@
   "storeOpenTimes": "Opening",
   "storeContactNumber": "contact number",
   "storeAddress": "Store address",
-  "menu": "Menü",
+  "menu": "Menu",
   "ratings": "ratings",
-  "closed": "geschlossen",
+  "closed": "closed",
   "storeFloatingButtonText": "{itemCount,plural, =1{Item}other{Items}}",
   "@storeFloatingButtonText": {
     "placeholders": {
