@@ -1,11 +1,14 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 
 part 'store_state.dart';
 
 class StoreCubit extends Cubit<StoreState> {
-  StoreCubit(this._hermesRepository) : super(const StoreState());
+  StoreCubit(
+    HermesRepository hermesRepository,
+  )   : _hermesRepository = hermesRepository,
+        super(const StoreState());
 
   final HermesRepository _hermesRepository;
 
@@ -13,21 +16,16 @@ class StoreCubit extends Cubit<StoreState> {
     emit(state.copyWith(status: StoreStatus.loading));
 
     try {
-      final menuRequest = await _hermesRepository.client.apiMenusMenuIdGet(
-        menuId: storeId,
+      final menu = await _hermesRepository.apiMenusMenuIdGet(
+        storeId: storeId,
       );
 
-      if (menuRequest.isSuccessful) {
-        emit(
-          state.copyWith(
-            status: StoreStatus.success,
-            menu: menuRequest.body,
-            checkoutItems: [],
-          ),
-        );
-      } else {
-        throw Exception();
-      }
+      emit(
+        state.copyWith(
+          status: StoreStatus.success,
+          menu: menu,
+        ),
+      );
     } on Exception {
       emit(state.copyWith(status: StoreStatus.failure));
     }
