@@ -32,15 +32,4 @@ class StoreCubit extends Cubit<StoreState> {
       emit(state.copyWith(status: StoreStatus.failure));
     }
   }
-
-  void updateCheckoutItems(List<CreateOrderItemDto> newCheckoutItems) {
-    // TODO: state does not reload on checkout items, this is a workaround
-    emit(
-      state.copyWith(
-        status:
-            state.status.isSuccess ? StoreStatus.reload : StoreStatus.success,
-        checkoutItems: newCheckoutItems,
-      ),
-    );
-  }
 }

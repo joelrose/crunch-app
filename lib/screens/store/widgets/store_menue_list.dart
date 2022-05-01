@@ -1,30 +1,24 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/app/app.dart';
+import 'package:pickup/screens/store/cubit/store_cubit.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
-import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class StoreMenueList extends StatelessWidget {
-  StoreMenueList({
-    Key? key,
-    required this.menueCategories,
-    required this.onCheckoutChange,
-    required this.restaurantImage,
-  }) : super(key: key);
-
-  List<CreateOrderItemDto> checkoutItems = [];
-
-  final List<DeliverectCategoryModelDto> menueCategories;
-  final void Function(List<CreateOrderItemDto>) onCheckoutChange;
-  final String restaurantImage;
+  const StoreMenueList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    menueCategories.sort(
-      (a, b) => a.sortOrder!.compareTo(b.sortOrder!),
+    final state = context.select((StoreCubit cubit) => cubit.state);
+    final menu = state.menu!;
+    final menueCategories = menu.menu!.categories!;
+    final checkoutItems = context.select(
+      (CheckoutBasketBloc bloc) => bloc.state.checkoutItems,
     );
 
     return Column(
@@ -60,9 +54,6 @@ class StoreMenueList extends StatelessWidget {
           shrinkWrap: true,
           itemBuilder: (context, j) {
             final category = menueCategories[j];
-            category.products!.sort(
-              (a, b) => a.product!.sortOrder!.compareTo(b.product!.sortOrder!),
-            );
 
             return Column(
               children: [
@@ -80,6 +71,7 @@ class StoreMenueList extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final item = category.products![i].product!;
+
                     return TextButton(
                       onPressed: item.snoozed!
                           ? null
@@ -88,16 +80,15 @@ class StoreMenueList extends StatelessWidget {
                                 context: context,
                                 isScrollControlled: true,
                                 builder: (context) {
+                                  final checkoutBasket =
+                                      context.read<CheckoutBasketBloc>();
                                   return FractionallySizedBox(
                                     heightFactor: 0.8,
                                     child: StoreDetailPage(
-                                      data: ProductDetailsData(
-                                        item: item,
-                                        restaurantImage: restaurantImage,
-                                        checkoutItems: checkoutItems,
-                                        onCheckoutChange:
-                                            onCheckoutChange,
-                                      ),
+                                      item: item,
+                                      restaurantImage: menu.menu!.menuImageUrl!,
+                                      checkoutItems:
+                                          checkoutBasket.state.checkoutItems,
                                     ),
                                   );
                                 },
@@ -141,7 +132,7 @@ class StoreMenueList extends StatelessWidget {
                                           padding:
                                               const EdgeInsets.only(left: 8),
                                           child: Text(
-                                            '${_amountInTheBasket(item.plu!)}x',
+                                            '${_amountInTheBasket(checkoutItems, item.plu!)}x',
                                             overflow: TextOverflow.clip,
                                             style: Theme.of(context)
                                                 .textTheme
@@ -213,7 +204,7 @@ class StoreMenueList extends StatelessWidget {
     );
   }
 
-  int _amountInTheBasket(String plu) {
+  int _amountInTheBasket(List<CreateOrderItemDto> checkoutItems, String plu) {
     final items = checkoutItems.where(
       (listItem) => plu == listItem.plu,
     );
