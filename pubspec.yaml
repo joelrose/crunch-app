@@ -14,6 +14,8 @@ dependencies:
   authentication_repository: 
     path: packages/authentication_repository
   cached_network_image: ^3.2.0
+  checkout_repository: 
+    path: packages/checkout_repository
   collection: ^1.15.0
   cupertino_icons: ^1.0.4
   equatable: ^2.0.3
@@ -28,6 +30,8 @@ dependencies:
   hermes_repository: 
     path: packages/hermes_repository
   intl: ^0.17.0
+  local_storage_checkout_api: 
+    path: packages/local_storage_checkout_api
   material_floating_search_bar: ^0.3.7
   onesignal_repository: 
     path: packages/onesignal_repository
