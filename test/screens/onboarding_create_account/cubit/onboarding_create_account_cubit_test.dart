@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:pickup/screens/onboarding_create_account/cubit/onboarding_create_account_cubit.dart';
 import 'package:pickup/screens/onboarding_create_account/onboarding_create_account.dart';
-import 'package:test/test.dart';
 
 void main() {
   const dataSocialLogin = CreateAccountData(isSocialLogin: true);
