@@ -1,19 +1,19 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 
-class CheckoutContactDetailsWidget extends StatefulWidget {
-  const CheckoutContactDetailsWidget({Key? key}) : super(key: key);
+class ContactDetails extends StatefulWidget {
+  const ContactDetails({Key? key}) : super(key: key);
 
   @override
-  _CheckoutContactDetailsWidgetState createState() =>
-      _CheckoutContactDetailsWidgetState();
+  _ContactDetailsState createState() =>
+      _ContactDetailsState();
 }
 
-class _CheckoutContactDetailsWidgetState
-    extends State<CheckoutContactDetailsWidget> {
+class _ContactDetailsState
+    extends State<ContactDetails> {
   final _phoneNumberController = TextEditingController();
 
   @override
@@ -28,7 +28,7 @@ class _CheckoutContactDetailsWidgetState
     return Column(
       children: [
         const DividerWidget(),
-        CheckoutHeaderRowWidget(
+        CheckoutRowHeader(
           header: context.l10n.contactDetails,
           onPressed: () {},
           buttonText: '',
@@ -43,7 +43,6 @@ class _CheckoutContactDetailsWidgetState
                 child: AlpacaTextField(
                   textColor: AlpacaColor.darkNavyColor,
                   hintText: context.l10n.mobileNumber,
-                  textController: _phoneNumberController,
                   validator: (value) => null,
                 ),
               ),

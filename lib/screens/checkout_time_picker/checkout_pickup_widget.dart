@@ -2,35 +2,23 @@ import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
+import 'package:pickup/screens/checkout/cubit/checkout_time_cubit.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/screens/checkout/widgets/widgets.dart';
+import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
+import 'package:pickup/screens/checkout_time_picker/models/models.dart';
 
-class CheckoutPickupWidget extends StatefulWidget {
-  const CheckoutPickupWidget({Key? key, required this.getPickupTime})
-      : super(key: key);
-  final Function(DateTime) getPickupTime;
+class CheckoutTimePicker extends StatefulWidget {
+  const CheckoutTimePicker({Key? key}) : super(key: key);
 
   @override
-  State<CheckoutPickupWidget> createState() => _CheckoutPickupWidgetState();
+  State<CheckoutTimePicker> createState() => _CheckoutTimePickerState();
 }
 
-class OpeningTimesBreak {
-  OpeningTimesBreak(this.start, this.end);
-  int start;
-  int end;
-}
-
-class OpeningTimes {
-  OpeningTimes(this.opening, this.closing, this.breaks);
-
-  num opening;
-  num closing;
-  OpeningTimesBreak breaks;
-}
-
-class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
+class _CheckoutTimePickerState extends State<CheckoutTimePicker> {
   int minuteWaitTime = 20;
   int minuteInterval = 5;
 
@@ -205,7 +193,8 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
         pickupTime,
       );
     });
-    widget.getPickupTime(pickupTime);
+
+    context.read<CheckoutTimeCubit>().updatePickupTime(pickupTime);
   }
 
   void jumpToNextHour() {
@@ -361,7 +350,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
     final String pickupMinuteString = pickupMinute.toString().padLeft(2, '0');
     if (DateTime.now().hour >
         openingTimes[DateTime.now().weekday - 1].closing) {
-      return CheckoutHeaderRowWidget(
+      return CheckoutRowHeader(
         header: context.l10n.pickupTime,
         buttonText: context.l10n.closed,
         onPressed: () {},
@@ -370,7 +359,7 @@ class _CheckoutPickupWidgetState extends State<CheckoutPickupWidget> {
       return Column(
         children: [
           const DividerWidget(),
-          CheckoutHeaderRowWidget(
+          CheckoutRowHeader(
             header: context.l10n.pickupTime,
             buttonText: '$pickupHourString:$pickupMinuteString ($waitTime min)',
             icon: SvgPicture.asset(

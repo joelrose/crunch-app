@@ -1,8 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
-class CheckoutHeaderRowWidget extends StatelessWidget {
-  const CheckoutHeaderRowWidget({
+class CheckoutRowHeader extends StatelessWidget {
+  const CheckoutRowHeader({
     Key? key,
     required this.header,
     required this.onPressed,
