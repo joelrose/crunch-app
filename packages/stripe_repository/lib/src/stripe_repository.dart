@@ -36,9 +36,9 @@ class StripeRepository {
       throw HermesApiRequestException();
     }
 
-    final clientSecret = response.body?.clientSecret ?? '';
+    final clientSecret = response.body?.clientSecret ?? null;
 
-    if (clientSecret.isEmpty) {
+    if (clientSecret == null) {
       throw HermesApiResponseException();
     }
 
