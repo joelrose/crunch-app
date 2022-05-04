@@ -32,4 +32,34 @@ class HermesRepository {
 
     return request.copyWith(headers: updatedHeaders);
   }
+
+  Future<GetMenuResponseDto> apiMenusMenuIdGet({
+    required String storeId,
+  }) async {
+    try {
+      final request = await client.apiMenusMenuIdGet(
+        menuId: storeId,
+      );
+
+      if (request.isSuccessful) {
+        request.body?.menu?.categories?.sort(
+          (a, b) => a.sortOrder!.compareTo(b.sortOrder!),
+        );
+
+        if (request.body?.menu?.categories != null) {
+          for (final category in request.body!.menu!.categories!) {
+            category.products?.sort(
+              (a, b) => a.product!.sortOrder!.compareTo(b.product!.sortOrder!),
+            );
+          }
+        }
+
+        return request.body!;
+      } else {
+        throw Exception();
+      }
+    } catch (exception) {
+      throw Exception();
+    }
+  }
 }

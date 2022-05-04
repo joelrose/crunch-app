@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/checkout/widgets/checkout_main_widget.dart';
-import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
+import 'package:pickup/screens/checkout/checkout.dart';
+import 'package:pickup/screens/checkout/cubit/cubit.dart';
+import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class CheckoutStoreDirectionWidget extends StatelessWidget {
-  const CheckoutStoreDirectionWidget({
-    Key? key,
-    required this.googleMaps,
-  }) : super(key: key);
-
-  final String googleMaps;
+class AddressDirection extends StatelessWidget {
+  const AddressDirection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final googleMaps = context
+        .select((CheckoutCubit cubit) => cubit.state.menu.googleMapsLink)!;
+
     return Column(
       children: [
         const DividerWidget(),
-        CheckoutHeaderRowWidget(
+        CheckoutRowHeader(
           header: context.l10n.store,
           onPressed: () async {
             await launchUrlString(googleMaps);

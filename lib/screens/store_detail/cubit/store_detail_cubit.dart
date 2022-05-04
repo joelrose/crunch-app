@@ -1,18 +1,23 @@
-import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
-import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/price_calculation.dart';
 
 part 'store_detail_state.dart';
 
 class StoreDetailCubit extends Cubit<StoreDetailState> {
-  StoreDetailCubit(this.data) : super(StoreDetailReload(data, 0, 0)) {
+  StoreDetailCubit({
+    required DeliverectProductModelDto item,
+    required List<CreateOrderItemDto> checkoutItems,
+  }) : super(
+          StoreDetailState(
+            checkoutItems: checkoutItems,
+            item: item,
+          ),
+        ) {
     init();
   }
-
-  final ProductDetailsData data;
 
   int amountOfProductsToAddToBasket = 1;
   int totalPrice = 0;
@@ -21,11 +26,11 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   late List<CreateOrderItemDto> orderDto = [];
 
   void init() {
-    totalPrice = data.item.price!;
+    totalPrice = state.item.price!;
 
-    _sortItems(data.item.childProducts);
+    _sortItems(state.item.childProducts);
 
-    final product = data.item;
+    final product = state.item;
     if (product.childProducts != null) {
       for (final child in product.childProducts!) {
         final firstOption = child.childProduct!.childProducts!.firstWhereOrNull(
@@ -88,7 +93,8 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   }
 
   void addToOrderOnClick() {
-    final item = data.item;
+    final item = state.item;
+    var checkoutItems = state.checkoutItems.toList();
 
     final newItem = CreateOrderItemDto(
       plu: item.plu,
@@ -98,16 +104,22 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
       items: _convertToOrderDto(),
     );
 
-    try {
-      final items =
-          data.checkoutItems.firstWhere((listItem) => listItem == newItem);
+    // We have to remove the quantity here 
+    final checkoutItem =
+        checkoutItems.firstWhereOrNull((listItem) => listItem == newItem);
 
-      items.quantity = items.quantity! + newItem.quantity!;
-    } catch (error) {
-      data.checkoutItems.add(newItem);
+    if (checkoutItem == null) {
+      checkoutItems.add(newItem);
+    } else {
+      checkoutItem.quantity = checkoutItem.quantity! + newItem.quantity!;
     }
 
-    data.onCheckoutChange(data.checkoutItems);
+    emit(
+      state.copyWith(
+        status: StoreDetailStatus.done,
+        checkoutItems: checkoutItems,
+      ),
+    );
   }
 
   List<CreateOrderItemDto> _convertToOrderDto() {
@@ -124,16 +136,14 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
 
   void _calculateNewPrice() {
     emit(
-      StoreDetailReload(
-        data,
-        _getTotalPrice(),
-        reload++,
+      state.copyWith(
+        price: _getTotalPrice(),
       ),
     );
   }
 
   int _getTotalPrice() {
     return totalPrice = amountOfProductsToAddToBasket *
-        (PriceCalulcation.getPriceOfItems(orderDto) + data.item.price!);
+        (PriceCalulcation.getPriceOfItems(orderDto) + state.item.price!);
   }
 }

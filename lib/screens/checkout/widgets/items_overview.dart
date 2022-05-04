@@ -1,22 +1,19 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
 
-class CheckOutItemsWidget extends StatefulWidget {
-  CheckOutItemsWidget({Key? key, required this.checkoutItems})
-      : super(key: key);
+class ItemsOverview extends StatelessWidget {
+  const ItemsOverview({Key? key}) : super(key: key);
 
-  List<CreateOrderItemDto> checkoutItems;
-
-  @override
-  State<CheckOutItemsWidget> createState() => _CheckOutItemsWidgetState();
-}
-
-class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
   @override
   Widget build(BuildContext context) {
+    final checkoutItems =
+        context.select((CheckoutBasketBloc cubit) => cubit.state.checkoutItems);
+
     return Column(
       children: [
         const Divider(),
@@ -24,10 +21,10 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
           padding: const EdgeInsets.fromLTRB(0, 0, 0, 18),
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: widget.checkoutItems.length,
+            itemCount: checkoutItems.length,
             shrinkWrap: true,
             itemBuilder: (context, itemIndex) {
-              final checkoutSummaryItem = widget.checkoutItems[itemIndex];
+              final checkoutSummaryItem = checkoutItems[itemIndex];
               return TextButton(
                 style: TextButton.styleFrom(
                   primary: AlpacaColor.primary100,
@@ -38,7 +35,7 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
                     vertical: 3,
                     horizontal: 18,
                   ),
-                  child: _buildItem(context, checkoutSummaryItem, itemIndex),
+                  child: _Item(checkoutSummaryItem, itemIndex),
                 ),
               );
             },
@@ -48,12 +45,16 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
       ],
     );
   }
+}
 
-  Widget _buildItem(
-    BuildContext context,
-    CreateOrderItemDto item,
-    int itemIndex,
-  ) {
+class _Item extends StatelessWidget {
+  const _Item(this.item, this.itemIndex, {Key? key}) : super(key: key);
+
+  final CreateOrderItemDto item;
+  final int itemIndex;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
@@ -75,27 +76,29 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildItemDescription(item),
+            _ItemDescription(item),
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: AlpacaSelect(
                 onDecrease: () {
                   if (item.quantity == 1) {
-                    setState(() {
-                      widget.checkoutItems.removeAt(itemIndex);
-                    });
+                    context
+                        .read<CheckoutBasketBloc>()
+                        .add(CheckoutBasketItemDeleted(itemIndex: itemIndex));
                   } else {
-                    setState(() {
-                      widget.checkoutItems[itemIndex].quantity =
-                          widget.checkoutItems[itemIndex].quantity! - 1;
-                    });
+                    context.read<CheckoutBasketBloc>().add(
+                          CheckoutBasketItemQuantityDecremented(
+                            itemIndex: itemIndex,
+                          ),
+                        );
                   }
                 },
                 onIncrease: () {
-                  setState(() {
-                    widget.checkoutItems[itemIndex].quantity =
-                        widget.checkoutItems[itemIndex].quantity! + 1;
-                  });
+                  context.read<CheckoutBasketBloc>().add(
+                        CheckoutBasketItemQuantityIncremented(
+                          itemIndex: itemIndex,
+                        ),
+                      );
                 },
                 amount: item.quantity!.toString(),
                 textBoxHorizontalPadding: 12,
@@ -107,6 +110,29 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _ItemDescription extends StatelessWidget {
+  const _ItemDescription(this.item, {Key? key}) : super(key: key);
+
+  final CreateOrderItemDto item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 6,
+          right: 60,
+        ),
+        child: Text(
+          _getDescription(item),
+          style: Theme.of(context).textTheme.headline5,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
     );
   }
 
@@ -122,21 +148,5 @@ class _CheckOutItemsWidgetState extends State<CheckOutItemsWidget> {
     }
 
     return '';
-  }
-
-  Widget _buildItemDescription(CreateOrderItemDto item) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(
-          top: 6,
-          right: 60,
-        ),
-        child: Text(
-          _getDescription(item),
-          style: Theme.of(context).textTheme.headline5,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-    );
   }
 }

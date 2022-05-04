@@ -1,52 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:hermes_repository/hermes_repository.dart';
-import 'package:pickup/screens/checkout/checkout.dart';
-import 'package:pickup/screens/checkout/models/models.dart';
-import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/screens/restaurant_detail/restaurant_detail.dart';
-import 'package:pickup/screens/store/model/create_store_data.dart';
 import 'package:pickup/screens/store/view/store.dart';
-import 'package:pickup/screens/store_detail/store_detail.dart';
-import 'package:pickup/shared/models/product_detail_model.dart';
 import 'package:pickup/shared/routes.dart' as routes;
-import 'package:test/test.dart';
 
 final List<RouteSettings> routeList = [
   const RouteSettings(name: LoadingScreen.route),
   const RouteSettings(
     name: StorePage.route,
     arguments: '',
-  ),
-  RouteSettings(
-    name: CheckoutScreen.route,
-    arguments: CreateStoreData(
-      checkoutItems: [],
-      googleMaps: '',
-      merchantId: '',
-      storeName: '',
-    ),
-  ),
-  RouteSettings(
-    name: CheckoutConfirmationScreen.route,
-    arguments: CreateCheckoutData(
-      checkoutItems: [],
-      creationTime: DateTime.now(),
-      googleMaps: '',
-      pickupTime: DateTime.now(),
-    ),
-  ),
-  RouteSettings(
-    name: StoreDetailPage.route,
-    arguments: ProductDetailsData(
-      checkoutItems: [],
-      item: DeliverectProductModelDto(),
-      onCheckoutChange: (_) {},
-      restaurantImage: '',
-    ),
   ),
   const RouteSettings(name: RestaurantDetailPage.route),
 ];

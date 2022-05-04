@@ -1,28 +1,19 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/store/cubit/store_cubit.dart';
 import 'package:pickup/screens/store/widgets/store_rating.dart';
 import 'package:pickup/screens/store/widgets/store_tag.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class StoreOverview extends StatelessWidget {
-  const StoreOverview({
-    Key? key,
-    required this.name,
-    required this.rating,
-    required this.reviewCount,
-    required this.googleMaps,
-    required this.estimatedTime,
-  }) : super(key: key);
-
-  final String name;
-  final String rating;
-  final String reviewCount;
-  final String googleMaps;
-  final String estimatedTime;
+  const StoreOverview({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final model = context.select((StoreCubit cubit) => cubit.state.menu!);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
       child: Column(
@@ -32,7 +23,7 @@ class StoreOverview extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                name,
+                model.menu!.menu!,
                 style: Theme.of(context).textTheme.headline2,
               ),
               Container(
@@ -59,7 +50,7 @@ class StoreOverview extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '$estimatedTime ${context.l10n.min}',
+                      '${model.averagePickUpTime} ${context.l10n.min}',
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
@@ -87,12 +78,12 @@ class StoreOverview extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 StoreRating(
-                  rating: rating,
-                  reviewCount: reviewCount,
+                  rating: model.rating!.toString(),
+                  reviewCount: model.reviewCount!,
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await launch(googleMaps);
+                    await launchUrlString(model.googleMapsLink!);
                   },
                   child: Row(
                     children: [

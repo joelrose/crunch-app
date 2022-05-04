@@ -1,0 +1,21 @@
+name: local_storage_checkout_api
+description: A Flutter implementation of the CheckoutApi that uses local storage.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  hermes_repository: 
+    path: ../hermes_repository
+  meta: ^1.3.0
+  rxdart: ^0.27.2
+  shared_preferences: ^2.0.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.2.0

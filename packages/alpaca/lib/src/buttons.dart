@@ -162,8 +162,8 @@ class AlpacaTextField extends StatelessWidget {
   const AlpacaTextField({
     Key? key,
     required this.hintText,
-    required this.textController,
     required this.validator,
+    this.textController,
     this.fillColor = AlpacaColor.lightGreyColor90,
     this.hintTextColor = AlpacaColor.lightGreyColor100,
     this.textColor = AlpacaColor.blackColor,
@@ -180,7 +180,7 @@ class AlpacaTextField extends StatelessWidget {
   final Color cursorColor;
   final TextInputAction textInputAction;
   final TextInputType textInputType;
-  final TextEditingController textController;
+  final TextEditingController? textController;
   final bool obscureText;
   final String? Function(String?) validator;
 

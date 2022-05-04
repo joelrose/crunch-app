@@ -1,5 +1,5 @@
-export 'checkout_contact_details_widget.dart';
-export 'checkout_main_widget.dart';
-export 'checkout_order_overview_navbar_widget.dart';
-export 'checkout_order_summary_widget.dart';
-export 'checkout_store_widget.dart';
+export 'address_directions.dart';
+export 'contact_details.dart';
+export 'divider_widget.dart';
+export 'items_overview.dart';
+export 'price_summary.dart';

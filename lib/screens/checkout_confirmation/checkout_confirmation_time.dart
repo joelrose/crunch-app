@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/checkout/cubit/checkout_time_cubit.dart';
 
 class CheckoutConfirmationTime extends StatefulWidget {
-  const CheckoutConfirmationTime({Key? key, required this.pickupTime})
+  const CheckoutConfirmationTime({Key? key})
       : super(key: key);
-
-  final DateTime pickupTime;
 
   @override
   _CheckoutConfirmationTimeState createState() =>
@@ -19,10 +19,13 @@ class _CheckoutConfirmationTimeState extends State<CheckoutConfirmationTime> {
   late DateTime pickupTime;
   late DateTime now;
   late int minutesToPickupOrder;
+
   @override
   void initState() {
     now = DateTime.now();
-    pickupTime = widget.pickupTime;
+    
+    pickupTime = context.read<CheckoutTimeCubit>().state.pickupTime;
+
     minutesToPickupOrder = pickupTime.difference(now).inMinutes;
     if (minutesToPickupOrder >= 0) {
       Timer.periodic(const Duration(seconds: 1), (timer) {
