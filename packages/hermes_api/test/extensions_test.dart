@@ -1,6 +1,5 @@
-import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
-import 'package:pickup/shared/extensions.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:hermes_api/hermes_api.dart';
 
 void main() {
   test('DeliverectOrderStatus Extension ', () {

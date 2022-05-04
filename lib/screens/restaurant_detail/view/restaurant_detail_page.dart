@@ -14,41 +14,50 @@ class RestaurantDetailPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Center(
-                child: Text(
-                  'Restaurants',
-                  style: Theme.of(context).textTheme.headline1!.merge(
-                        const TextStyle(
-                          color: AlpacaColor.blackColor,
-                        ),
-                      ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  color: AlpacaColor.blackColor,
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                ),
-              )
-            ],
-          ),
-          const Divider(height: 40),
-          const Expanded(
+        children: const [
+          _Header(),
+          Divider(height: 40),
+          Expanded(
             child: RestaurantListView(
               isHorizontal: false,
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Center(
+          child: Text(
+            'Restaurants',
+            style: Theme.of(context).textTheme.headline1!.merge(
+                  const TextStyle(
+                    color: AlpacaColor.blackColor,
+                  ),
+                ),
+          ),
+        ),
+        Positioned(
+          left: 0,
+          child: IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            color: AlpacaColor.blackColor,
+            icon: const Icon(
+              Icons.arrow_back_ios,
+            ),
+            padding: const EdgeInsets.all(10),
+          ),
+        )
+      ],
     );
   }
 }

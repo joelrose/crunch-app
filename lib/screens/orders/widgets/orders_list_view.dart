@@ -2,7 +2,6 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:intl/intl.dart';
-import 'package:pickup/shared/extensions.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class OrdersListView extends StatelessWidget {

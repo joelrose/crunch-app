@@ -17,71 +17,94 @@ class ProfilePage extends StatelessWidget {
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,
       child: Column(
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Center(
-                child: Text(
-                  'Profile',
-                  style: Theme.of(context).textTheme.headline1!.merge(
-                        const TextStyle(
-                          color: AlpacaColor.blackColor,
-                        ),
-                      ),
-                ),
-              ),
-              Positioned(
-                left: 20,
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  color: AlpacaColor.blackColor,
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
+        children: const [
+          _Header(),
+          SizedBox(
             height: 20,
           ),
-          const AlpacaDivider(),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildTiles(),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: ActionButton(
-                    key: const Key('logout_button'),
-                    buttonText: context.l10n.logout,
-                    isPrimaryButton: false,
-                    textColor: AlpacaColor.redColor,
-                    onPressed: () async {
-                      final authenticationRepository =
-                          context.read<AuthenticationRepository>();
+          AlpacaDivider(),
+          _SignOut(),
+        ],
+      ),
+    );
+  }
+}
 
-                      await authenticationRepository.signOut();
+class _SignOut extends StatelessWidget {
+  const _SignOut({Key? key}) : super(key: key);
 
-                      Navigator.of(context).pushAndRemoveUntil(
-                        OnboardingWelcomePage.route(),
-                        (route) => false,
-                      );
-                    },
-                  ),
-                ),
-              ],
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const _Tiles(),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 18.0),
+            child: ActionButton(
+              key: const Key('logout_button'),
+              buttonText: context.l10n.logout,
+              isPrimaryButton: false,
+              textColor: AlpacaColor.redColor,
+              onPressed: () async {
+                final authenticationRepository =
+                    context.read<AuthenticationRepository>();
+
+                await authenticationRepository.signOut();
+
+                Navigator.of(context).pushAndRemoveUntil(
+                  OnboardingWelcomePage.route(),
+                  (route) => false,
+                );
+              },
             ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildTiles() {
+class _Header extends StatelessWidget {
+  const _Header({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Center(
+          child: Text(
+            'Profile',
+            style: Theme.of(context).textTheme.headline1!.merge(
+                  const TextStyle(
+                    color: AlpacaColor.blackColor,
+                  ),
+                ),
+          ),
+        ),
+        Positioned(
+          left: 20,
+          child: IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            color: AlpacaColor.blackColor,
+            icon: const Icon(
+              Icons.arrow_back_ios,
+            ),
+            padding: const EdgeInsets.all(10),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class _Tiles extends StatelessWidget {
+  const _Tiles({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Container(

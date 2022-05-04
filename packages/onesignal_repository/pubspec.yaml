@@ -12,3 +12,9 @@ dependencies:
   onesignal_flutter: ^3.2.8
   authentication_repository: 
     path: ../authentication_repository
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+  test: any

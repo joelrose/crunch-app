@@ -1,51 +1,38 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:hermes_repository/hermes_repository.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:pickup/screens/search_bar/widgets/active_search_widget.dart';
-import 'package:pickup/screens/search_bar/widgets/start_searching_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/search_bar/cubit/search_bar_cubit.dart';
+import 'package:pickup/screens/search_bar/widgets/matching_restaurants_widget.dart';
 
 class SearchResultsWidget extends StatelessWidget {
   const SearchResultsWidget({
     Key? key,
-    required this.controller,
-    required this.filteredSearchHistory,
-    required this.filteredRestaurants,
-    required this.isRecentSearchVisible,
-    required this.deleteSearchTerm,
-    required this.addSearchTerm,
   }) : super(key: key);
-
-  final FloatingSearchBarController controller;
-  final List<String> filteredSearchHistory;
-  final List<GetMenusResponseDto> filteredRestaurants;
-  final bool isRecentSearchVisible;
-  final Function deleteSearchTerm;
-  final Function addSearchTerm;
 
   @override
   Widget build(BuildContext context) {
+    final state = context.select((SearchBarCubit cubit) => cubit.state);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Material(
           color: AlpacaColor.white100Color,
-          child: Builder(
-            builder: (context) {
-              if (filteredSearchHistory.isEmpty && controller.query.isEmpty) {
-                return const NotActiveSearchWidget();
-              } else {
-                return ActiveSearchWidget(
-                  controller: controller,
-                  filteredSearchHistory: filteredSearchHistory,
-                  filteredRestaurants: filteredRestaurants,
-                  isRecentSearchVisible: isRecentSearchVisible,
-                  deleteSearchTerm: deleteSearchTerm,
-                  addSearchTerm: addSearchTerm,
-                );
-              }
-            },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (state.query.isNotEmpty && state.stores.isNotEmpty)
+                const MatchingRestaurantsWidget(),
+              if (state.query.isNotEmpty && state.stores.isEmpty)
+                Text(
+                  context.l10n.noRestaurantsFound,
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                        color: AlpacaColor.darkGreyColor,
+                      ),
+                )
+            ],
           ),
         ),
       ),
