@@ -2,7 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 
-part 'checkout_state.dart';
+import 'checkout_state.dart';
+
 
 class CheckoutCubit extends Cubit<CheckoutState> {
   CheckoutCubit({required GetMenuResponseDto menu})

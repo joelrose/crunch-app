@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
-import 'package:pickup/screens/checkout/cubit/cubit.dart';
 import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../cubits/cubit.dart';
 
 class AddressDirection extends StatelessWidget {
   const AddressDirection({Key? key}) : super(key: key);
