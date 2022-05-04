@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
-import 'package:pickup/screens/checkout_time_picker/models/models.dart';
 
-import '../checkout/checkout.dart';
+import '../../checkout.dart';
+import '../../domain/entities/opening_times.dart';
 
 class CheckoutTimePicker extends StatefulWidget {
   const CheckoutTimePicker({Key? key}) : super(key: key);

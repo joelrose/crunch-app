@@ -8,7 +8,7 @@ import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/screens/checkout_confirmation/checkout_confirmation.dart';
 import 'package:pickup/screens/checkout_navbar/checkout_navbar.dart';
 import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
-import 'package:pickup/screens/checkout_time_picker/checkout_pickup_widget.dart';
+import 'package:pickup/screens/checkout/presentation/widgets/checkout_pickup_widget.dart';
 import 'package:pickup/shared/show_async_loading.dart';
 import 'package:stripe_repository/stripe_repository.dart';
 
