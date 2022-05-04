@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/search_bar/cubit/search_bar_cubit.dart';
-import 'package:test/test.dart';
 
 void main() {
   group('SearchBarCubit', () {

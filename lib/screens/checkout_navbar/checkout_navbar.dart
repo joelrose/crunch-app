@@ -2,8 +2,8 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/screens/checkout/widgets/divider_widget.dart';
 
-class CheckoutOrderNavbarWidget extends StatelessWidget {
-  const CheckoutOrderNavbarWidget({
+class CheckoutNavbar extends StatelessWidget {
+  const CheckoutNavbar({
     Key? key,
     this.storeName,
     required this.pageOverviewName,

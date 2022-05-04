@@ -1,25 +1,44 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hermes_repository/hermes_repository.dart';
+import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/screens/store_detail/widgets/product_detail.dart';
 import 'package:pickup/screens/store_detail/widgets/product_option_widget.dart';
 import 'package:pickup/screens/store_detail/widgets/product_order_widget.dart';
-import 'package:pickup/shared/models/product_detail_model.dart';
 
 class StoreDetailPage extends StatelessWidget {
-  const StoreDetailPage({Key? key, required this.data}) : super(key: key);
+  const StoreDetailPage({
+    Key? key,
+    required this.item,
+    required this.restaurantImage,
+    required this.checkoutItems,
+  }) : super(key: key);
 
-  static const route = '/store/product';
-
-  final ProductDetailsData data;
+  final DeliverectProductModelDto item;
+  final String restaurantImage;
+  final List<CreateOrderItemDto> checkoutItems;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => StoreDetailCubit(data),
-      child: StoreDetailView(
-        image: data.item.imageUrl ?? data.restaurantImage,
+      create: (_) => StoreDetailCubit(
+        checkoutItems: checkoutItems,
+        item: item,
+      ),
+      child: BlocListener<StoreDetailCubit, StoreDetailState>(
+        listener: (context, state) {
+          if (state.status == StoreDetailStatus.done) {
+            context.read<CheckoutBasketBloc>().add(
+                  CheckoutBasketItemUpdated(checkoutItems: state.checkoutItems),
+                );
+            Navigator.pop(context);
+          }
+        },
+        child: StoreDetailView(
+          image: item.imageUrl ?? restaurantImage,
+        ),
       ),
     );
   }

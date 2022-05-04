@@ -1,5 +1,5 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:pickup/shared/country_emoji.dart';
-import 'package:test/test.dart';
 
 void main() {
   test(
