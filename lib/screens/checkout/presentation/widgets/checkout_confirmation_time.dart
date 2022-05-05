@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
 
-import '../checkout/cubits/cubit.dart';
+import '../../cubits/cubit.dart';
 
 class CheckoutConfirmationTime extends StatefulWidget {
   const CheckoutConfirmationTime({Key? key})

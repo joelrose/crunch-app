@@ -5,13 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/app.dart';
-import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/store/cubit/store_cubit.dart';
 import 'package:pickup/screens/store/widgets/store_information.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
 import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
+
+import '../../checkout/presentation/screen/checkout_page.dart';
 
 class StoreView extends StatelessWidget {
   const StoreView({

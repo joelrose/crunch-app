@@ -1,3 +1,2 @@
-export 'view/checkout_page.dart';
-export 'view/checkout_view.dart';
+export 'screen//checkout_page.dart';
 export 'widgets/widgets.dart';

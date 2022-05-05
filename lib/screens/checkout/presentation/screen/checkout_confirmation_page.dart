@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
-import 'package:pickup/screens/checkout_confirmation/checkout_confirmation_time.dart';
+import 'package:pickup/screens/checkout/presentation/widgets/checkout_confirmation_time.dart';
 import 'package:pickup/screens/checkout_navbar/checkout_navbar.dart';
 import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 import 'package:pickup/screens/home/home.dart';
