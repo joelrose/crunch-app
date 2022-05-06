@@ -10,7 +10,7 @@ import 'package:pickup/screens/checkout/cubits/checkout_payment_cubit/checkout_p
 import 'package:pickup/screens/checkout/cubits/checkout_timer_cubit/checkout_time_cubit.dart';
 import 'package:pickup/screens/checkout/presentation/screen/checkout_confirmation_page.dart';
 import 'package:pickup/screens/checkout/presentation/widgets/address_directions.dart';
-import 'package:pickup/screens/checkout/presentation/widgets/checkout_pickup_widget.dart';
+import 'package:pickup/screens/checkout/presentation/widgets/checkout_timer.dart';
 import 'package:pickup/screens/checkout/presentation/widgets/contact_details.dart';
 import 'package:pickup/screens/checkout/presentation/widgets/items_overview.dart';
 import 'package:pickup/screens/checkout/presentation/widgets/price_summary.dart';
@@ -32,7 +32,8 @@ class CheckoutPage extends StatelessWidget {
             create: (_) => CheckoutCubit(menu: menu),
           ),
           BlocProvider(
-            create: (_) => CheckoutTimeCubit(),
+            create: (_) =>
+                CheckoutTimeCubit(openingHours: menu.menu!.availabilities),
           ),
           BlocProvider(
             create: (context) => CheckoutPaymentCubit(
@@ -114,7 +115,7 @@ class _Content extends StatelessWidget {
               ),
               const ItemsOverview(),
               const Divider(),
-              const CheckoutTimePicker(),
+              CheckoutTimer(),
               const AddressDirection(),
               const ContactDetails(),
               const PriceSummary(),
