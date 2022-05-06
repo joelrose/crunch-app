@@ -7,34 +7,48 @@ class CheckoutTimeState extends Equatable {
   }) {
     final List<OpeningHour> availableOpeningTimes = [];
     for (final e in openingHours) {
-      if (e.dayOfWeek!.index == 2) {
+      if (e.dayOfWeek!.index == 4) {
         if (e.startTime != null) {
           final startingHour = int.parse(e.startTime!.substring(0, 2));
           final startingMinute = int.parse(e.startTime!.substring(3, 5));
-          availableOpeningTimes.add(OpeningHour(
+          availableOpeningTimes.add(
+            OpeningHour(
               startingHour,
               List.generate(
-                  60 - startingMinute, (index) => index + startingMinute)));
+                60 - startingMinute,
+                (index) => index + startingMinute,
+              ),
+            ),
+          );
         } else {
           throw Exception(
-              'No StartTime was found for openingHours with ID ${e.id}');
+            'No StartTime was found for openingHours with ID ${e.id}',
+          );
         }
         if (e.endTime != null) {
           final endingHour = int.parse(e.endTime!.substring(0, 2));
           final endingMinute = int.parse(e.endTime!.substring(3, 5));
-          availableOpeningTimes.add(OpeningHour(
+          availableOpeningTimes.add(
+            OpeningHour(
               endingHour,
               List.generate(
-                  60 - (60 - endingMinute), (index) => endingMinute - index)));
+                endingMinute != 0 ? 60 - (60 - endingMinute) : 1,
+                (index) => endingMinute - index,
+              ),
+            ),
+          );
         } else {
           throw Exception(
-              'No EndTime was found for openingHours with ID ${e.id}');
+            'No EndTime was found for openingHours with ID ${e.id}',
+          );
         }
         if (e.endTime != null && e.startTime != null) {
           final startingHour = int.parse(e.startTime!.substring(0, 2));
           final endingHour = int.parse(e.endTime!.substring(0, 2));
           final allHoursBetween = List.generate(
-              endingHour - startingHour, (index) => index + startingHour + 1);
+            endingHour - startingHour - 1,
+            (index) => index + startingHour + 1,
+          );
           for (final e in allHoursBetween) {
             availableOpeningTimes
                 .add(OpeningHour(e, List.generate(60, (index) => index)));
@@ -42,44 +56,42 @@ class CheckoutTimeState extends Equatable {
         }
       }
     }
+    availableOpeningTimes.sort((a, b) => a.hour.compareTo(b.hour));
 
     return CheckoutTimeState._internal(
-        pickupTime: pickupTime,
-        openingHours: openingHours,
-        currentSelectedHour: 9,
-        currentSelectedMinute: 0,
-        availableOpeningTimes: availableOpeningTimes);
+      pickupTime: pickupTime,
+      currentSelectedHour: availableOpeningTimes[0],
+      currentSelectedMinuteIndex: 0,
+      availableOpeningTimes: availableOpeningTimes,
+    );
   }
 
   const CheckoutTimeState._internal(
       {required this.pickupTime,
-      required this.openingHours,
       required this.currentSelectedHour,
-      required this.currentSelectedMinute,
+      required this.currentSelectedMinuteIndex,
       required this.availableOpeningTimes});
 
   CheckoutTimeState copyWith(
           {DateTime? pickupTime,
-          List<DeliverectAvailabilityModel>? openingHours,
-          int? currentSelectedHour,
-          int? currentSelectedMinute,
+          int? currentSelectedMinuteIndex,
+          OpeningHour? currentSelectedHour,
           List<OpeningHour>? availableOpeningTimes}) =>
       CheckoutTimeState._internal(
-          pickupTime: pickupTime ?? this.pickupTime,
-          currentSelectedHour: currentSelectedHour ?? this.currentSelectedHour,
-          openingHours: openingHours ?? this.openingHours,
-          currentSelectedMinute:
-              currentSelectedMinute ?? this.currentSelectedMinute,
-          availableOpeningTimes:
-              availableOpeningTimes ?? this.availableOpeningTimes);
+        pickupTime: pickupTime ?? this.pickupTime,
+        currentSelectedMinuteIndex:
+            currentSelectedMinuteIndex ?? this.currentSelectedMinuteIndex,
+        availableOpeningTimes:
+            availableOpeningTimes ?? this.availableOpeningTimes,
+        currentSelectedHour: currentSelectedHour ?? this.currentSelectedHour,
+      );
 
   final DateTime pickupTime;
-  final List<DeliverectAvailabilityModel> openingHours;
   final List<OpeningHour> availableOpeningTimes;
-  final int currentSelectedHour;
-  final int currentSelectedMinute;
+  final OpeningHour currentSelectedHour;
+  final int currentSelectedMinuteIndex;
 
   @override
   List<Object> get props =>
-      [pickupTime, currentSelectedHour, currentSelectedMinute];
+      [pickupTime, currentSelectedHour, currentSelectedMinuteIndex];
 }

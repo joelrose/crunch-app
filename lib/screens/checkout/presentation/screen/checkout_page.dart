@@ -115,7 +115,7 @@ class _Content extends StatelessWidget {
               ),
               const ItemsOverview(),
               const Divider(),
-              CheckoutTimer(),
+              const CheckoutTimer(),
               const AddressDirection(),
               const ContactDetails(),
               const PriceSummary(),
