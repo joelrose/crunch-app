@@ -41,6 +41,7 @@ dependencies:
   stripe_repository: 
     path: packages/stripe_repository
   url_launcher: ^6.1.0
+  fleasy: ^0.13.0
 
 dev_dependencies:
   bloc_test: ^9.0.3

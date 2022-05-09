@@ -64,7 +64,6 @@ class CheckoutPage extends StatelessWidget {
           final snackBar = SnackBar(
             content: Text(context.l10n.connectionPaymentFail),
           );
-
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
@@ -115,7 +114,7 @@ class _Content extends StatelessWidget {
               ),
               const ItemsOverview(),
               const Divider(),
-              const CheckoutTimer(),
+              CheckoutTimer(),
               const AddressDirection(),
               const ContactDetails(),
               const PriceSummary(),
