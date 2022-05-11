@@ -5,8 +5,6 @@ import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-
-
 class AddressDirection extends StatelessWidget {
   const AddressDirection({Key? key}) : super(key: key);
 

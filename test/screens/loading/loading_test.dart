@@ -50,9 +50,8 @@ void main() {
         fakeAsync.flushTimers();
       });
 
-      verify(() =>
-              navigator.pushAndRemoveUntil<void>(any(that: isRoute<void>()), any()))
-          .called(1);
+      verify(() => navigator.pushAndRemoveUntil<void>(
+          any(that: isRoute<void>()), any())).called(1);
     });
 
     testWidgets('loading screen loaded authenticated', (tester) async {

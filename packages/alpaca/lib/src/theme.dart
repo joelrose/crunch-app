@@ -8,19 +8,17 @@ ThemeData getThemeData() {
     fontFamily: GoogleFonts.inter().fontFamily,
     textTheme: TextTheme(
       headline1: TextStyle(
-        fontSize: 28,
-        fontWeight: FontWeight.w700,
-        fontFamily: GoogleFonts.lexendDeca().fontFamily,
-        color: AlpacaColor.white100Color,
-        letterSpacing: -0.015
-      ),
+          fontSize: 28,
+          fontWeight: FontWeight.w700,
+          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+          color: AlpacaColor.white100Color,
+          letterSpacing: -0.015),
       headline2: TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.w700,
-        fontFamily: GoogleFonts.lexendDeca().fontFamily,
-        color: AlpacaColor.darkNavyColor,
-        letterSpacing: -0.015
-      ),
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+          color: AlpacaColor.darkNavyColor,
+          letterSpacing: -0.015),
       headline3: TextStyle(
         color: AlpacaColor.lightBlackColor,
         fontSize: 18,

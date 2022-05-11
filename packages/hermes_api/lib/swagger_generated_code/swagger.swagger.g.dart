@@ -411,7 +411,7 @@ GetOrderResponseDto _$GetOrderResponseDtoFromJson(Map<String, dynamic> json) =>
     GetOrderResponseDto(
       id: json['id'] as String?,
       // TODO: manually edited
-      status: deliverectOrderStatusFromJson((json['status'] as int) .toString()),
+      status: deliverectOrderStatusFromJson((json['status'] as int).toString()),
       price: (json['price'] as num?)?.toDouble(),
       estimatedPickUpTime: json['estimatedPickUpTime'] == null
           ? null

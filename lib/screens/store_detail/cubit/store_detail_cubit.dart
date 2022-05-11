@@ -104,7 +104,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
       items: _convertToOrderDto(),
     );
 
-    // We have to remove the quantity here 
+    // We have to remove the quantity here
     final checkoutItem =
         checkoutItems.firstWhereOrNull((listItem) => listItem == newItem);
 

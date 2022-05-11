@@ -4,17 +4,14 @@ import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/presentation/widgets/widgets.dart';
 import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 
-
 class ContactDetails extends StatefulWidget {
   const ContactDetails({Key? key}) : super(key: key);
 
   @override
-  _ContactDetailsState createState() =>
-      _ContactDetailsState();
+  _ContactDetailsState createState() => _ContactDetailsState();
 }
 
-class _ContactDetailsState
-    extends State<ContactDetails> {
+class _ContactDetailsState extends State<ContactDetails> {
   final _phoneNumberController = TextEditingController();
 
   @override

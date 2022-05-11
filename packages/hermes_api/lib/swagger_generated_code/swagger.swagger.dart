@@ -172,7 +172,8 @@ class CreateOrderItemDto {
             (identical(other.price, price) ||
                 const DeepCollectionEquality().equals(other.price, price)) &&
             (identical(other.quantity, quantity) ||
-                const DeepCollectionEquality().equals(other.quantity, quantity)) &&
+                const DeepCollectionEquality()
+                    .equals(other.quantity, quantity)) &&
             (identical(other.items, items) ||
                 const DeepCollectionEquality().equals(other.items, items)));
   }
@@ -1583,8 +1584,7 @@ enums.DeliverectOrderStatus deliverectOrderStatusFromJson(
           (element) =>
               element.value.toLowerCase() ==
               deliverectOrderStatus.toLowerCase(),
-          orElse: () => const MapEntry(
-              enums.DeliverectOrderStatus.$new, '10'))
+          orElse: () => const MapEntry(enums.DeliverectOrderStatus.$new, '10'))
       .key;
 }
 

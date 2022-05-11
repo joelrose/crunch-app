@@ -1,4 +1,7 @@
+import '/Users/florian/AndroidStudioProjects/crunch-app/lib/screens/checkout/util/extensions.dart';
+
 part of 'checkout_time_cubit.dart';
+
 
 class CheckoutTimeState extends Equatable {
   factory CheckoutTimeState({
@@ -10,7 +13,7 @@ class CheckoutTimeState extends Equatable {
       if (e.dayOfWeek!.index == 4) {
         if (e.startTime != null) {
           final startingHour = int.parse(e.startTime!.substring(0, 2));
-          final startingMinute = int.parse(e.startTime!.substring(3, 5));
+          final startingMinute = e.startTime?.getHour;
           availableOpeningTimes.add(
             OpeningHour(
               startingHour,
