@@ -82,133 +82,133 @@ class _BottomSheetState extends State<_BottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CheckoutTimeCubit, CheckoutTimeState>(
-      builder: (context, stateSheet) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              height: 150,
-              margin: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                bottom: 50,
-                top: 20,
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(color: AlpacaColor.greyColor),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: NotificationListener(
-                      onNotification: (n) {
-                        if (n is ScrollEndNotification) {
-                          Future.delayed(Duration.zero, () {
-                            widget.hourController.animateToItem(
-                              widget.hourController.selectedItem,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeOut,
-                            );
-                          });
-                        }
-                        return false;
-                      },
-                      child: ListWheelScrollView(
-                        controller: widget.hourController,
-                        restorationId: 'minutes',
-                        squeeze: 0.75,
-                        onSelectedItemChanged: (value) {
-                          context
-                              .read<CheckoutTimeCubit>()
-                              .updateCurrentSelectedHour(value);
-                          if (!stateSheet.availableOpeningTimes[value].minutes
-                              .contains(stateSheet.currentSelectedHour.minutes[
-                                  stateSheet.currentSelectedMinuteIndex])) {
-                            widget.minuteController.jumpTo(
-                              0,
-                            );
+    return SafeArea(
+      child: BlocBuilder<CheckoutTimeCubit, CheckoutTimeState>(
+        builder: (context, stateSheet) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 150,
+                margin: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AlpacaColor.greyColor),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: NotificationListener(
+                        onNotification: (n) {
+                          if (n is ScrollEndNotification) {
+                            Future.delayed(Duration.zero, () {
+                              widget.hourController.animateToItem(
+                                widget.hourController.selectedItem,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeOut,
+                              );
+                            });
                           }
+                          return false;
                         },
-                        itemExtent: 40,
-                        children: List.generate(
-                          stateSheet.availableOpeningTimes.length,
-                          (index) => Text(
-                            stateSheet.availableOpeningTimes[index].hour
-                                .toString(),
-                            style: TextStyle(
-                              fontSize: 40,
-                              color: stateSheet.currentSelectedHour.hour ==
-                                      stateSheet
-                                          .availableOpeningTimes[index].hour
-                                  ? AlpacaColor.primary100
-                                  : Colors.grey,
+                        child: ListWheelScrollView(
+                          controller: widget.hourController,
+                          restorationId: 'minutes',
+                          squeeze: 0.75,
+                          onSelectedItemChanged: (value) {
+                            context
+                                .read<CheckoutTimeCubit>()
+                                .updateCurrentSelectedHour(value);
+                            if (!stateSheet.availableOpeningTimes[value].minutes
+                                .contains(stateSheet
+                                        .currentSelectedHour.minutes[
+                                    stateSheet.currentSelectedMinuteIndex])) {
+                              widget.minuteController.jumpTo(
+                                0,
+                              );
+                            }
+                          },
+                          itemExtent: 40,
+                          children: List.generate(
+                            stateSheet.availableOpeningTimes.length,
+                            (index) => Text(
+                              stateSheet.availableOpeningTimes[index].hour
+                                  .toString(),
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: stateSheet.currentSelectedHour.hour ==
+                                        stateSheet
+                                            .availableOpeningTimes[index].hour
+                                    ? AlpacaColor.primary100
+                                    : Colors.grey,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const Text(
-                    ':',
-                    style:
-                        TextStyle(fontSize: 40, color: AlpacaColor.primary100),
-                  ),
-                  Expanded(
-                    child: NotificationListener(
-                      onNotification: (n) {
-                        if (n is ScrollEndNotification) {
-                          Future.delayed(Duration.zero, () {
-                            widget.minuteController.animateToItem(
-                              widget.minuteController.selectedItem,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeOut,
-                            );
-                          });
-                        }
-                        return false;
-                      },
-                      child: ListWheelScrollView(
-                        restorationId: 'min',
-                        controller: widget.minuteController,
-                        squeeze: 0.75,
-                        onSelectedItemChanged: (value) {
-                          context
-                              .read<CheckoutTimeCubit>()
-                              .updateCurrentSelectedMinute(value);
+                    const Text(
+                      ':',
+                      style: TextStyle(
+                          fontSize: 40, color: AlpacaColor.primary100),
+                    ),
+                    Expanded(
+                      child: NotificationListener(
+                        onNotification: (n) {
+                          if (n is ScrollEndNotification) {
+                            Future.delayed(Duration.zero, () {
+                              widget.minuteController.animateToItem(
+                                widget.minuteController.selectedItem,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeOut,
+                              );
+                            });
+                          }
+                          return false;
                         },
-                        itemExtent: 40,
-                        children: List.generate(
-                          stateSheet.currentSelectedHour.minutes.length,
-                          (index) => Text(
-                            stateSheet.currentSelectedHour.minutes[index]
-                                .toString(),
-                            style: TextStyle(
-                              fontSize: 40,
-                              color:
-                                  stateSheet.currentSelectedMinuteIndex == index
-                                      ? AlpacaColor.primary100
-                                      : Colors.grey,
+                        child: ListWheelScrollView(
+                          restorationId: 'min',
+                          controller: widget.minuteController,
+                          squeeze: 0.75,
+                          onSelectedItemChanged: (value) {
+                            context
+                                .read<CheckoutTimeCubit>()
+                                .updateCurrentSelectedMinute(value);
+                          },
+                          itemExtent: 40,
+                          children: List.generate(
+                            stateSheet.currentSelectedHour.minutes.length,
+                            (index) => Text(
+                              stateSheet.currentSelectedHour.minutes[index]
+                                  .toString(),
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: stateSheet.currentSelectedMinuteIndex ==
+                                        index
+                                    ? AlpacaColor.primary100
+                                    : Colors.grey,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 50,
-              width: 200,
-              child: ActionButton(
-                buttonText: 'Fertig',
-                onPressed: () {},
-              ),
-            )
-          ],
-        );
-      },
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                height: 52,
+                width: 200,
+                child: ActionButton(
+                  buttonText: 'Fertig',
+                  onPressed: () {},
+                ),
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }
