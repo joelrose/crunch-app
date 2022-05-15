@@ -3,11 +3,12 @@ part of 'checkout_time_cubit.dart';
 class CheckoutTimeState extends Equatable {
   factory CheckoutTimeState({
     required DateTime pickupTime,
+    required DateTime currentTime,
     required List<DeliverectAvailabilityModel> openingHours,
   }) {
     final List<OpeningHour> availableOpeningTimes = [];
     for (final e in openingHours) {
-      if (e.dayOfWeek!.index == 4) {
+      if (e.dayOfWeek!.index == currentTime.weekday) {
         var startTime = e.startTime;
         if (e.startTime != null) {
           final startingHour = startTime!.getHour;

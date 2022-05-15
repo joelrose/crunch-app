@@ -13,6 +13,7 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
       required DateTime currentTime})
       : super(
           CheckoutTimeState(
+            currentTime: currentTime,
             pickupTime: currentTime.add(const Duration(minutes: 20)),
             openingHours: openingHours ?? [],
           ),
