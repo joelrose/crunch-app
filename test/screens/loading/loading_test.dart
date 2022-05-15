@@ -35,7 +35,7 @@ void main() {
 
     testWidgets('loading screen loaded unauthenticated', (tester) async {
       when(() => mockAuthService.getUser).thenAnswer(
-        (_) => Future.value(null),
+        (_) => Future.value(),
       );
 
       when(() => navigator.pushAndRemoveUntil<void>(any(), any()))
@@ -51,7 +51,7 @@ void main() {
       });
 
       verify(() => navigator.pushAndRemoveUntil<void>(
-          any(that: isRoute<void>()), any())).called(1);
+          any(that: isRoute<void>()), any(),),).called(1);
     });
 
     testWidgets('loading screen loaded authenticated', (tester) async {
@@ -59,7 +59,9 @@ void main() {
           .thenAnswer((_) => Future<MockUser>.value(MockUser()));
 
       when(() => navigator.pushNamedAndRemoveUntil<Object?>(any(), any()))
-          .thenAnswer((_) async {});
+          .thenAnswer((_) async {
+            return null;
+          });
 
       FakeAsync().run((fakeAsync) {
         tester.pumpApp(

@@ -40,6 +40,17 @@ class StretchyHeader extends StretchyHeaderBase {
 
 @immutable
 class HeaderData {
+
+  const HeaderData({
+    required this.header,
+    required this.headerHeight,
+    this.highlightHeader,
+    this.blurContent = true,
+    this.highlightHeaderAlignment = HighlightHeaderAlignment.bottom,
+    this.overlay,
+    this.blurColor,
+    this.backgroundColor,
+  }) : assert(headerHeight >= 0.0);
   ///Header Widget that will be stretched, it will appear at the top of the page
   final Widget header;
 
@@ -89,20 +100,20 @@ class HeaderData {
 
   ///If you want to blur the content when scroll. True by default
   final bool blurContent;
-
-  const HeaderData({
-    required this.header,
-    required this.headerHeight,
-    this.highlightHeader,
-    this.blurContent = true,
-    this.highlightHeaderAlignment = HighlightHeaderAlignment.bottom,
-    this.overlay,
-    this.blurColor,
-    this.backgroundColor,
-  }) : assert(headerHeight >= 0.0);
 }
 
 class StretchyHeaderBase extends StatefulWidget {
+
+  StretchyHeaderBase({
+    Key? key,
+    required this.headerData,
+    required this.listBuilder,
+    ScrollController? scrollController,
+    double? displacement,
+    this.onRefresh,
+  })  : displacement = displacement ?? 40.0,
+        scrollController = scrollController ?? ScrollController(),
+        super(key: key);
   ///Header parameters describing how the header will be displayed
   final HeaderData headerData;
 
@@ -121,17 +132,6 @@ class StretchyHeaderBase extends StatefulWidget {
   final VoidCallback? onRefresh;
 
   final ScrollController scrollController;
-
-  StretchyHeaderBase({
-    Key? key,
-    required this.headerData,
-    required this.listBuilder,
-    ScrollController? scrollController,
-    double? displacement,
-    this.onRefresh,
-  })  : displacement = displacement ?? 40.0,
-        scrollController = scrollController ?? ScrollController(),
-        super(key: key);
 
   @override
   _StretchyHeaderBaseState createState() => _StretchyHeaderBaseState();
@@ -163,7 +163,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
   @override
   void didUpdateWidget(StretchyHeaderBase oldWidget) {
     if (widget.headerData.highlightHeader != null) {
-      WidgetsBinding.instance!.addPostFrameCallback(_onLayoutDone);
+      WidgetsBinding.instance.addPostFrameCallback(_onLayoutDone);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -172,7 +172,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
   void initState() {
     _headerSize = widget.headerData.headerHeight;
     if (widget.headerData.highlightHeader != null) {
-      WidgetsBinding.instance!.addPostFrameCallback(_onLayoutDone);
+      WidgetsBinding.instance.addPostFrameCallback(_onLayoutDone);
     }
     super.initState();
   }
@@ -279,12 +279,12 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
 }
 
 class HeaderClipper extends CustomClipper<Rect> {
-  final double height;
 
   HeaderClipper(this.height);
+  final double height;
 
   @override
-  getClip(Size size) => Rect.fromLTRB(0.0, 0.0, size.width, this.height);
+  Rect getClip(Size size) => Rect.fromLTRB(0.0, 0.0, size.width, height);
 
   @override
   bool shouldReclip(CustomClipper oldClipper) {

@@ -16,10 +16,10 @@ void main() {
     late MockAuthenticationRepository mockAuthenticationRepository;
     late MockOneSignal mockOneSignal;
 
-    final email = 'crunchœcrunch.app';
-    final uid = '123456';
-    final displayName = 'crunch';
-    final appId = '654321';
+    const email = 'crunchœcrunch.app';
+    const uid = '123456';
+    const displayName = 'crunch';
+    const appId = '654321';
 
     setUpAll(() async {
       mockOneSignal = MockOneSignal();
@@ -52,8 +52,8 @@ void main() {
           .thenAnswer((_) => Future.value());
 
       when(() => mockOneSignal.promptUserForPushNotificationPermission(
-            fallbackToSettings: false,
-          )).thenAnswer(
+            
+          ),).thenAnswer(
         (_) => Future.value(true),
       );
     });
@@ -68,7 +68,7 @@ void main() {
       verify(() => mockOneSignal.setAppId(appId)).called(1);
 
       verify(() =>
-              mockOneSignal.setEmail(email: email, emailAuthHashToken: null))
+              mockOneSignal.setEmail(email: email),)
           .called(1);
 
       verify(() => mockOneSignal.setExternalUserId(uid)).called(1);

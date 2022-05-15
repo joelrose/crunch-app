@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 
-import '../checkout/checkout.dart';
+import 'package:pickup/screens/checkout/checkout.dart';
 
 class CheckoutNavbar extends StatelessWidget {
   const CheckoutNavbar({

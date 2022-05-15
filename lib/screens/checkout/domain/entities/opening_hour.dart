@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class OpeningHour extends Equatable {
-  OpeningHour(this.hour, this.minutes);
+  const OpeningHour(this.hour, this.minutes);
 
   final int hour;
   final List<int> minutes;

@@ -1,9 +1,10 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:collection/collection.dart';
-
 import 'package:chopper/chopper.dart';
 import 'package:chopper/chopper.dart' as chopper;
+import 'package:collection/collection.dart';
+import 'package:json_annotation/json_annotation.dart';
+
 import 'swagger.enums.swagger.dart' as enums;
+
 export 'swagger.enums.swagger.dart';
 
 part 'swagger.swagger.chopper.dart';
@@ -23,7 +24,7 @@ abstract class Swagger extends ChopperService {
     final newClient = ChopperClient(
         services: [_$Swagger()],
         converter: $JsonSerializableConverter(),
-        baseUrl: 'https://');
+        baseUrl: 'https://',);
     return _$Swagger(newClient);
   }
 
@@ -35,17 +36,17 @@ abstract class Swagger extends ChopperService {
   ///@param menuId
   @Get(path: '/api/menus/{menuId}')
   Future<chopper.Response<GetMenuResponseDto>> apiMenusMenuIdGet(
-      {@Path('menuId') required String? menuId});
+      {@Path('menuId') required String? menuId,});
 
   ///
   @Post(path: '/api/orders')
   Future<chopper.Response<CreateOrderResponseDto>> apiOrdersPost(
-      {@Body() required CreateOrderRequestDto? body});
+      {@Body() required CreateOrderRequestDto? body,});
 
   ///
   @Put(path: '/api/orders')
   Future<chopper.Response<bool>> apiOrdersPut(
-      {@Body() required UpdateStatusOrderModel? body});
+      {@Body() required UpdateStatusOrderModel? body,});
 
   ///
   @Get(path: '/api/orders')
@@ -55,12 +56,12 @@ abstract class Swagger extends ChopperService {
   ///@param orderId
   @Get(path: '/api/orders/{orderId}')
   Future<chopper.Response<GetOrderResponseDto>> apiOrdersOrderIdGet(
-      {@Path('orderId') required String? orderId});
+      {@Path('orderId') required String? orderId,});
 
   ///
   @Post(path: '/api/users')
   Future<chopper.Response<bool>> apiUsersPost(
-      {@Body() required CreateUserRequestDto? body});
+      {@Body() required CreateUserRequestDto? body,});
 
   ///
   @Delete(path: '/api/users')
@@ -73,7 +74,7 @@ abstract class Swagger extends ChopperService {
   ///
   @Post(path: '/api/whitelistuser')
   Future<chopper.Response<bool>> apiWhitelistuserPost(
-      {@Body() required String? body});
+      {@Body() required String? body,});
 }
 
 final Map<Type, Object Function(Map<String, dynamic>)>
@@ -154,7 +155,7 @@ class CreateOrderItemDto {
   @JsonKey(name: 'quantity', includeIfNull: false)
   int? quantity;
   @JsonKey(
-      name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[])
+      name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[],)
   final List<CreateOrderItemDto>? items;
   static const fromJsonFactory = _$CreateOrderItemDtoFromJson;
   static const toJsonFactory = _$CreateOrderItemDtoToJson;
@@ -194,13 +195,13 @@ extension $CreateOrderItemDtoExtension on CreateOrderItemDto {
       String? name,
       int? price,
       int? quantity,
-      List<CreateOrderItemDto>? items}) {
+      List<CreateOrderItemDto>? items,}) {
     return CreateOrderItemDto(
         plu: plu ?? this.plu,
         name: name ?? this.name,
         price: price ?? this.price,
         quantity: quantity ?? this.quantity,
-        items: items ?? this.items);
+        items: items ?? this.items,);
   }
 }
 
@@ -217,7 +218,7 @@ class CreateOrderRequestDto {
   @JsonKey(name: 'merchantId', includeIfNull: false)
   final String? merchantId;
   @JsonKey(
-      name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[])
+      name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[],)
   final List<CreateOrderItemDto>? items;
   static const fromJsonFactory = _$CreateOrderRequestDtoFromJson;
   static const toJsonFactory = _$CreateOrderRequestDtoToJson;
@@ -243,9 +244,9 @@ class CreateOrderRequestDto {
 
 extension $CreateOrderRequestDtoExtension on CreateOrderRequestDto {
   CreateOrderRequestDto copyWith(
-      {String? merchantId, List<CreateOrderItemDto>? items}) {
+      {String? merchantId, List<CreateOrderItemDto>? items,}) {
     return CreateOrderRequestDto(
-        merchantId: merchantId ?? this.merchantId, items: items ?? this.items);
+        merchantId: merchantId ?? this.merchantId, items: items ?? this.items,);
   }
 }
 
@@ -281,7 +282,7 @@ class CreateOrderResponseDto {
 extension $CreateOrderResponseDtoExtension on CreateOrderResponseDto {
   CreateOrderResponseDto copyWith({String? clientSecret}) {
     return CreateOrderResponseDto(
-        clientSecret: clientSecret ?? this.clientSecret);
+        clientSecret: clientSecret ?? this.clientSecret,);
   }
 }
 
@@ -331,11 +332,11 @@ class CreateUserRequestDto {
 
 extension $CreateUserRequestDtoExtension on CreateUserRequestDto {
   CreateUserRequestDto copyWith(
-      {String? firstName, String? lastName, String? languageCode}) {
+      {String? firstName, String? lastName, String? languageCode,}) {
     return CreateUserRequestDto(
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
-        languageCode: languageCode ?? this.languageCode);
+        languageCode: languageCode ?? this.languageCode,);
   }
 }
 
@@ -360,7 +361,7 @@ class DeliverectAvailabilityModel {
       name: 'dayOfWeek',
       includeIfNull: false,
       toJson: deliverectDayToJson,
-      fromJson: deliverectDayFromJson)
+      fromJson: deliverectDayFromJson,)
   final enums.DeliverectDay? dayOfWeek;
   @JsonKey(name: 'endTime', includeIfNull: false)
   final String? endTime;
@@ -406,13 +407,13 @@ extension $DeliverectAvailabilityModelExtension on DeliverectAvailabilityModel {
       DateTime? createdAt,
       enums.DeliverectDay? dayOfWeek,
       String? endTime,
-      String? startTime}) {
+      String? startTime,}) {
     return DeliverectAvailabilityModel(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
         dayOfWeek: dayOfWeek ?? this.dayOfWeek,
         endTime: endTime ?? this.endTime,
-        startTime: startTime ?? this.startTime);
+        startTime: startTime ?? this.startTime,);
   }
 }
 
@@ -458,7 +459,7 @@ class DeliverectCategoryModelDto {
   @JsonKey(
       name: 'products',
       includeIfNull: false,
-      defaultValue: <CategoryRelationModelDto>[])
+      defaultValue: <CategoryRelationModelDto>[],)
   final List<CategoryRelationModelDto>? products;
   static const fromJsonFactory = _$DeliverectCategoryModelDtoFromJson;
   static const toJsonFactory = _$DeliverectCategoryModelDtoToJson;
@@ -527,7 +528,7 @@ extension $DeliverectCategoryModelDtoExtension on DeliverectCategoryModelDto {
       String? menu,
       String? name,
       int? sortOrder,
-      List<CategoryRelationModelDto>? products}) {
+      List<CategoryRelationModelDto>? products,}) {
     return DeliverectCategoryModelDto(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
@@ -539,7 +540,7 @@ extension $DeliverectCategoryModelDtoExtension on DeliverectCategoryModelDto {
         menu: menu ?? this.menu,
         name: name ?? this.name,
         sortOrder: sortOrder ?? this.sortOrder,
-        products: products ?? this.products);
+        products: products ?? this.products,);
   }
 }
 
@@ -563,12 +564,12 @@ class DeliverectMenuDto {
   @JsonKey(
       name: 'availabilities',
       includeIfNull: false,
-      defaultValue: <DeliverectAvailabilityModel>[])
+      defaultValue: <DeliverectAvailabilityModel>[],)
   final List<DeliverectAvailabilityModel>? availabilities;
   @JsonKey(
       name: 'categories',
       includeIfNull: false,
-      defaultValue: <DeliverectCategoryModelDto>[])
+      defaultValue: <DeliverectCategoryModelDto>[],)
   final List<DeliverectCategoryModelDto>? categories;
   @JsonKey(name: 'channelLinkId', includeIfNull: false)
   final String? channelLinkId;
@@ -643,7 +644,7 @@ extension $DeliverectMenuDtoExtension on DeliverectMenuDto {
       String? menu,
       String? menuId,
       String? menuImageUrl,
-      int? menuType}) {
+      int? menuType,}) {
     return DeliverectMenuDto(
         availabilities: availabilities ?? this.availabilities,
         categories: categories ?? this.categories,
@@ -653,7 +654,7 @@ extension $DeliverectMenuDtoExtension on DeliverectMenuDto {
         menu: menu ?? this.menu,
         menuId: menuId ?? this.menuId,
         menuImageUrl: menuImageUrl ?? this.menuImageUrl,
-        menuType: menuType ?? this.menuType);
+        menuType: menuType ?? this.menuType,);
   }
 }
 
@@ -674,7 +675,7 @@ class DeliverectMenusDto {
   @JsonKey(
       name: 'availabilities',
       includeIfNull: false,
-      defaultValue: <DeliverectAvailabilityModel>[])
+      defaultValue: <DeliverectAvailabilityModel>[],)
   final List<DeliverectAvailabilityModel>? availabilities;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
@@ -730,14 +731,14 @@ extension $DeliverectMenusDtoExtension on DeliverectMenusDto {
       String? menu,
       String? menuId,
       String? menuImageUrl,
-      int? menuType}) {
+      int? menuType,}) {
     return DeliverectMenusDto(
         availabilities: availabilities ?? this.availabilities,
         description: description ?? this.description,
         menu: menu ?? this.menu,
         menuId: menuId ?? this.menuId,
         menuImageUrl: menuImageUrl ?? this.menuImageUrl,
-        menuType: menuType ?? this.menuType);
+        menuType: menuType ?? this.menuType,);
   }
 }
 
@@ -807,7 +808,7 @@ class DeliverectProductModelDto {
   @JsonKey(
       name: 'childProducts',
       includeIfNull: false,
-      defaultValue: <ProductRelationModelDto>[])
+      defaultValue: <ProductRelationModelDto>[],)
   final List<ProductRelationModelDto>? childProducts;
   static const fromJsonFactory = _$DeliverectProductModelDtoFromJson;
   static const toJsonFactory = _$DeliverectProductModelDtoToJson;
@@ -915,7 +916,7 @@ extension $DeliverectProductModelDtoExtension on DeliverectProductModelDto {
       int? sortOrder,
       int? takeawayTax,
       bool? visible,
-      List<ProductRelationModelDto>? childProducts}) {
+      List<ProductRelationModelDto>? childProducts,}) {
     return DeliverectProductModelDto(
         productId: productId ?? this.productId,
         account: account ?? this.account,
@@ -935,7 +936,7 @@ extension $DeliverectProductModelDtoExtension on DeliverectProductModelDto {
         sortOrder: sortOrder ?? this.sortOrder,
         takeawayTax: takeawayTax ?? this.takeawayTax,
         visible: visible ?? this.visible,
-        childProducts: childProducts ?? this.childProducts);
+        childProducts: childProducts ?? this.childProducts,);
   }
 }
 
@@ -1024,7 +1025,7 @@ extension $GetMenuResponseDtoExtension on GetMenuResponseDto {
       String? averagePickUpTime,
       String? address,
       String? googleMapsLink,
-      DeliverectMenuDto? menu}) {
+      DeliverectMenuDto? menu,}) {
     return GetMenuResponseDto(
         id: id ?? this.id,
         phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -1033,7 +1034,7 @@ extension $GetMenuResponseDtoExtension on GetMenuResponseDto {
         averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
         address: address ?? this.address,
         googleMapsLink: googleMapsLink ?? this.googleMapsLink,
-        menu: menu ?? this.menu);
+        menu: menu ?? this.menu,);
   }
 }
 
@@ -1098,13 +1099,13 @@ extension $GetMenusResponseDtoExtension on GetMenusResponseDto {
       double? rating,
       String? reviewCount,
       String? averagePickUpTime,
-      DeliverectMenusDto? menu}) {
+      DeliverectMenusDto? menu,}) {
     return GetMenusResponseDto(
         id: id ?? this.id,
         rating: rating ?? this.rating,
         reviewCount: reviewCount ?? this.reviewCount,
         averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
-        menu: menu ?? this.menu);
+        menu: menu ?? this.menu,);
   }
 }
 
@@ -1128,7 +1129,7 @@ class GetOrderResponseDto {
       name: 'status',
       includeIfNull: false,
       toJson: deliverectOrderStatusToJson,
-      fromJson: deliverectOrderStatusFromJson)
+      fromJson: deliverectOrderStatusFromJson,)
   final enums.DeliverectOrderStatus? status;
   @JsonKey(name: 'price', includeIfNull: false)
   final double? price;
@@ -1137,7 +1138,7 @@ class GetOrderResponseDto {
   @JsonKey(name: 'merchant', includeIfNull: false)
   final MerchantModelDto? merchant;
   @JsonKey(
-      name: 'items', includeIfNull: false, defaultValue: <OrderItemModel>[])
+      name: 'items', includeIfNull: false, defaultValue: <OrderItemModel>[],)
   final List<OrderItemModel>? items;
   static const fromJsonFactory = _$GetOrderResponseDtoFromJson;
   static const toJsonFactory = _$GetOrderResponseDtoToJson;
@@ -1181,14 +1182,14 @@ extension $GetOrderResponseDtoExtension on GetOrderResponseDto {
       double? price,
       DateTime? estimatedPickUpTime,
       MerchantModelDto? merchant,
-      List<OrderItemModel>? items}) {
+      List<OrderItemModel>? items,}) {
     return GetOrderResponseDto(
         id: id ?? this.id,
         status: status ?? this.status,
         price: price ?? this.price,
         estimatedPickUpTime: estimatedPickUpTime ?? this.estimatedPickUpTime,
         merchant: merchant ?? this.merchant,
-        items: items ?? this.items);
+        items: items ?? this.items,);
   }
 }
 
@@ -1244,12 +1245,12 @@ class GetUserResponseDto {
 
 extension $GetUserResponseDtoExtension on GetUserResponseDto {
   GetUserResponseDto copyWith(
-      {String? id, DateTime? createdAt, String? firstName, String? lastName}) {
+      {String? id, DateTime? createdAt, String? firstName, String? lastName,}) {
     return GetUserResponseDto(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
         firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName);
+        lastName: lastName ?? this.lastName,);
   }
 }
 
@@ -1331,7 +1332,7 @@ extension $MerchantModelDtoExtension on MerchantModelDto {
       String? reviewCount,
       String? averagePickUpTime,
       String? address,
-      String? googleMapsLink}) {
+      String? googleMapsLink,}) {
     return MerchantModelDto(
         name: name ?? this.name,
         phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -1339,7 +1340,7 @@ extension $MerchantModelDtoExtension on MerchantModelDto {
         reviewCount: reviewCount ?? this.reviewCount,
         averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
         address: address ?? this.address,
-        googleMapsLink: googleMapsLink ?? this.googleMapsLink);
+        googleMapsLink: googleMapsLink ?? this.googleMapsLink,);
   }
 }
 
@@ -1377,7 +1378,7 @@ class OrderItemModel {
   @JsonKey(name: 'parentId', includeIfNull: false)
   final String? parentId;
   @JsonKey(
-      name: 'items', includeIfNull: false, defaultValue: <OrderItemModel>[])
+      name: 'items', includeIfNull: false, defaultValue: <OrderItemModel>[],)
   final List<OrderItemModel>? items;
   static const fromJsonFactory = _$OrderItemModelFromJson;
   static const toJsonFactory = _$OrderItemModelToJson;
@@ -1434,7 +1435,7 @@ extension $OrderItemModelExtension on OrderItemModel {
       int? quantity,
       OrderItemModel? parent,
       String? parentId,
-      List<OrderItemModel>? items}) {
+      List<OrderItemModel>? items,}) {
     return OrderItemModel(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
@@ -1444,7 +1445,7 @@ extension $OrderItemModelExtension on OrderItemModel {
         quantity: quantity ?? this.quantity,
         parent: parent ?? this.parent,
         parentId: parentId ?? this.parentId,
-        items: items ?? this.items);
+        items: items ?? this.items,);
   }
 }
 
@@ -1480,7 +1481,7 @@ class ProductRelationModelDto {
 extension $ProductRelationModelDtoExtension on ProductRelationModelDto {
   ProductRelationModelDto copyWith({DeliverectProductModelDto? childProduct}) {
     return ProductRelationModelDto(
-        childProduct: childProduct ?? this.childProduct);
+        childProduct: childProduct ?? this.childProduct,);
   }
 }
 
@@ -1500,7 +1501,7 @@ class UpdateStatusOrderModel {
       name: 'orderStatus',
       includeIfNull: false,
       toJson: deliverectOrderStatusToJson,
-      fromJson: deliverectOrderStatusFromJson)
+      fromJson: deliverectOrderStatusFromJson,)
   final enums.DeliverectOrderStatus? orderStatus;
   static const fromJsonFactory = _$UpdateStatusOrderModelFromJson;
   static const toJsonFactory = _$UpdateStatusOrderModelToJson;
@@ -1527,10 +1528,10 @@ class UpdateStatusOrderModel {
 
 extension $UpdateStatusOrderModelExtension on UpdateStatusOrderModel {
   UpdateStatusOrderModel copyWith(
-      {String? orderId, enums.DeliverectOrderStatus? orderStatus}) {
+      {String? orderId, enums.DeliverectOrderStatus? orderStatus,}) {
     return UpdateStatusOrderModel(
         orderId: orderId ?? this.orderId,
-        orderStatus: orderStatus ?? this.orderStatus);
+        orderStatus: orderStatus ?? this.orderStatus,);
   }
 }
 
@@ -1548,7 +1549,7 @@ enums.DeliverectDay deliverectDayFromJson(String? deliverectDay) {
           (element) =>
               element.value.toLowerCase() == deliverectDay.toLowerCase(),
           orElse: () =>
-              const MapEntry(enums.DeliverectDay.swaggerGeneratedUnknown, ''))
+              const MapEntry(enums.DeliverectDay.swaggerGeneratedUnknown, ''),)
       .key;
 }
 
@@ -1569,12 +1570,12 @@ List<enums.DeliverectDay> deliverectDayListFromJson(List? deliverectDay) {
 }
 
 String? deliverectOrderStatusToJson(
-    enums.DeliverectOrderStatus? deliverectOrderStatus) {
+    enums.DeliverectOrderStatus? deliverectOrderStatus,) {
   return enums.$DeliverectOrderStatusMap[deliverectOrderStatus];
 }
 
 enums.DeliverectOrderStatus deliverectOrderStatusFromJson(
-    String? deliverectOrderStatus) {
+    String? deliverectOrderStatus,) {
   if (deliverectOrderStatus == null) {
     return enums.DeliverectOrderStatus.swaggerGeneratedUnknown;
   }
@@ -1584,12 +1585,12 @@ enums.DeliverectOrderStatus deliverectOrderStatusFromJson(
           (element) =>
               element.value.toLowerCase() ==
               deliverectOrderStatus.toLowerCase(),
-          orElse: () => const MapEntry(enums.DeliverectOrderStatus.$new, '10'))
+          orElse: () => const MapEntry(enums.DeliverectOrderStatus.$new, '10'),)
       .key;
 }
 
 List<String> deliverectOrderStatusListToJson(
-    List<enums.DeliverectOrderStatus>? deliverectOrderStatus) {
+    List<enums.DeliverectOrderStatus>? deliverectOrderStatus,) {
   if (deliverectOrderStatus == null) {
     return [];
   }
@@ -1600,7 +1601,7 @@ List<String> deliverectOrderStatusListToJson(
 }
 
 List<enums.DeliverectOrderStatus> deliverectOrderStatusListFromJson(
-    List? deliverectOrderStatus) {
+    List? deliverectOrderStatus,) {
   if (deliverectOrderStatus == null) {
     return [];
   }
@@ -1649,7 +1650,7 @@ class $CustomJsonDecoder {
 class $JsonSerializableConverter extends chopper.JsonConverter {
   @override
   chopper.Response<ResultType> convertResponse<ResultType, Item>(
-      chopper.Response response) {
+      chopper.Response response,) {
     if (response.bodyString.isEmpty) {
       // In rare cases, when let's say 204 (no content) is returned -
       // we cannot decode the missing json with the result type specified
@@ -1658,7 +1659,7 @@ class $JsonSerializableConverter extends chopper.JsonConverter {
 
     final jsonRes = super.convertResponse(response);
     return jsonRes.copyWith<ResultType>(
-        body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType);
+        body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType,);
   }
 }
 

@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 
 class Bounceable extends StatefulWidget {
+
+  const Bounceable({
+    Key? key,
+    required this.child,
+    this.onTap,
+    this.onTapUp,
+    this.onTapDown,
+    this.onTapCancel,
+    this.duration = const Duration(milliseconds: 50),
+    this.reverseDuration = const Duration(milliseconds: 50),
+    this.curve = Curves.decelerate,
+    this.reverseCurve = Curves.decelerate,
+    this.scaleFactor = 0.8,
+  })  : assert(
+          scaleFactor >= 0.0 && scaleFactor <= 1.0,
+          'The valid range of scaleFactor is from 0.0 to 1.0.',
+        ),
+        super(key: key);
   /// Set it to `null` to disable `onTap`.
   final VoidCallback? onTap;
   final void Function(TapUpDetails)? onTapUp;
@@ -24,24 +42,6 @@ class Bounceable extends StatefulWidget {
 
   final Widget child;
 
-  const Bounceable({
-    Key? key,
-    required this.child,
-    this.onTap,
-    this.onTapUp,
-    this.onTapDown,
-    this.onTapCancel,
-    this.duration = const Duration(milliseconds: 50),
-    this.reverseDuration = const Duration(milliseconds: 50),
-    this.curve = Curves.decelerate,
-    this.reverseCurve = Curves.decelerate,
-    this.scaleFactor = 0.8,
-  })  : assert(
-          scaleFactor >= 0.0 && scaleFactor <= 1.0,
-          'The valid range of scaleFactor is from 0.0 to 1.0.',
-        ),
-        super(key: key);
-
   @override
   _BounceableState createState() => _BounceableState();
 }
@@ -53,7 +53,6 @@ class _BounceableState extends State<Bounceable>
     duration: widget.duration,
     reverseDuration: widget.reverseDuration,
     value: 1.0,
-    upperBound: 1.0,
     lowerBound: widget.scaleFactor,
   );
 

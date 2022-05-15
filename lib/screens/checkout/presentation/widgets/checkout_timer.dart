@@ -56,7 +56,7 @@ class _BottomSheet extends StatefulWidget {
       required this.hourController,
       required this.minuteController,
       required this.startingHour,
-      required this.startingMinute})
+      required this.startingMinute,})
       : super(key: key);
 
   final FixedExtentScrollController hourController;
@@ -72,7 +72,7 @@ class _BottomSheetState extends State<_BottomSheet> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback(initListData);
+    WidgetsBinding.instance.addPostFrameCallback(initListData);
   }
 
   void initListData(_) {
@@ -122,7 +122,7 @@ class _BottomSheetState extends State<_BottomSheet> {
                             if (!stateSheet.availableOpeningTimes[value].minutes
                                 .contains(stateSheet
                                         .currentSelectedHour.minutes[
-                                    stateSheet.currentSelectedMinuteIndex])) {
+                                    stateSheet.currentSelectedMinuteIndex],)) {
                               widget.minuteController.jumpTo(
                                 0,
                               );
@@ -150,7 +150,7 @@ class _BottomSheetState extends State<_BottomSheet> {
                     const Text(
                       ':',
                       style: TextStyle(
-                          fontSize: 40, color: AlpacaColor.primary100),
+                          fontSize: 40, color: AlpacaColor.primary100,),
                     ),
                     Expanded(
                       child: NotificationListener(

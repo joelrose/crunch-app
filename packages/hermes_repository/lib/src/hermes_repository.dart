@@ -5,7 +5,7 @@ import 'package:hermes_api/hermes_api.dart';
 
 class HermesRepository {
   HermesRepository(
-      {required String apiUrl, required this.authenticationRepository}) {
+      {required String apiUrl, required this.authenticationRepository,}) {
     _chopperClient = ChopperClient(
       baseUrl: apiUrl,
       services: [Swagger.create(ChopperClient())],
