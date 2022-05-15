@@ -51,13 +51,13 @@ class CheckoutTimer extends StatelessWidget {
 }
 
 class _BottomSheet extends StatefulWidget {
-  const _BottomSheet(
-      {Key? key,
-      required this.hourController,
-      required this.minuteController,
-      required this.startingHour,
-      required this.startingMinute,})
-      : super(key: key);
+  const _BottomSheet({
+    Key? key,
+    required this.hourController,
+    required this.minuteController,
+    required this.startingHour,
+    required this.startingMinute,
+  }) : super(key: key);
 
   final FixedExtentScrollController hourController;
   final FixedExtentScrollController minuteController;
@@ -120,9 +120,10 @@ class _BottomSheetState extends State<_BottomSheet> {
                                 .read<CheckoutTimeCubit>()
                                 .updateCurrentSelectedHour(value);
                             if (!stateSheet.availableOpeningTimes[value].minutes
-                                .contains(stateSheet
-                                        .currentSelectedHour.minutes[
-                                    stateSheet.currentSelectedMinuteIndex],)) {
+                                .contains(
+                              stateSheet.currentSelectedHour.minutes[
+                                  stateSheet.currentSelectedMinuteIndex],
+                            )) {
                               widget.minuteController.jumpTo(
                                 0,
                               );
@@ -150,7 +151,9 @@ class _BottomSheetState extends State<_BottomSheet> {
                     const Text(
                       ':',
                       style: TextStyle(
-                          fontSize: 40, color: AlpacaColor.primary100,),
+                        fontSize: 40,
+                        color: AlpacaColor.primary100,
+                      ),
                     ),
                     Expanded(
                       child: NotificationListener(
@@ -196,15 +199,51 @@ class _BottomSheetState extends State<_BottomSheet> {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 20),
-                height: 52,
-                width: 200,
-                child: ActionButton(
-                  buttonText: 'Fertig',
-                  onPressed: () {},
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 52,
+                        child: ActionButton(
+                          buttonText: 'Fertig',
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 20),
+                        height: 52,
+                        child: ActionButton(
+                          buttonText: 'Jetzt',
+                          onPressed: () {
+                            final now = DateTime(2022, 5, 12, 11, 23);
+                            final hour = stateSheet.availableOpeningTimes
+                                .indexWhere(
+                                    (element) => element.hour == now.hour);
+
+                            final minute = stateSheet
+                                .currentSelectedHour.minutes
+                                .indexOf(now.minute);
+
+                            context
+                                .read<CheckoutTimeCubit>()
+                                .updateCurrentSelectedHour(hour);
+                            context
+                                .read<CheckoutTimeCubit>()
+                                .updateCurrentSelectedMinute(minute);
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              )
+              ),
             ],
           );
         },
