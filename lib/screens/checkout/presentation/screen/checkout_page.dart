@@ -32,8 +32,9 @@ class CheckoutPage extends StatelessWidget {
             create: (_) => CheckoutCubit(menu: menu),
           ),
           BlocProvider(
-            create: (_) =>
-                CheckoutTimeCubit(openingHours: menu.menu!.availabilities),
+            create: (_) => CheckoutTimeCubit(
+                currentTime: DateTime.now(),
+                openingHours: menu.menu!.availabilities),
           ),
           BlocProvider(
             create: (context) => CheckoutPaymentCubit(

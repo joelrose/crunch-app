@@ -1,10 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 
-
-
-
-
 class CheckoutState extends Equatable {
   const CheckoutState({required this.menu});
 

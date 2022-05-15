@@ -3,14 +3,17 @@ import 'package:fleasy/fleasy.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_api/swagger_generated_code/swagger.swagger.dart';
 import 'package:pickup/screens/checkout/domain/entities/opening_hour.dart';
+import 'package:pickup/screens/checkout/util/extensions.dart';
 
 part 'checkout_time_state.dart';
 
 class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
-  CheckoutTimeCubit({required List<DeliverectAvailabilityModel>? openingHours})
+  CheckoutTimeCubit(
+      {required List<DeliverectAvailabilityModel>? openingHours,
+      required DateTime currentTime})
       : super(
           CheckoutTimeState(
-            pickupTime: DateTime.now().add(const Duration(minutes: 20)),
+            pickupTime: currentTime.add(const Duration(minutes: 20)),
             openingHours: openingHours ?? [],
           ),
         );

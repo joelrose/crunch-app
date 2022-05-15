@@ -1,7 +1,4 @@
-import '/Users/florian/AndroidStudioProjects/crunch-app/lib/screens/checkout/util/extensions.dart';
-
 part of 'checkout_time_cubit.dart';
-
 
 class CheckoutTimeState extends Equatable {
   factory CheckoutTimeState({
@@ -11,9 +8,10 @@ class CheckoutTimeState extends Equatable {
     final List<OpeningHour> availableOpeningTimes = [];
     for (final e in openingHours) {
       if (e.dayOfWeek!.index == 4) {
+        var startTime = e.startTime;
         if (e.startTime != null) {
-          final startingHour = int.parse(e.startTime!.substring(0, 2));
-          final startingMinute = e.startTime?.getHour;
+          final startingHour = startTime!.getHour;
+          final startingMinute = startTime.getMinutes;
           availableOpeningTimes.add(
             OpeningHour(
               startingHour,
@@ -29,8 +27,9 @@ class CheckoutTimeState extends Equatable {
           );
         }
         if (e.endTime != null) {
-          final endingHour = int.parse(e.endTime!.substring(0, 2));
-          final endingMinute = int.parse(e.endTime!.substring(3, 5));
+          var endTime = e.endTime;
+          final endingHour = endTime!.getHour;
+          final endingMinute = endTime.getMinutes;
           availableOpeningTimes.add(
             OpeningHour(
               endingHour,
@@ -61,7 +60,7 @@ class CheckoutTimeState extends Equatable {
     }
     availableOpeningTimes.sort((a, b) => a.hour.compareTo(b.hour));
 
-    return CheckoutTimeState._internal(
+    return CheckoutTimeState.internal(
       pickupTime: pickupTime,
       currentSelectedHour: availableOpeningTimes[0],
       currentSelectedMinuteIndex: 0,
@@ -69,7 +68,7 @@ class CheckoutTimeState extends Equatable {
     );
   }
 
-  const CheckoutTimeState._internal(
+  const CheckoutTimeState.internal(
       {required this.pickupTime,
       required this.currentSelectedHour,
       required this.currentSelectedMinuteIndex,
@@ -80,7 +79,7 @@ class CheckoutTimeState extends Equatable {
           int? currentSelectedMinuteIndex,
           OpeningHour? currentSelectedHour,
           List<OpeningHour>? availableOpeningTimes}) =>
-      CheckoutTimeState._internal(
+      CheckoutTimeState.internal(
         pickupTime: pickupTime ?? this.pickupTime,
         currentSelectedMinuteIndex:
             currentSelectedMinuteIndex ?? this.currentSelectedMinuteIndex,
