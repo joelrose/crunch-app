@@ -1,73 +1,53 @@
 {
   "project_info": {
-    "project_number": "295391330962",
-    "project_id": "alpaca-91e4b",
-    "storage_bucket": "alpaca-91e4b.appspot.com"
+    "project_number": "899655281519",
+    "project_id": "pickup-app-staging",
+    "storage_bucket": "pickup-app-staging.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:295391330962:android:e6c4849f3c7c6d220edc4b",
-        "android_client_info": {
-          "package_name": "tech.getcrunch.crunch"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "295391330962-48npbbjg5vklkb9jd1o6tfmj5chjcmbc.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB6Vz5lQ7OwMBXxDGAFFzy-LTQjuwYhgjw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "295391330962-48npbbjg5vklkb9jd1o6tfmj5chjcmbc.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "295391330962-9cj8hpvcqaqmeb14n16r6tj61grng3e4.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "tech.getcrunch.crunch.stg"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:295391330962:android:359a55c5959447030edc4b",
+        "mobilesdk_app_id": "1:899655281519:android:3b76b85c81d3efe177569a",
         "android_client_info": {
           "package_name": "tech.getcrunch.crunch.dev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "295391330962-48npbbjg5vklkb9jd1o6tfmj5chjcmbc.apps.googleusercontent.com",
+          "client_id": "899655281519-6mu3gnmqqjpb16ao77o45bbib8vcemmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tech.getcrunch.crunch.dev",
+            "certificate_hash": "cad0490868c4649e84d10051ac86749056f65616"
+          }
+        },
+        {
+          "client_id": "899655281519-lpprj6p9j1f0u8t02as7nj4ba1n4pl26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tech.getcrunch.crunch.dev",
+            "certificate_hash": "12f6896124b997a8b8f5c85fced9daf6558d43af"
+          }
+        },
+        {
+          "client_id": "899655281519-ra8khb0o7vqeubjjmjakl2h9j8vm92v6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB6Vz5lQ7OwMBXxDGAFFzy-LTQjuwYhgjw"
+          "current_key": "AIzaSyAw5LktIP7yM9Y8eIdFvFs4yrJehmoZVqQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "295391330962-48npbbjg5vklkb9jd1o6tfmj5chjcmbc.apps.googleusercontent.com",
+              "client_id": "899655281519-ra8khb0o7vqeubjjmjakl2h9j8vm92v6.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "295391330962-9cj8hpvcqaqmeb14n16r6tj61grng3e4.apps.googleusercontent.com",
+              "client_id": "899655281519-ffcood4dk1dtg5459rd0vicbat969ge7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "tech.getcrunch.crunch.stg"
@@ -79,31 +59,47 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:295391330962:android:4c7bb1bdc57fc1360edc4b",
+        "mobilesdk_app_id": "1:899655281519:android:e5417a5437e18a0e77569a",
         "android_client_info": {
           "package_name": "tech.getcrunch.crunch.stg"
         }
       },
       "oauth_client": [
         {
-          "client_id": "295391330962-48npbbjg5vklkb9jd1o6tfmj5chjcmbc.apps.googleusercontent.com",
+          "client_id": "899655281519-edkgm8gdhgkubn7autni8othqq1d62m7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tech.getcrunch.crunch.stg",
+            "certificate_hash": "12f6896124b997a8b8f5c85fced9daf6558d43af"
+          }
+        },
+        {
+          "client_id": "899655281519-vnp9b3lqdlntkachusiul84n42u1envc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tech.getcrunch.crunch.stg",
+            "certificate_hash": "cad0490868c4649e84d10051ac86749056f65616"
+          }
+        },
+        {
+          "client_id": "899655281519-ra8khb0o7vqeubjjmjakl2h9j8vm92v6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB6Vz5lQ7OwMBXxDGAFFzy-LTQjuwYhgjw"
+          "current_key": "AIzaSyAw5LktIP7yM9Y8eIdFvFs4yrJehmoZVqQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "295391330962-48npbbjg5vklkb9jd1o6tfmj5chjcmbc.apps.googleusercontent.com",
+              "client_id": "899655281519-ra8khb0o7vqeubjjmjakl2h9j8vm92v6.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "295391330962-9cj8hpvcqaqmeb14n16r6tj61grng3e4.apps.googleusercontent.com",
+              "client_id": "899655281519-ffcood4dk1dtg5459rd0vicbat969ge7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "tech.getcrunch.crunch.stg"
