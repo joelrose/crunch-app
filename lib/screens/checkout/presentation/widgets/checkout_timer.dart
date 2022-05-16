@@ -119,16 +119,8 @@ class _BottomSheetState extends State<_BottomSheet> {
                           onSelectedItemChanged: (value) {
                             context
                                 .read<CheckoutTimeCubit>()
-                                .updateCurrentSelectedHour(value);
-                            if (!stateSheet.availableOpeningTimes[value].minutes
-                                .contains(
-                              stateSheet.currentSelectedHour.minutes[
-                                  stateSheet.currentSelectedMinuteIndex],
-                            )) {
-                              widget.minuteController.jumpTo(
-                                0,
-                              );
-                            }
+                                .updateCurrentSelectedHour(
+                                    value, widget.minuteController);
                           },
                           itemExtent: 40,
                           children: List.generate(
@@ -225,9 +217,10 @@ class _BottomSheetState extends State<_BottomSheet> {
                             final now = kDebugMode
                                 ? DateTime(2022, 5, 12, 11, 23)
                                 : DateTime.now();
-                            final hour = stateSheet.availableOpeningTimes
-                                .indexWhere(
-                                    (element) => element.hour == now.hour,);
+                            final hour =
+                                stateSheet.availableOpeningTimes.indexWhere(
+                              (element) => element.hour == now.hour,
+                            );
 
                             final minute = stateSheet
                                 .currentSelectedHour.minutes
@@ -235,7 +228,8 @@ class _BottomSheetState extends State<_BottomSheet> {
 
                             context
                                 .read<CheckoutTimeCubit>()
-                                .updateCurrentSelectedHour(hour);
+                                .updateCurrentSelectedHour(
+                                    hour, widget.minuteController);
                             context
                                 .read<CheckoutTimeCubit>()
                                 .updateCurrentSelectedMinute(minute);

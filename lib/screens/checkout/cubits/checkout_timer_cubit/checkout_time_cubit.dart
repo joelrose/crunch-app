@@ -1,4 +1,5 @@
 import 'package:fleasy/fleasy.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hermes_repository/hermes_repository.dart';
@@ -19,8 +20,7 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
     openingHours.removeWhere(
       (element) => element.dayOfWeek!.index != currentTime.weekday,
     );
-
-    final availableOpeningTimes = openingHours.getOpeningHours;
+    final availableOpeningTimes = openingHours.getOpeningHours(currentTime);
     availableOpeningTimes.sort((a, b) => a.hour.compareTo(b.hour));
 
     return CheckoutTimeCubit._internal(
@@ -55,11 +55,14 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
     );
   }
 
-  void updateCurrentSelectedHour(int hourIndex) {
+  void updateCurrentSelectedHour(
+    int hourIndex,
+    FixedExtentScrollController minuteController,
+  ) {
     final newHour = state.availableOpeningTimes[hourIndex];
-    final newMinuteIndex = newHour.minutes.indexOf(
-      state.currentSelectedHour.minutes[state.currentSelectedMinuteIndex],
-    );
+    final oldMinuteValue =
+        state.currentSelectedHour.minutes[state.currentSelectedMinuteIndex];
+    final newMinuteIndex = newHour.minutes.indexOf(oldMinuteValue);
 
     if (newMinuteIndex == -1) {
       emit(
@@ -70,18 +73,19 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
               .copyWith(hour: newHour.hour, minute: newHour.minutes[0]),
         ),
       );
+      minuteController.jumpToItem(0);
     } else {
       emit(
         state.copyWith(
           pickupTime: state.pickupTime.copyWith(
             hour: newHour.hour,
-            minute: state
-                .currentSelectedHour.minutes[state.currentSelectedMinuteIndex],
+            minute: oldMinuteValue,
           ),
           currentSelectedHour: newHour,
           currentSelectedMinuteIndex: newMinuteIndex,
         ),
       );
+      minuteController.jumpToItem(oldMinuteValue + 1);
     }
   }
 }

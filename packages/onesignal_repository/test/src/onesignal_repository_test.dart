@@ -51,9 +51,9 @@ void main() {
       when(() => mockOneSignal.setAppId(any()))
           .thenAnswer((_) => Future.value());
 
-      when(() => mockOneSignal.promptUserForPushNotificationPermission(
-            
-          ),).thenAnswer(
+      when(
+        () => mockOneSignal.promptUserForPushNotificationPermission(),
+      ).thenAnswer(
         (_) => Future.value(true),
       );
     });
@@ -67,9 +67,9 @@ void main() {
 
       verify(() => mockOneSignal.setAppId(appId)).called(1);
 
-      verify(() =>
-              mockOneSignal.setEmail(email: email),)
-          .called(1);
+      verify(
+        () => mockOneSignal.setEmail(email: email),
+      ).called(1);
 
       verify(() => mockOneSignal.setExternalUserId(uid)).called(1);
 
