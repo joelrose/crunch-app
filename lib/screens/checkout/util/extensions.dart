@@ -27,30 +27,34 @@ extension GetOpeningHourFromInt on int {
   }
 }
 
-extension GetOpeningHours on String {
-  OpeningHour get fromEndingHour {
-    return OpeningHour(
-      getHour,
-      List.generate(getMinutes, (index) => getMinutes - index),
-    );
-  }
-
+extension GetStartOpeningHour on DateTime {
   OpeningHour get fromStartingHour {
     return OpeningHour(
-      getHour,
+      hour,
       List.generate(
-        60 - getMinutes,
-        (index) => index + getMinutes,
+        60 - minute,
+        (index) => index + minute,
       ),
     );
   }
 }
 
+extension GetEndingOpeningHours on String {
+  OpeningHour get fromEndingHour {
+    return OpeningHour(
+      getHour,
+      List.generate(getMinutes + 1, (index) => index),
+    );
+  }
+}
+
 extension GetListOfOpeningHoures on List<DeliverectAvailabilityModel> {
-  List<OpeningHour> get getOpeningHours {
+  List<OpeningHour> getOpeningHours(DateTime currentDateTime) {
     final List<OpeningHour> openingHours = [];
     for (final e in this) {
-      openingHours.add(e.startTime!.fromStartingHour);
+      openingHours.add(
+        currentDateTime.add(const Duration(minutes: 20)).fromStartingHour,
+      );
       if (e.endTime!.getMinutes != 0) {
         openingHours.add(e.endTime!.fromEndingHour);
       }
@@ -59,7 +63,6 @@ extension GetListOfOpeningHoures on List<DeliverectAvailabilityModel> {
         openingHours.add(i.toOpeningHour);
       }
     }
-
     return openingHours;
   }
 }
