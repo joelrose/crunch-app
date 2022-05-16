@@ -1,4 +1,5 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,8 +34,10 @@ class CheckoutPage extends StatelessWidget {
           ),
           BlocProvider(
             create: (_) => CheckoutTimeCubit(
-              currentTime: DateTime(2022, 5, 12),
-              openingHours: menu.menu?.availabilities,
+              currentTime: kDebugMode
+                  ? DateTime(2022, 5, 12, 9, 10)
+                  : DateTime.now(), // TODO: replace with DateTime.now()
+              openingHours: menu.menu!.availabilities!,
             ),
           ),
           BlocProvider(

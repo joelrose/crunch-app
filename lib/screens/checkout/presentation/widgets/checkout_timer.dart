@@ -1,4 +1,5 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
@@ -221,7 +222,9 @@ class _BottomSheetState extends State<_BottomSheet> {
                         child: ActionButton(
                           buttonText: 'Jetzt',
                           onPressed: () {
-                            final now = DateTime(2022, 5, 12, 11, 23);
+                            final now = kDebugMode
+                                ? DateTime(2022, 5, 12, 11, 23)
+                                : DateTime.now();
                             final hour = stateSheet.availableOpeningTimes
                                 .indexWhere(
                                     (element) => element.hour == now.hour);
