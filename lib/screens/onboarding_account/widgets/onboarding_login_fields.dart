@@ -101,7 +101,11 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
             onChanged: (text) async {
               final phoneNumber = selectedPhoneCode + text;
 
-              isValidPhoneNumber = await phoneNumber.isValidPhoneNumber();
+              try {
+                isValidPhoneNumber = await phoneNumber.isValidPhoneNumber();
+              } catch (exception) {
+                isValidPhoneNumber = false;
+              }
             },
             validator: (text) {
               if (!isValidPhoneNumber) {
@@ -203,30 +207,33 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
   }
 
   Widget _buildTextFieldPrefix() {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () async {},
-      child: ClipRRect(
-        borderRadius: const BorderRadius.horizontal(left: Radius.circular(8)),
-        child: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(bottom: 2),
-          child: Row(
-            children: [
-              Container(width: 8),
-              Text(
-                Utils.countryCodeToEmoji(selectedCountryCode),
-                style: Theme.of(context).textTheme.headline2,
-              ),
-              Container(width: 6),
-              Text(
-                selectedPhoneCode,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5!
-                    .copyWith(color: AlpacaColor.white100Color),
-              ),
-            ],
+    return SizedBox(
+      width: 80,
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () async {},
+        child: ClipRRect(
+          borderRadius: const BorderRadius.horizontal(left: Radius.circular(8)),
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(bottom: 2),
+            child: Row(
+              children: [
+                Container(width: 8),
+                Text(
+                  Utils.countryCodeToEmoji(selectedCountryCode),
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+                Container(width: 4),
+                Text(
+                  selectedPhoneCode,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: AlpacaColor.white100Color),
+                ),
+              ],
+            ),
           ),
         ),
       ),
