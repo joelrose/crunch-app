@@ -36,20 +36,29 @@ class SocialOnboarding extends StatelessWidget {
             );
           },
         ),
-        getSocialButton(
-          isSignUp
-              ? context.l10n.signUpWithApple
-              : context.l10n.signInWithApple,
-          MediaQuery.of(context).size.width,
-          SvgPicture.asset(
-            'assets/apple-logo.svg',
-          ),
-          () async {
-            LoadingUtils.asyncLoading(
-              _socialSignUp(context),
-            );
+        FutureBuilder(
+          future: context.read<AuthenticationRepository>().appleSignInAvailable,
+          builder: (context, snapshot) {
+            if (snapshot.data == true) {
+              return getSocialButton(
+                isSignUp
+                    ? context.l10n.signUpWithApple
+                    : context.l10n.signInWithApple,
+                MediaQuery.of(context).size.width,
+                SvgPicture.asset(
+                  'assets/apple-logo.svg',
+                ),
+                () async {
+                  LoadingUtils.asyncLoading(
+                    _socialSignUp(context),
+                  );
+                },
+                backgroundWhite: false,
+              );
+            } else {
+              return Container();
+            }
           },
-          backgroundWhite: false,
         ),
       ],
     );
@@ -70,7 +79,7 @@ class SocialOnboarding extends StatelessWidget {
       final response =
           await hermesRepository.client.apiWhitelistuserPost(body: user.email);
 
-      if (response.isSuccessful && response.body == true) {
+      if (response.isSuccessful && response.body == true ) {
         final account = await hermesRepository.client.apiUsersGet();
 
         if (account.isSuccessful) {

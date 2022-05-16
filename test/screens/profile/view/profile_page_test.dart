@@ -1,14 +1,15 @@
-import 'package:authentication_repository/authentication_repository.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
+import 'package:pickup/screens/profile/cubit/profile_cubit.dart';
 import 'package:pickup/screens/profile/view/profile_page.dart';
 import 'package:pickup/screens/profile/widgets/profile_tile.dart';
 
 import '../../../helpers/helpers.dart';
 
-class MockAuthenticationRepository extends Mock
-    implements AuthenticationRepository {}
+class MockProfileCubit extends Mock implements ProfileCubit {}
 
 void main() {
   group(
@@ -20,41 +21,90 @@ void main() {
         expect(find.byType(ProfileTile), findsNWidgets(5));
       });
 
-      testWidgets('logout button works as expected', (tester) async {
-        final MockNavigator navigator = MockNavigator();
-        final AuthenticationRepository authenticationRepository =
-            MockAuthenticationRepository();
+      testWidgets('page loads ProfileView', (tester) async {
+        await tester.pumpApp(ProfilePage());
 
-        when(() => authenticationRepository.signOut()).thenAnswer((_) async {});
+        expect(find.byType(ProfileView), findsOneWidget);
+      });
 
-        when(() => navigator.pushAndRemoveUntil<void>(any(), any()))
-            .thenAnswer((_) async {});
+      group('logout button', () {
+        testWidgets('navigates to login page on successful logout',
+            (tester) async {
+          final MockNavigator navigator = MockNavigator();
 
-        await tester.pumpApp(
-          ProfilePage(),
-          navigator: navigator,
-          authenticationRepository: authenticationRepository,
-        );
+          when(() => navigator.pushAndRemoveUntil<void>(any(), any()))
+              .thenAnswer((_) async {});
 
-        final logoutButton = find.byKey(
-          const Key('logout_button'),
-        );
+          final profileCubit = MockProfileCubit();
 
-        expect(logoutButton, findsOneWidget);
+          whenListen(
+            profileCubit,
+            Stream.fromIterable([
+              const ProfileState(status: ProfileStatus.loading),
+              const ProfileState(status: ProfileStatus.loggedOut)
+            ]),
+          );
 
-        await tester.tap(logoutButton);
-        await tester.pumpAndSettle();
+          when(() => profileCubit.state).thenAnswer(
+            (i) => const ProfileState(status: ProfileStatus.loggedOut),
+          );
 
-        verify(
-          () => authenticationRepository.signOut(),
-        ).called(1);
+          when(() => profileCubit.close()).thenAnswer((_) async {});
 
-        verify(
-          () => navigator.pushAndRemoveUntil<void>(
-            any(that: isRoute<void>()),
-            any(),
-          ),
-        ).called(1);
+          await tester.pumpApp(
+            BlocProvider<ProfileCubit>(
+              create: (context) => profileCubit,
+              child: const ProfileView(),
+            ),
+            navigator: navigator,
+          );
+
+          verify(
+            () => navigator.pushAndRemoveUntil<void>(
+              any(that: isRoute<void>()),
+              any(),
+            ),
+          ).called(1);
+        });
+
+        testWidgets('calls logout method on tap', (tester) async {
+          final profileCubit = MockProfileCubit();
+
+          whenListen(
+            profileCubit,
+            Stream.fromIterable([
+              const ProfileState(status: ProfileStatus.initial),
+            ]),
+          );
+
+          when(() => profileCubit.state).thenAnswer(
+            (i) => const ProfileState(status: ProfileStatus.initial),
+          );
+
+          when(() => profileCubit.logoutUser()).thenAnswer((_) async {});
+
+          when(() => profileCubit.close()).thenAnswer((_) async {});
+
+          await tester.pumpApp(
+            BlocProvider<ProfileCubit>(
+              create: (context) => profileCubit,
+              child: const ProfileView(),
+            ),
+          );
+
+          final logoutButton = find.byKey(
+            const Key('logout_button'),
+          );
+
+          expect(logoutButton, findsOneWidget);
+
+          await tester.tap(logoutButton);
+          await tester.pumpAndSettle();
+
+          verify(
+            () => profileCubit.logoutUser(),
+          ).called(1);
+        });
       });
     },
   );

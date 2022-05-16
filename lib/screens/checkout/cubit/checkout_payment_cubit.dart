@@ -29,9 +29,7 @@ class CheckoutPaymentCubit extends Cubit<CheckoutPaymentState> {
       );
 
       emit(const CheckoutPaymentState(PaymentStatus.paid));
-    } catch (exception, stack) {
-      FirebaseCrashlytics.instance.recordError(exception, stack);
-
+    } catch (exception) {
       emit(const CheckoutPaymentState(PaymentStatus.failed));
     }
   }
