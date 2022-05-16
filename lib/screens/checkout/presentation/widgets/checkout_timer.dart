@@ -205,7 +205,7 @@ class _BottomSheetState extends State<_BottomSheet> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Container(
+                      child: SizedBox(
                         height: 52,
                         child: ActionButton(
                           buttonText: 'Fertig',
@@ -227,7 +227,7 @@ class _BottomSheetState extends State<_BottomSheet> {
                                 : DateTime.now();
                             final hour = stateSheet.availableOpeningTimes
                                 .indexWhere(
-                                    (element) => element.hour == now.hour);
+                                    (element) => element.hour == now.hour,);
 
                             final minute = stateSheet
                                 .currentSelectedHour.minutes

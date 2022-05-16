@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:stripe_repository/stripe_repository.dart';
@@ -29,7 +28,7 @@ class CheckoutPaymentCubit extends Cubit<CheckoutPaymentState> {
       );
 
       emit(const CheckoutPaymentState(PaymentStatus.paid));
-    } catch (exception, stack) {
+    } catch (exception) {
       emit(const CheckoutPaymentState(PaymentStatus.failed));
     }
   }
