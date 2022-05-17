@@ -26,9 +26,9 @@ jobs:
         run: flutter test --coverage
 
       - name: Get Code Coverage
-        uses: joelrose/code-coverage@main
+        uses: joelrose/code-coverage@v1
         with:
           path: ./coverage/lcov.info
 
       - name: Echo Code Coverage
-        run: echo ${{ steps.code_coverage.outputs.code_coverage }}
+        run: echo "${{ steps.code_coverage.outputs.code_coverage }}""
