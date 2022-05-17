@@ -29,6 +29,7 @@ jobs:
         uses: joelrose/code-coverage@v1
         with:
           path: ./coverage/lcov.info
+        id: code_coverage
 
       - name: Echo Code Coverage
         run: echo "${{ steps.code_coverage.outputs.code_coverage }}""
