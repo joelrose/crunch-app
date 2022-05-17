@@ -32,4 +32,4 @@ jobs:
         id: code_coverage
 
       - name: Echo Code Coverage
-        run: echo "${{ steps.code_coverage.outputs.code_coverage }}""
+        run: echo "${{ steps.code_coverage.outputs.code_coverage }}"
