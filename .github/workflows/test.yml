@@ -11,19 +11,19 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v2
       
-      - name: Install flutter
-        uses: subosito/flutter-action@v1
-        with:
-          channel: 'stable'
-      
-      - name: Run flutter precache
-        run: flutter precache
-      
-      - name : Install dependencies
-        run: flutter pub get
-      
-      - name: Run flutter tests
-        run: flutter test --coverage
+#      - name: Install flutter
+#        uses: subosito/flutter-action@v1
+#        with:
+#          channel: 'stable'
+#      
+#      - name: Run flutter precache
+#        run: flutter precache
+#      
+#      - name : Install dependencies
+#        run: flutter pub get
+#      
+#     - name: Run flutter tests
+#       run: flutter test --coverage
 
       - name: Get Code Coverage
         uses: joelrose/code-coverage@v1
