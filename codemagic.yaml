@@ -188,6 +188,7 @@ workflows:
         - pattern: '*'
           include: true
     scripts:
+      - brew install gnupg
       - |
         sh $FCI_BUILD_DIR/scripts/decrypt_android_signing.sh  
       - |
