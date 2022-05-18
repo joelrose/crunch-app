@@ -80,7 +80,7 @@ workflows:
       - flutter packages pub get
       - find . -name "Podfile" -execdir pod install \;
       - keychain initialize
-      - app-store-connect fetch-signing-files "tech.getcrunch.vendor" --type IOS_APP_STORE
+      - app-store-connect fetch-signing-files "tech.getcrunch.crunch" --type IOS_APP_STORE
         --create
       - keychain add-certificates
       - xcode-project use-profiles
@@ -205,7 +205,7 @@ workflows:
         # set up local properties
         echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
       - flutter packages pub get
-      - flutter build apk --release --flavor staging -t lib/main_staging.dart --export-options-plist=/Users/builder/export_options.plist  
+      - flutter build apk --release --flavor staging -t lib/main_staging.dart
     artifacts:
       - build/**/outputs/apk/**/*.apk
       - build/**/outputs/bundle/**/*.aab
