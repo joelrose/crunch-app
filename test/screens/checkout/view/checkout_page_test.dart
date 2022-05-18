@@ -68,7 +68,7 @@ final CheckoutPaymentCubit checkoutPaymentCubit = MockCheckoutPaymentCubit();
 final CheckoutCubit checkoutCubit = MockCheckoutCubit();
 final CheckoutBasketBloc checkoutBasketBloc = MockCheckoutBloc();
 
-CheckoutTimeState getCheckouTimeState() => CheckoutTimeState.static(
+CheckoutTimeState getCheckoutTimeState() => CheckoutTimeState.static(
     mockCurrentPickUpTime, mockOpeningHour, 0, mockAvailableOpeningHours);
 
 void main() {
@@ -81,7 +81,7 @@ void main() {
       when(() => checkoutCubit.state)
           .thenReturn(CheckoutState(menu: mockMenuModel));
 
-      when(() => checkoutTimeCubit.state).thenReturn(getCheckouTimeState());
+      when(() => checkoutTimeCubit.state).thenReturn(getCheckoutTimeState());
 
       when(() => checkoutCubit.close()).thenAnswer((_) async {});
       when(() => checkoutTimeCubit.close()).thenAnswer((_) async {});
@@ -102,7 +102,7 @@ void main() {
 
       whenListen(
         checkoutTimeCubit,
-        Stream.fromIterable([getCheckouTimeState()]),
+        Stream.fromIterable([getCheckoutTimeState()]),
       );
 
       whenListen(checkoutCubit,
