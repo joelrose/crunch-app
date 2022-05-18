@@ -22,7 +22,8 @@ class CheckoutTimer extends StatelessWidget {
     return BlocBuilder<CheckoutTimeCubit, CheckoutTimeState>(
       builder: (context, state) => CheckoutRowHeader(
         header: context.l10n.pickupTime,
-        buttonText: state.pickupTime.formatToLocalTime(context),
+        buttonText: state.pickupTime
+            .formatToLocalTime(Localizations.localeOf(context).languageCode),
         onPressed: () {
           showModalBottomSheet(
             shape: const RoundedRectangleBorder(
@@ -35,7 +36,7 @@ class CheckoutTimer extends StatelessWidget {
             builder: (ctx) {
               return BlocProvider.value(
                 value: BlocProvider.of<CheckoutTimeCubit>(context),
-                child: _BottomSheet(
+                child: PickUpTimeBottomSheet(
                   startingMinute: state.currentSelectedMinuteIndex,
                   startingHour: state.availableOpeningTimes
                       .indexOf(state.currentSelectedHour),
@@ -51,8 +52,8 @@ class CheckoutTimer extends StatelessWidget {
   }
 }
 
-class _BottomSheet extends StatefulWidget {
-  const _BottomSheet({
+class PickUpTimeBottomSheet extends StatefulWidget {
+  const PickUpTimeBottomSheet({
     Key? key,
     required this.hourController,
     required this.minuteController,
@@ -66,10 +67,10 @@ class _BottomSheet extends StatefulWidget {
   final int startingHour;
 
   @override
-  State<_BottomSheet> createState() => _BottomSheetState();
+  State<PickUpTimeBottomSheet> createState() => _PickUpTimeBottomSheetState();
 }
 
-class _BottomSheetState extends State<_BottomSheet> {
+class _PickUpTimeBottomSheetState extends State<PickUpTimeBottomSheet> {
   @override
   void initState() {
     super.initState();
@@ -117,10 +118,20 @@ class _BottomSheetState extends State<_BottomSheet> {
                           restorationId: 'minutes',
                           squeeze: 0.75,
                           onSelectedItemChanged: (value) {
+                            final newHour =
+                                stateSheet.availableOpeningTimes[value];
+                            final oldMinuteValue = stateSheet
+                                .currentSelectedHour
+                                .minutes[stateSheet.currentSelectedMinuteIndex];
+                            final newMinuteIndex =
+                                newHour.minutes.indexOf(oldMinuteValue);
                             context
                                 .read<CheckoutTimeCubit>()
                                 .updateCurrentSelectedHour(
-                                    value, widget.minuteController);
+                                  value,
+                                );
+
+                            widget.minuteController.jumpToItem(newMinuteIndex);
                           },
                           itemExtent: 40,
                           children: List.generate(
@@ -228,8 +239,7 @@ class _BottomSheetState extends State<_BottomSheet> {
 
                             context
                                 .read<CheckoutTimeCubit>()
-                                .updateCurrentSelectedHour(
-                                    hour, widget.minuteController);
+                                .updateCurrentSelectedHour(hour);
                             context
                                 .read<CheckoutTimeCubit>()
                                 .updateCurrentSelectedMinute(minute);

@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:hermes_repository/hermes_repository.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:pickup/screens/checkout/domain/entities/opening_hour.dart';
 
 extension DateFormatter on DateTime {
-  String formatToLocalTime(BuildContext context) {
-    final languageCode = Localizations.localeOf(context).languageCode;
+  String formatToLocalTime(String languageCode) {
+    initializeDateFormatting(languageCode);
     final time = DateFormat('HH:mm', languageCode).format(this);
     return time;
   }
@@ -47,5 +46,3 @@ extension GetEndingOpeningHours on String {
     );
   }
 }
-
-
