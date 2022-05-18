@@ -38,11 +38,11 @@ workflows:
       - keychain add-certificates
       - xcode-project use-profiles
       - flutter build ipa --flavor staging -t lib/main_staging.dart
-      - "#!/usr/bin/env sh\n \nset -e   # exit on first failed command\nset -x   #\
-        \ print all executed commands to the log\n \nif [ \"$CM_BUILD_STEP_STATUS\"\
-        \ == \"success\" ]\nthen\n  firebase appdistribution:distribute $CM_BUILD_OUTPUT_DIR/Crunch.ipa\
-        \ --app 1:899655281519:android:e5417a5437e18a0e77569a --groups \"iOS\" --token\
-        \ \"$FIREBASE_TOKEN\"\nfi\n"
+      - | 
+        #!/usr/bin/env sh
+        set -e   # exit on first failed command
+        set -x   #
+        firebase appdistribution:distribute "$CM_BUILD_OUTPUT_DIR/Crunch.ipa" --app 1:899655281519:android:e5417a5437e18a0e77569a --groups "iOS" --token "$FIREBASE_TOKEN"
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
