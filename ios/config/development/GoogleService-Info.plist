@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>295391330962-tieojv00c8uua2o4gvpe1vfvjtmna8dn.apps.googleusercontent.com</string>
+	<string>899655281519-vs2j36ps61l11ugu1e0c758kohft1go8.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.295391330962-tieojv00c8uua2o4gvpe1vfvjtmna8dn</string>
+	<string>com.googleusercontent.apps.899655281519-vs2j36ps61l11ugu1e0c758kohft1go8</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>899655281519-edkgm8gdhgkubn7autni8othqq1d62m7.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC1Luq1YKg1oXzKajDSXmbNLvs_hPcGNDM</string>
+	<string>AIzaSyAWv1EiphPiDeKld-5dF8_8xK5mEIqX6Qg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>295391330962</string>
+	<string>899655281519</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>tech.getcrunch.crunch.dev</string>
 	<key>PROJECT_ID</key>
-	<string>alpaca-91e4b</string>
+	<string>pickup-app-staging</string>
 	<key>STORAGE_BUCKET</key>
-	<string>alpaca-91e4b.appspot.com</string>
+	<string>pickup-app-staging.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:295391330962:ios:202ed1e0db4cc0ba0edc4b</string>
+	<string>1:899655281519:ios:09ed1999f74308a577569a</string>
 </dict>
 </plist>

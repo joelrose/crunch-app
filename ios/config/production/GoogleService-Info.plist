@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>295391330962-au3si6q7mvj113a5f1os9d8eohfv9lt6.apps.googleusercontent.com</string>
+	<string>157548903969-aojrcnc1bkutovs9rgouf583sqqp6kek.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.295391330962-au3si6q7mvj113a5f1os9d8eohfv9lt6</string>
+	<string>com.googleusercontent.apps.157548903969-aojrcnc1bkutovs9rgouf583sqqp6kek</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC1Luq1YKg1oXzKajDSXmbNLvs_hPcGNDM</string>
+	<string>AIzaSyAQc-0RvbRUnGAZaXpbR9xjc0G-Pg9DUjk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>295391330962</string>
+	<string>157548903969</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>tech.getcrunch.crunch</string>
 	<key>PROJECT_ID</key>
-	<string>alpaca-91e4b</string>
+	<string>pickup-app-production</string>
 	<key>STORAGE_BUCKET</key>
-	<string>alpaca-91e4b.appspot.com</string>
+	<string>pickup-app-production.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:295391330962:ios:80f132ea46cc2ec90edc4b</string>
+	<string>1:157548903969:ios:940f0ee075205bbbbb2d60</string>
 </dict>
 </plist>

@@ -3,12 +3,29 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding_welcome/onboarding_welcome.dart';
+import 'package:pickup/screens/profile/cubit/profile_cubit.dart';
 import 'package:pickup/screens/profile/widgets/profile_tile.dart';
 
 class ProfilePage extends StatelessWidget {
   static const route = '/profile';
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ProfileCubit(
+        authenticationRepository: context.read<AuthenticationRepository>(),
+        oneSignalRepository: context.read<OneSignalRepository>(),
+      ),
+      child: const ProfileView(),
+    );
+  }
+}
+
+class ProfileView extends StatelessWidget {
+  const ProfileView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,32 +52,32 @@ class _SignOut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const _Tiles(),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: ActionButton(
-              key: const Key('logout_button'),
-              buttonText: context.l10n.logout,
-              isPrimaryButton: false,
-              textColor: AlpacaColor.redColor,
-              onPressed: () async {
-                final authenticationRepository =
-                    context.read<AuthenticationRepository>();
-
-                await authenticationRepository.signOut();
-
-                Navigator.of(context).pushAndRemoveUntil(
-                  OnboardingWelcomePage.route(),
-                  (route) => false,
-                );
-              },
+    return BlocListener<ProfileCubit, ProfileState>(
+      listener: (context, state) {
+        if (state.status == ProfileStatus.loggedOut) {
+          Navigator.of(context).pushAndRemoveUntil(
+            OnboardingWelcomePage.route(),
+            (route) => false,
+          );
+        }
+      },
+      child: Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const _Tiles(),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: ActionButton(
+                key: const Key('logout_button'),
+                buttonText: context.l10n.logout,
+                isPrimaryButton: false,
+                textColor: AlpacaColor.redColor,
+                onPressed: () => context.read<ProfileCubit>().logoutUser(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

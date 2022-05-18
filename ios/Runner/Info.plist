@@ -32,7 +32,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.295391330962-tieojv00c8uua2o4gvpe1vfvjtmna8dn</string>
+				<string>com.googleusercontent.apps.899655281519-vs2j36ps61l11ugu1e0c758kohft1go8</string>
 			</array>
 		</dict>
 		<dict>
@@ -40,7 +40,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.295391330962-9cj8hpvcqaqmeb14n16r6tj61grng3e4</string>
+				<string>com.googleusercontent.apps.899655281519-ffcood4dk1dtg5459rd0vicbat969ge7</string>
 			</array>
 		</dict>
 		<dict>
@@ -48,7 +48,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.295391330962-au3si6q7mvj113a5f1os9d8eohfv9lt6</string>
+				<string>com.googleusercontent.apps.157548903969-aojrcnc1bkutovs9rgouf583sqqp6kek</string>
 			</array>
 		</dict>
 		<dict>
@@ -56,7 +56,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>app-1-295391330962-ios-d811921ced4c9ce30edc4b</string>
+				<string>app-1-899655281519-ios-09ed1999f74308a577569a</string>
 			</array>
 		</dict>
 		<dict>
@@ -64,7 +64,15 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>app-1-295391330962-ios-202ed1e0db4cc0ba0edc4b</string>
+				<string>app-1-899655281519-ios-451eeeb0d4ae1dff77569a</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-157548903969-ios-940f0ee075205bbbbb2d60</string>
 			</array>
 		</dict>
 	</array>
