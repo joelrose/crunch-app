@@ -4,7 +4,6 @@ workflows:
     max_build_duration: 30
     environment:
       vars:
-        FIREBASE_TOKEN: Encrypted(Z0FBQUFBQmloTW1IbU5MTUcyaVVmOUx6SUpkNzhJc2JuazJnemRsZ0U0X3ZsdHRXUWJ1THFDbktEMWVCOUN0dDlacm11cWpnOW5zaHBHUGttN3JvaUdrUzNQMGI0ejRQRW0yMmFiOGRMTzR2UUsxdmdLSzBqeVE4TlJLc0FZZVhUaUllTGF2dVFSWVFVdlc2YXI5Wld5VXpJcFo0MlhGNjJVYnptYjdYQklUa2l2WVJwd041R3RDaWtHRjNLM1NPanBhSEJWUjhBWGJKWS1SRUoxai1nNlNvblJmb25zb205dz09)
         APP_STORE_CONNECT_ISSUER_ID: de4a206c-7100-496e-83a5-73e673af6c85
         APP_STORE_CONNECT_KEY_IDENTIFIER: 647N3684PB
         APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(Z0FBQUFBQmloTW1INTI0UjJaSFRmeW5PNU1lRnB0Y2Z2NW5ZcXgyMjUyMFplSWV6ZFJqMWxkNDZBUzlhVnJUcmZPVkcyTHBkVHBuUU9mN1dmVEt0RktoUXVTd2tQc2YwVEpQT1ZVYkFkWGJKdEVVSEpEVFNvRExvelo1UWJHZTRPYmZfMzMtbEw3a0hKd0FjMkxRVFliR0NIazdRM0Rsd3lwcGJHc1BTYWx3MG9FRW5xUnNRa21sNGN6T1NxOU1Md2Y0bklHLVh1eTVXWUlCbmV1ejBQelQzNzRkU2k1NHRwbnRhMEd6UGlGcHFacndlanhnRS04S3V1X29XY3lEd2xWblVfc0xoV1VDei1tWGs5Rkl0X2lXekVSakt2OWgzNWVoSExwM1NxSndmdmctMFRua1JGREdzbjhXVUtXQ190dWxzWlI2b1JOWFZFS1BHZjk3b19hbXh2RlRIOHRmRnQ2YjJmdjZra2RxSFpMT25wa18tYUJuenhKR19maTM0eFZISVhnSHdYSk8tX0ljZE5Rbk9sMVZzcHh0ZG15TmZQcmxxQzYyRk9NNURfWUJYRW55cTN3QT0=)
@@ -35,11 +34,6 @@ workflows:
       - keychain add-certificates
       - xcode-project use-profiles
       - flutter build ipa --flavor staging -t lib/main_staging.dart --export-options-plist=/Users/builder/export_options.plist  
-      - | 
-        #!/usr/bin/env sh
-        set -e   # exit on first failed command
-        set -x   #
-        firebase appdistribution:distribute "$CM_BUILD_OUTPUT_DIR/Crunch.ipa" --app 1:899655281519:android:e5417a5437e18a0e77569a --groups "iOS" --token "$FIREBASE_TOKEN"
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
@@ -50,6 +44,12 @@ workflows:
       slack:
         channel: '#codemagic-pipeline'
         notify_on_build_start: false
+      firebase:
+        firebase_token: Encrypted(Z0FBQUFBQmloTW1IbU5MTUcyaVVmOUx6SUpkNzhJc2JuazJnemRsZ0U0X3ZsdHRXUWJ1THFDbktEMWVCOUN0dDlacm11cWpnOW5zaHBHUGttN3JvaUdrUzNQMGI0ejRQRW0yMmFiOGRMTzR2UUsxdmdLSzBqeVE4TlJLc0FZZVhUaUllTGF2dVFSWVFVdlc2YXI5Wld5VXpJcFo0MlhGNjJVYnptYjdYQklUa2l2WVJwd041R3RDaWtHRjNLM1NPanBhSEJWUjhBWGJKWS1SRUoxai1nNlNvblJmb25zb205dz09)
+        ios:
+          app_id: 1:899655281519:ios:451eeeb0d4ae1dff77569a
+          groups:
+            - iOS
   ios-production:
     name: iOS Production
     max_build_duration: 60
