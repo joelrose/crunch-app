@@ -1,10 +1,9 @@
 import 'package:fleasy/fleasy.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/checkout/domain/entities/opening_hour.dart';
-import 'package:pickup/screens/checkout/util/extensions.dart';
+import 'package:pickup/screens/checkout/util/helper.dart';
 
 part 'checkout_time_state.dart';
 
@@ -20,7 +19,8 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
     openingHours.removeWhere(
       (element) => element.dayOfWeek!.index != currentTime.weekday,
     );
-    final availableOpeningTimes = openingHours.getOpeningHours(currentTime);
+    final availableOpeningTimes = getOpeningHours(
+        currentDateTime: currentTime, availabilityModels: openingHours);
     availableOpeningTimes.sort((a, b) => a.hour.compareTo(b.hour));
 
     return CheckoutTimeCubit._internal(
@@ -57,7 +57,6 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
 
   void updateCurrentSelectedHour(
     int hourIndex,
-    FixedExtentScrollController minuteController,
   ) {
     final newHour = state.availableOpeningTimes[hourIndex];
     final oldMinuteValue =
@@ -73,7 +72,7 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
               .copyWith(hour: newHour.hour, minute: newHour.minutes[0]),
         ),
       );
-      minuteController.jumpToItem(0);
+      //minuteController.jumpToItem(0);
     } else {
       emit(
         state.copyWith(
@@ -85,7 +84,7 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
           currentSelectedMinuteIndex: newMinuteIndex,
         ),
       );
-      minuteController.jumpToItem(oldMinuteValue + 1);
+      //minuteController.jumpToItem(newMinuteIndex);
     }
   }
 }
