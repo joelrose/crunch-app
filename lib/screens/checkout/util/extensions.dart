@@ -48,21 +48,4 @@ extension GetEndingOpeningHours on String {
   }
 }
 
-extension GetListOfOpeningHoures on List<DeliverectAvailabilityModel> {
-  List<OpeningHour> getOpeningHours(DateTime currentDateTime) {
-    final List<OpeningHour> openingHours = [];
-    for (final e in this) {
-      openingHours.add(
-        currentDateTime.add(const Duration(minutes: 20)).fromStartingHour,
-      );
-      if (e.endTime!.getMinutes != 0) {
-        openingHours.add(e.endTime!.fromEndingHour);
-      }
 
-      for (int i = e.startTime!.getHour + 1; i < e.endTime!.getHour; i++) {
-        openingHours.add(i.toOpeningHour);
-      }
-    }
-    return openingHours;
-  }
-}
