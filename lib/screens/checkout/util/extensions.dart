@@ -26,17 +26,7 @@ extension GetOpeningHourFromInt on int {
   }
 }
 
-extension GetStartOpeningHour on DateTime {
-  OpeningHour get fromStartingHour {
-    return OpeningHour(
-      hour,
-      List.generate(
-        60 - minute,
-        (index) => index + minute,
-      ),
-    );
-  }
-}
+
 
 extension GetEndingOpeningHours on String {
   OpeningHour get fromEndingHour {
