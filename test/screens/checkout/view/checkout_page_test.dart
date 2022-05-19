@@ -1,4 +1,6 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hermes_repository/hermes_repository.dart';
@@ -10,6 +12,7 @@ import 'package:pickup/screens/checkout/cubits/checkout_payment_cubit/checkout_p
 import 'package:pickup/screens/checkout/cubits/checkout_timer_cubit/checkout_time_cubit.dart';
 import 'package:pickup/screens/checkout/domain/entities/opening_hour.dart';
 import 'package:pickup/screens/checkout/presentation/screen/checkout_page.dart';
+import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 
 import '../../../helpers/pump_app.dart';
 
@@ -119,6 +122,23 @@ void main() {
         ));
 
         expect(find.byType(CheckoutPage), findsOneWidget);
+      });
+
+      testWidgets('renders time pick bottom sheet', (tester) async {
+        await tester.pumpApp(MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => checkoutTimeCubit),
+            BlocProvider(create: (_) => checkoutPaymentCubit),
+            BlocProvider(create: (_) => checkoutCubit),
+          ],
+          child: const CheckoutPage(),
+        ));
+        final pickTimeButton = find.byKey(const Key('PickTimeButton'));
+
+        await tester.tap(pickTimeButton);
+        await tester.pump();
+
+        expect(find.byType(ListWheelScrollView), findsNWidgets(2));
       });
     },
   );

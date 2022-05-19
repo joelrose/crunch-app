@@ -22,10 +22,7 @@ void main() {
   ];
 
   group('check if creating the opening Houres works', () {
-    test('check if creation of Opening hour from current time works', () {
-      final startOpeningHour = mockCurrentTime.fromStartingHour;
-      expect(startOpeningHour, const OpeningHour(9, [55, 56, 57, 58, 59]));
-    });
+
 
     test('check if creation of end Opening hour', () {
       final endingHour = mockTimeString.fromEndingHour;

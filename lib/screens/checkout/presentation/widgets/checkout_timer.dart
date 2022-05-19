@@ -21,6 +21,7 @@ class CheckoutTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CheckoutTimeCubit, CheckoutTimeState>(
       builder: (context, state) => CheckoutRowHeader(
+        buttonKey: Key('PickTimeButton'),
         header: context.l10n.pickupTime,
         buttonText: state.pickupTime
             .formatToLocalTime(Localizations.localeOf(context).languageCode),
@@ -174,6 +175,7 @@ class _PickUpTimeBottomSheetState extends State<PickUpTimeBottomSheet> {
                           return false;
                         },
                         child: ListWheelScrollView(
+                          key: const Key('MinuteScrollView'),
                           restorationId: 'min',
                           controller: widget.minuteController,
                           squeeze: 0.75,
