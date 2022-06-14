@@ -32,6 +32,9 @@ class OnboardingCreateAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final step = context
+        .select((OnboardingCreateAccountCubit cubit) => cubit.state.step);
+
     return PageWrapper(
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,
@@ -40,9 +43,11 @@ class OnboardingCreateAccountView extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: Column(
-          children: const [
-            _CreateAccountStatusBar(),
-            _Stack(),
+          children: [
+            if (step != OnboardingStep.phoneVerification) ...[
+              const _CreateAccountStatusBar(),
+            ],
+            const _Stack(),
           ],
         ),
       ),
@@ -60,7 +65,7 @@ class _CreateAccountStatusBar extends StatelessWidget {
     final state =
         context.select((OnboardingCreateAccountCubit cubit) => cubit.state);
 
-    final step = state.step.index;
+    final step = state.step;
 
     return Column(
       children: [
@@ -70,18 +75,17 @@ class _CreateAccountStatusBar extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               child: Text(
-                '${context.l10n.step} ${step + 1}/${state.maxSteps}',
+                '${context.l10n.step} ${step.index}/${state.maxSteps}',
                 style: Theme.of(context).textTheme.headline4!.copyWith(
                       color: AlpacaColor.darkNavyColor,
                     ),
               ),
             ),
-            if (!(step == 0 && !state.data.isSocialLogin) &&
-                (step != 1 && !state.data.isSocialLogin))
+            if (step == OnboardingStep.phoneVerification)
               Positioned(
                 left: 0,
                 child: GestureDetector(
-                  onTap: () => step == 0
+                  onTap: () => step == OnboardingStep.phoneVerification
                       ? Navigator.of(context).pop()
                       : context
                           .read<OnboardingCreateAccountCubit>()
@@ -111,7 +115,7 @@ class _CreateAccountStatusBar extends StatelessWidget {
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: _getBorderRadius(index, state.maxSteps),
-                        color: (step - index) >= 0
+                        color: (step.index - (index + 1)) >= 0
                             ? AlpacaColor.primary100
                             : AlpacaColor.lightGreyColor90,
                       ),
@@ -170,7 +174,9 @@ class _Stack extends StatelessWidget {
           ),
           child: IntrinsicHeight(
             child: IndexedStack(
-              index: state.step.index,
+              index: state.data.isSocialLogin
+                  ? state.step.index - 1
+                  : state.step.index,
               children: [
                 if (!state.data.isSocialLogin) ...[
                   StepPhoneVerification(
