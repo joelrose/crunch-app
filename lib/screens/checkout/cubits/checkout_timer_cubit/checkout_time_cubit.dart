@@ -1,13 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:fleasy/fleasy.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/checkout/domain/entities/opening_hour.dart';
 import 'package:pickup/screens/checkout/util/helper.dart';
 
 part 'checkout_time_state.dart';
-
-part 'checkout_time_cubit.freezed.dart';
 
 typedef ListIndex = int Function(int);
 
@@ -37,7 +35,7 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
     required OpeningHour currentSelectedHour,
     required int currentSelectedMinuteIndex,
   }) : super(
-          CheckoutTimeState.static(
+          CheckoutTimeState(
             pickupTime,
             currentSelectedHour,
             currentSelectedMinuteIndex,

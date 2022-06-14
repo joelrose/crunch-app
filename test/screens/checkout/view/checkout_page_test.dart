@@ -1,4 +1,3 @@
-import 'package:alpaca/alpaca.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,14 +11,15 @@ import 'package:pickup/screens/checkout/cubits/checkout_payment_cubit/checkout_p
 import 'package:pickup/screens/checkout/cubits/checkout_timer_cubit/checkout_time_cubit.dart';
 import 'package:pickup/screens/checkout/domain/entities/opening_hour.dart';
 import 'package:pickup/screens/checkout/presentation/screen/checkout_page.dart';
-import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 
 import '../../../helpers/pump_app.dart';
 
 final mockMenuModel = GetMenuResponseDto(
-    id: 'asdlfnasdjfn',
-    googleMapsLink: 'asdfasdf',
-    menu: DeliverectMenuDto(menu: 'asdfa', availabilities: [
+  id: 'id',
+  googleMapsLink: 'googleMapsLink',
+  menu: DeliverectMenuDto(
+    menu: 'asdfa',
+    availabilities: [
       DeliverectAvailabilityModel(
         dayOfWeek: DeliverectDay.friday,
         startTime: '01:00',
@@ -35,7 +35,9 @@ final mockMenuModel = GetMenuResponseDto(
         startTime: '13:00',
         endTime: '14:00',
       ),
-    ]));
+    ],
+  ),
+);
 
 final mockOpeningHours = [
   DeliverectAvailabilityModel(
@@ -71,8 +73,12 @@ final CheckoutPaymentCubit checkoutPaymentCubit = MockCheckoutPaymentCubit();
 final CheckoutCubit checkoutCubit = MockCheckoutCubit();
 final CheckoutBasketBloc checkoutBasketBloc = MockCheckoutBloc();
 
-CheckoutTimeState getCheckoutTimeState() => CheckoutTimeState.static(
-    mockCurrentPickUpTime, mockOpeningHour, 0, mockAvailableOpeningHours);
+CheckoutTimeState getCheckoutTimeState() => CheckoutTimeState(
+      mockCurrentPickUpTime,
+      mockOpeningHour,
+      0,
+      mockAvailableOpeningHours,
+    );
 
 void main() {
   group(

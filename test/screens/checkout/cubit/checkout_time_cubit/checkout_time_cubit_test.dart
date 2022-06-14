@@ -37,7 +37,7 @@ void main() {
       expect(
         buildCubit(currentTime: mockCurrentTime, openingHours: mockOpeningHours)
             .state,
-        CheckoutTimeState.static(
+        CheckoutTimeState(
           mockPickupTime,
           mockOpeningHour,
           0,
@@ -71,7 +71,7 @@ void main() {
       expect(
         buildCubit(currentTime: mockCurrentTime, openingHours: mockOpeningHours)
             .state,
-        CheckoutTimeState.static(
+        CheckoutTimeState(
           mockPickupTime,
           mockOpeningHour,
           0,
@@ -108,7 +108,7 @@ void main() {
       ),
       act: (cubit) => cubit.updateCurrentSelectedHour(1),
       expect: () => [
-        CheckoutTimeState.static(
+        CheckoutTimeState(
           DateTime(2022, 5, 12, 11, 15),
           mockAvailableOpeningHours[1],
           15,
