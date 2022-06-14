@@ -35,8 +35,7 @@ void main() {
         OpeningHour(11, List.generate(60, (index) => index)),
       ];
       expect(
-        buildCubit(
-                currentTime: mockCurrentTime, openingHours: mockOpeningHours)
+        buildCubit(currentTime: mockCurrentTime, openingHours: mockOpeningHours)
             .state,
         CheckoutTimeState.static(
           mockPickupTime,
@@ -59,7 +58,6 @@ void main() {
           startTime: '14:00',
           endTime: '16:00',
         ),
-
       ];
       final mockPickupTime = DateTime(2022, 5, 12, 10, 15);
       final mockOpeningHour =
@@ -71,8 +69,7 @@ void main() {
         OpeningHour(15, List.generate(60, (index) => index)),
       ];
       expect(
-        buildCubit(
-                currentTime: mockCurrentTime, openingHours: mockOpeningHours)
+        buildCubit(currentTime: mockCurrentTime, openingHours: mockOpeningHours)
             .state,
         CheckoutTimeState.static(
           mockPickupTime,
@@ -106,14 +103,18 @@ void main() {
     blocTest<CheckoutTimeCubit, CheckoutTimeState>(
       'updateCurrentSelectedHour',
       build: () => buildCubit(
-          currentTime: mockCurrentTime, openingHours: mockOpeningHours),
-      act: (cubit) => cubit.updateCurrentSelectedHour(1),
-      expect: () => CheckoutTimeState.static(
-        DateTime(2022, 5, 12, 11, 15),
-        mockAvailableOpeningHours[1],
-        15,
-        mockAvailableOpeningHours,
+        currentTime: mockCurrentTime,
+        openingHours: mockOpeningHours,
       ),
+      act: (cubit) => cubit.updateCurrentSelectedHour(1),
+      expect: () => [
+        CheckoutTimeState.static(
+          DateTime(2022, 5, 12, 11, 15),
+          mockAvailableOpeningHours[1],
+          15,
+          mockAvailableOpeningHours,
+        )
+      ],
     );
   });
 }
