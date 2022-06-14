@@ -8,12 +8,10 @@ class ContactDetails extends StatefulWidget {
   const ContactDetails({Key? key}) : super(key: key);
 
   @override
-  _ContactDetailsState createState() =>
-      _ContactDetailsState();
+  _ContactDetailsState createState() => _ContactDetailsState();
 }
 
-class _ContactDetailsState
-    extends State<ContactDetails> {
+class _ContactDetailsState extends State<ContactDetails> {
   final _phoneNumberController = TextEditingController();
 
   @override

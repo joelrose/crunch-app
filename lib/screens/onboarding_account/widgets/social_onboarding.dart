@@ -79,7 +79,7 @@ class SocialOnboarding extends StatelessWidget {
       final response =
           await hermesRepository.client.apiWhitelistuserPost(body: user.email);
 
-      if (response.isSuccessful && response.body == true ) {
+      if (response.isSuccessful && response.body == true) {
         final account = await hermesRepository.client.apiUsersGet();
 
         if (account.isSuccessful) {

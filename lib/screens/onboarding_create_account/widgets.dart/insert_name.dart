@@ -101,7 +101,7 @@ class _StepInsertNameState extends State<StepInsertName> {
           body: CreateUserRequestDto(
             firstName: _firstNameController.text,
             lastName: _lastNameController.text,
-            languageCode: 'DE',
+            languageCode: 'de',
           ),
         ),
       );

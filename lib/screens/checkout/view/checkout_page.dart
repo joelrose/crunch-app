@@ -72,9 +72,7 @@ class CheckoutPage extends StatelessWidget {
             onPressed: () {
               final checkoutItems =
                   context.read<CheckoutBasketBloc>().state.checkoutItems;
-              context
-                  .read<CheckoutPaymentCubit>()
-                  .checkout(checkoutItems);
+              context.read<CheckoutPaymentCubit>().checkout(checkoutItems);
             },
             buttonText: context.l10n.buttonPayLabel,
           ),

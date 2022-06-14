@@ -34,8 +34,8 @@ void main() {
           ),
         ).thenThrow(Exception());
       },
-      act: (c) => c.fetchRestaurant(''),
       build: () => StoreCubit(hermesService),
+      act: (c) => c.fetchRestaurant(''),
       expect: () => [
         const StoreState(status: StoreStatus.loading),
         const StoreState(status: StoreStatus.failure),

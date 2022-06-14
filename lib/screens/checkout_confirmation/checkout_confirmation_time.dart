@@ -7,8 +7,7 @@ import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/cubit/checkout_time_cubit.dart';
 
 class CheckoutConfirmationTime extends StatefulWidget {
-  const CheckoutConfirmationTime({Key? key})
-      : super(key: key);
+  const CheckoutConfirmationTime({Key? key}) : super(key: key);
 
   @override
   _CheckoutConfirmationTimeState createState() =>
@@ -23,7 +22,7 @@ class _CheckoutConfirmationTimeState extends State<CheckoutConfirmationTime> {
   @override
   void initState() {
     now = DateTime.now();
-    
+
     pickupTime = context.read<CheckoutTimeCubit>().state.pickupTime;
 
     minutesToPickupOrder = pickupTime.difference(now).inMinutes;
