@@ -163,7 +163,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
   @override
   void didUpdateWidget(StretchyHeaderBase oldWidget) {
     if (widget.headerData.highlightHeader != null) {
-      WidgetsBinding.instance.addPostFrameCallback(_onLayoutDone);
+      WidgetsBinding.instance!.addPostFrameCallback(_onLayoutDone);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -172,7 +172,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
   void initState() {
     _headerSize = widget.headerData.headerHeight;
     if (widget.headerData.highlightHeader != null) {
-      WidgetsBinding.instance.addPostFrameCallback(_onLayoutDone);
+      WidgetsBinding.instance!.addPostFrameCallback(_onLayoutDone);
     }
     super.initState();
   }

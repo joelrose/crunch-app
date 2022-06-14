@@ -75,7 +75,7 @@ class _PickUpTimeBottomSheetState extends State<PickUpTimeBottomSheet> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(initListData);
+    WidgetsBinding.instance!.addPostFrameCallback(initListData);
   }
 
   void initListData(_) {
