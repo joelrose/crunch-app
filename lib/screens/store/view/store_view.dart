@@ -25,57 +25,63 @@ class StoreView extends StatelessWidget {
         if (state.status.isSuccess || state.status.isReload) {
           final model = state.menu!;
 
-          return Builder(builder: (context) {
-            final checkoutItems = context
-                .select((CheckoutBasketBloc bloc) => bloc.state.checkoutItems);
+          return Builder(
+            builder: (context) {
+              final checkoutItems = context.select(
+                (CheckoutBasketBloc bloc) => bloc.state.checkoutItems,
+              );
 
-            return PageWrapper(
-              floatingActionButtonWidget: Visibility(
-                visible: checkoutItems.isNotEmpty,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CheckoutButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        CheckoutPage.route(
-                          menu: model,
-                        ),
-                      );
-                    },
-                    buttonText:
-                        '${context.l10n.storeFloatingButtonText(_getItemsInCart(checkoutItems))} in Cart ->',
-                    priceText: Utilities.currencyFormat(
-                      PriceCalulcation.getPriceOfItems(checkoutItems),
+              final storeFloatingButtonText = context.l10n
+                  .storeFloatingButtonText(_getItemsInCart(checkoutItems));
+              final floatingButtonText = '$storeFloatingButtonText in Cart ->';
+
+              return PageWrapper(
+                floatingActionButtonWidget: Visibility(
+                  visible: checkoutItems.isNotEmpty,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CheckoutButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          CheckoutPage.route(
+                            menu: model,
+                          ),
+                        );
+                      },
+                      buttonText: floatingButtonText,
+                      priceText: Utilities.currencyFormat(
+                        PriceCalulcation.getPriceOfItems(checkoutItems),
+                      ),
+                      textColor: AlpacaColor.white100Color,
                     ),
-                    textColor: AlpacaColor.white100Color,
                   ),
                 ),
-              ),
-              padding: EdgeInsets.zero,
-              backgroundColor: AlpacaColor.white100Color,
-              statusBarStyle: SystemUiOverlayStyle.dark,
-              child: AlpacaStretchyHeader(
-                image: model.menu?.menuImageUrl ?? '',
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const StoreOverview(),
-                      const Divider(),
-                      const StoreInformation(),
-                      const Divider(),
-                      const StoreMenueList(),
-                      if (checkoutItems.isNotEmpty)
-                        const SizedBox(
-                          height: 80,
-                        ),
-                    ],
+                padding: EdgeInsets.zero,
+                backgroundColor: AlpacaColor.white100Color,
+                statusBarStyle: SystemUiOverlayStyle.dark,
+                child: AlpacaStretchyHeader(
+                  image: model.menu?.menuImageUrl ?? '',
+                  child: SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const StoreOverview(),
+                        const Divider(),
+                        const StoreInformation(),
+                        const Divider(),
+                        const StoreMenueList(),
+                        if (checkoutItems.isNotEmpty)
+                          const SizedBox(
+                            height: 80,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },);
+              );
+            },
+          );
         } else {
           return Container(color: AlpacaColor.white100Color);
         }
