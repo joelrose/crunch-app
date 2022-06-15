@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/screens/checkout/cubits/checkout_cubit/checkout_cubit.dart';
@@ -17,7 +18,6 @@ import 'package:pickup/screens/checkout/presentation/widgets/items_overview.dart
 import 'package:pickup/screens/checkout/presentation/widgets/price_summary.dart';
 import 'package:pickup/screens/checkout_navbar/checkout_navbar.dart';
 import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
-import 'package:pickup/shared/show_async_loading.dart';
 import 'package:stripe_repository/stripe_repository.dart';
 
 class CheckoutPage extends StatelessWidget {
@@ -60,11 +60,11 @@ class CheckoutPage extends StatelessWidget {
           Navigator.of(context).push(
             CheckoutConfirmationPage.route(),
           );
-          LoadingUtils.hide();
+          context.read<LoadingOverlayRepository>().hide();
         } else if (state.status.isLoading) {
-          LoadingUtils.show();
+          context.read<LoadingOverlayRepository>().show();
         } else if (state.status.isFailed) {
-          LoadingUtils.hide();
+          context.read<LoadingOverlayRepository>().hide();
 
           final snackBar = SnackBar(
             content: Text(context.l10n.connectionPaymentFail),

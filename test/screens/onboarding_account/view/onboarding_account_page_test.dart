@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockingjay/mockingjay.dart';
 import 'package:pickup/screens/onboarding_account/onboarding_account.dart';
-
-import '../../../helpers/helpers.dart';
 
 void main() {
   group('OnboardingAccountPage', () {
@@ -16,7 +13,7 @@ void main() {
     );
 
     // TODO: fix widget overflow
-   /* testWidgets('renders OnboardingAccountView', (tester) async {
+    /* testWidgets('renders OnboardingAccountView', (tester) async {
       await tester.pumpApp(
         Navigator(
           onGenerateRoute: (_) => OnboardingAccountPage.route(isSignUp: true),
@@ -26,11 +23,5 @@ void main() {
     });*/
   });
 
-  group('OnboardingWelcomeView', () {
-    late MockNavigator navigator;
-
-    setUp(() async {
-      navigator = MockNavigator();
-    });
-  });
+  group('OnboardingWelcomeView', () {});
 }

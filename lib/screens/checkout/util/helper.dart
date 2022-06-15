@@ -2,9 +2,10 @@ import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/checkout/domain/entities/opening_hour.dart';
 import 'package:pickup/screens/checkout/util/extensions.dart';
 
-List<OpeningHour> getOpeningHours(
-    {required DateTime currentDateTime,
-    required List<DeliverectAvailabilityModel> availabilityModels}) {
+List<OpeningHour> getOpeningHours({
+  required DateTime currentDateTime,
+  required List<DeliverectAvailabilityModel> availabilityModels,
+}) {
   final List<OpeningHour> openingHours = [];
   final pickUpTime = currentDateTime.add(const Duration(minutes: 20));
   for (final e in availabilityModels) {
@@ -15,7 +16,8 @@ List<OpeningHour> getOpeningHours(
           .add(getOpeningHour(hour: startHour, minute: pickUpTime.minute));
     } else {
       openingHours.add(
-          getOpeningHour(hour: startHour, minute: e.startTime!.getMinutes));
+        getOpeningHour(hour: startHour, minute: e.startTime!.getMinutes),
+      );
     }
 
     if (e.endTime!.getMinutes != 0) {

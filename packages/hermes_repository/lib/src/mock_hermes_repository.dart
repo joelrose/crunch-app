@@ -27,13 +27,11 @@ class MockHermesService implements HermesRepository {
   Swagger get client => _chopperClient.getService<Swagger>();
 
   @override
-  // TODO: implement authenticationRepository
   AuthenticationRepository get authenticationRepository =>
       throw UnimplementedError();
 
   @override
   Future<GetMenuResponseDto> apiMenusMenuIdGet({required String storeId}) {
-    // TODO: implement apiMenusMenuIdGet
     throw UnimplementedError();
   }
 }

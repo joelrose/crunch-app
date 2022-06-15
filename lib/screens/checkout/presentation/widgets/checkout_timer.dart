@@ -21,7 +21,7 @@ class CheckoutTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CheckoutTimeCubit, CheckoutTimeState>(
       builder: (context, state) => CheckoutRowHeader(
-        buttonKey: Key('PickTimeButton'),
+        buttonKey: const Key('PickTimeButton'),
         header: context.l10n.pickupTime,
         buttonText: state.pickupTime
             .formatToLocalTime(Localizations.localeOf(context).languageCode),

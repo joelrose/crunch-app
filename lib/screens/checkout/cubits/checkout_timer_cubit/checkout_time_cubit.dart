@@ -18,7 +18,9 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
       (element) => element.dayOfWeek!.index != currentTime.weekday,
     );
     final availableOpeningTimes = getOpeningHours(
-        currentDateTime: currentTime, availabilityModels: openingHours);
+      currentDateTime: currentTime,
+      availabilityModels: openingHours,
+    );
     availableOpeningTimes.sort((a, b) => a.hour.compareTo(b.hour));
 
     return CheckoutTimeCubit._internal(

@@ -40,7 +40,6 @@ class StretchyHeader extends StretchyHeaderBase {
 
 @immutable
 class HeaderData {
-
   const HeaderData({
     required this.header,
     required this.headerHeight,
@@ -51,16 +50,18 @@ class HeaderData {
     this.blurColor,
     this.backgroundColor,
   }) : assert(headerHeight >= 0.0);
+
   ///Header Widget that will be stretched, it will appear at the top of the page
   final Widget header;
 
   ///Height of your header widget
   final double headerHeight;
 
-  ///highlight header that will be placed on the header, this widget always be visible without blurring effect
+  //  highlight header that will be placed on the header, 
+  //  this widget always be visible without blurring effect
   final Widget? highlightHeader;
 
-  ///alignment for the highlight header
+  // alignment for the highlight header
   final HighlightHeaderAlignment highlightHeaderAlignment;
 
   ///This widget will be placed on top the header container.
@@ -103,7 +104,6 @@ class HeaderData {
 }
 
 class StretchyHeaderBase extends StatefulWidget {
-
   StretchyHeaderBase({
     Key? key,
     required this.headerData,
@@ -114,6 +114,7 @@ class StretchyHeaderBase extends StatefulWidget {
   })  : displacement = displacement ?? 40.0,
         scrollController = scrollController ?? ScrollController(),
         super(key: key);
+
   ///Header parameters describing how the header will be displayed
   final HeaderData headerData;
 
@@ -279,7 +280,6 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
 }
 
 class HeaderClipper extends CustomClipper<Rect> {
-
   HeaderClipper(this.height);
   final double height;
 

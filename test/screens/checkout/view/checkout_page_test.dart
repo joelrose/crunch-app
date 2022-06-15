@@ -114,31 +114,37 @@ void main() {
         Stream.fromIterable([getCheckoutTimeState()]),
       );
 
-      whenListen(checkoutCubit,
-          Stream.fromIterable([CheckoutState(menu: mockMenuModel)]));
+      whenListen(
+        checkoutCubit,
+        Stream.fromIterable([CheckoutState(menu: mockMenuModel)]),
+      );
 
       testWidgets('renders CheckoutPage', (tester) async {
-        await tester.pumpApp(MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => checkoutTimeCubit),
-            BlocProvider(create: (_) => checkoutPaymentCubit),
-            BlocProvider(create: (_) => checkoutCubit),
-          ],
-          child: const CheckoutPage(),
-        ));
+        await tester.pumpApp(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => checkoutTimeCubit),
+              BlocProvider(create: (_) => checkoutPaymentCubit),
+              BlocProvider(create: (_) => checkoutCubit),
+            ],
+            child: const CheckoutPage(),
+          ),
+        );
 
         expect(find.byType(CheckoutPage), findsOneWidget);
       });
 
       testWidgets('renders time pick bottom sheet', (tester) async {
-        await tester.pumpApp(MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => checkoutTimeCubit),
-            BlocProvider(create: (_) => checkoutPaymentCubit),
-            BlocProvider(create: (_) => checkoutCubit),
-          ],
-          child: const CheckoutPage(),
-        ));
+        await tester.pumpApp(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => checkoutTimeCubit),
+              BlocProvider(create: (_) => checkoutPaymentCubit),
+              BlocProvider(create: (_) => checkoutCubit),
+            ],
+            child: const CheckoutPage(),
+          ),
+        );
         final pickTimeButton = find.byKey(const Key('PickTimeButton'));
 
         await tester.tap(pickTimeButton);

@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
@@ -11,7 +12,6 @@ import 'package:pickup/screens/home/view/home_view.dart';
 import 'package:pickup/screens/orders/orders.dart';
 
 import '../../helpers/pump_app.dart';
-import '../../mock/mock_hermes_service.dart';
 
 class MockDiscoverCubit extends MockCubit<DiscoverState>
     implements DiscoverCubit {}

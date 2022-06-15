@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Bounceable extends StatefulWidget {
-
   const Bounceable({
     Key? key,
     required this.child,
@@ -19,6 +18,7 @@ class Bounceable extends StatefulWidget {
           'The valid range of scaleFactor is from 0.0 to 1.0.',
         ),
         super(key: key);
+
   /// Set it to `null` to disable `onTap`.
   final VoidCallback? onTap;
   final void Function(TapUpDetails)? onTapUp;
@@ -37,7 +37,8 @@ class Bounceable extends StatefulWidget {
   /// The curve of the scaling animation when `onTapDown`..
   final Curve? reverseCurve;
 
-  /// The scale factor of the child widget. The valid range of `scaleFactor` is from `0.0` to `1.0`.
+  /// The scale factor of the child widget.
+  /// The valid range of `scaleFactor` is from `0.0` to `1.0`.
   final double scaleFactor;
 
   final Widget child;
