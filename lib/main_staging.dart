@@ -16,6 +16,8 @@ import 'package:stripe_repository/stripe_repository.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await AuthenticationRepository.initializeFirebase();
+
   await dotenv.load(
     fileName:
         'assets/enviroments/.env.${Enviroment.staging.toString().split('.').last}',
@@ -24,8 +26,6 @@ Future<void> main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
   final _authenticationRepository = AuthenticationRepository();
-
-  await _authenticationRepository.initializeFirebase();
 
   final _oneSignalRepository = OneSignalRepository(
     authenticationRepository: _authenticationRepository,

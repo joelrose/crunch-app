@@ -16,6 +16,8 @@ import 'package:stripe_repository/stripe_repository.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await AuthenticationRepository.initializeFirebase();
+
   await dotenv.load(
     fileName:
         'assets/enviroments/.env.${Enviroment.production.toString().split('.').last}',
