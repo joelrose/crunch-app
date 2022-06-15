@@ -4,8 +4,8 @@ import 'package:checkout_repository/checkout_repository.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/bloc/checkout_basket_bloc.dart';
@@ -22,11 +22,13 @@ class App extends StatelessWidget {
     required HermesRepository hermesRepository,
     required StripeRepository stripeRepository,
     required CheckoutRepository checkoutRepository,
+    required LoadingOverlayRepository loadingOverlayRepository,
   })  : _authenticationRepository = authenticationRepository,
         _oneSignalRepository = oneSignalRepository,
         _hermesRepository = hermesRepository,
         _stripeRepository = stripeRepository,
         _checkoutRepository = checkoutRepository,
+        _loadingOverlayRepository = loadingOverlayRepository,
         super(key: key);
 
   final AuthenticationRepository _authenticationRepository;
@@ -34,6 +36,7 @@ class App extends StatelessWidget {
   final HermesRepository _hermesRepository;
   final StripeRepository _stripeRepository;
   final CheckoutRepository _checkoutRepository;
+  final LoadingOverlayRepository _loadingOverlayRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +47,7 @@ class App extends StatelessWidget {
         RepositoryProvider.value(value: _hermesRepository),
         RepositoryProvider.value(value: _stripeRepository),
         RepositoryProvider.value(value: _checkoutRepository),
+        RepositoryProvider.value(value: _loadingOverlayRepository),
       ],
       child: const AppView(),
     );
@@ -80,7 +84,7 @@ class AppView extends StatelessWidget {
         initialRoute: LoadingScreen.route,
         theme: getThemeData(),
         navigatorObservers: <NavigatorObserver>[observer],
-        builder: EasyLoading.init(),
+        builder: context.read<LoadingOverlayRepository>().initialize(),
       ),
     );
   }

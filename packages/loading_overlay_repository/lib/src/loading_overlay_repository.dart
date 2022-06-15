@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoadingUtils {
-  static Future<void> hide() async {
-    await EasyLoading.dismiss();
-  }
+class LoadingOverlayRepository {
+  LoadingOverlayRepository();
 
-  static Future<void> show() async {
+  Future<void> show() async {
     EasyLoading.instance
       ..loadingStyle = EasyLoadingStyle.custom
       ..indicatorType = EasyLoadingIndicatorType.ring
@@ -33,13 +31,21 @@ class LoadingUtils {
     );
   }
 
-  static Future<T> asyncLoading<T>(Future<T> asyncFunction) async {
-    await LoadingUtils.show();
+  Future<void> hide() async {
+    await EasyLoading.dismiss();
+  }
+
+  Future<T> asyncLoading<T>(Future<T> asyncFunction) async {
+    await show();
 
     final value = await asyncFunction;
 
-    await LoadingUtils.hide();
+    await hide();
 
     return value;
+  }
+
+  Widget Function(BuildContext, Widget?) initialize() {
+    return EasyLoading.init();
   }
 }

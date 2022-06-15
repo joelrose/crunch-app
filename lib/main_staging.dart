@@ -6,6 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:local_storage_checkout_api/local_storage_checkout_api.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/screens/app/app.dart';
@@ -57,6 +58,7 @@ Future<void> main() async {
         oneSignalRepository: _oneSignalRepository,
         hermesRepository: _hermesRepository,
         stripeRepository: _stripeRepository,
+        loadingOverlayRepository: LoadingOverlayRepository(),
       ),
     ),
     (error, stackTrace) =>
