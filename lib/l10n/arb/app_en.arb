@@ -33,7 +33,7 @@
   "orderSummary": "Order summary",
   "subtotal": "Subtotal",
   "discount": "discount",
-  "store": "store",
+  "store": "Store",
   "directionsButtonLabel": "Get directions",
   "connectionPaymentFail": "Unable to connect to payment provider!",
   "buttonPayLabel": "Pay now",
