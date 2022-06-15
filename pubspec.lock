@@ -441,12 +441,12 @@ packages:
     source: hosted
     version: "5.0.2"
   flutter_easyloading:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_easyloading
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.3"
+    version: "3.0.5"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -665,6 +665,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  loading_overlay_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/loading_overlay_repository"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   local_storage_checkout_api:
     dependency: "direct main"
     description:

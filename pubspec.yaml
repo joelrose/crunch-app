@@ -26,11 +26,12 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_dotenv: ^5.0.2
-  flutter_easyloading: ^3.0.3
   flutter_svg: ^1.0.3
   hermes_repository: 
     path: packages/hermes_repository
   intl: ^0.17.0
+  loading_overlay_repository: 
+    path: packages/loading_overlay_repository
   local_storage_checkout_api: 
     path: packages/local_storage_checkout_api
   material_floating_search_bar: ^0.3.7
