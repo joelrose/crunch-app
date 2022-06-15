@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:checkout_repository/checkout_repository.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -31,14 +30,14 @@ class AppBlocObserver extends BlocObserver {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
-
   await dotenv.load(
     fileName:
         'assets/enviroments/.env.${Enviroment.development.toString().split('.').last}',
   );
 
   final _authenticationRepository = AuthenticationRepository();
+
+  await _authenticationRepository.initializeFirebase();
 
   final _oneSignalRepository = OneSignalRepository(
     authenticationRepository: _authenticationRepository,
