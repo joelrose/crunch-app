@@ -58,7 +58,11 @@ class CheckoutPage extends StatelessWidget {
       listener: (context, state) {
         if (state.status.isPaid) {
           Navigator.of(context).push(
-            CheckoutConfirmationPage.route(),
+            CheckoutConfirmationPage.route(
+              pickUpTime: context.read<CheckoutTimeCubit>().state.pickupTime,
+              googleMapsLink:
+                  context.read<CheckoutCubit>().state.menu.googleMapsLink!,
+            ),
           );
           context.read<LoadingOverlayRepository>().hide();
         } else if (state.status.isLoading) {
@@ -101,6 +105,9 @@ class _Content extends StatelessWidget {
     final storeName =
         context.select((CheckoutCubit cubit) => cubit.state.menu.menu!.menu!);
 
+    final googleMapsLink = context
+        .select((CheckoutCubit cubit) => cubit.state.menu.googleMapsLink)!;
+
     return Column(
       children: [
         CheckoutNavbar(
@@ -120,7 +127,9 @@ class _Content extends StatelessWidget {
               const ItemsOverview(),
               const Divider(),
               CheckoutTimer(),
-              const AddressDirection(),
+              AddressDirection(
+                googleMapsLink: googleMapsLink,
+              ),
               const ContactDetails(),
               const PriceSummary(),
               Container(

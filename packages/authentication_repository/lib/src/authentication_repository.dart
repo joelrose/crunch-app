@@ -28,7 +28,7 @@ class AuthenticationRepository {
 
   FirebaseAuth get firebaseAuth => _firebaseAuth;
 
-  Future<void> initializeFirebase() async {
+  static Future<void> initializeFirebase() async {
     await Firebase.initializeApp();
   }
 

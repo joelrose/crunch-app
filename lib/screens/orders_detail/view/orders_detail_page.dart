@@ -1,5 +1,8 @@
+import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:pickup/screens/orders_detail/widgets/widgets.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class OrdersDetailPage extends StatelessWidget {
   const OrdersDetailPage({
@@ -11,6 +14,36 @@ class OrdersDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      color: Colors.white,
+      child: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Info(
+              name: order.merchant!.name!,
+              id: order.id!,
+            ),
+            Map(
+              googleMapsLink: order.merchant!.googleMapsLink!,
+              name: order.merchant!.name!,
+            ),
+            Detail(order: order),
+            const Divider(),
+            ItemList(
+              items: order.items!,
+            ),
+            ActionButton(
+              key: const Key('support_button'),
+              buttonText: 'Support',
+              isPrimaryButton: false,
+              textColor: AlpacaColor.darkGreyColor,
+              onPressed: () => launchUrlString('mailto:joel@getcrunch.tech'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

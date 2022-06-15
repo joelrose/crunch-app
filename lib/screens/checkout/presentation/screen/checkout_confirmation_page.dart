@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/checkout.dart';
 import 'package:pickup/screens/checkout_navbar/checkout_navbar.dart';
@@ -10,9 +11,18 @@ import 'package:pickup/screens/home/home.dart';
 class CheckoutConfirmationPage extends StatelessWidget {
   const CheckoutConfirmationPage({Key? key}) : super(key: key);
 
-  static Route<void> route() {
+  static Route<void> route({
+    required DateTime pickUpTime,
+    required String googleMapsLink,
+  }) {
     return MaterialPageRoute(
-      builder: (_) => const CheckoutConfirmationPage(),
+      builder: (_) => BlocProvider(
+        create: (_) => CheckoutConfirmationCubit(
+          pickupTime: pickUpTime,
+          googleMapsLink: googleMapsLink,
+        ),
+        child: const CheckoutConfirmationPage(),
+      ),
     );
   }
 
@@ -40,6 +50,9 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state =
+        context.select((CheckoutConfirmationCubit cubit) => cubit.state);
+
     return Flexible(
       child: ListView(
         children: [
@@ -68,8 +81,10 @@ class _Content extends StatelessWidget {
               Container(
                 color: AlpacaColor.primary100.withOpacity(0.03),
                 height: 151,
-                child: const Center(
-                  child: CheckoutConfirmationTime(),
+                child: Center(
+                  child: CheckoutConfirmationTime(
+                    pickupTime: state.pickupTime,
+                  ),
                 ),
               ),
               CheckoutRowHeader(
@@ -79,7 +94,9 @@ class _Content extends StatelessWidget {
                 disableButton: true,
               ),
               const ItemsOverview(),
-              const AddressDirection(),
+              AddressDirection(
+                googleMapsLink: state.googleMapsLink,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,

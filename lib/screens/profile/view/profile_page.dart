@@ -129,23 +129,23 @@ class _Tiles extends StatelessWidget {
         ),
         const ProfileTile(
           title: 'Language',
-          link: '',
+          link: 'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
         ),
         const ProfileTile(
           title: 'Terms & Conditions',
-          link: '',
+          link: 'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
         ),
         const ProfileTile(
           title: 'Data Privacy',
-          link: '',
+          link: 'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
         ),
         const ProfileTile(
           title: 'Contact Us',
-          link: '',
+          link: 'mailto:joel@getcrunch.tech',
         ),
         const ProfileTile(
           title: 'Visit our Website',
-          link: '',
+          link: 'https://getcrunch.tech',
         ),
         const AlpacaDivider(),
       ],
