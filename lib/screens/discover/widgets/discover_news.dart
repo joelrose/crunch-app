@@ -44,7 +44,7 @@ class DiscoverNews extends StatelessWidget {
                 SizedBox(
                   width: 200,
                   child: Text(
-                   context.l10n.discoverSubtitle,
+                    context.l10n.discoverSubtitle,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText2!

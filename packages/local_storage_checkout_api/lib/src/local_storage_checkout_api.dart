@@ -35,9 +35,9 @@ class LocalStorageCheckoutApi {
     final checkoutItemsJson = _getValue(kCheckoutCollectionKey);
     if (checkoutItemsJson != null) {
       final checkoutItems = List<Map>.from(
-              json.decode(checkoutItemsJson) as List)
+              json.decode(checkoutItemsJson) as List,)
           .map((jsonMap) =>
-              CreateOrderItemDto.fromJson(Map<String, dynamic>.from(jsonMap)))
+              CreateOrderItemDto.fromJson(Map<String, dynamic>.from(jsonMap)),)
           .toList();
       _checkoutStreamController.add(checkoutItems);
     } else {
@@ -48,7 +48,7 @@ class LocalStorageCheckoutApi {
   Stream<List<CreateOrderItemDto>> getCheckoutItems() =>
       _checkoutStreamController.asBroadcastStream();
 
-  void clear() async {
+  Future<void> clear() async {
     _checkoutStreamController.value = [];
   }
 

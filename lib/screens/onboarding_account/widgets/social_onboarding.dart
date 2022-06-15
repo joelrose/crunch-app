@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/onboarding_account/cubit/onboarding_account_cubit.dart';
 import 'package:pickup/screens/onboarding_create_account/onboarding_create_account.dart';
-import 'package:pickup/shared/show_async_loading.dart';
 
 class SocialOnboarding extends StatelessWidget {
   const SocialOnboarding({Key? key}) : super(key: key);
@@ -31,25 +31,34 @@ class SocialOnboarding extends StatelessWidget {
             'assets/google-logo.svg',
           ),
           () async {
-            LoadingUtils.asyncLoading(
-              _socialSignUp(context, appleLogin: false),
-            );
+            context.read<LoadingOverlayRepository>().asyncLoading(
+                  _socialSignUp(context, appleLogin: false),
+                );
           },
         ),
-        getSocialButton(
-          isSignUp
-              ? context.l10n.signUpWithApple
-              : context.l10n.signInWithApple,
-          MediaQuery.of(context).size.width,
-          SvgPicture.asset(
-            'assets/apple-logo.svg',
-          ),
-          () async {
-            LoadingUtils.asyncLoading(
-              _socialSignUp(context),
-            );
+        FutureBuilder(
+          future: context.read<AuthenticationRepository>().appleSignInAvailable,
+          builder: (context, snapshot) {
+            if (snapshot.data == true) {
+              return getSocialButton(
+                isSignUp
+                    ? context.l10n.signUpWithApple
+                    : context.l10n.signInWithApple,
+                MediaQuery.of(context).size.width,
+                SvgPicture.asset(
+                  'assets/apple-logo.svg',
+                ),
+                () async {
+                  context.read<LoadingOverlayRepository>().asyncLoading(
+                        _socialSignUp(context),
+                      );
+                },
+                backgroundWhite: false,
+              );
+            } else {
+              return Container();
+            }
           },
-          backgroundWhite: false,
         ),
       ],
     );

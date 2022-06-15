@@ -1,29 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Bounceable extends StatefulWidget {
-  /// Set it to `null` to disable `onTap`.
-  final VoidCallback? onTap;
-  final void Function(TapUpDetails)? onTapUp;
-  final void Function(TapDownDetails)? onTapDown;
-  final VoidCallback? onTapCancel;
-
-  /// The reverse duration of the scaling animation when `onTapUp`.
-  final Duration? duration;
-
-  /// The duration of the scaling animation when `onTapDown`.
-  final Duration? reverseDuration;
-
-  /// The reverse curve of the scaling animation when `onTapUp`.
-  final Curve curve;
-
-  /// The curve of the scaling animation when `onTapDown`..
-  final Curve? reverseCurve;
-
-  /// The scale factor of the child widget. The valid range of `scaleFactor` is from `0.0` to `1.0`.
-  final double scaleFactor;
-
-  final Widget child;
-
   const Bounceable({
     Key? key,
     required this.child,
@@ -42,6 +19,30 @@ class Bounceable extends StatefulWidget {
         ),
         super(key: key);
 
+  /// Set it to `null` to disable `onTap`.
+  final VoidCallback? onTap;
+  final void Function(TapUpDetails)? onTapUp;
+  final void Function(TapDownDetails)? onTapDown;
+  final VoidCallback? onTapCancel;
+
+  /// The reverse duration of the scaling animation when `onTapUp`.
+  final Duration? duration;
+
+  /// The duration of the scaling animation when `onTapDown`.
+  final Duration? reverseDuration;
+
+  /// The reverse curve of the scaling animation when `onTapUp`.
+  final Curve curve;
+
+  /// The curve of the scaling animation when `onTapDown`..
+  final Curve? reverseCurve;
+
+  /// The scale factor of the child widget.
+  /// The valid range of `scaleFactor` is from `0.0` to `1.0`.
+  final double scaleFactor;
+
+  final Widget child;
+
   @override
   _BounceableState createState() => _BounceableState();
 }
@@ -53,7 +54,6 @@ class _BounceableState extends State<Bounceable>
     duration: widget.duration,
     reverseDuration: widget.reverseDuration,
     value: 1.0,
-    upperBound: 1.0,
     lowerBound: widget.scaleFactor,
   );
 

@@ -3,13 +3,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding_account/cubit/onboarding_account_cubit.dart';
 import 'package:pickup/screens/onboarding_account/widgets/widgets.dart';
 import 'package:pickup/screens/onboarding_create_account/onboarding_create_account.dart';
 import 'package:pickup/shared/country_emoji.dart';
 import 'package:pickup/shared/phone_number_verification.dart';
-import 'package:pickup/shared/show_async_loading.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class OnboardingLoginFields extends StatefulWidget {
@@ -101,7 +101,11 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
             onChanged: (text) async {
               final phoneNumber = selectedPhoneCode + text;
 
-              isValidPhoneNumber = await phoneNumber.isValidPhoneNumber();
+              try {
+                isValidPhoneNumber = await phoneNumber.isValidPhoneNumber();
+              } catch (exception) {
+                isValidPhoneNumber = false;
+              }
             },
             validator: (text) {
               if (!isValidPhoneNumber) {
@@ -154,9 +158,11 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
     return GestureDetector(
       onTap: () async {
         final phoneNumber = selectedPhoneCode + _textController.text;
+        final loadingOverlayRepository =
+            context.read<LoadingOverlayRepository>();
 
         if (_form.currentState!.validate()) {
-          LoadingUtils.show();
+          loadingOverlayRepository.show();
 
           final hermesRepository = context.read<HermesRepository>();
 
@@ -164,6 +170,8 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
               .apiWhitelistuserPost(body: phoneNumber);
 
           if (response.isSuccessful && response.body == true) {
+            // TODO: replace this with a cubit
+            // ignore: use_build_context_synchronously
             Navigator.of(context).pushAndRemoveUntil(
               OnboardingCreateAccountPage.route(
                 data: CreateAccountData(
@@ -182,7 +190,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
               return;
             }
 
-            LoadingUtils.hide();
+            loadingOverlayRepository.hide();
 
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
@@ -203,30 +211,33 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
   }
 
   Widget _buildTextFieldPrefix() {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () async {},
-      child: ClipRRect(
-        borderRadius: const BorderRadius.horizontal(left: Radius.circular(8)),
-        child: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(bottom: 2),
-          child: Row(
-            children: [
-              Container(width: 8),
-              Text(
-                Utils.countryCodeToEmoji(selectedCountryCode),
-                style: Theme.of(context).textTheme.headline2,
-              ),
-              Container(width: 6),
-              Text(
-                selectedPhoneCode,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5!
-                    .copyWith(color: AlpacaColor.white100Color),
-              ),
-            ],
+    return SizedBox(
+      width: 80,
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () async {},
+        child: ClipRRect(
+          borderRadius: const BorderRadius.horizontal(left: Radius.circular(8)),
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(bottom: 2),
+            child: Row(
+              children: [
+                Container(width: 8),
+                Text(
+                  Utils.countryCodeToEmoji(selectedCountryCode),
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+                Container(width: 4),
+                Text(
+                  selectedPhoneCode,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: AlpacaColor.white100Color),
+                ),
+              ],
+            ),
           ),
         ),
       ),

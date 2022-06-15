@@ -94,7 +94,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
 
   void addToOrderOnClick() {
     final item = state.item;
-    var checkoutItems = state.checkoutItems.toList();
+    final checkoutItems = state.checkoutItems.toList();
 
     final newItem = CreateOrderItemDto(
       plu: item.plu,
@@ -104,7 +104,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
       items: _convertToOrderDto(),
     );
 
-    // We have to remove the quantity here 
+    // We have to remove the quantity here
     final checkoutItem =
         checkoutItems.firstWhereOrNull((listItem) => listItem == newItem);
 
@@ -123,7 +123,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   }
 
   List<CreateOrderItemDto> _convertToOrderDto() {
-    List<CreateOrderItemDto> returnValue = [];
+    final List<CreateOrderItemDto> returnValue = [];
 
     for (final optionCategory in orderDto) {
       if (optionCategory.items != null) {

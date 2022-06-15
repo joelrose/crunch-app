@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:checkout_repository/checkout_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,6 +9,7 @@ import 'package:hermes_repository/hermes_repository.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
 import 'package:stripe_repository/stripe_repository.dart';
 
@@ -20,6 +22,8 @@ class MockOneSignalRepository extends Mock implements OneSignalRepository {}
 
 class MockStripeRepository extends Mock implements StripeRepository {}
 
+class MockCheckoutRepository extends Mock implements CheckoutRepository {}
+
 extension PumpApp on WidgetTester {
   Future<void> pumpApp(
     Widget widget, {
@@ -28,6 +32,7 @@ extension PumpApp on WidgetTester {
     OneSignalRepository? oneSignalRepository,
     HermesRepository? hermesRepository,
     StripeRepository? stripeRepository,
+    CheckoutRepository? checkoutRepository,
     DiscoverCubit? discoverCubit,
   }) {
     final innerChild = Scaffold(
@@ -38,6 +43,7 @@ extension PumpApp on WidgetTester {
     final _oneSignalRepository = MockOneSignalRepository();
     final _hermesRepository = MockHermesRepository();
     final _stripeRepository = MockStripeRepository();
+    final _checkoutRepository = MockCheckoutRepository();
 
     return pumpWidget(
       MultiRepositoryProvider(
@@ -54,10 +60,22 @@ extension PumpApp on WidgetTester {
           RepositoryProvider.value(
             value: stripeRepository ?? _stripeRepository,
           ),
+          RepositoryProvider.value(
+            value: checkoutRepository ?? _checkoutRepository,
+          ),
         ],
-        child: BlocProvider(
-          create: (context) =>
-              discoverCubit ?? DiscoverCubit(_hermesRepository),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => CheckoutBasketBloc(
+                checkoutRepository: _checkoutRepository,
+              ),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  discoverCubit ?? DiscoverCubit(_hermesRepository),
+            )
+          ],
           child: MaterialApp(
             localizationsDelegates: const [
               AppLocalizations.delegate,

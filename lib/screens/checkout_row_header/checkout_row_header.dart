@@ -8,6 +8,7 @@ class CheckoutRowHeader extends StatelessWidget {
     required this.onPressed,
     required this.buttonText,
     this.icon,
+    this.buttonKey,
     this.disableButton = false,
     this.buttonBackground = true,
     this.disableButtonBackground = false,
@@ -20,6 +21,7 @@ class CheckoutRowHeader extends StatelessWidget {
   final bool disableButton;
   final bool buttonBackground;
   final bool disableButtonBackground;
+  final Key? buttonKey;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class CheckoutRowHeader extends StatelessWidget {
           ),
           if (!disableButton)
             AlpacaCheckoutButton(
+              key: buttonKey,
               onPressed: onPressed,
               buttonText: buttonText,
               disableButtonBackground: disableButtonBackground,

@@ -34,7 +34,7 @@
   "subtotal": "Subtotal",
   "discount": "discount",
   "store": "store",
-  "directionsButtonLabel": "Get directions ->",
+  "directionsButtonLabel": "Get directions",
   "connectionPaymentFail": "Unable to connect to payment provider!",
   "buttonPayLabel": "Pay now",
   "orderOverview": "Order Overview",
@@ -76,12 +76,12 @@
   "storeAddress": "Store address",
   "menu": "Menu",
   "ratings": "ratings",
-  "closed": "closed",
-  "storeFloatingButtonText": "{itemCount,plural, =1{Item}other{Items}}",
+  "closed": "Closed",
+  "storeFloatingButtonText": "{itemCount,plural, =1{{itemCount} item}other{ {itemCount} items}}",
   "@storeFloatingButtonText": {
-    "placeholders": {
-      "itemCount": {}
-    }
+     "placeholders": {
+        "itemCount": {}
+     }
   },
   "addToOrder": "Add to order",
   "cancel": "cancel",

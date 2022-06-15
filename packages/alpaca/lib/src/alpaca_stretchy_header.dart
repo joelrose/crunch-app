@@ -40,16 +40,28 @@ class StretchyHeader extends StretchyHeaderBase {
 
 @immutable
 class HeaderData {
+  const HeaderData({
+    required this.header,
+    required this.headerHeight,
+    this.highlightHeader,
+    this.blurContent = true,
+    this.highlightHeaderAlignment = HighlightHeaderAlignment.bottom,
+    this.overlay,
+    this.blurColor,
+    this.backgroundColor,
+  }) : assert(headerHeight >= 0.0);
+
   ///Header Widget that will be stretched, it will appear at the top of the page
   final Widget header;
 
   ///Height of your header widget
   final double headerHeight;
 
-  ///highlight header that will be placed on the header, this widget always be visible without blurring effect
+  //  highlight header that will be placed on the header, 
+  //  this widget always be visible without blurring effect
   final Widget? highlightHeader;
 
-  ///alignment for the highlight header
+  // alignment for the highlight header
   final HighlightHeaderAlignment highlightHeaderAlignment;
 
   ///This widget will be placed on top the header container.
@@ -89,20 +101,20 @@ class HeaderData {
 
   ///If you want to blur the content when scroll. True by default
   final bool blurContent;
-
-  const HeaderData({
-    required this.header,
-    required this.headerHeight,
-    this.highlightHeader,
-    this.blurContent = true,
-    this.highlightHeaderAlignment = HighlightHeaderAlignment.bottom,
-    this.overlay,
-    this.blurColor,
-    this.backgroundColor,
-  }) : assert(headerHeight >= 0.0);
 }
 
 class StretchyHeaderBase extends StatefulWidget {
+  StretchyHeaderBase({
+    Key? key,
+    required this.headerData,
+    required this.listBuilder,
+    ScrollController? scrollController,
+    double? displacement,
+    this.onRefresh,
+  })  : displacement = displacement ?? 40.0,
+        scrollController = scrollController ?? ScrollController(),
+        super(key: key);
+
   ///Header parameters describing how the header will be displayed
   final HeaderData headerData;
 
@@ -121,17 +133,6 @@ class StretchyHeaderBase extends StatefulWidget {
   final VoidCallback? onRefresh;
 
   final ScrollController scrollController;
-
-  StretchyHeaderBase({
-    Key? key,
-    required this.headerData,
-    required this.listBuilder,
-    ScrollController? scrollController,
-    double? displacement,
-    this.onRefresh,
-  })  : displacement = displacement ?? 40.0,
-        scrollController = scrollController ?? ScrollController(),
-        super(key: key);
 
   @override
   _StretchyHeaderBaseState createState() => _StretchyHeaderBaseState();
@@ -279,12 +280,11 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
 }
 
 class HeaderClipper extends CustomClipper<Rect> {
+  HeaderClipper(this.height);
   final double height;
 
-  HeaderClipper(this.height);
-
   @override
-  getClip(Size size) => Rect.fromLTRB(0.0, 0.0, size.width, this.height);
+  Rect getClip(Size size) => Rect.fromLTRB(0.0, 0.0, size.width, height);
 
   @override
   bool shouldReclip(CustomClipper oldClipper) {

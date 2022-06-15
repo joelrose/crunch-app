@@ -28,4 +28,8 @@ class OneSignalRepository {
       }
     }
   }
+
+  Future<void> logout() async {
+    await OneSignal.shared.disablePush(true);
+  }
 }

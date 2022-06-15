@@ -7,7 +7,7 @@ class HermesApiRequestException implements Exception {}
 class HermesApiResponseException implements Exception {}
 
 class StripeRepository {
-  StripeRepository({required this.hermesRepository}) {}
+  StripeRepository({required this.hermesRepository});
 
   final HermesRepository hermesRepository;
 
@@ -36,7 +36,7 @@ class StripeRepository {
       throw HermesApiRequestException();
     }
 
-    final clientSecret = response.body?.clientSecret ?? null;
+    final clientSecret = response.body?.clientSecret;
 
     if (clientSecret == null) {
       throw HermesApiResponseException();

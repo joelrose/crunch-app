@@ -28,7 +28,8 @@ void main() {
     });
 
     test(
-        'testing google login twice, once cancelled, once not cancelled at the same test.',
+        '''testing google login twice, once cancelled, 
+          once not cancelled at the same test.''',
         () async {
       googleSignIn.setIsCancelled(true);
       final signInAccount = await googleSignIn.signIn();

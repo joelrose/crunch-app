@@ -6,17 +6,15 @@ class OnboardingCreateAccountState extends Equatable {
   OnboardingCreateAccountState({
     OnboardingStep? step,
     required this.data,
-  }) {
-    maxSteps = data.isSocialLogin ? 2 : 3;
-    this.step = step ??
-        (data.isSocialLogin
-            ? OnboardingStep.name
-            : OnboardingStep.phoneVerification);
-  }
+  })  : maxSteps = data.isSocialLogin ? 2 : 3,
+        step = step ??
+            (data.isSocialLogin
+                ? OnboardingStep.name
+                : OnboardingStep.phoneVerification);
 
   final CreateAccountData data;
-  late OnboardingStep step;
-  late int maxSteps;
+  final OnboardingStep step;
+  final int maxSteps;
 
   OnboardingCreateAccountState copyWith({
     OnboardingStep? step,

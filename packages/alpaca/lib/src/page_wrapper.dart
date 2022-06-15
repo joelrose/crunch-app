@@ -8,7 +8,7 @@ class PageWrapper extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
     this.statusBarStyle = SystemUiOverlayStyle.light,
     this.floatingActionButtonWidget,
-    this.appBar = null,
+    this.appBar,
     required this.backgroundColor,
   }) : super(key: key);
 
@@ -35,7 +35,7 @@ class PageWrapper extends StatelessWidget {
           floatingActionButtonLocation: floatingActionButtonWidget != null
               ? FloatingActionButtonLocation.centerFloat
               : null,
-          floatingActionButton: floatingActionButtonWidget),
+          floatingActionButton: floatingActionButtonWidget,),
     );
   }
 }

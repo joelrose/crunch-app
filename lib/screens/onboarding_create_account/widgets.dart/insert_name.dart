@@ -2,9 +2,9 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding_create_account/cubit/onboarding_create_account_cubit.dart';
-import 'package:pickup/shared/show_async_loading.dart';
 
 class StepInsertName extends StatefulWidget {
   const StepInsertName({Key? key}) : super(key: key);
@@ -95,12 +95,16 @@ class _StepInsertNameState extends State<StepInsertName> {
     if (_formKey.currentState!.validate()) {
       final hermesRepository = context.read<HermesRepository>();
 
+      final loadingOverlayRepository = context.read<LoadingOverlayRepository>();
+
       // TODO: validate response
-      final response = await LoadingUtils.asyncLoading<Response<bool>>(
+      final response =
+          await loadingOverlayRepository.asyncLoading<Response<bool>>(
         hermesRepository.client.apiUsersPost(
           body: CreateUserRequestDto(
             firstName: _firstNameController.text,
             lastName: _lastNameController.text,
+            languageCode: 'de',
           ),
         ),
       );

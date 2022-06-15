@@ -33,7 +33,7 @@ void main() {
     });
 
     testWidgets(
-        'navigates to OnboardingExplanationScreen when SignIn button is pressed',
+        '''navigates to OnboardingExplanationScreen when SignIn button is pressed''',
         (WidgetTester tester) async {
       when(() => navigator.push<void>(any())).thenAnswer((_) async {});
 
