@@ -26,8 +26,6 @@ extension GetOpeningHourFromInt on int {
   }
 }
 
-
-
 extension GetEndingOpeningHours on String {
   OpeningHour get fromEndingHour {
     return OpeningHour(

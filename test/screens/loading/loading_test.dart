@@ -64,8 +64,8 @@ void main() {
 
       when(() => navigator.pushNamedAndRemoveUntil<Object?>(any(), any()))
           .thenAnswer((_) async {
-            return null;
-          });
+        return null;
+      });
 
       FakeAsync().run((fakeAsync) {
         tester.pumpApp(
