@@ -6,10 +6,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/onboarding_create_account/cubit/onboarding_create_account_cubit.dart';
-import 'package:pickup/shared/show_async_loading.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class StepPhoneVerification extends StatefulWidget {
@@ -82,7 +82,10 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
 
             startTimer();
 
-            LoadingUtils.hide();
+            final loadingOverlayRepository =
+                context.read<LoadingOverlayRepository>();
+
+            loadingOverlayRepository.hide();
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
           verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},

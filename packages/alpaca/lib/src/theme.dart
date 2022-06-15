@@ -8,19 +8,17 @@ ThemeData getThemeData() {
     fontFamily: GoogleFonts.inter().fontFamily,
     textTheme: TextTheme(
       headline1: TextStyle(
-        fontSize: 28,
-        fontWeight: FontWeight.w700,
-        fontFamily: GoogleFonts.lexendDeca().fontFamily,
-        color: AlpacaColor.white100Color,
-        letterSpacing: -0.015
-      ),
+          fontSize: 28,
+          fontWeight: FontWeight.w700,
+          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+          color: AlpacaColor.white100Color,
+          letterSpacing: -0.015,),
       headline2: TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.w700,
-        fontFamily: GoogleFonts.lexendDeca().fontFamily,
-        color: AlpacaColor.darkNavyColor,
-        letterSpacing: -0.015
-      ),
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+          color: AlpacaColor.darkNavyColor,
+          letterSpacing: -0.015,),
       headline3: TextStyle(
         color: AlpacaColor.lightBlackColor,
         fontSize: 18,
@@ -32,13 +30,13 @@ ThemeData getThemeData() {
           fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 15,
           letterSpacing: -0.02,
-          color: AlpacaColor.greyColor80),
+          color: AlpacaColor.greyColor80,),
       headline5: TextStyle(
           fontWeight: FontWeight.w400,
           fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 15,
           height: 1.4,
-          color: AlpacaColor.greyColor80),
+          color: AlpacaColor.greyColor80,),
       subtitle1: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w700,
@@ -49,17 +47,17 @@ ThemeData getThemeData() {
           fontWeight: FontWeight.w400,
           fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 12,
-          color: AlpacaColor.greyColor80),
+          color: AlpacaColor.greyColor80,),
       bodyText2: TextStyle(
           fontWeight: FontWeight.w600,
           fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 12,
-          color: AlpacaColor.greyColor80),
+          color: AlpacaColor.greyColor80,),
       caption: TextStyle(
           fontWeight: FontWeight.w400,
           fontFamily: GoogleFonts.inter().fontFamily,
           fontSize: 11,
-          color: AlpacaColor.greyColor80),
+          color: AlpacaColor.greyColor80,),
       button: TextStyle(
         color: AlpacaColor.blackColor,
         fontFamily: GoogleFonts.inter().fontFamily,

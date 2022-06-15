@@ -44,7 +44,9 @@ void main() {
         any(),
         arguments: mockRestaurantModel.id,
       ),
-    ).thenAnswer((_) async {});
+    ).thenAnswer((_) async {
+      return null;
+    });
 
     await mockNetworkImages(
       () => tester.pumpApp(

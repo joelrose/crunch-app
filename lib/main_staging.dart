@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:checkout_repository/checkout_repository.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:local_storage_checkout_api/local_storage_checkout_api.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/screens/app/app.dart';
@@ -16,8 +16,6 @@ import 'package:stripe_repository/stripe_repository.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
-
   await dotenv.load(
     fileName:
         'assets/enviroments/.env.${Enviroment.staging.toString().split('.').last}',
@@ -26,6 +24,8 @@ Future<void> main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
   final _authenticationRepository = AuthenticationRepository();
+
+  await _authenticationRepository.initializeFirebase();
 
   final _oneSignalRepository = OneSignalRepository(
     authenticationRepository: _authenticationRepository,
@@ -58,6 +58,7 @@ Future<void> main() async {
         oneSignalRepository: _oneSignalRepository,
         hermesRepository: _hermesRepository,
         stripeRepository: _stripeRepository,
+        loadingOverlayRepository: LoadingOverlayRepository(),
       ),
     ),
     (error, stackTrace) =>

@@ -12,7 +12,6 @@ import 'package:pickup/screens/home/view/home_view.dart';
 import 'package:pickup/screens/orders/orders.dart';
 
 import '../../helpers/pump_app.dart';
-import '../../mock/mock_hermes_service.dart';
 
 class MockDiscoverCubit extends MockCubit<DiscoverState>
     implements DiscoverCubit {}
@@ -26,7 +25,7 @@ void main() {
       when(() => discoverCubit.state).thenReturn(
         DiscoverState(
           status: DiscoverStatus.success,
-          stores: [],
+          stores: const [],
         ),
       );
     });

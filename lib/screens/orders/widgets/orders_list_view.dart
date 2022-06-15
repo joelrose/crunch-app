@@ -76,23 +76,6 @@ class OrdersListView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      // Expanded(
-                      //   child: ListView.builder(
-                      //     itemCount: order.items?.length ?? 0,
-                      //     shrinkWrap: true,
-                      //     physics: const NeverScrollableScrollPhysics(),
-                      //     itemBuilder: (context, index) {
-                      //       final item = order.items!.elementAt(index);
-                      //       return Padding(
-                      //         padding: const EdgeInsets.only(top: 10, left: 2),
-                      //         child: Text(
-                      //           '\u2022 1x ${item.name!}',
-                      //           style: theme.textTheme.headline5,
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
                       Row(
                         children: [
                           Text(

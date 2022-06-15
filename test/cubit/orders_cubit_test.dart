@@ -3,8 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/orders/cubit/orders_cubit.dart';
 
-import '../mock/mock_hermes_service.dart';
-
 void main() {
   late HermesRepository hermesService;
 

@@ -42,3 +42,5 @@ build/
 .classpath
 .settings
 .last_build_id
+
+/coverage

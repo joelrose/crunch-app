@@ -11,7 +11,8 @@ class ProductOptionWidget extends StatelessWidget {
     return BlocBuilder<StoreDetailCubit, StoreDetailState>(
       builder: (context, state) {
         final optionCategories = context.select(
-            (StoreDetailCubit cubit) => cubit.state.item.childProducts)!;
+          (StoreDetailCubit cubit) => cubit.state.item.childProducts,
+        )!;
 
         return ListView.builder(
           physics: const NeverScrollableScrollPhysics(),

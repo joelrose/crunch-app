@@ -26,15 +26,15 @@ class _$Swagger extends Swagger {
 
   @override
   Future<Response<GetMenuResponseDto>> apiMenusMenuIdGet(
-      {required String? menuId}) {
-    final $url = '/api/menus/${menuId}';
+      {required String? menuId,}) {
+    final $url = '/api/menus/$menuId';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<GetMenuResponseDto, GetMenuResponseDto>($request);
   }
 
   @override
   Future<Response<CreateOrderResponseDto>> apiOrdersPost(
-      {required CreateOrderRequestDto? body}) {
+      {required CreateOrderRequestDto? body,}) {
     final $url = '/api/orders';
     final $body = body;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
@@ -60,8 +60,8 @@ class _$Swagger extends Swagger {
 
   @override
   Future<Response<GetOrderResponseDto>> apiOrdersOrderIdGet(
-      {required String? orderId}) {
-    final $url = '/api/orders/${orderId}';
+      {required String? orderId,}) {
+    final $url = '/api/orders/$orderId';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<GetOrderResponseDto, GetOrderResponseDto>($request);
   }

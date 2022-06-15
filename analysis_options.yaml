@@ -28,3 +28,8 @@ linter:
 
     return_of_invalid_type: false
     invalid_assignment: true
+
+analyzer:
+  exclude:
+    - lib/test/**
+    - packages/hermes_api/lib/swagger_generated_code/**

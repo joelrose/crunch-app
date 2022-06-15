@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/onboarding_account/cubit/onboarding_account_cubit.dart';
 import 'package:pickup/screens/onboarding_create_account/onboarding_create_account.dart';
-import 'package:pickup/shared/show_async_loading.dart';
 
 class SocialOnboarding extends StatelessWidget {
   const SocialOnboarding({Key? key}) : super(key: key);
@@ -31,9 +31,9 @@ class SocialOnboarding extends StatelessWidget {
             'assets/google-logo.svg',
           ),
           () async {
-            LoadingUtils.asyncLoading(
-              _socialSignUp(context, appleLogin: false),
-            );
+            context.read<LoadingOverlayRepository>().asyncLoading(
+                  _socialSignUp(context, appleLogin: false),
+                );
           },
         ),
         FutureBuilder(
@@ -49,9 +49,9 @@ class SocialOnboarding extends StatelessWidget {
                   'assets/apple-logo.svg',
                 ),
                 () async {
-                  LoadingUtils.asyncLoading(
-                    _socialSignUp(context),
-                  );
+                  context.read<LoadingOverlayRepository>().asyncLoading(
+                        _socialSignUp(context),
+                      );
                 },
                 backgroundWhite: false,
               );

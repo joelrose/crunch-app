@@ -25,7 +25,7 @@ Widget getSocialButton(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Row(
             children: [
-              Container(
+              SizedBox(
                 width: 25,
                 height: 25,
                 child: svgPicture,
@@ -270,7 +270,7 @@ class AlpacaCheckoutButton extends StatelessWidget {
           minimumSize: Size.zero,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-          backgroundColor: buttonBackground),
+          backgroundColor: buttonBackground,),
       onPressed: onPressed,
       child: Row(
         children: [
@@ -282,7 +282,7 @@ class AlpacaCheckoutButton extends StatelessWidget {
           ),
           if (svgPicture != null)
             Padding(
-              padding: EdgeInsets.only(left: 4),
+              padding: const EdgeInsets.only(left: 4),
               child: svgPicture,
             )
         ],
@@ -366,14 +366,14 @@ class CheckoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Bounceable(
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
       child: CupertinoButton(
         onPressed: onPressed,
         padding: EdgeInsets.zero,
         child: DecoratedBox(
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-              color: AlpacaColor.primary100),
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              color: AlpacaColor.primary100,),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -394,10 +394,10 @@ class CheckoutButton extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.horizontal(
-                        right: Radius.circular(8.0)),
-                    color: AlpacaColor.primary80),
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.horizontal(
+                        right: Radius.circular(8.0),),
+                    color: AlpacaColor.primary80,),
                 child: Text(
                   priceText,
                   textAlign: TextAlign.center,
