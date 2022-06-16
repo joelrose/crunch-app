@@ -12,6 +12,7 @@ import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
 import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
+import 'package:skeleton_loader/skeleton_loader.dart';
 
 class StoreView extends StatelessWidget {
   const StoreView({
@@ -83,9 +84,154 @@ class StoreView extends StatelessWidget {
             },
           );
         } else {
-          return Container(color: AlpacaColor.white100Color);
+          return Container(
+            color: Colors.white,
+            child: SkeletonLoader(
+              builder: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 26,
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    width: 140,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    margin: const EdgeInsets.only(left: 30),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    width: 112,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    margin: const EdgeInsets.only(left: 30),
+                  ),
+                  const SizedBox(height: 15),
+                  const Divider(
+                    color: Colors.white,
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    width: 80,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    margin: const EdgeInsets.only(left: 30),
+                  ),
+                  const SizedBox(height: 10),
+                  const Divider(
+                    color: Colors.white,
+                  ),
+                  _buildSkeletonTile(),
+                  _buildSkeletonTile(),
+                ],
+              ),
+              highlightColor: const Color(0xFFF1EFEF),
+            ),
+          );
         }
       },
+    );
+  }
+
+  Widget _buildSkeletonTile() {
+    return Column(
+      children: [
+        const SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  Container(
+                    width: 130,
+                    height: 18,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    margin: const EdgeInsets.only(left: 30),
+                  ),
+                  const SizedBox(height: 18),
+                  Container(
+                    width: 180,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    margin: const EdgeInsets.only(left: 30),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    width: 180,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    margin: const EdgeInsets.only(left: 30),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    width: 180,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    margin: const EdgeInsets.only(left: 30),
+                  ),
+                  const SizedBox(height: 14),
+                  Container(
+                    width: 40,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    margin: const EdgeInsets.only(left: 30),
+                  ),
+                ],
+              ),
+              Container(
+                width: 115,
+                height: 130,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                margin: const EdgeInsets.only(left: 30),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 15),
+        const Divider(
+          color: Colors.white,
+        ),
+      ],
     );
   }
 
