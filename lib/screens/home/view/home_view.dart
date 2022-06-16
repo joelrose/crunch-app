@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/discover.dart';
+import 'package:pickup/screens/friends/view/friends_page.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/home/widgets/widgets.dart';
 import 'package:pickup/screens/orders/orders.dart';
@@ -32,8 +33,8 @@ class HomeView extends StatelessWidget {
             SafeArea(
               child: ConstructionWidget(title: context.l10n.navigationVouchers),
             ),
-            SafeArea(
-              child: ConstructionWidget(title: context.l10n.navigationFriends),
+            const SafeArea(
+              child: FriendsPage(),
             ),
           ],
         ),
