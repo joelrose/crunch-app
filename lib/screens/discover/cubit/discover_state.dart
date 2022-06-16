@@ -24,7 +24,7 @@ class DiscoverState extends Equatable {
   }) {
     return DiscoverState(
       status: status ?? this.status,
-      stores: stores ?? [],
+      stores: stores ?? this.stores,
     );
   }
 
