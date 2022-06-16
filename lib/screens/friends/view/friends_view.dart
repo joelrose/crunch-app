@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pickup/screens/feedback/feedback.dart';
 import 'package:pickup/screens/friends/cubit/cubit.dart';
 import 'package:pickup/screens/friends/models/models.dart';
 
@@ -10,73 +11,87 @@ class FriendsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Friends',
-                  style: Theme.of(context).textTheme.headline1!.merge(
-                        const TextStyle(
-                          color: AlpacaColor.blackColor,
-                        ),
-                      ),
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/gift.svg',
-                      height: 26,
-                    ),
-                    Container(
-                      width: 15,
-                    ),
-                    SvgPicture.asset(
-                      'assets/icons/user-plus.svg',
-                      height: 26,
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-          const Divider(height: 0),
-          Flexible(
-            child: TabBar(
-              indicatorColor: AlpacaColor.blackColor,
-              tabs: [
-                Tab(
-                  child: Text(
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return const FractionallySizedBox(
+              heightFactor: 0.65,
+              child: FeedbackView(),
+            );
+          },
+        );
+      },
+      child: DefaultTabController(
+        length: 2,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
                     'Friends',
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.headline1!.merge(
+                          const TextStyle(
+                            color: AlpacaColor.blackColor,
+                          ),
+                        ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    'Feed',
-                    style: Theme.of(context).textTheme.bodyText2,
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/gift.svg',
+                        height: 26,
+                      ),
+                      Container(
+                        width: 15,
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/user-plus.svg',
+                        height: 26,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            const Divider(height: 0),
+            Flexible(
+              child: TabBar(
+                indicatorColor: AlpacaColor.blackColor,
+                tabs: [
+                  Tab(
+                    child: Text(
+                      'Friends',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
                   ),
-                ),
-              ],
+                  Tab(
+                    child: Text(
+                      'Feed',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            flex: 10,
-            child: TabBarView(
-              children: [
-                _FriendsTab(),
-                Container(color: Colors.red),
-              ],
+            Expanded(
+              flex: 10,
+              child: TabBarView(
+                children: [
+                  _FriendsTab(),
+                  Container(color: Colors.red),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
