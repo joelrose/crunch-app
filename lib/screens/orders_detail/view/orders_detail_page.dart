@@ -1,6 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/checkout_navbar/checkout_navbar.dart';
 import 'package:pickup/screens/orders_detail/widgets/widgets.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -21,11 +23,11 @@ class OrdersDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Info(
-              name: order.merchant!.name!,
-              id: order.id!,
+            CheckoutNavbar(
+              storeName: order.merchant!.name,
+              pageOverviewName: context.l10n.orderOverview,
             ),
-            Map(
+            CrunchMap(
               googleMapsLink: order.merchant!.googleMapsLink!,
               name: order.merchant!.name!,
             ),
@@ -36,7 +38,7 @@ class OrdersDetailPage extends StatelessWidget {
             ),
             ActionButton(
               key: const Key('support_button'),
-              buttonText: 'Support',
+              buttonText: context.l10n.support,
               isPrimaryButton: false,
               textColor: AlpacaColor.darkGreyColor,
               onPressed: () => launchUrlString('mailto:joel@getcrunch.tech'),
