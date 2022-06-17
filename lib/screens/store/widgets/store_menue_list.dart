@@ -8,6 +8,7 @@ import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/screens/store/cubit/store_cubit.dart';
 import 'package:pickup/screens/store_detail/store_detail.dart';
 import 'package:pickup/shared/utilities.dart';
+import 'package:skeleton_loader/skeleton_loader.dart';
 
 class StoreMenueList extends StatelessWidget {
   const StoreMenueList({Key? key}) : super(key: key);
@@ -18,20 +19,15 @@ class StoreMenueList extends StatelessWidget {
     final menu = state.menu!;
     final menueCategories = menu.menu!.categories!;
 
-    return Column(
-      children: [
-        const _Header(),
-        ListView.builder(
-          itemCount: menueCategories.length,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, j) {
-            return _Item(
-              category: menueCategories[j],
-            );
-          },
-        ),
-      ],
+    return ListView.builder(
+      itemCount: menueCategories.length,
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, j) {
+        return _Item(
+          category: menueCategories[j],
+        );
+      },
     );
   }
 }
@@ -46,7 +42,7 @@ class _Item extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          contentPadding: const EdgeInsets.fromLTRB(25, 15, 0, 0),
+          contentPadding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
           title: Text(
             category.name!,
             style: Theme.of(context).textTheme.headline2,
@@ -67,6 +63,9 @@ class _Item extends StatelessWidget {
           },
         ),
         const AlpacaDivider(),
+        const SizedBox(
+          height: 15,
+        ),
       ],
     );
   }
