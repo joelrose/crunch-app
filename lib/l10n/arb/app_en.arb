@@ -96,5 +96,12 @@
    "profile": "Profile",
    "feed": "Feed",
    "allFriends": "All friends",
-   "bestFriends": "Best friends"
+   "bestFriends": "Best friends",
+   "submit": "Submit",
+   "feedbackTitle": "Hey, unfortunately we are still building this feature 😟",
+   "feedbackSubtitle": "...but we would love your input on it!",
+   "feedbackQuestion": "How likely are you to use such a feature?",
+   "feedbackSliderLikely": "Very likely",
+   "feedbackSliderUnlikely": "Less likely",
+   "feedbackTextfieldHint": "How would you expect this service?\nIs there anything specific you would love to see?"
 }

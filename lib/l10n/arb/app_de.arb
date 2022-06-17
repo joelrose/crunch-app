@@ -96,5 +96,12 @@
    "profile": "Profil",
    "feed": "Feed",
    "allFriends": "Alle Freunde",
-   "bestFriends": "Beste Freunde"
+   "bestFriends": "Beste Freunde",
+   "submit": "Absenden",
+   "feedbackTitle": "Hey, wir bauen das Feature leider noch 😟",
+   "feedbackSubtitle": "...aber wir würden gerne dein Feedback dazu bekommen!",
+   "feedbackQuestion": "Würdest du die Freunde Funktion nutzen?",
+   "feedbackSliderUnlikely": "Weniger wahrscheinlich",
+   "feedbackSliderLikely": "Sehr wahrscheinlich",
+   "feedbackTextfieldHint": "Was erwartest du von diesem Feature?\nHast du genaue Vorstellungen?"
 }

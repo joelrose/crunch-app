@@ -1,6 +1,8 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/feedback/cubit/cubit.dart';
 
 class FeedbackView extends StatelessWidget {
@@ -40,7 +42,7 @@ class FeedbackView extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Hey, unfortunately we are still building this feature 😟',
+                  context.l10n.feedbackTitle,
                   style: Theme.of(context).textTheme.headline1!.merge(
                         const TextStyle(
                           color: AlpacaColor.blackColor,
@@ -50,7 +52,7 @@ class FeedbackView extends StatelessWidget {
                 ),
                 Container(height: 10),
                 Text(
-                  '...but we would love your input on it!',
+                  context.l10n.feedbackSubtitle,
                   style: Theme.of(context).textTheme.headline5,
                   textAlign: TextAlign.center,
                 ),
@@ -58,7 +60,7 @@ class FeedbackView extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'How likely are you to use such a feature?',
+                    context.l10n.feedbackQuestion,
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                           fontSize: 16,
                         ),
@@ -71,7 +73,7 @@ class FeedbackView extends StatelessWidget {
                 Container(height: 25),
                 ActionButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  buttonText: 'Submit',
+                  buttonText: context.l10n.submit,
                 ),
               ],
             ),
@@ -99,8 +101,7 @@ class _TextField extends StatelessWidget {
         cursorColor: Colors.black,
         style: Theme.of(context).textTheme.headline5,
         decoration: InputDecoration(
-          hintText:
-              'How would you expect this service?\nIs there anything specific you would love to see?',
+          hintText: context.l10n.feedbackTextfieldHint,
           fillColor: AlpacaColor.lightGreyColor90,
           filled: true,
           border: OutlineInputBorder(
@@ -133,9 +134,11 @@ class _Slider extends StatelessWidget {
               valueIndicatorShape: SliderComponentShape.noOverlay,
               overlayShape: SliderComponentShape.noOverlay,
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14.0),
-              rangeTrackShape: RoundedRectRangeSliderTrackShape(),
+              rangeTrackShape: const RoundedRectRangeSliderTrackShape(),
             ),
             child: Slider(
+              onChangeStart: (_) => HapticFeedback.mediumImpact(),
+              onChangeEnd: (_) => HapticFeedback.mediumImpact(),
               value: sliderValue,
               max: 10,
               divisions: 10,
@@ -153,11 +156,11 @@ class _Slider extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Less likely',
+                context.l10n.feedbackSliderUnlikely,
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Text(
-                'Very likely',
+                context.l10n.feedbackSliderLikely,
                 style: Theme.of(context).textTheme.bodyText2,
               ),
             ],
