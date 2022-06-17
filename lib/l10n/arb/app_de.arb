@@ -63,6 +63,7 @@
    "navigationOrders": "Bestellungen",
    "navigationVouchers": "Gutscheine",
    "navigationFriends": "Freunde",
+   "friends": "Freunde",
    "myOrders": "Meine Bestellungen",
    "constructionTitle": "Hey, wir bauen hier etwas tolles. Bleib gespannt!",
    "discoverSubtitle": "Essen mitnehmen war noch nie so einfach!",
@@ -77,7 +78,7 @@
    "menu": "Menü",
    "ratings": "Bewertungen",
    "closed": "Geschlossen",
-   "storeFloatingButtonText": "{itemCount,plural, =1{{itemCount} item}other{ {itemCount} items}}",
+   "storeFloatingButtonText": "{itemCount,plural, =1{{itemCount} Artikel}other{ {itemCount} Artikel}} im Warenkorb",
    "@storeFloatingButtonText": {
       "placeholders": {
          "itemCount": {}
@@ -90,5 +91,10 @@
    "contactDetails": "Kontaktdaten",
    "contactDetailsDescription": "Wenn du eine Telefonnummer angibts, kann das Restaurant dich im Fall von Problemen mit deiner Bestellung anrufen.",
    "pickupTime": "Abholzeit",
-   "notOnWhitelist": "Du musst dich leider noch ein wenig gedulden, bevor Du die App nutzen kannst."
+   "notOnWhitelist": "Du musst dich leider noch ein wenig gedulden, bevor Du die App nutzen kannst.",
+   "support": "Hilfe",
+   "profile": "Profil",
+   "feed": "Feed",
+   "allFriends": "Alle Freunde",
+   "bestFriends": "Beste Freunde"
 }

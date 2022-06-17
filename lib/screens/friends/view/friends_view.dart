@@ -2,9 +2,11 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/feedback/feedback.dart';
 import 'package:pickup/screens/friends/cubit/cubit.dart';
 import 'package:pickup/screens/friends/models/models.dart';
+import 'package:pickup/screens/friends/widgets/widgets.dart';
 
 class FriendsView extends StatelessWidget {
   const FriendsView({Key? key}) : super(key: key);
@@ -36,7 +38,7 @@ class FriendsView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Friends',
+                    context.l10n.friends,
                     style: Theme.of(context).textTheme.headline1!.merge(
                           const TextStyle(
                             color: AlpacaColor.blackColor,
@@ -68,13 +70,13 @@ class FriendsView extends StatelessWidget {
                 tabs: [
                   Tab(
                     child: Text(
-                      'Friends',
+                      context.l10n.friends,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
                   Tab(
                     child: Text(
-                      'Feed',
+                      context.l10n.feed,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
@@ -85,7 +87,7 @@ class FriendsView extends StatelessWidget {
               flex: 10,
               child: TabBarView(
                 children: [
-                  _FriendsTab(),
+                  const _FriendsTab(),
                   Container(color: Colors.red),
                 ],
               ),
@@ -133,7 +135,7 @@ class _FriendsList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
-              'Best friends (${bestFriends.length})',
+              '${context.l10n.bestFriends} (${bestFriends.length})',
               style: Theme.of(context).textTheme.headline3,
             ),
           ),
@@ -144,7 +146,7 @@ class _FriendsList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
-              'All friends (${friends.length})',
+              '${context.l10n.allFriends} (${friends.length})',
               style: Theme.of(context).textTheme.headline3,
             ),
           ),
