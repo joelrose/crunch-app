@@ -24,7 +24,7 @@ class OrdersState extends Equatable {
   }) {
     return OrdersState(
       status: status ?? this.status,
-      orders: orders ?? [],
+      orders: orders ?? this.orders,
     );
   }
 
