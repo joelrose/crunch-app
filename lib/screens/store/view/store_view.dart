@@ -7,7 +7,6 @@ import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/screens/checkout/presentation/screen/checkout_page.dart';
 import 'package:pickup/screens/store/cubit/store_cubit.dart';
-import 'package:pickup/screens/store/widgets/store_information.dart';
 import 'package:pickup/screens/store/widgets/store_menue_list.dart';
 import 'package:pickup/screens/store/widgets/store_overview.dart';
 import 'package:pickup/shared/price_calculation.dart';
@@ -34,7 +33,7 @@ class StoreView extends StatelessWidget {
 
               final storeFloatingButtonText = context.l10n
                   .storeFloatingButtonText(_getItemsInCart(checkoutItems));
-              final floatingButtonText = '$storeFloatingButtonText in Cart ->';
+              final floatingButtonText = '$storeFloatingButtonText ->';
 
               return PageWrapper(
                 floatingActionButtonWidget: Visibility(
@@ -68,9 +67,7 @@ class StoreView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const StoreOverview(),
-                        const Divider(),
-                        const StoreInformation(),
-                        const Divider(),
+                        const Divider(height: 0),
                         const StoreMenueList(),
                         if (checkoutItems.isNotEmpty)
                           const SizedBox(

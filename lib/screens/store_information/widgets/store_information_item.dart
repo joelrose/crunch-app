@@ -24,8 +24,8 @@ class StoreInformationItem extends StatelessWidget {
           SvgPicture.asset(
             icon,
             color: AlpacaColor.primary60,
-            height: 18,
-            width: 18,
+            height: 25,
+            width: 25,
           ),
           Padding(
             padding: const EdgeInsets.only(
