@@ -1,9 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/feedback/feedback.dart';
 import 'package:pickup/screens/friends/cubit/cubit.dart';
 import 'package:pickup/screens/friends/models/models.dart';
 import 'package:pickup/screens/friends/widgets/widgets.dart';
@@ -13,87 +11,63 @@ class FriendsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) {
-            return const FractionallySizedBox(
-              heightFactor: 0.65,
-              child: FeedbackView(),
-            );
-          },
-        );
-      },
-      child: DefaultTabController(
-        length: 2,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AlpacaHeader(
+            title: context.l10n.friends,
+            headerItems: [
+              HeaderItem(
+                onPressed: () {},
+                svgPath: 'assets/icons/gift.svg',
+              ),
+              HeaderItem(
+                onPressed: () {},
+                svgPath: 'assets/icons/user-plus.svg',
+              ),
+            ],
+          ),
+          Flexible(
+            child: TabBar(
+              indicatorColor: AlpacaColor.blackColor,
+              tabs: [
+                Tab(
+                  child: Text(
                     context.l10n.friends,
-                    style: Theme.of(context).textTheme.headline1!.merge(
-                          const TextStyle(
-                            color: AlpacaColor.blackColor,
-                          ),
-                        ),
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/gift.svg',
-                        height: 26,
-                      ),
-                      Container(
-                        width: 15,
-                      ),
-                      SvgPicture.asset(
-                        'assets/icons/user-plus.svg',
-                        height: 26,
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                ),
+                Tab(
+                  child: Text(
+                    context.l10n.feed,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+              ],
             ),
-            const Divider(height: 0),
-            Flexible(
-              child: TabBar(
-                indicatorColor: AlpacaColor.blackColor,
-                tabs: [
-                  Tab(
-                    child: Text(
-                      context.l10n.friends,
-                      style: Theme.of(context).textTheme.bodyText2,
+          ),
+          Expanded(
+            flex: 10,
+            child: TabBarView(
+              children: [
+                const _FriendsTab(),
+                Column(
+                  children: List.generate(
+                    10,
+                    (index) => Column(
+                      children: const [
+                        Divider(),
+                      ],
                     ),
                   ),
-                  Tab(
-                    child: Text(
-                      context.l10n.feed,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 10,
-              child: TabBarView(
-                children: [
-                  const _FriendsTab(),
-                  Container(color: Colors.red),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
