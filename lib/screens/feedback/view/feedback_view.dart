@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/feedback/cubit/cubit.dart';
 
@@ -14,71 +15,118 @@ class FeedbackView extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => FeedbackSliderCubit(0),
-        )
+        ),
+        BlocProvider(
+          create: (context) => FeedbackCubit(),
+        ),
       ],
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(
-              top: 10,
-              right: 5,
-            ),
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(),
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                shape: const CircleBorder(),
-                primary: AlpacaColor.lightGreyColor90,
-              ),
-              child: const Icon(
-                Icons.close,
-                color: AlpacaColor.lightGreyColor100,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: Column(
-              children: [
-                Text(
-                  context.l10n.feedbackTitle,
-                  style: Theme.of(context).textTheme.headline1!.merge(
-                        const TextStyle(
-                          color: AlpacaColor.blackColor,
-                        ),
+      child: BlocListener<FeedbackCubit, FeedbackState>(
+        listener: (context, state) {
+          if (state.status.isLoading) {
+            context.read<LoadingOverlayRepository>().show();
+          } else if (state.status.isSubmitted) {
+            context.read<LoadingOverlayRepository>().hide();
+            Navigator.of(context).pop();
+          } else if (state.status.isFailed) {
+            context.read<LoadingOverlayRepository>().hide();
+            Navigator.of(context).pop();
+          }
+        },
+        child: const _Content(),
+      ),
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  const _Content({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const _BackButton(),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          child: Column(
+            children: [
+              Text(
+                context.l10n.feedbackTitle,
+                style: Theme.of(context).textTheme.headline1!.merge(
+                      const TextStyle(
+                        color: AlpacaColor.blackColor,
                       ),
-                  textAlign: TextAlign.center,
-                ),
-                Container(height: 10),
-                Text(
-                  context.l10n.feedbackSubtitle,
-                  style: Theme.of(context).textTheme.headline5,
-                  textAlign: TextAlign.center,
-                ),
-                Container(height: 25),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    context.l10n.feedbackQuestion,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
-                          fontSize: 16,
-                        ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                const _Slider(),
-                Container(height: 20),
-                const _TextField(),
-                Container(height: 25),
-                ActionButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  buttonText: context.l10n.submit,
-                ),
-              ],
-            ),
+                    ),
+                textAlign: TextAlign.center,
+              ),
+              Container(height: 10),
+              Text(
+                context.l10n.feedbackSubtitle,
+                style: Theme.of(context).textTheme.headline5,
+                textAlign: TextAlign.center,
+              ),
+              Container(height: 25),
+              const _Slider(),
+              Container(height: 20),
+              const _TextField(),
+              Container(height: 25),
+              const _SubmitButton(),
+            ],
           ),
-        ],
+        ),
+      ],
+    );
+  }
+}
+
+class _SubmitButton extends StatelessWidget {
+  const _SubmitButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final hasChanged = context.select(
+      (FeedbackSliderCubit cubit) => cubit.state.hasChanged,
+    );
+
+    return ActionButton(
+      onPressed: hasChanged ? () => submit(context) : null,
+      buttonText: context.l10n.submit,
+    );
+  }
+
+  void submit(BuildContext context) {
+    final sliderValue = context.read<FeedbackSliderCubit>();
+
+    final feedbackCubit = context.read<FeedbackCubit>();
+
+    feedbackCubit.submitFeedback(
+      value: sliderValue.state.value,
+    );
+  }
+}
+
+class _BackButton extends StatelessWidget {
+  const _BackButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(
+        top: 10,
+        right: 5,
+      ),
+      alignment: Alignment.centerRight,
+      child: ElevatedButton(
+        onPressed: () => Navigator.of(context).pop(),
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          shape: const CircleBorder(),
+          primary: AlpacaColor.lightGreyColor90,
+        ),
+        child: const Icon(
+          Icons.close,
+          color: AlpacaColor.lightGreyColor100,
+        ),
       ),
     );
   }
@@ -100,6 +148,7 @@ class _TextField extends StatelessWidget {
         maxLines: 3,
         cursorColor: Colors.black,
         style: Theme.of(context).textTheme.headline5,
+        onChanged: (text) => context.read<FeedbackCubit>().updateText(text),
         decoration: InputDecoration(
           hintText: context.l10n.feedbackTextfieldHint,
           fillColor: AlpacaColor.lightGreyColor90,
@@ -125,6 +174,16 @@ class _Slider extends StatelessWidget {
 
     return Column(
       children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            context.l10n.feedbackQuestion,
+            style: Theme.of(context).textTheme.headline3!.copyWith(
+                  fontSize: 16,
+                ),
+            textAlign: TextAlign.left,
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.only(top: 12, bottom: 10),
           child: SliderTheme(

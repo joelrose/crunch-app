@@ -9,6 +9,7 @@ import 'package:pickup/screens/friends/view/friends_page.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/home/widgets/widgets.dart';
 import 'package:pickup/screens/orders/orders.dart';
+import 'package:pickup/screens/rewards/view/rewards_page.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -25,18 +26,16 @@ class HomeView extends StatelessWidget {
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         backgroundColor: AlpacaColor.white100Color,
-        body: IndexedStack(
-          index: selectedTab.index,
-          children: [
-            const SafeArea(child: DiscoverPage()),
-            const SafeArea(child: OrdersPage()),
-            SafeArea(
-              child: ConstructionWidget(title: context.l10n.navigationVouchers),
-            ),
-            const SafeArea(
-              child: FriendsPage(),
-            ),
-          ],
+        body: SafeArea(
+          child: IndexedStack(
+            index: selectedTab.index,
+            children: const [
+              DiscoverPage(),
+              OrdersPage(),
+              HiddenWidget(child: RewardsPage()),
+              HiddenWidget(child: FriendsPage()),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
