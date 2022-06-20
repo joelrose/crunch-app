@@ -67,6 +67,7 @@ class _OnboardingAccountViewState extends State<OnboardingAccountView> {
   Widget _buildStack(BuildContext context) {
     return Stack(
       children: [
+        const _Image(),
         Column(
           children: const [
             _Header(),
@@ -74,7 +75,6 @@ class _OnboardingAccountViewState extends State<OnboardingAccountView> {
             OnboardingLoginFields(),
           ],
         ),
-        const _Image(),
       ],
     );
   }
