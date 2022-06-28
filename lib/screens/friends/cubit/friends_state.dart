@@ -3,36 +3,49 @@ part of 'friends_cubit.dart';
 class FriendsState extends Equatable {
   const FriendsState();
 
-  List<Friend> get friendList => const [
-        Friend(
-          name: 'Joel Rose',
+  List<Friend> get friendList => [
+        const Friend(
+          name: 'Benni R',
           isBestFriend: true,
         ),
-        Friend(
-          name: 'Filip Tsolov',
+        const Friend(
+          name: 'Hannah W',
           isBestFriend: true,
         ),
-        Friend(
-          name: 'Hauke G',
-        ),
-        Friend(
-          name: 'Lennart S',
-        ),
-        Friend(
-          name: 'Tim C',
-        ),
-        Friend(
-          name: 'Max B',
-        ),
-        Friend(
-          name: 'Luis G',
-        ),
-        Friend(
+        const Friend(
           name: 'Florian G',
+          isBestFriend: true,
         ),
-        Friend(
-          name: 'Matthias F',
+        const Friend(
+          name: 'Mia M',
+          isBestFriend: true,
         ),
+        const Friend(
+          name: 'Joel R',
+          isBestFriend: true,
+        ),
+        const Friend(
+          name: 'Emily F',
+        ),
+        const Friend(
+          name: 'Filip T',
+        ),
+        const Friend(
+          name: 'Marie S',
+        ),
+        const Friend(
+          name: 'Olivia X',
+        ),
+        const Friend(
+          name: 'Sophia U',
+        ),
+        const Friend(
+          name: 'Emma P',
+        ),
+        for (int i = 0; i < 20; i++)
+          const Friend(
+            name: 'John D',
+          ),
       ];
 
   @override

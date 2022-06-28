@@ -124,7 +124,12 @@ class _FriendsList extends StatelessWidget {
               style: Theme.of(context).textTheme.headline3,
             ),
           ),
-          Expanded(child: _FriendsGrid(friendList: friends)),
+          Expanded(
+            child: _FriendsGrid(
+              friendList: friends,
+              reversedColors: true,
+            ),
+          ),
         ],
       ),
     );
@@ -132,9 +137,14 @@ class _FriendsList extends StatelessWidget {
 }
 
 class _FriendsGrid extends StatelessWidget {
-  const _FriendsGrid({Key? key, required this.friendList}) : super(key: key);
+  const _FriendsGrid({
+    Key? key,
+    required this.friendList,
+    this.reversedColors = false,
+  }) : super(key: key);
 
   final List<Friend> friendList;
+  final bool reversedColors;
 
   List<FriendColor> get colors => const [
         FriendColor(
@@ -169,9 +179,15 @@ class _FriendsGrid extends StatelessWidget {
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
       children: friendList.map((friend) {
+        int index = ++i % colors.length;
+
+        if (reversedColors) {
+          index = (colors.length - 1) - index;
+        }
+
         return FriendTile(
           friend: friend,
-          color: colors[++i % colors.length],
+          color: colors[index],
         );
       }).toList(),
     );

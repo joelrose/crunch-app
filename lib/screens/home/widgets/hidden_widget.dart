@@ -1,5 +1,5 @@
-import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pickup/screens/feedback/feedback.dart';
 
 class HiddenWidget extends StatelessWidget {
@@ -15,6 +15,7 @@ class HiddenWidget extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () async {
+        HapticFeedback.mediumImpact();
         await showFeedbackForm(context);
       },
       child: Stack(
