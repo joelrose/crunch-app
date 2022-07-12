@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
@@ -37,7 +38,10 @@ class ProductOrderWidget extends StatelessWidget {
         bottom: 30,
       ),
       child: ActionButton(
-        onPressed: () => context.read<StoreDetailCubit>().addToOrderOnClick(),
+        onPressed: () {
+          HapticFeedback.mediumImpact();
+          context.read<StoreDetailCubit>().addToOrderOnClick();
+        },
         buttonText: context.l10n.addToOrder,
       ),
     );

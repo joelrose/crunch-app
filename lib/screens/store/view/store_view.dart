@@ -42,6 +42,7 @@ class StoreView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: CheckoutButton(
                       onPressed: () {
+                        HapticFeedback.mediumImpact();
                         Navigator.of(context).push(
                           CheckoutPage.route(
                             menu: model,
