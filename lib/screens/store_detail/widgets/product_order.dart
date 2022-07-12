@@ -6,7 +6,7 @@ import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/shared/utilities.dart';
 
-class ProductOrderWidget extends StatelessWidget {
+class ProductOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<StoreDetailCubit, StoreDetailState>(

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
 import 'package:pickup/shared/utilities.dart';
 
-class ProductDetailWidget extends StatelessWidget {
-  const ProductDetailWidget({Key? key}) : super(key: key);
+class ProductDetail extends StatelessWidget {
+  const ProductDetail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
