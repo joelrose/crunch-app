@@ -49,6 +49,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
                     price: firstOption.childProduct!.price,
                     name: firstOption.childProduct!.name,
                     quantity: 1,
+                    items: [],
                   )
                 ]
               : [],
@@ -94,7 +95,7 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
 
   void addToOrderOnClick() {
     final item = state.item;
-    final checkoutItems = state.checkoutItems.toList();
+    final checkoutItems = List<CreateOrderItemDto>.from(state.checkoutItems);
 
     final newItem = CreateOrderItemDto(
       plu: item.plu,
@@ -104,14 +105,19 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
       items: _convertToOrderDto(),
     );
 
-    // We have to remove the quantity here
-    final checkoutItem =
-        checkoutItems.firstWhereOrNull((listItem) => listItem == newItem);
+    final checkoutItem = checkoutItems.firstWhereOrNull(
+      (listItem) =>
+          listItem.equals(newItem) &&
+          const DeepCollectionEquality().equals(newItem.items, listItem.items),
+    );
 
     if (checkoutItem == null) {
       checkoutItems.add(newItem);
     } else {
-      checkoutItem.quantity = checkoutItem.quantity! + newItem.quantity!;
+      checkoutItems[checkoutItems.indexOf(checkoutItem)] =
+          checkoutItem.copyWith(
+        quantity: checkoutItem.quantity! + newItem.quantity!,
+      );
     }
 
     emit(
