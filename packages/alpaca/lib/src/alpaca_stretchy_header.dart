@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:alpaca/alpaca.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:skeleton_loader/skeleton_loader.dart';
 
 enum HighlightHeaderAlignment {
   bottom,
@@ -57,7 +58,7 @@ class HeaderData {
   ///Height of your header widget
   final double headerHeight;
 
-  //  highlight header that will be placed on the header, 
+  //  highlight header that will be placed on the header,
   //  this widget always be visible without blurring effect
   final Widget? highlightHeader;
 
@@ -313,26 +314,39 @@ class AlpacaStretchyHeader extends StatelessWidget {
         header: CachedNetworkImage(
           imageUrl: image,
           fit: BoxFit.cover,
+          fadeInDuration: const Duration(milliseconds: 0),
+          placeholder: (context, url) => SkeletonLoader(
+            builder: Container(
+              height: 200,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+            ),
+          ),
         ),
         blurContent: false,
         highlightHeaderAlignment: HighlightHeaderAlignment.top,
         highlightHeader: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 18,
             vertical: 18,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
+            ElevatedButton(
                 onPressed: () => Navigator.of(context).pop(),
-                color: AlpacaColor.white100Color,
-                icon: const Icon(
-                  Icons.arrow_back_ios,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  enableFeedback: false,
+                  shape: const CircleBorder(),
+                  primary: AlpacaColor.lightGreyColor90,
+                  padding: EdgeInsets.only(left: 8),
                 ),
-                padding: const EdgeInsets.all(10),
-                alignment: Alignment.topLeft,
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AlpacaColor.lightGreyColor100,
+                ),
               ),
             ],
           ),
