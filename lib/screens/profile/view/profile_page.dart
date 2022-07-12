@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hermes_repository/hermes_repository.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/cubit/language/language_cubit.dart';
@@ -92,7 +93,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserCubit, UserState>(
+    return BlocBuilder<UserCubit, BaseState<GetUserResponseDto>>(
       builder: (context, state) {
         if (state.status.isSuccessful) {
           return Stack(
@@ -105,8 +106,8 @@ class _Header extends StatelessWidget {
                       radius: 40,
                       backgroundColor: AlpacaColor.primary20,
                       child: Text(
-                        state.user!.firstName!.substring(0, 1) +
-                            state.user!.lastName!.substring(0, 1),
+                        state.model!.firstName!.substring(0, 1) +
+                            state.model!.lastName!.substring(0, 1),
                         style: Theme.of(context).textTheme.headline4!.copyWith(
                               color: const Color(0xff33047B),
                             ),
@@ -116,7 +117,7 @@ class _Header extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      '${state.user!.firstName!} ${state.user!.lastName!}',
+                      '${state.model!.firstName!} ${state.model!.lastName!}',
                       style: Theme.of(context).textTheme.headline4!.copyWith(
                             color: AlpacaColor.darkNavyColor,
                           ),
@@ -159,13 +160,10 @@ class _Tiles extends StatelessWidget {
       builder: (BuildContext context) => Container(
         height: 216,
         padding: const EdgeInsets.only(top: 6.0),
-        // The Bottom margin is provided to align the popup above the system navigation bar.
         margin: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        // Provide a background color for the popup.
         color: CupertinoColors.systemBackground.resolveFrom(context),
-        // Use a SafeArea widget to avoid system overlaps.
         child: SafeArea(
           top: false,
           child: child,
@@ -192,14 +190,11 @@ class _Tiles extends StatelessWidget {
                 squeeze: 1.2,
                 useMagnifier: true,
                 itemExtent: _kItemExtent,
-                // This is called when selected item is changed.
                 onSelectedItemChanged: (int selectedItem) {
-                  // Change the language of the application.
                   context.read<LanguageCubit>().setLocale(
                         AppLocalizations.supportedLocales[selectedItem],
                       );
                 },
-
                 children: List<Widget>.generate(
                     AppLocalizations.supportedLocales.length, (int index) {
                   return Center(
