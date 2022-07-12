@@ -171,15 +171,13 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
 
           if (response.isSuccessful && response.body == true) {
             // TODO: replace this with a cubit
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pushAndRemoveUntil(
+            Navigator.of(context).push(
               OnboardingCreateAccountPage.route(
                 data: CreateAccountData(
                   phoneNumber: phoneNumber,
                   isSocialLogin: false,
                 ),
               ),
-              (route) => false,
             );
           } else {
             final snackBar = SnackBar(
