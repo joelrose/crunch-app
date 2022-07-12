@@ -48,6 +48,7 @@ Future<void> main() async {
   _stripeRepository.setupStripe(
     merchantIdentifier: dotenv.env['STRIPE_MERCHANT_IDENTIFIER']!,
     stripeKey: dotenv.env['STRIPE_KEY']!,
+    isTestEnvironment: true,
   );
 
   runZonedGuarded(
