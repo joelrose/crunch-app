@@ -1,13 +1,18 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/app/cubit/language/language_cubit.dart';
+import 'package:pickup/screens/app/cubit/user/user_cubit.dart';
 import 'package:pickup/screens/onboarding_welcome/onboarding_welcome.dart';
 import 'package:pickup/screens/profile/cubit/profile_cubit.dart';
 import 'package:pickup/screens/profile/widgets/profile_tile.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfilePage extends StatelessWidget {
   static const route = '/profile';
@@ -39,7 +44,6 @@ class ProfileView extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          AlpacaDivider(),
           _SignOut(),
         ],
       ),
@@ -88,67 +92,167 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Center(
-          child: Text(
-            'Profile',
-            style: Theme.of(context).textTheme.headline1!.merge(
-                  const TextStyle(
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
+        if (state.status.isSuccessful) {
+          return Stack(
+            alignment: Alignment.centerRight,
+            children: [
+              Center(
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: AlpacaColor.primary20,
+                      child: Text(
+                        state.user!.firstName!.substring(0, 1) +
+                            state.user!.lastName!.substring(0, 1),
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                              color: const Color(0xff33047B),
+                            ),
+                      ),
+                    ),
+                    Container(
+                      height: 15,
+                    ),
+                    Text(
+                      '${state.user!.firstName!} ${state.user!.lastName!}',
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                            color: AlpacaColor.darkNavyColor,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: 20,
+                top: 10,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Icon(
+                    Icons.arrow_back_ios,
+                    size: 20,
                     color: AlpacaColor.blackColor,
                   ),
                 ),
-          ),
-        ),
-        Positioned(
-          left: 20,
-          child: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            color: AlpacaColor.blackColor,
-            icon: const Icon(
-              Icons.arrow_back_ios,
-            ),
-            padding: const EdgeInsets.all(10),
-          ),
-        )
-      ],
+              ),
+            ],
+          );
+        } else {
+          return Container();
+        }
+      },
     );
   }
 }
 
+const double _kItemExtent = 32.0;
+
 class _Tiles extends StatelessWidget {
   const _Tiles({Key? key}) : super(key: key);
 
+  void _showDialog(Widget child, BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 216,
+        padding: const EdgeInsets.only(top: 6.0),
+        // The Bottom margin is provided to align the popup above the system navigation bar.
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        // Provide a background color for the popup.
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        // Use a SafeArea widget to avoid system overlaps.
+        child: SafeArea(
+          top: false,
+          child: child,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final externalLink = _externalLink();
+
     return Column(
       children: [
         Container(
           height: 20,
         ),
-        const ProfileTile(
-          title: 'Language',
-          link: 'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
+        ProfileTile(
+          title: context.l10n.language,
+          onPressed: () {
+            _showDialog(
+              CupertinoPicker(
+                magnification: 1.22,
+                squeeze: 1.2,
+                useMagnifier: true,
+                itemExtent: _kItemExtent,
+                // This is called when selected item is changed.
+                onSelectedItemChanged: (int selectedItem) {
+                  // Change the language of the application.
+                  context.read<LanguageCubit>().setLocale(
+                        AppLocalizations.supportedLocales[selectedItem],
+                      );
+                },
+
+                children: List<Widget>.generate(
+                    AppLocalizations.supportedLocales.length, (int index) {
+                  return Center(
+                    child: Text(
+                      AppLocalizations.supportedLocales[index].languageCode,
+                    ),
+                  );
+                }),
+              ),
+              context,
+            );
+          },
+          imagePath: 'assets/icons/sliders.svg',
         ),
-        const ProfileTile(
-          title: 'Terms & Conditions',
-          link: 'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
+        ProfileTile(
+          title: context.l10n.termsAndConditions,
+          imagePath: 'assets/icons/book.svg',
+          onPressed: () => launchUrlString(
+            'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
+          ),
+          suffixWidget: externalLink,
         ),
-        const ProfileTile(
-          title: 'Data Privacy',
-          link: 'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
+        ProfileTile(
+          title: context.l10n.dataPrivacy,
+          onPressed: () => launchUrlString(
+            'https://crunch-app.notion.site/Imprint-e6703f9d44be4d0f9ee0992953056d74',
+          ),
+          imagePath: 'assets/icons/shield.svg',
+          suffixWidget: externalLink,
         ),
-        const ProfileTile(
-          title: 'Contact Us',
-          link: 'mailto:joel@getcrunch.tech',
+        ProfileTile(
+          title: context.l10n.contactUs,
+          onPressed: () => launchUrlString('mailto:joel@getcrunch.tech'),
+          imagePath: 'assets/icons/message-square.svg',
+          suffixWidget: externalLink,
         ),
-        const ProfileTile(
-          title: 'Visit our Website',
-          link: 'https://getcrunch.tech',
+        ProfileTile(
+          title: context.l10n.visitOurWebsite,
+          imagePath: 'assets/icons/layout.svg',
+          onPressed: () => launchUrlString('https://getcrunch.tech'),
+          suffixWidget: externalLink,
         ),
         const AlpacaDivider(),
       ],
+    );
+  }
+
+  Widget _externalLink() {
+    return SvgPicture.asset(
+      'assets/icons/external-link.svg',
+      color: AlpacaColor.lightGreyColor100,
+      height: 20,
+      fit: BoxFit.fitHeight,
     );
   }
 }
