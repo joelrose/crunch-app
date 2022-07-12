@@ -65,11 +65,12 @@
    "navigationFriends": "Freunde",
    "friends": "Freunde",
    "myOrders": "Meine Bestellungen",
+   "ordersEmpty": "Du hast noch keine Bestellungen getätigt.",
    "constructionTitle": "Hey, wir bauen hier etwas tolles. Bleib gespannt!",
    "discoverSubtitle": "Essen mitnehmen war noch nie so einfach!",
    "discoverTitle": "Willkommen bei Crunch",
    "viewAll": "Alle anzeigen",
-   "searchBarHint": "Suche nach Restaurants oder Kategorien",
+   "searchBarHint": "Suche ...",
    "logout": "Ausloggen",
    "storeInformation": "Informationen",
    "storeOpenTimes": "Öffnungszeiten",
@@ -104,5 +105,13 @@
    "feedbackQuestion": "Würdest du die Freunde Funktion nutzen?",
    "feedbackSliderUnlikely": "Weniger wahrscheinlich",
    "feedbackSliderLikely": "Sehr wahrscheinlich",
-   "feedbackTextfieldHint": "Was erwartest du von diesem Feature?\nHast du genaue Vorstellungen?"
+   "feedbackTextfieldHint": "Was erwartest du von diesem Feature?\nHast du genaue Vorstellungen?",
+
+
+
+   "language": "Sprache",
+   "termsAndConditions": "Allgemeine Geschäftsbedingungen",
+   "dataPrivacy": "Datenschutzerklärung",
+   "contactUs": "Kontaktiere uns",
+   "visitOurWebsite": "Besuche unsere Website"
 }

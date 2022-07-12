@@ -36,7 +36,7 @@ class OrdersView extends StatelessWidget {
                   onRefresh: () => context.read<OrdersCubit>().fetchOrders(),
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height - 200,
-                    child: _buildListView(state.orders),
+                    child: _ListView(orders: state.orders),
                   ),
                 ),
               );
@@ -48,31 +48,54 @@ class OrdersView extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildListView(List<GetOrderResponseDto> orders) {
-    if (orders.isNotEmpty) {
-      return ListView.builder(
-        itemCount: orders.length,
-        physics: const AlwaysScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return OrdersListView(
-            order: orders.elementAt(index),
+class _ListView extends StatelessWidget {
+  const _ListView({Key? key, required this.orders}) : super(key: key);
+
+  final List<GetOrderResponseDto> orders;
+
+  @override
+  Widget build(BuildContext context) {
+    return orders.isNotEmpty
+        ? ListView.builder(
+            itemCount: orders.length,
+            physics: const AlwaysScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return OrdersListView(
+                order: orders.elementAt(index),
+              );
+            },
+          )
+        : ListView(
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 150),
+                    child: SvgPicture.asset(
+                      'assets/no-data.svg',
+                      height: 160,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 220,
+                    child: Text(
+                      context.l10n.ordersEmpty,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .copyWith(color: AlpacaColor.blackColor),
+                          textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           );
-        },
-      );
-    } else {
-      return ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 150),
-            child: SvgPicture.asset(
-              'assets/no-data.svg',
-              height: 200,
-            ),
-          ),
-        ],
-      );
-    }
   }
 }
