@@ -11,32 +11,33 @@ class ItemsOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final checkoutItems =
-        context.select((CheckoutBasketBloc cubit) => cubit.state.checkoutItems);
-
-    return Column(
-      children: [
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 18),
-          child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: checkoutItems.length,
-            shrinkWrap: true,
-            itemBuilder: (context, itemIndex) {
-              final checkoutSummaryItem = checkoutItems[itemIndex];
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 3,
-                  horizontal: 18,
-                ),
-                child: _Item(checkoutSummaryItem, itemIndex),
-              );
-            },
-          ),
-        ),
-        const Divider(),
-      ],
+    return BlocBuilder<CheckoutBasketBloc, CheckoutBasketState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 18),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: state.checkoutItems.length,
+                shrinkWrap: true,
+                itemBuilder: (context, itemIndex) {
+                  final checkoutSummaryItem = state.checkoutItems[itemIndex];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 3,
+                      horizontal: 18,
+                    ),
+                    child: _Item(checkoutSummaryItem, itemIndex),
+                  );
+                },
+              ),
+            ),
+            const Divider(),
+          ],
+        );
+      },
     );
   }
 }
@@ -49,61 +50,70 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Dismissible(
+      key: UniqueKey(),
+      background: Container(
+        color: Colors.red,
+        alignment: Alignment.centerRight,
+        child: Text(
+          'Delete item',
+          style: Theme.of(context).textTheme.headline4!.copyWith(
+                color: AlpacaColor.blackColor,
+              ),
+        ),
+      ),
+      onDismissed: (direction) {
+        context
+            .read<CheckoutBasketBloc>()
+            .add(CheckoutBasketItemDeleted(itemIndex: itemIndex));
+      },
+      direction: DismissDirection.endToStart,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
           children: [
             Text(
-              item.name!,
+              item.quantity!.toString(),
               style: Theme.of(context).textTheme.headline4,
             ),
-            Text(
-              Utilities.currencyFormat(PriceCalulcation.getPriceOfItem(item)),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4!
-                  .copyWith(color: AlpacaColor.darkNavyColor),
+            const SizedBox(
+              width: 20,
             ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _ItemDescription(item),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: AlpacaSelect(
-                onDecrease: () {
-                  if (item.quantity == 1) {
-                    context
-                        .read<CheckoutBasketBloc>()
-                        .add(CheckoutBasketItemDeleted(itemIndex: itemIndex));
-                  } else {
-                    context.read<CheckoutBasketBloc>().add(
-                          CheckoutBasketItemQuantityDecremented(
-                            itemIndex: itemIndex,
-                          ),
-                        );
-                  }
-                },
-                onIncrease: () {
-                  context.read<CheckoutBasketBloc>().add(
-                        CheckoutBasketItemQuantityIncremented(
-                          itemIndex: itemIndex,
+            Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        item.name!,
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      Text(
+                        Utilities.currencyFormat(
+                          PriceCalulcation.getPriceOfItem(item),
                         ),
-                      );
-                },
-                amount: item.quantity!.toString(),
-                textBoxHorizontalPadding: 12,
-                textStyle: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: AlpacaColor.darkNavyColor,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(color: AlpacaColor.blackColor),
+                      ),
+                    ],
+                  ),
+                  if (item.items != null) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _ItemDescription(item),
+                      ],
                     ),
+                  ]
+                ],
               ),
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
