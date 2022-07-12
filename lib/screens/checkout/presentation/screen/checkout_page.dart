@@ -102,10 +102,7 @@ class _Content extends StatelessWidget {
   Widget build(BuildContext context) {
     final storeName =
         context.select((CheckoutCubit cubit) => cubit.state.menu.menu!.menu!);
-
-    final googleMapsLink = context
-        .select((CheckoutCubit cubit) => cubit.state.menu.googleMapsLink)!;
-
+        
     return Column(
       children: [
         CheckoutNavbar(
