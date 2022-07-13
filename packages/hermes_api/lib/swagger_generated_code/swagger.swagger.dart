@@ -22,9 +22,10 @@ abstract class Swagger extends ChopperService {
     }
 
     final newClient = ChopperClient(
-        services: [_$Swagger()],
-        converter: $JsonSerializableConverter(),
-        baseUrl: 'https://',);
+      services: [_$Swagger()],
+      converter: $JsonSerializableConverter(),
+      baseUrl: 'https://',
+    );
     return _$Swagger(newClient);
   }
 
@@ -35,18 +36,21 @@ abstract class Swagger extends ChopperService {
   ///
   ///@param menuId
   @Get(path: '/api/menus/{menuId}')
-  Future<chopper.Response<GetMenuResponseDto>> apiMenusMenuIdGet(
-      {@Path('menuId') required String? menuId,});
+  Future<chopper.Response<GetMenuResponseDto>> apiMenusMenuIdGet({
+    @Path('menuId') required String? menuId,
+  });
 
   ///
   @Post(path: '/api/orders')
-  Future<chopper.Response<CreateOrderResponseDto>> apiOrdersPost(
-      {@Body() required CreateOrderRequestDto? body,});
+  Future<chopper.Response<CreateOrderResponseDto>> apiOrdersPost({
+    @Body() required CreateOrderRequestDto? body,
+  });
 
   ///
   @Put(path: '/api/orders')
-  Future<chopper.Response<bool>> apiOrdersPut(
-      {@Body() required UpdateStatusOrderModel? body,});
+  Future<chopper.Response<bool>> apiOrdersPut({
+    @Body() required UpdateStatusOrderModel? body,
+  });
 
   ///
   @Get(path: '/api/orders')
@@ -55,13 +59,15 @@ abstract class Swagger extends ChopperService {
   ///
   ///@param orderId
   @Get(path: '/api/orders/{orderId}')
-  Future<chopper.Response<GetOrderResponseDto>> apiOrdersOrderIdGet(
-      {@Path('orderId') required String? orderId,});
+  Future<chopper.Response<GetOrderResponseDto>> apiOrdersOrderIdGet({
+    @Path('orderId') required String? orderId,
+  });
 
   ///
   @Post(path: '/api/users')
-  Future<chopper.Response<bool>> apiUsersPost(
-      {@Body() required CreateUserRequestDto? body,});
+  Future<chopper.Response<bool>> apiUsersPost({
+    @Body() required CreateUserRequestDto? body,
+  });
 
   ///
   @Delete(path: '/api/users')
@@ -73,8 +79,9 @@ abstract class Swagger extends ChopperService {
 
   ///
   @Post(path: '/api/whitelistuser')
-  Future<chopper.Response<bool>> apiWhitelistuserPost(
-      {@Body() required String? body,});
+  Future<chopper.Response<bool>> apiWhitelistuserPost({
+    @Body() required String? body,
+  });
 }
 
 final Map<Type, Object Function(Map<String, dynamic>)>
@@ -155,7 +162,10 @@ class CreateOrderItemDto {
   @JsonKey(name: 'quantity', includeIfNull: false)
   int? quantity;
   @JsonKey(
-      name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[],)
+    name: 'items',
+    includeIfNull: false,
+    defaultValue: <CreateOrderItemDto>[],
+  )
   final List<CreateOrderItemDto>? items;
   static const fromJsonFactory = _$CreateOrderItemDtoFromJson;
   static const toJsonFactory = _$CreateOrderItemDtoToJson;
@@ -164,19 +174,28 @@ class CreateOrderItemDto {
   // TODO: remove quantity check
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is CreateOrderItemDto &&
-            (identical(other.plu, plu) ||
-                const DeepCollectionEquality().equals(other.plu, plu)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.price, price) ||
-                const DeepCollectionEquality().equals(other.price, price)) &&
-            (identical(other.quantity, quantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.quantity, quantity)) &&
-            (identical(other.items, items) ||
-                const DeepCollectionEquality().equals(other.items, items)));
+    final isPLUSame = (identical(other.plu, plu) ||
+        const DeepCollectionEquality().equals(other.plu, plu));
+
+    final isIdentical = identical(this, other) || (other is CreateOrderItemDto);
+
+    final isNameSame = (identical(other.name, name) ||
+        const DeepCollectionEquality().equals(other.name, name));
+
+    final isPriceSame = (identical(other.price, price) ||
+        const DeepCollectionEquality().equals(other.price, price));
+
+    final isSameQuantity = (identical(other.quantity, quantity) ||
+        const DeepCollectionEquality().equals(other.quantity, quantity));
+
+    final isSameItems = (identical(other.items, items) ||
+        const DeepCollectionEquality().equals(other.items, items));
+    return isIdentical &&
+        isPLUSame &&
+        isNameSame &&
+        isPriceSame &&
+        isSameQuantity &&
+        isSameItems;
   }
 
   @override
@@ -190,18 +209,20 @@ class CreateOrderItemDto {
 }
 
 extension $CreateOrderItemDtoExtension on CreateOrderItemDto {
-  CreateOrderItemDto copyWith(
-      {String? plu,
-      String? name,
-      int? price,
-      int? quantity,
-      List<CreateOrderItemDto>? items,}) {
+  CreateOrderItemDto copyWith({
+    String? plu,
+    String? name,
+    int? price,
+    int? quantity,
+    List<CreateOrderItemDto>? items,
+  }) {
     return CreateOrderItemDto(
-        plu: plu ?? this.plu,
-        name: name ?? this.name,
-        price: price ?? this.price,
-        quantity: quantity ?? this.quantity,
-        items: items ?? this.items,);
+      plu: plu ?? this.plu,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      items: items ?? this.items,
+    );
   }
 }
 
@@ -218,7 +239,10 @@ class CreateOrderRequestDto {
   @JsonKey(name: 'merchantId', includeIfNull: false)
   final String? merchantId;
   @JsonKey(
-      name: 'items', includeIfNull: false, defaultValue: <CreateOrderItemDto>[],)
+    name: 'items',
+    includeIfNull: false,
+    defaultValue: <CreateOrderItemDto>[],
+  )
   final List<CreateOrderItemDto>? items;
   static const fromJsonFactory = _$CreateOrderRequestDtoFromJson;
   static const toJsonFactory = _$CreateOrderRequestDtoToJson;
@@ -243,10 +267,14 @@ class CreateOrderRequestDto {
 }
 
 extension $CreateOrderRequestDtoExtension on CreateOrderRequestDto {
-  CreateOrderRequestDto copyWith(
-      {String? merchantId, List<CreateOrderItemDto>? items,}) {
+  CreateOrderRequestDto copyWith({
+    String? merchantId,
+    List<CreateOrderItemDto>? items,
+  }) {
     return CreateOrderRequestDto(
-        merchantId: merchantId ?? this.merchantId, items: items ?? this.items,);
+      merchantId: merchantId ?? this.merchantId,
+      items: items ?? this.items,
+    );
   }
 }
 
@@ -282,7 +310,8 @@ class CreateOrderResponseDto {
 extension $CreateOrderResponseDtoExtension on CreateOrderResponseDto {
   CreateOrderResponseDto copyWith({String? clientSecret}) {
     return CreateOrderResponseDto(
-        clientSecret: clientSecret ?? this.clientSecret,);
+      clientSecret: clientSecret ?? this.clientSecret,
+    );
   }
 }
 
@@ -331,12 +360,16 @@ class CreateUserRequestDto {
 }
 
 extension $CreateUserRequestDtoExtension on CreateUserRequestDto {
-  CreateUserRequestDto copyWith(
-      {String? firstName, String? lastName, String? languageCode,}) {
+  CreateUserRequestDto copyWith({
+    String? firstName,
+    String? lastName,
+    String? languageCode,
+  }) {
     return CreateUserRequestDto(
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName,
-        languageCode: languageCode ?? this.languageCode,);
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      languageCode: languageCode ?? this.languageCode,
+    );
   }
 }
 
@@ -358,10 +391,11 @@ class DeliverectAvailabilityModel {
   @JsonKey(name: 'createdAt', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(
-      name: 'dayOfWeek',
-      includeIfNull: false,
-      toJson: deliverectDayToJson,
-      fromJson: deliverectDayFromJson,)
+    name: 'dayOfWeek',
+    includeIfNull: false,
+    toJson: deliverectDayToJson,
+    fromJson: deliverectDayFromJson,
+  )
   final enums.DeliverectDay? dayOfWeek;
   @JsonKey(name: 'endTime', includeIfNull: false)
   final String? endTime;
@@ -402,18 +436,20 @@ class DeliverectAvailabilityModel {
 }
 
 extension $DeliverectAvailabilityModelExtension on DeliverectAvailabilityModel {
-  DeliverectAvailabilityModel copyWith(
-      {String? id,
-      DateTime? createdAt,
-      enums.DeliverectDay? dayOfWeek,
-      String? endTime,
-      String? startTime,}) {
+  DeliverectAvailabilityModel copyWith({
+    String? id,
+    DateTime? createdAt,
+    enums.DeliverectDay? dayOfWeek,
+    String? endTime,
+    String? startTime,
+  }) {
     return DeliverectAvailabilityModel(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        dayOfWeek: dayOfWeek ?? this.dayOfWeek,
-        endTime: endTime ?? this.endTime,
-        startTime: startTime ?? this.startTime,);
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      dayOfWeek: dayOfWeek ?? this.dayOfWeek,
+      endTime: endTime ?? this.endTime,
+      startTime: startTime ?? this.startTime,
+    );
   }
 }
 
@@ -457,9 +493,10 @@ class DeliverectCategoryModelDto {
   @JsonKey(name: 'sortOrder', includeIfNull: false)
   final int? sortOrder;
   @JsonKey(
-      name: 'products',
-      includeIfNull: false,
-      defaultValue: <CategoryRelationModelDto>[],)
+    name: 'products',
+    includeIfNull: false,
+    defaultValue: <CategoryRelationModelDto>[],
+  )
   final List<CategoryRelationModelDto>? products;
   static const fromJsonFactory = _$DeliverectCategoryModelDtoFromJson;
   static const toJsonFactory = _$DeliverectCategoryModelDtoToJson;
@@ -517,30 +554,32 @@ class DeliverectCategoryModelDto {
 }
 
 extension $DeliverectCategoryModelDtoExtension on DeliverectCategoryModelDto {
-  DeliverectCategoryModelDto copyWith(
-      {String? id,
-      DateTime? createdAt,
-      String? categoryId,
-      String? account,
-      String? description,
-      String? imageUrl,
-      int? level,
-      String? menu,
-      String? name,
-      int? sortOrder,
-      List<CategoryRelationModelDto>? products,}) {
+  DeliverectCategoryModelDto copyWith({
+    String? id,
+    DateTime? createdAt,
+    String? categoryId,
+    String? account,
+    String? description,
+    String? imageUrl,
+    int? level,
+    String? menu,
+    String? name,
+    int? sortOrder,
+    List<CategoryRelationModelDto>? products,
+  }) {
     return DeliverectCategoryModelDto(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        categoryId: categoryId ?? this.categoryId,
-        account: account ?? this.account,
-        description: description ?? this.description,
-        imageUrl: imageUrl ?? this.imageUrl,
-        level: level ?? this.level,
-        menu: menu ?? this.menu,
-        name: name ?? this.name,
-        sortOrder: sortOrder ?? this.sortOrder,
-        products: products ?? this.products,);
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      categoryId: categoryId ?? this.categoryId,
+      account: account ?? this.account,
+      description: description ?? this.description,
+      imageUrl: imageUrl ?? this.imageUrl,
+      level: level ?? this.level,
+      menu: menu ?? this.menu,
+      name: name ?? this.name,
+      sortOrder: sortOrder ?? this.sortOrder,
+      products: products ?? this.products,
+    );
   }
 }
 
@@ -562,14 +601,16 @@ class DeliverectMenuDto {
       _$DeliverectMenuDtoFromJson(json);
 
   @JsonKey(
-      name: 'availabilities',
-      includeIfNull: false,
-      defaultValue: <DeliverectAvailabilityModel>[],)
+    name: 'availabilities',
+    includeIfNull: false,
+    defaultValue: <DeliverectAvailabilityModel>[],
+  )
   final List<DeliverectAvailabilityModel>? availabilities;
   @JsonKey(
-      name: 'categories',
-      includeIfNull: false,
-      defaultValue: <DeliverectCategoryModelDto>[],)
+    name: 'categories',
+    includeIfNull: false,
+    defaultValue: <DeliverectCategoryModelDto>[],
+  )
   final List<DeliverectCategoryModelDto>? categories;
   @JsonKey(name: 'channelLinkId', includeIfNull: false)
   final String? channelLinkId;
@@ -635,26 +676,28 @@ class DeliverectMenuDto {
 }
 
 extension $DeliverectMenuDtoExtension on DeliverectMenuDto {
-  DeliverectMenuDto copyWith(
-      {List<DeliverectAvailabilityModel>? availabilities,
-      List<DeliverectCategoryModelDto>? categories,
-      String? channelLinkId,
-      int? currency,
-      String? description,
-      String? menu,
-      String? menuId,
-      String? menuImageUrl,
-      int? menuType,}) {
+  DeliverectMenuDto copyWith({
+    List<DeliverectAvailabilityModel>? availabilities,
+    List<DeliverectCategoryModelDto>? categories,
+    String? channelLinkId,
+    int? currency,
+    String? description,
+    String? menu,
+    String? menuId,
+    String? menuImageUrl,
+    int? menuType,
+  }) {
     return DeliverectMenuDto(
-        availabilities: availabilities ?? this.availabilities,
-        categories: categories ?? this.categories,
-        channelLinkId: channelLinkId ?? this.channelLinkId,
-        currency: currency ?? this.currency,
-        description: description ?? this.description,
-        menu: menu ?? this.menu,
-        menuId: menuId ?? this.menuId,
-        menuImageUrl: menuImageUrl ?? this.menuImageUrl,
-        menuType: menuType ?? this.menuType,);
+      availabilities: availabilities ?? this.availabilities,
+      categories: categories ?? this.categories,
+      channelLinkId: channelLinkId ?? this.channelLinkId,
+      currency: currency ?? this.currency,
+      description: description ?? this.description,
+      menu: menu ?? this.menu,
+      menuId: menuId ?? this.menuId,
+      menuImageUrl: menuImageUrl ?? this.menuImageUrl,
+      menuType: menuType ?? this.menuType,
+    );
   }
 }
 
@@ -673,9 +716,10 @@ class DeliverectMenusDto {
       _$DeliverectMenusDtoFromJson(json);
 
   @JsonKey(
-      name: 'availabilities',
-      includeIfNull: false,
-      defaultValue: <DeliverectAvailabilityModel>[],)
+    name: 'availabilities',
+    includeIfNull: false,
+    defaultValue: <DeliverectAvailabilityModel>[],
+  )
   final List<DeliverectAvailabilityModel>? availabilities;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
@@ -725,20 +769,22 @@ class DeliverectMenusDto {
 }
 
 extension $DeliverectMenusDtoExtension on DeliverectMenusDto {
-  DeliverectMenusDto copyWith(
-      {List<DeliverectAvailabilityModel>? availabilities,
-      String? description,
-      String? menu,
-      String? menuId,
-      String? menuImageUrl,
-      int? menuType,}) {
+  DeliverectMenusDto copyWith({
+    List<DeliverectAvailabilityModel>? availabilities,
+    String? description,
+    String? menu,
+    String? menuId,
+    String? menuImageUrl,
+    int? menuType,
+  }) {
     return DeliverectMenusDto(
-        availabilities: availabilities ?? this.availabilities,
-        description: description ?? this.description,
-        menu: menu ?? this.menu,
-        menuId: menuId ?? this.menuId,
-        menuImageUrl: menuImageUrl ?? this.menuImageUrl,
-        menuType: menuType ?? this.menuType,);
+      availabilities: availabilities ?? this.availabilities,
+      description: description ?? this.description,
+      menu: menu ?? this.menu,
+      menuId: menuId ?? this.menuId,
+      menuImageUrl: menuImageUrl ?? this.menuImageUrl,
+      menuType: menuType ?? this.menuType,
+    );
   }
 }
 
@@ -806,9 +852,10 @@ class DeliverectProductModelDto {
   @JsonKey(name: 'visible', includeIfNull: false)
   final bool? visible;
   @JsonKey(
-      name: 'childProducts',
-      includeIfNull: false,
-      defaultValue: <ProductRelationModelDto>[],)
+    name: 'childProducts',
+    includeIfNull: false,
+    defaultValue: <ProductRelationModelDto>[],
+  )
   final List<ProductRelationModelDto>? childProducts;
   static const fromJsonFactory = _$DeliverectProductModelDtoFromJson;
   static const toJsonFactory = _$DeliverectProductModelDtoToJson;
@@ -897,46 +944,48 @@ class DeliverectProductModelDto {
 }
 
 extension $DeliverectProductModelDtoExtension on DeliverectProductModelDto {
-  DeliverectProductModelDto copyWith(
-      {String? productId,
-      String? account,
-      int? deliveryTax,
-      String? description,
-      String? imageUrl,
-      String? location,
-      int? max,
-      int? min,
-      int? multiply,
-      int? multiMax,
-      String? name,
-      String? plu,
-      int? price,
-      int? productType,
-      bool? snoozed,
-      int? sortOrder,
-      int? takeawayTax,
-      bool? visible,
-      List<ProductRelationModelDto>? childProducts,}) {
+  DeliverectProductModelDto copyWith({
+    String? productId,
+    String? account,
+    int? deliveryTax,
+    String? description,
+    String? imageUrl,
+    String? location,
+    int? max,
+    int? min,
+    int? multiply,
+    int? multiMax,
+    String? name,
+    String? plu,
+    int? price,
+    int? productType,
+    bool? snoozed,
+    int? sortOrder,
+    int? takeawayTax,
+    bool? visible,
+    List<ProductRelationModelDto>? childProducts,
+  }) {
     return DeliverectProductModelDto(
-        productId: productId ?? this.productId,
-        account: account ?? this.account,
-        deliveryTax: deliveryTax ?? this.deliveryTax,
-        description: description ?? this.description,
-        imageUrl: imageUrl ?? this.imageUrl,
-        location: location ?? this.location,
-        max: max ?? this.max,
-        min: min ?? this.min,
-        multiply: multiply ?? this.multiply,
-        multiMax: multiMax ?? this.multiMax,
-        name: name ?? this.name,
-        plu: plu ?? this.plu,
-        price: price ?? this.price,
-        productType: productType ?? this.productType,
-        snoozed: snoozed ?? this.snoozed,
-        sortOrder: sortOrder ?? this.sortOrder,
-        takeawayTax: takeawayTax ?? this.takeawayTax,
-        visible: visible ?? this.visible,
-        childProducts: childProducts ?? this.childProducts,);
+      productId: productId ?? this.productId,
+      account: account ?? this.account,
+      deliveryTax: deliveryTax ?? this.deliveryTax,
+      description: description ?? this.description,
+      imageUrl: imageUrl ?? this.imageUrl,
+      location: location ?? this.location,
+      max: max ?? this.max,
+      min: min ?? this.min,
+      multiply: multiply ?? this.multiply,
+      multiMax: multiMax ?? this.multiMax,
+      name: name ?? this.name,
+      plu: plu ?? this.plu,
+      price: price ?? this.price,
+      productType: productType ?? this.productType,
+      snoozed: snoozed ?? this.snoozed,
+      sortOrder: sortOrder ?? this.sortOrder,
+      takeawayTax: takeawayTax ?? this.takeawayTax,
+      visible: visible ?? this.visible,
+      childProducts: childProducts ?? this.childProducts,
+    );
   }
 }
 
@@ -1017,24 +1066,26 @@ class GetMenuResponseDto {
 }
 
 extension $GetMenuResponseDtoExtension on GetMenuResponseDto {
-  GetMenuResponseDto copyWith(
-      {String? id,
-      String? phoneNumber,
-      double? rating,
-      String? reviewCount,
-      String? averagePickUpTime,
-      String? address,
-      String? googleMapsLink,
-      DeliverectMenuDto? menu,}) {
+  GetMenuResponseDto copyWith({
+    String? id,
+    String? phoneNumber,
+    double? rating,
+    String? reviewCount,
+    String? averagePickUpTime,
+    String? address,
+    String? googleMapsLink,
+    DeliverectMenuDto? menu,
+  }) {
     return GetMenuResponseDto(
-        id: id ?? this.id,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        rating: rating ?? this.rating,
-        reviewCount: reviewCount ?? this.reviewCount,
-        averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
-        address: address ?? this.address,
-        googleMapsLink: googleMapsLink ?? this.googleMapsLink,
-        menu: menu ?? this.menu,);
+      id: id ?? this.id,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      rating: rating ?? this.rating,
+      reviewCount: reviewCount ?? this.reviewCount,
+      averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
+      address: address ?? this.address,
+      googleMapsLink: googleMapsLink ?? this.googleMapsLink,
+      menu: menu ?? this.menu,
+    );
   }
 }
 
@@ -1094,18 +1145,20 @@ class GetMenusResponseDto {
 }
 
 extension $GetMenusResponseDtoExtension on GetMenusResponseDto {
-  GetMenusResponseDto copyWith(
-      {String? id,
-      double? rating,
-      String? reviewCount,
-      String? averagePickUpTime,
-      DeliverectMenusDto? menu,}) {
+  GetMenusResponseDto copyWith({
+    String? id,
+    double? rating,
+    String? reviewCount,
+    String? averagePickUpTime,
+    DeliverectMenusDto? menu,
+  }) {
     return GetMenusResponseDto(
-        id: id ?? this.id,
-        rating: rating ?? this.rating,
-        reviewCount: reviewCount ?? this.reviewCount,
-        averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
-        menu: menu ?? this.menu,);
+      id: id ?? this.id,
+      rating: rating ?? this.rating,
+      reviewCount: reviewCount ?? this.reviewCount,
+      averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
+      menu: menu ?? this.menu,
+    );
   }
 }
 
@@ -1126,10 +1179,11 @@ class GetOrderResponseDto {
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(
-      name: 'status',
-      includeIfNull: false,
-      toJson: deliverectOrderStatusToJson,
-      fromJson: deliverectOrderStatusFromJson,)
+    name: 'status',
+    includeIfNull: false,
+    toJson: deliverectOrderStatusToJson,
+    fromJson: deliverectOrderStatusFromJson,
+  )
   final enums.DeliverectOrderStatus? status;
   @JsonKey(name: 'price', includeIfNull: false)
   final double? price;
@@ -1138,7 +1192,10 @@ class GetOrderResponseDto {
   @JsonKey(name: 'merchant', includeIfNull: false)
   final MerchantModelDto? merchant;
   @JsonKey(
-      name: 'items', includeIfNull: false, defaultValue: <OrderItemModel>[],)
+    name: 'items',
+    includeIfNull: false,
+    defaultValue: <OrderItemModel>[],
+  )
   final List<OrderItemModel>? items;
   static const fromJsonFactory = _$GetOrderResponseDtoFromJson;
   static const toJsonFactory = _$GetOrderResponseDtoToJson;
@@ -1176,20 +1233,22 @@ class GetOrderResponseDto {
 }
 
 extension $GetOrderResponseDtoExtension on GetOrderResponseDto {
-  GetOrderResponseDto copyWith(
-      {String? id,
-      enums.DeliverectOrderStatus? status,
-      double? price,
-      DateTime? estimatedPickUpTime,
-      MerchantModelDto? merchant,
-      List<OrderItemModel>? items,}) {
+  GetOrderResponseDto copyWith({
+    String? id,
+    enums.DeliverectOrderStatus? status,
+    double? price,
+    DateTime? estimatedPickUpTime,
+    MerchantModelDto? merchant,
+    List<OrderItemModel>? items,
+  }) {
     return GetOrderResponseDto(
-        id: id ?? this.id,
-        status: status ?? this.status,
-        price: price ?? this.price,
-        estimatedPickUpTime: estimatedPickUpTime ?? this.estimatedPickUpTime,
-        merchant: merchant ?? this.merchant,
-        items: items ?? this.items,);
+      id: id ?? this.id,
+      status: status ?? this.status,
+      price: price ?? this.price,
+      estimatedPickUpTime: estimatedPickUpTime ?? this.estimatedPickUpTime,
+      merchant: merchant ?? this.merchant,
+      items: items ?? this.items,
+    );
   }
 }
 
@@ -1244,13 +1303,18 @@ class GetUserResponseDto {
 }
 
 extension $GetUserResponseDtoExtension on GetUserResponseDto {
-  GetUserResponseDto copyWith(
-      {String? id, DateTime? createdAt, String? firstName, String? lastName,}) {
+  GetUserResponseDto copyWith({
+    String? id,
+    DateTime? createdAt,
+    String? firstName,
+    String? lastName,
+  }) {
     return GetUserResponseDto(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName,);
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+    );
   }
 }
 
@@ -1325,22 +1389,24 @@ class MerchantModelDto {
 }
 
 extension $MerchantModelDtoExtension on MerchantModelDto {
-  MerchantModelDto copyWith(
-      {String? name,
-      String? phoneNumber,
-      double? rating,
-      String? reviewCount,
-      String? averagePickUpTime,
-      String? address,
-      String? googleMapsLink,}) {
+  MerchantModelDto copyWith({
+    String? name,
+    String? phoneNumber,
+    double? rating,
+    String? reviewCount,
+    String? averagePickUpTime,
+    String? address,
+    String? googleMapsLink,
+  }) {
     return MerchantModelDto(
-        name: name ?? this.name,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        rating: rating ?? this.rating,
-        reviewCount: reviewCount ?? this.reviewCount,
-        averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
-        address: address ?? this.address,
-        googleMapsLink: googleMapsLink ?? this.googleMapsLink,);
+      name: name ?? this.name,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      rating: rating ?? this.rating,
+      reviewCount: reviewCount ?? this.reviewCount,
+      averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
+      address: address ?? this.address,
+      googleMapsLink: googleMapsLink ?? this.googleMapsLink,
+    );
   }
 }
 
@@ -1378,7 +1444,10 @@ class OrderItemModel {
   @JsonKey(name: 'parentId', includeIfNull: false)
   final String? parentId;
   @JsonKey(
-      name: 'items', includeIfNull: false, defaultValue: <OrderItemModel>[],)
+    name: 'items',
+    includeIfNull: false,
+    defaultValue: <OrderItemModel>[],
+  )
   final List<OrderItemModel>? items;
   static const fromJsonFactory = _$OrderItemModelFromJson;
   static const toJsonFactory = _$OrderItemModelToJson;
@@ -1426,26 +1495,28 @@ class OrderItemModel {
 }
 
 extension $OrderItemModelExtension on OrderItemModel {
-  OrderItemModel copyWith(
-      {String? id,
-      DateTime? createdAt,
-      String? plu,
-      String? name,
-      int? price,
-      int? quantity,
-      OrderItemModel? parent,
-      String? parentId,
-      List<OrderItemModel>? items,}) {
+  OrderItemModel copyWith({
+    String? id,
+    DateTime? createdAt,
+    String? plu,
+    String? name,
+    int? price,
+    int? quantity,
+    OrderItemModel? parent,
+    String? parentId,
+    List<OrderItemModel>? items,
+  }) {
     return OrderItemModel(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        plu: plu ?? this.plu,
-        name: name ?? this.name,
-        price: price ?? this.price,
-        quantity: quantity ?? this.quantity,
-        parent: parent ?? this.parent,
-        parentId: parentId ?? this.parentId,
-        items: items ?? this.items,);
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      plu: plu ?? this.plu,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      parent: parent ?? this.parent,
+      parentId: parentId ?? this.parentId,
+      items: items ?? this.items,
+    );
   }
 }
 
@@ -1481,7 +1552,8 @@ class ProductRelationModelDto {
 extension $ProductRelationModelDtoExtension on ProductRelationModelDto {
   ProductRelationModelDto copyWith({DeliverectProductModelDto? childProduct}) {
     return ProductRelationModelDto(
-        childProduct: childProduct ?? this.childProduct,);
+      childProduct: childProduct ?? this.childProduct,
+    );
   }
 }
 
@@ -1498,10 +1570,11 @@ class UpdateStatusOrderModel {
   @JsonKey(name: 'orderId', includeIfNull: false)
   final String? orderId;
   @JsonKey(
-      name: 'orderStatus',
-      includeIfNull: false,
-      toJson: deliverectOrderStatusToJson,
-      fromJson: deliverectOrderStatusFromJson,)
+    name: 'orderStatus',
+    includeIfNull: false,
+    toJson: deliverectOrderStatusToJson,
+    fromJson: deliverectOrderStatusFromJson,
+  )
   final enums.DeliverectOrderStatus? orderStatus;
   static const fromJsonFactory = _$UpdateStatusOrderModelFromJson;
   static const toJsonFactory = _$UpdateStatusOrderModelToJson;
@@ -1527,11 +1600,14 @@ class UpdateStatusOrderModel {
 }
 
 extension $UpdateStatusOrderModelExtension on UpdateStatusOrderModel {
-  UpdateStatusOrderModel copyWith(
-      {String? orderId, enums.DeliverectOrderStatus? orderStatus,}) {
+  UpdateStatusOrderModel copyWith({
+    String? orderId,
+    enums.DeliverectOrderStatus? orderStatus,
+  }) {
     return UpdateStatusOrderModel(
-        orderId: orderId ?? this.orderId,
-        orderStatus: orderStatus ?? this.orderStatus,);
+      orderId: orderId ?? this.orderId,
+      orderStatus: orderStatus ?? this.orderStatus,
+    );
   }
 }
 
@@ -1546,10 +1622,10 @@ enums.DeliverectDay deliverectDayFromJson(String? deliverectDay) {
 
   return enums.$DeliverectDayMap.entries
       .firstWhere(
-          (element) =>
-              element.value.toLowerCase() == deliverectDay.toLowerCase(),
-          orElse: () =>
-              const MapEntry(enums.DeliverectDay.swaggerGeneratedUnknown, ''),)
+        (element) => element.value.toLowerCase() == deliverectDay.toLowerCase(),
+        orElse: () =>
+            const MapEntry(enums.DeliverectDay.swaggerGeneratedUnknown, ''),
+      )
       .key;
 }
 
@@ -1570,27 +1646,30 @@ List<enums.DeliverectDay> deliverectDayListFromJson(List? deliverectDay) {
 }
 
 String? deliverectOrderStatusToJson(
-    enums.DeliverectOrderStatus? deliverectOrderStatus,) {
+  enums.DeliverectOrderStatus? deliverectOrderStatus,
+) {
   return enums.$DeliverectOrderStatusMap[deliverectOrderStatus];
 }
 
 enums.DeliverectOrderStatus deliverectOrderStatusFromJson(
-    String? deliverectOrderStatus,) {
+  String? deliverectOrderStatus,
+) {
   if (deliverectOrderStatus == null) {
     return enums.DeliverectOrderStatus.swaggerGeneratedUnknown;
   }
 
   return enums.$DeliverectOrderStatusMap.entries
       .firstWhere(
-          (element) =>
-              element.value.toLowerCase() ==
-              deliverectOrderStatus.toLowerCase(),
-          orElse: () => const MapEntry(enums.DeliverectOrderStatus.$new, '10'),)
+        (element) =>
+            element.value.toLowerCase() == deliverectOrderStatus.toLowerCase(),
+        orElse: () => const MapEntry(enums.DeliverectOrderStatus.$new, '10'),
+      )
       .key;
 }
 
 List<String> deliverectOrderStatusListToJson(
-    List<enums.DeliverectOrderStatus>? deliverectOrderStatus,) {
+  List<enums.DeliverectOrderStatus>? deliverectOrderStatus,
+) {
   if (deliverectOrderStatus == null) {
     return [];
   }
@@ -1601,7 +1680,8 @@ List<String> deliverectOrderStatusListToJson(
 }
 
 List<enums.DeliverectOrderStatus> deliverectOrderStatusListFromJson(
-    List? deliverectOrderStatus,) {
+  List? deliverectOrderStatus,
+) {
   if (deliverectOrderStatus == null) {
     return [];
   }
@@ -1650,7 +1730,8 @@ class $CustomJsonDecoder {
 class $JsonSerializableConverter extends chopper.JsonConverter {
   @override
   chopper.Response<ResultType> convertResponse<ResultType, Item>(
-      chopper.Response response,) {
+    chopper.Response response,
+  ) {
     if (response.bodyString.isEmpty) {
       // In rare cases, when let's say 204 (no content) is returned -
       // we cannot decode the missing json with the result type specified
@@ -1659,7 +1740,8 @@ class $JsonSerializableConverter extends chopper.JsonConverter {
 
     final jsonRes = super.convertResponse(response);
     return jsonRes.copyWith<ResultType>(
-        body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType,);
+      body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType,
+    );
   }
 }
 

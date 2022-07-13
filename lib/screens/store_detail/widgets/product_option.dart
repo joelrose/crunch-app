@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
+import 'package:pickup/screens/store_detail/cubits/cubits.dart';
 import 'package:pickup/screens/store_detail/widgets/product_option_list_view.dart';
 
 class ProductOption extends StatelessWidget {
@@ -8,6 +8,7 @@ class ProductOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: check if bloc builder is neccessary here
     return BlocBuilder<StoreDetailCubit, StoreDetailState>(
       builder: (context, state) {
         final optionCategories = context.select(

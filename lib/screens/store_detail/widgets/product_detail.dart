@@ -1,7 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
+import 'package:pickup/screens/store_detail/cubits/cubits.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class ProductDetail extends StatelessWidget {
@@ -16,8 +16,7 @@ class ProductDetail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(
-            context,
+          _Header(
             name: item.name!,
             price: item.price!,
           ),
@@ -32,12 +31,17 @@ class ProductDetail extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildHeader(
-    BuildContext context, {
-    required String name,
-    required int price,
-  }) {
+class _Header extends StatelessWidget {
+  const _Header({Key? key, required this.name, required this.price})
+      : super(key: key);
+
+  final String name;
+  final num price;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

@@ -3,35 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/store_detail/cubit/store_detail_cubit.dart';
+import 'package:pickup/screens/store_detail/cubits/cubits.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class ProductOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StoreDetailCubit, StoreDetailState>(
-      builder: (context, state) {
-        return Column(
-          children: [
-            const Divider(
-              height: 0,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Column(
-                children: [
-                  _buildSelect(context),
-                  _buildButton(context),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
+    // TODO: check if it still reloads
+    return Column(
+      children: [
+        const Divider(
+          height: 0,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Column(
+            children: const [
+              _SelectContainer(),
+              _SubmitButton(),
+            ],
+          ),
+        ),
+      ],
     );
   }
+}
 
-  Widget _buildButton(BuildContext context) {
+class _SubmitButton extends StatelessWidget {
+  const _SubmitButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
         top: 20,
@@ -40,23 +42,30 @@ class ProductOrder extends StatelessWidget {
       child: ActionButton(
         onPressed: () {
           HapticFeedback.mediumImpact();
-          context.read<StoreDetailCubit>().addToOrderOnClick();
+          context.read<StoreDetailCubit>().addProductToBasket();
         },
         buttonText: context.l10n.addToOrder,
       ),
     );
   }
+}
 
-  Widget _buildSelect(BuildContext context) {
+class _SelectContainer extends StatelessWidget {
+  const _SelectContainer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final totalPrice =
+        context.select((StoreDetailCubit cubit) => cubit.state.price);
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildAlpacaSelect(context),
+          const _SelectContent(),
           Text(
             Utilities.currencyFormat(
-              context.read<StoreDetailCubit>().totalPrice,
+              totalPrice,
             ),
             style: Theme.of(context).textTheme.headline2!.copyWith(
                   color: AlpacaColor.primary100,
@@ -66,9 +75,15 @@ class ProductOrder extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildAlpacaSelect(BuildContext context) {
-    final cubit = context.read<StoreDetailCubit>();
+class _SelectContent extends StatelessWidget {
+  const _SelectContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final basketAmount =
+        context.select((StoreDetailCubit cubit) => cubit.state.basketAmount);
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -83,9 +98,9 @@ class ProductOrder extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: AlpacaSelect(
-        amount: cubit.amountOfProductsToAddToBasket.toString(),
-        onDecrease: () => cubit.decreaseItemAmount(),
-        onIncrease: () => cubit.increaseItemAmount(),
+        amount: basketAmount.toString(),
+        onDecrease: () => context.read<StoreDetailCubit>().decreaseItemAmount(),
+        onIncrease: () => context.read<StoreDetailCubit>().increaseItemAmount(),
         textBoxHorizontalPadding: 12,
         textStyle: Theme.of(context).textTheme.headline2!.copyWith(
               color: AlpacaColor.darkNavyColor,

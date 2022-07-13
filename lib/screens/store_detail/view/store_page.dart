@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/app/app.dart';
-import 'package:pickup/screens/store_detail/cubit/cubit.dart';
+import 'package:pickup/screens/store_detail/cubits/cubits.dart';
 import 'package:pickup/screens/store_detail/widgets/widgets.dart';
 
 class StoreDetailPage extends StatelessWidget {
@@ -11,26 +11,27 @@ class StoreDetailPage extends StatelessWidget {
     Key? key,
     required this.item,
     required this.restaurantImage,
-    required this.checkoutItems,
   }) : super(key: key);
 
   final DeliverectProductModelDto item;
   final String restaurantImage;
-  final List<CreateOrderItemDto> checkoutItems;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => StoreDetailCubit(
-        checkoutItems: checkoutItems,
         item: item,
       ),
       child: BlocListener<StoreDetailCubit, StoreDetailState>(
         listener: (context, state) {
           if (state.status == StoreDetailStatus.done) {
+            final orderItem =
+                context.read<StoreDetailCubit>().createOrderItemDto();
+
             context.read<CheckoutBasketBloc>().add(
-                  CheckoutBasketItemUpdated(checkoutItems: state.checkoutItems),
+                  CheckoutBasketItemAdded(item: orderItem),
                 );
+
             Navigator.pop(context);
           }
         },

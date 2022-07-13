@@ -9,28 +9,20 @@ part 'store_detail_state.dart';
 class StoreDetailCubit extends Cubit<StoreDetailState> {
   StoreDetailCubit({
     required DeliverectProductModelDto item,
-    required List<CreateOrderItemDto> checkoutItems,
   }) : super(
           StoreDetailState(
-            checkoutItems: checkoutItems,
             item: item,
+            orderItems: const [],
           ),
         ) {
     init();
   }
 
-  int amountOfProductsToAddToBasket = 1;
-  int totalPrice = 0;
-  int reload = 0;
-
-  late List<CreateOrderItemDto> orderDto = [];
-
   void init() {
-    totalPrice = state.item.price!;
-
-    _sortItems(state.item.childProducts);
+    final List<CreateOrderItemDto> orderItems = [];
 
     final product = state.item;
+
     if (product.childProducts != null) {
       for (final child in product.childProducts!) {
         final firstOption = child.childProduct!.childProducts!.firstWhereOrNull(
@@ -55,83 +47,62 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
               : [],
         );
 
-        orderDto.add(itemTitleAndOptions);
+        orderItems.add(itemTitleAndOptions);
       }
-    }
-
-    _calculateNewPrice();
-  }
-
-  void _sortItems(List<ProductRelationModelDto>? list) {
-    if (list == null) {
-      return;
-    }
-
-    list.sort(
-      (a, b) =>
-          a.childProduct!.sortOrder!.compareTo(b.childProduct!.sortOrder!),
-    );
-
-    for (final element in list) {
-      _sortItems(element.childProduct!.childProducts);
-    }
-  }
-
-  void changeItemPrice() {
-    _calculateNewPrice();
-  }
-
-  void increaseItemAmount() {
-    amountOfProductsToAddToBasket += 1;
-    _calculateNewPrice();
-  }
-
-  void decreaseItemAmount() {
-    if (amountOfProductsToAddToBasket != 1) {
-      amountOfProductsToAddToBasket -= 1;
-      _calculateNewPrice();
-    }
-  }
-
-  void addToOrderOnClick() {
-    final item = state.item;
-    final checkoutItems = List<CreateOrderItemDto>.from(state.checkoutItems);
-
-    final newItem = CreateOrderItemDto(
-      plu: item.plu,
-      price: item.price,
-      name: item.name,
-      quantity: amountOfProductsToAddToBasket,
-      items: _convertToOrderDto(),
-    );
-
-    final checkoutItem = checkoutItems.firstWhereOrNull(
-      (listItem) =>
-          listItem.equals(newItem) &&
-          const DeepCollectionEquality().equals(newItem.items, listItem.items),
-    );
-
-    if (checkoutItem == null) {
-      checkoutItems.add(newItem);
-    } else {
-      checkoutItems[checkoutItems.indexOf(checkoutItem)] =
-          checkoutItem.copyWith(
-        quantity: checkoutItem.quantity! + newItem.quantity!,
-      );
     }
 
     emit(
       state.copyWith(
-        status: StoreDetailStatus.done,
-        checkoutItems: checkoutItems,
+        price: _getTotalPrice(),
+        orderItems: orderItems,
       ),
+    );
+  }
+
+  void increaseItemAmount() {
+    emit(
+      state.copyWith(
+        price: _getTotalPrice(),
+        basketAmount: state.basketAmount + 1,
+      ),
+    );
+  }
+
+  void decreaseItemAmount() {
+    if (state.basketAmount != 1) {
+      emit(
+        state.copyWith(
+          price: _getTotalPrice(),
+          basketAmount: state.basketAmount - 1,
+        ),
+      );
+    }
+  }
+
+  void addProductToBasket() {
+    emit(
+      state.copyWith(
+        status: StoreDetailStatus.done,
+      ),
+    );
+  }
+
+  CreateOrderItemDto createOrderItemDto() {
+    final item = state.item;
+
+    return CreateOrderItemDto(
+      plu: item.plu,
+      price: item.price,
+      name: item.name,
+      quantity: state.basketAmount,
+      items: _convertToOrderDto(),
     );
   }
 
   List<CreateOrderItemDto> _convertToOrderDto() {
     final List<CreateOrderItemDto> returnValue = [];
 
-    for (final optionCategory in orderDto) {
+    for (final optionCategory in state.orderItems) {
       if (optionCategory.items != null) {
         optionCategory.items!.sort((a, b) => a.name!.compareTo(b.name!));
         returnValue.addAll(optionCategory.items!);
@@ -140,16 +111,9 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
     return returnValue;
   }
 
-  void _calculateNewPrice() {
-    emit(
-      state.copyWith(
-        price: _getTotalPrice(),
-      ),
-    );
-  }
-
   int _getTotalPrice() {
-    return totalPrice = amountOfProductsToAddToBasket *
-        (PriceCalulcation.getPriceOfItems(orderDto) + state.item.price!);
+    return state.basketAmount *
+        (PriceCalulcation.getPriceOfItems(state.orderItems) +
+            state.item.price!);
   }
 }

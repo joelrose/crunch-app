@@ -15,7 +15,7 @@ class CheckoutBasketBloc
     on<CheckoutBasketItemQuantityDecremented>(_onItemDecremented);
     on<CheckoutBasketItemQuantityIncremented>(_onItemIncremented);
     on<CheckoutBasketItemDeleted>(_onItemDeleted);
-    on<CheckoutBasketItemUpdated>(_onItemsUpdated);
+    on<CheckoutBasketItemAdded>(_onItemAdded);
   }
 
   final CheckoutRepository _checkoutRepository;
@@ -59,10 +59,21 @@ class CheckoutBasketBloc
     await _checkoutRepository.incrementItemQuantity(event.itemIndex);
   }
 
-  Future<void> _onItemsUpdated(
-    CheckoutBasketItemUpdated event,
+  Future<void> _onItemAdded(
+    CheckoutBasketItemAdded event,
     Emitter<CheckoutBasketState> emit,
   ) async {
-    await _checkoutRepository.updateCheckoutItems(event.checkoutItems);
+    await _checkoutRepository.addItem(event.item);
+  }
+
+  int getAmount(String plu) {
+    final items = state.checkoutItems.where(
+      (listItem) => plu == listItem.plu,
+    );
+
+    return items.fold(
+      0,
+      (previousValue, element) => previousValue + element.quantity!,
+    );
   }
 }

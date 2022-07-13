@@ -95,13 +95,11 @@ class _ItemButton extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       builder: (context) {
-        final checkoutBasket = context.read<CheckoutBasketBloc>();
         return FractionallySizedBox(
           heightFactor: 0.8,
           child: StoreDetailPage(
             item: product,
             restaurantImage: imageUrl,
-            checkoutItems: checkoutBasket.state.checkoutItems,
           ),
         );
       },
