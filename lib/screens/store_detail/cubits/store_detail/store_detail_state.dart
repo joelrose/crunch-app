@@ -9,6 +9,7 @@ class StoreDetailState extends Equatable {
     required this.orderItems,
     this.price = 0,
     this.basketAmount = 1,
+    this.magicNumber = 42,
   });
 
   // the current status
@@ -26,12 +27,16 @@ class StoreDetailState extends Equatable {
   // the customized order item
   final List<CreateOrderItemDto> orderItems;
 
+  //
+  final int magicNumber;
+
   StoreDetailState copyWith({
     StoreDetailStatus? status,
     DeliverectProductModelDto? item,
     List<CreateOrderItemDto>? orderItems,
     int? price,
     int? basketAmount,
+    int? magicNumber,
   }) {
     return StoreDetailState(
       status: status ?? this.status,
@@ -39,9 +44,17 @@ class StoreDetailState extends Equatable {
       orderItems: orderItems ?? this.orderItems,
       price: price ?? this.price,
       basketAmount: basketAmount ?? this.basketAmount,
+      magicNumber: magicNumber ?? this.magicNumber,
     );
   }
 
   @override
-  List<Object> get props => [item, price, status, basketAmount, orderItems];
+  List<Object> get props => [
+        item,
+        price,
+        status,
+        basketAmount,
+        orderItems,
+        magicNumber,
+      ];
 }

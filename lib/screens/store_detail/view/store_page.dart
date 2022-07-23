@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/app/app.dart';
-import 'package:pickup/screens/store_detail/cubits/cubits.dart';
-import 'package:pickup/screens/store_detail/widgets/widgets.dart';
+import 'package:pickup/screens/store_detail/store_detail.dart';
 
 class StoreDetailPage extends StatelessWidget {
   const StoreDetailPage({
@@ -58,7 +57,7 @@ class StoreDetailView extends StatelessWidget {
             child: Column(
               children: const [
                 ProductDetail(),
-                ProductOption(),
+                ProductOptions(),
               ],
             ),
           ),

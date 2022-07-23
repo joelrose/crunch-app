@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pickup/screens/store_detail/cubits/cubits.dart';
-import 'package:pickup/screens/store_detail/widgets/product_option_list_view.dart';
+import 'package:pickup/screens/store_detail/store_detail.dart';
 
-class ProductOption extends StatelessWidget {
-  const ProductOption({Key? key}) : super(key: key);
+class ProductOptions extends StatelessWidget {
+  const ProductOptions({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +21,12 @@ class ProductOption extends StatelessWidget {
           itemBuilder: (context, optionCategoryIndex) {
             final item = optionCategories[optionCategoryIndex].childProduct!;
 
-            return ProductOptionListView(
-              name: item.name!,
-              index: optionCategoryIndex,
-              optionCategory: item,
+            return BlocProvider(
+              create: (context) => ProductOptionCubit(
+                index: optionCategoryIndex,
+                optionCategory: item,
+              ),
+              child: const OptionListView(),
             );
           },
         );

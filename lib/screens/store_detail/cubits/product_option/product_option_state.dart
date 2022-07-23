@@ -1,10 +1,14 @@
 part of 'product_option_cubit.dart';
 
-abstract class ProductOptionState extends Equatable {
-  const ProductOptionState();
+class ProductOptionState extends Equatable {
+  const ProductOptionState({
+    required this.index,
+    required this.optionCategory,
+  });
+
+  final int index;
+  final DeliverectProductModelDto optionCategory;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [index, optionCategory];
 }
-
-class ProductOptionInitial extends ProductOptionState {}

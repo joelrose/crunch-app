@@ -60,20 +60,23 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   }
 
   void increaseItemAmount() {
+    final basketAmount = state.basketAmount + 1;
     emit(
       state.copyWith(
-        price: _getTotalPrice(),
-        basketAmount: state.basketAmount + 1,
+        price: _getTotalPrice(basketAmount: basketAmount),
+        basketAmount: basketAmount,
       ),
     );
   }
 
   void decreaseItemAmount() {
     if (state.basketAmount != 1) {
+      final basketAmount = state.basketAmount - 1;
+
       emit(
         state.copyWith(
-          price: _getTotalPrice(),
-          basketAmount: state.basketAmount - 1,
+          price: _getTotalPrice(basketAmount: basketAmount),
+          basketAmount: basketAmount,
         ),
       );
     }
@@ -111,9 +114,80 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
     return returnValue;
   }
 
-  int _getTotalPrice() {
-    return state.basketAmount *
+  int _getTotalPrice({int? basketAmount}) {
+    return (basketAmount ?? state.basketAmount) *
         (PriceCalulcation.getPriceOfItems(state.orderItems) +
             state.item.price!);
+  }
+
+  void _emitNewState() {
+    emit(
+      state.copyWith(
+        price: _getTotalPrice(),
+        magicNumber: state.magicNumber + 1,
+      ),
+    );
+  }
+
+  // ORDERITEM
+
+  void addRadioOrderItem(int categoryIndex, CreateOrderItemDto item) {
+    final dto = state.orderItems[categoryIndex].items!;
+
+    dto.clear();
+
+    dto.add(item);
+
+    state.orderItems[categoryIndex].items = dto;
+
+    _emitNewState();
+  }
+
+  void addCheckBoxOrderItem(int categoryIndex, CreateOrderItemDto item) {
+    final dto = state.orderItems[categoryIndex].items!;
+
+    final index = dto.indexWhere(
+      (element) => element.plu == item.plu!,
+    );
+
+    if (index != -1) {
+      dto.removeAt(index);
+    } else {
+      dto.add(item);
+    }
+
+    state.orderItems[categoryIndex].items = dto;
+
+    _emitNewState();
+  }
+
+  void decreaseOrderItem(int categoryIndex, String? plu) {
+    final dto = state.orderItems[categoryIndex].items!;
+
+    final index = dto.firstWhereOrNull(
+      (element) => element.plu == plu,
+    );
+
+    if (index != null && index.quantity != 1) {
+      index.quantity = index.quantity! - 1;
+    } else {
+      dto.remove(index);
+    }
+
+    _emitNewState();
+  }
+
+  void increaseOrderItem(int categoryIndex, String? plu, int maximalQuantity) {
+    final dto = state.orderItems[categoryIndex].items!;
+
+    final index = dto.firstWhereOrNull(
+      (element) => element.plu == plu!,
+    );
+
+    if (index != null && index.quantity! < maximalQuantity) {
+      index.quantity = index.quantity! + 1;
+    }
+
+    _emitNewState();
   }
 }

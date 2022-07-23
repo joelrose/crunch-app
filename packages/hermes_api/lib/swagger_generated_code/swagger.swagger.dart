@@ -166,7 +166,7 @@ class CreateOrderItemDto {
     includeIfNull: false,
     defaultValue: <CreateOrderItemDto>[],
   )
-  final List<CreateOrderItemDto>? items;
+  List<CreateOrderItemDto>? items;
   static const fromJsonFactory = _$CreateOrderItemDtoFromJson;
   static const toJsonFactory = _$CreateOrderItemDtoToJson;
   Map<String, dynamic> toJson() => _$CreateOrderItemDtoToJson(this);
