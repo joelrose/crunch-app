@@ -22,7 +22,7 @@ class StripeRepository {
     Stripe.publishableKey = stripeKey;
     Stripe.merchantIdentifier = merchantIdentifier;
 
-    isTestEnvironment = isTestEnvironment;
+    this.isTestEnvironment = isTestEnvironment;
 
     await Stripe.instance.applySettings();
   }

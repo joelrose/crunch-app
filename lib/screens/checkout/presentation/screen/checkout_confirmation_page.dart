@@ -93,7 +93,7 @@ class _Content extends StatelessWidget {
                 buttonText: '',
                 disableButton: true,
               ),
-              const ItemsOverview(),
+              const ItemsOverview(isEditable: false),
               AddressDirection(
                 googleMapsLink: state.googleMapsLink,
               ),
