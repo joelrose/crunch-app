@@ -25,18 +25,12 @@ class ItemsOverview extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, itemIndex) {
               final checkoutSummaryItem = checkoutItems[itemIndex];
-              return TextButton(
-                style: TextButton.styleFrom(
-                  primary: AlpacaColor.primary100,
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 3,
+                  horizontal: 18,
                 ),
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 3,
-                    horizontal: 18,
-                  ),
-                  child: _Item(checkoutSummaryItem, itemIndex),
-                ),
+                child: _Item(checkoutSummaryItem, itemIndex),
               );
             },
           ),
@@ -144,7 +138,14 @@ class _ItemDescription extends StatelessWidget {
         buffer.write('${item.name!}, ');
       }
 
-      return buffer.toString();
+      final string = buffer.toString();
+
+      return string == ''
+          ? string
+          : string.substring(
+              0,
+              string.length - 2,
+            );
     }
 
     return '';

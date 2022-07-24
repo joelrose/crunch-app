@@ -1,11 +1,9 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/store/cubit/store_cubit.dart';
 import 'package:pickup/screens/store/widgets/store_rating.dart';
-import 'package:pickup/screens/store/widgets/store_tag.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:pickup/screens/store_information/store_information.dart';
 
 class StoreOverview extends StatelessWidget {
   const StoreOverview({Key? key}) : super(key: key);
@@ -14,100 +12,56 @@ class StoreOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.select((StoreCubit cubit) => cubit.state.menu!);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                model.menu!.menu!,
-                style: Theme.of(context).textTheme.headline2,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(70),
-                  border: Border.all(
-                    color: AlpacaColor.lightGreyColor90,
-                  ),
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return TextButton(
+      onPressed: () => Navigator.of(context).push(
+        StoreInformationPage.route(
+          menu: model,
+        ),
+      ),
+      style: TextButton.styleFrom(
+        primary: AlpacaColor.primary100,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(right: 6),
-                      child: Icon(
-                        Icons.timelapse,
-                        size: 18,
-                      ),
-                    ),
                     Text(
-                      '${model.averagePickUpTime} ${context.l10n.min}',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(color: AlpacaColor.greyColor80),
+                      model.menu!.menu!,
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              StoreTag(name: 'Vegan'),
-              SizedBox(width: 6),
-              StoreTag(name: 'Pasta'),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                StoreRating(
-                  rating: model.rating!.toString(),
-                  reviewCount: model.reviewCount!,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    await launchUrlString(model.googleMapsLink!);
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                        context.l10n.directionsButtonLabel,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                              color: AlpacaColor.primary100,
-                            ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 4),
-                        child: Icon(
-                          Icons.arrow_forward,
-                          color: AlpacaColor.primary100,
-                          size: 16,
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        StoreRating(
+                          rating: model.rating!.toString(),
+                          reviewCount: model.reviewCount!,
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
-          ),
-        ],
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: AlpacaColor.greyColor80,
+              size: 18,
+            ),
+          ],
+        ),
       ),
     );
   }

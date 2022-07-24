@@ -1,4 +1,3 @@
-import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
@@ -41,25 +40,57 @@ class RestaurantListView extends StatelessWidget {
         return SkeletonLoader(
           builder: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
-            height: 190,
+            height: 195,
             child: ListView.separated(
               clipBehavior: Clip.none,
               scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,
               separatorBuilder: (context, index) => const SizedBox(width: 16),
               itemCount: 2,
               itemBuilder: (context, index) {
-                return Material(
-                  elevation: 2,
-                  borderRadius: BorderRadius.circular(10),
-                  child: const SizedBox(
-                    height: 190,
-                    width: 235,
+                return SizedBox(
+                  height: 195,
+                  width: 250,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 250,
+                        height: 123,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 13,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: 132,
+                        height: 23,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        margin: const EdgeInsets.only(left: 10),
+                      ),
+                      const SizedBox(height: 3),
+                      Container(
+                        width: 112,
+                        height: 15,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        margin: const EdgeInsets.only(left: 10),
+                      ),
+                    ],
                   ),
                 );
               },
             ),
           ),
-          highlightColor: AlpacaColor.primary100,
+          highlightColor: const Color(0xFFF1EFEF),
         );
       },
     );

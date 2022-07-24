@@ -62,19 +62,19 @@ class _AlpacaButton extends StatelessWidget {
     required this.backgroundColor,
     required this.textColor,
     required this.buttonText,
-    required this.onPressed,
+    this.onPressed,
   }) : super(key: key);
 
   final Color backgroundColor;
   final Color textColor;
   final String buttonText;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       onPressed: onPressed,
-      disabledColor: Colors.red,
+      disabledColor: AlpacaColor.greyColor80,
       color: backgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: SizedBox(
@@ -100,7 +100,7 @@ class ActionButton extends StatelessWidget {
 
   final bool isPrimaryButton;
   final String buttonText;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   final Color? textColor;
 

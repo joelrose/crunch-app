@@ -1,18 +1,19 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/store/cubit/store_cubit.dart';
-import 'package:pickup/screens/store/widgets/store_information_item.dart';
+import 'package:pickup/screens/store_information/cubit/cubit.dart';
+import 'package:pickup/screens/store_information/widgets/store_information_item.dart';
 
 class StoreInformation extends StatelessWidget {
   const StoreInformation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final model = context.select((StoreCubit cubit) => cubit.state.menu!);
+    final model = context.select(
+      (StoreInformationCubit cubit) => cubit.state.menu,
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -23,7 +24,7 @@ class StoreInformation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10, top: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -32,12 +33,6 @@ class StoreInformation extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline3!.copyWith(
                         color: AlpacaColor.darkNavyColor,
                       ),
-                ),
-                SvgPicture.asset(
-                  'assets/icons/chevron-left.svg',
-                  color: AlpacaColor.lightGreyColor100,
-                  height: 24,
-                  width: 24,
                 ),
               ],
             ),

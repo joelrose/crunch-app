@@ -35,8 +35,7 @@ void main() {
       testWidgets('page loads and shows content', (tester) async {
         await tester.pumpApp(OrdersDetailPage(order: mockOrderResponse));
 
-        expect(find.byType(Info), findsOneWidget);
-        expect(find.byType(Map), findsOneWidget);
+        expect(find.byType(CrunchMap), findsOneWidget);
         expect(find.byType(Detail), findsOneWidget);
         expect(find.byType(ItemList), findsOneWidget);
         expect(find.byType(ActionButton), findsOneWidget);

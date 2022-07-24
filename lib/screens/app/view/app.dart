@@ -9,6 +9,8 @@ import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/bloc/checkout_basket_bloc.dart';
+import 'package:pickup/screens/app/cubit/language/language_cubit.dart';
+import 'package:pickup/screens/app/cubit/user/user_cubit.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
 import 'package:pickup/screens/loading/loading.dart';
 import 'package:pickup/shared/routes.dart' as routes;
@@ -66,7 +68,7 @@ class AppView extends StatelessWidget {
         BlocProvider(
           create: (_) => DiscoverCubit(
             context.read<HermesRepository>(),
-          )..fetchRestaurants(),
+          ),
         ),
         BlocProvider(
           create: (context) => CheckoutBasketBloc(
@@ -75,16 +77,27 @@ class AppView extends StatelessWidget {
               const CheckoutBasketSubscriptionRequested(),
             ),
         ),
+        BlocProvider(create: (context) => LanguageCubit()),
+        BlocProvider(
+          create: (context) => UserCubit(
+            hermesRepository: context.read<HermesRepository>(),
+          ),
+        ),
       ],
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: routes.Router.generateRoute,
-        initialRoute: LoadingScreen.route,
-        theme: getThemeData(),
-        navigatorObservers: <NavigatorObserver>[observer],
-        builder: context.read<LoadingOverlayRepository>().initialize(),
+      child: BlocBuilder<LanguageCubit, LanguageState>(
+        builder: (context, state) {
+          return MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: state.locale,
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: routes.Router.generateRoute,
+            initialRoute: LoadingScreen.route,
+            theme: getThemeData(),
+            navigatorObservers: <NavigatorObserver>[observer],
+            builder: context.read<LoadingOverlayRepository>().initialize(),
+          );
+        },
       ),
     );
   }
