@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:alpaca/alpaca.dart';
 import 'package:authentication_repository/authentication_repository.dart';
@@ -22,8 +21,6 @@ class _LoadingScreenState extends State<LoadingScreen>
   late AnimationController animationController;
   late Animation<double> heightSequence;
   late Animation<double> widthSequence;
-
-  late Timer? _timer;
 
   bool isLogoVisible = true;
 
@@ -85,20 +82,19 @@ class _LoadingScreenState extends State<LoadingScreen>
 
     animationController.forward();
 
-    _loadWidget();
+    // listen to is animation finished
+
+    animationController.addListener(() {
+      if (!animationController.isAnimating) {
+        navigationPage();
+      }
+    });
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     animationController.dispose();
     super.dispose();
-  }
-
-  Future<Timer> _loadWidget() async {
-    const _duration = Duration(milliseconds: 1600);
-    _timer = Timer(_duration, navigationPage);
-    return _timer!;
   }
 
   void navigationPage() {
@@ -154,7 +150,7 @@ class _LoadingScreenState extends State<LoadingScreen>
               child: Align(
                 child: AnimatedOpacity(
                   opacity: isLogoVisible ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(seconds: 1),
                   child: SvgPicture.asset(
                     'assets/logo/crunch-logo.svg',
                     color: AlpacaColor.white100Color,

@@ -1,23 +1,14 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
-import 'package:pickup/screens/store_detail/widgets/product_option_entry.dart';
+import 'package:pickup/screens/store_detail/cubits/cubits.dart';
+import 'package:pickup/screens/store_detail/widgets/option_item.dart';
 
-class ProductOptionListView extends StatelessWidget {
-  const ProductOptionListView({
+class OptionListView extends StatelessWidget {
+  const OptionListView({
     Key? key,
-    required this.name,
-    required this.index,
-    required this.optionCategory,
-    this.itemOptionIndex = -1,
-    this.optionalParentPlu = '',
   }) : super(key: key);
-
-  final String name;
-  final int index;
-  final DeliverectProductModelDto optionCategory;
-  final String optionalParentPlu;
-  final int itemOptionIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +17,7 @@ class ProductOptionListView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildRestrictionText(context),
+          const _RestrictionText(),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 20),
             width: MediaQuery.of(context).size.width,
@@ -37,21 +28,25 @@ class ProductOptionListView extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: ProductOptionEntry(
-              optionCategory: optionCategory,
-              itemCategoryIndex: index,
-              itemOptionIndex: itemOptionIndex,
-              optionalParentPlu: optionalParentPlu,
-            ),
+            child:const OptionItem(),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildRestrictionText(BuildContext context) {
+class _RestrictionText extends StatelessWidget {
+  const _RestrictionText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final optionCategory = context
+        .select((ProductOptionCubit cubit) => cubit.state.optionCategory);
+
     final min = optionCategory.min!;
     final max = optionCategory.max!;
+    final name = optionCategory.name!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

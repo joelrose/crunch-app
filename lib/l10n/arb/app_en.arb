@@ -92,6 +92,7 @@
    "contactDetails": "Contact details",
    "contactDetailsDescription": "Providing a phone number allows the restaurant to contact you easily in case there is an issue with your order.",
    "pickupTime": "Pickup Time",
+   "now": "Now",
    "notOnWhitelist": "You are not on the whitelist, you'll get access soon.",
    "support": "Support",
    "profile": "Profile",
@@ -110,5 +111,7 @@
    "termsAndConditions": "Terms & Conditions",
    "dataPrivacy": "Data Privacy",
    "contactUs": "Contact us",
-   "visitOurWebsite": "Visit our website"
+   "visitOurWebsite": "Visit our website",
+   "deleteItem": "Delete item"
+
 }

@@ -20,6 +20,6 @@ class CheckoutRepository {
   Future<void> incrementItemQuantity(int itemIndex) =>
       _checkoutApi.incrementItemQuantityByIndex(itemIndex);
 
-  Future<void> updateCheckoutItems(List<CreateOrderItemDto> checkoutItems) =>
-      _checkoutApi.updateCheckoutItems(checkoutItems);
+  Future<void> addItem(CreateOrderItemDto item) =>
+      _checkoutApi.addItem(item);
 }

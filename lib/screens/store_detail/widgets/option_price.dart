@@ -2,8 +2,8 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:pickup/shared/utilities.dart';
 
-class ProductOptionPrice extends StatelessWidget {
-  const ProductOptionPrice({
+class OptionPrice extends StatelessWidget {
+  const OptionPrice({
     Key? key,
     required this.name,
     required this.price,

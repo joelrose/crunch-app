@@ -4,8 +4,10 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:hermes_api/hermes_api.dart';
 
 class HermesRepository {
-  HermesRepository(
-      {required String apiUrl, required this.authenticationRepository,}) {
+  HermesRepository({
+    required String apiUrl,
+    required this.authenticationRepository,
+  }) {
     _chopperClient = ChopperClient(
       baseUrl: apiUrl,
       services: [Swagger.create(ChopperClient())],
@@ -36,6 +38,21 @@ class HermesRepository {
   Future<GetMenuResponseDto> apiMenusMenuIdGet({
     required String storeId,
   }) async {
+    void _sortItems(List<ProductRelationModelDto>? list) {
+      if (list == null) {
+        return;
+      }
+
+      list.sort(
+        (a, b) =>
+            a.childProduct!.sortOrder!.compareTo(b.childProduct!.sortOrder!),
+      );
+
+      for (final element in list) {
+        _sortItems(element.childProduct!.childProducts);
+      }
+    }
+
     try {
       final request = await client.apiMenusMenuIdGet(
         menuId: storeId,
@@ -48,9 +65,16 @@ class HermesRepository {
 
         if (request.body?.menu?.categories != null) {
           for (final category in request.body!.menu!.categories!) {
-            category.products?.sort(
-              (a, b) => a.product!.sortOrder!.compareTo(b.product!.sortOrder!),
-            );
+            if (category.products != null) {
+              category.products?.sort(
+                (a, b) =>
+                    a.product!.sortOrder!.compareTo(b.product!.sortOrder!),
+              );
+
+              for (final product in category.products!) {
+                _sortItems(product.product?.childProducts);
+              }
+            }
           }
         }
 

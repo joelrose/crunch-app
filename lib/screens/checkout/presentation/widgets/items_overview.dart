@@ -7,103 +7,126 @@ import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class ItemsOverview extends StatelessWidget {
-  const ItemsOverview({Key? key}) : super(key: key);
+  const ItemsOverview({Key? key, this.isEditable = true}) : super(key: key);
+
+  final bool isEditable;
 
   @override
   Widget build(BuildContext context) {
-    final checkoutItems =
-        context.select((CheckoutBasketBloc cubit) => cubit.state.checkoutItems);
-
-    return Column(
-      children: [
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 18),
-          child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: checkoutItems.length,
-            shrinkWrap: true,
-            itemBuilder: (context, itemIndex) {
-              final checkoutSummaryItem = checkoutItems[itemIndex];
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 3,
-                  horizontal: 18,
-                ),
-                child: _Item(checkoutSummaryItem, itemIndex),
-              );
-            },
-          ),
-        ),
-        const Divider(),
-      ],
+    return BlocConsumer<CheckoutBasketBloc, CheckoutBasketState>(
+      listener: (context, state) {
+        if (state.checkoutItems.isEmpty) {
+          Navigator.of(context).pop();
+        }
+      },
+      builder: (context, state) {
+        return Column(
+          children: [
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 18),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: state.checkoutItems.length,
+                shrinkWrap: true,
+                itemBuilder: (context, itemIndex) {
+                  final checkoutSummaryItem = state.checkoutItems[itemIndex];
+                  return _Item(checkoutSummaryItem, itemIndex, isEditable);
+                },
+              ),
+            ),
+            const Divider(),
+          ],
+        );
+      },
     );
   }
 }
 
 class _Item extends StatelessWidget {
-  const _Item(this.item, this.itemIndex, {Key? key}) : super(key: key);
+  // ignore: avoid_positional_boolean_parameters
+  const _Item(this.item, this.itemIndex, this.isEditable, {Key? key})
+      : super(key: key);
 
   final CreateOrderItemDto item;
   final int itemIndex;
+  final bool isEditable;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              item.name!,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Text(
-              Utilities.currencyFormat(PriceCalulcation.getPriceOfItem(item)),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4!
-                  .copyWith(color: AlpacaColor.darkNavyColor),
-            ),
-          ],
+    if (isEditable) {
+      return Dismissible(
+        key: UniqueKey(),
+        background: Container(
+          color: Colors.red,
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.only(right: 10),
+          child: Text(
+            'Delete item',
+            style: Theme.of(context).textTheme.headline4!.copyWith(
+                  color: AlpacaColor.blackColor,
+                ),
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _ItemDescription(item),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: AlpacaSelect(
-                onDecrease: () {
-                  if (item.quantity == 1) {
-                    context
-                        .read<CheckoutBasketBloc>()
-                        .add(CheckoutBasketItemDeleted(itemIndex: itemIndex));
-                  } else {
-                    context.read<CheckoutBasketBloc>().add(
-                          CheckoutBasketItemQuantityDecremented(
-                            itemIndex: itemIndex,
-                          ),
-                        );
-                  }
-                },
-                onIncrease: () {
-                  context.read<CheckoutBasketBloc>().add(
-                        CheckoutBasketItemQuantityIncremented(
-                          itemIndex: itemIndex,
-                        ),
-                      );
-                },
-                amount: item.quantity!.toString(),
-                textBoxHorizontalPadding: 12,
-                textStyle: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: AlpacaColor.darkNavyColor,
+        onDismissed: (direction) {
+          context
+              .read<CheckoutBasketBloc>()
+              .add(CheckoutBasketItemDeleted(itemIndex: itemIndex));
+        },
+        direction: DismissDirection.endToStart,
+        child: _Content(context),
+      );
+    } else {
+      return _Content(context);
+    }
+  }
+
+  Widget _Content(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+      child: Row(
+        children: [
+          Text(
+            item.quantity!.toString(),
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      item.name!,
+                      style: Theme.of(context).textTheme.headline4,
                     ),
-              ),
+                    Text(
+                      Utilities.currencyFormat(
+                        PriceCalulcation.getPriceOfItem(item),
+                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .copyWith(color: AlpacaColor.blackColor),
+                    ),
+                  ],
+                ),
+                if (item.items != null) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _ItemDescription(item),
+                    ],
+                  ),
+                ]
+              ],
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

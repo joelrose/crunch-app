@@ -23,8 +23,12 @@ class CheckoutTimer extends StatelessWidget {
       builder: (context, state) => CheckoutRowHeader(
         buttonKey: const Key('PickTimeButton'),
         header: context.l10n.pickupTime,
+        buttonText: context.l10n.now,
+        onPressed: () {},
+        /*
         buttonText: state.pickupTime
             .formatToLocalTime(Localizations.localeOf(context).languageCode),
+        onPressed: () {},
         onPressed: () {
           showModalBottomSheet(
             shape: const RoundedRectangleBorder(
@@ -47,7 +51,7 @@ class CheckoutTimer extends StatelessWidget {
               );
             },
           );
-        },
+        },*/
       ),
     );
   }

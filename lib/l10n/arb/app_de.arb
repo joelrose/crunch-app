@@ -35,7 +35,7 @@
    "discount": "Rabatt",
    "store": "Restaurant",
    "directionsButtonLabel": "Navigieren",
-   "connectionPaymentFail": "Verbindung zum Zahlungs Dienstleister nicht möglich",
+   "connectionPaymentFail": "Verbindung zum Zahlungsdienstleister nicht möglich. Bitter versuche es später noch einmal.",
    "buttonPayLabel": "Jetzt bestellen",
    "orderOverview": "Bestellung",
    "phoneVerificationTitle": "Wir haben den Verifizierungscode an ",
@@ -56,9 +56,9 @@
    "edit": "Bearbeiten",
    "min": "minuten",
    "ready": "bereit",
-   "orderStatus": "Order status",
-   "orderInPreperation": "Your order is being prepared...",
-   "orderDetails": "Bestell Details",
+   "orderStatus": "Orderstatus",
+   "orderInPreperation": "Deine Bestellung wird verarbeitet...",
+   "orderDetails": "Bestelldetails",
    "navigationDiscover": "Entdecken",
    "navigationOrders": "Bestellungen",
    "navigationVouchers": "Gutscheine",
@@ -92,6 +92,7 @@
    "contactDetails": "Kontaktdaten",
    "contactDetailsDescription": "Wenn du eine Telefonnummer angibts, kann das Restaurant dich im Fall von Problemen mit deiner Bestellung anrufen.",
    "pickupTime": "Abholzeit",
+   "now": "Jetzt",
    "notOnWhitelist": "Du musst dich leider noch ein wenig gedulden, bevor Du die App nutzen kannst.",
    "support": "Hilfe",
    "profile": "Profil",
@@ -107,7 +108,7 @@
    "feedbackSliderLikely": "Sehr wahrscheinlich",
    "feedbackTextfieldHint": "Was erwartest du von diesem Feature?\nHast du genaue Vorstellungen?",
 
-
+   "deleteItem": "Artikel löschen",
 
    "language": "Sprache",
    "termsAndConditions": "Allgemeine Geschäftsbedingungen",
