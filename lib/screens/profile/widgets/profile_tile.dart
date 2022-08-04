@@ -1,34 +1,46 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProfileTile extends StatelessWidget {
   const ProfileTile({
     Key? key,
     required this.title,
-    required this.link,
+    this.imagePath = 'assets/icons/user.svg',
+    this.suffixWidget = const Icon(
+      Icons.navigate_next,
+      size: 30,
+      color: AlpacaColor.lightGreyColor100,
+    ),
+    this.onPressed,
   }) : super(key: key);
 
   final String title;
-  final String link;
+  final String imagePath;
+  final Widget suffixWidget;
 
+  final void Function()? onPressed;
+ 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const AlpacaDivider(),
-        TextButton(
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.zero,
-            primary: AlpacaColor.primary100,
+    return SizedBox(
+     height: 61,
+      child: Column(
+        children: [
+          const AlpacaDivider(),
+          TextButton(
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              primary: AlpacaColor.primary100,
+            ),
+            onPressed: onPressed,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: _buildTileContent(context),
+            ),
           ),
-          onPressed: () => launchUrlString(link),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: _buildTileContent(context),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -38,24 +50,27 @@ class ProfileTile extends StatelessWidget {
       children: [
         Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.bodyText1!.merge(
-                      const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-              ),
+            SvgPicture.asset(
+              imagePath,
+              color: AlpacaColor.lightGreyColor100,
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontSize: 16,
+                          color: AlpacaColor.darkNavyColor,
+                        ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-        const Icon(
-          Icons.navigate_next,
-          size: 30,
-          color: AlpacaColor.darkGreyColor,
-        ),
+        suffixWidget
       ],
     );
   }

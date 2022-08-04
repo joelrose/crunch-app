@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/discover/discover.dart';
+import 'package:pickup/screens/friends/view/friends_page.dart';
 import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/home/widgets/widgets.dart';
 import 'package:pickup/screens/orders/orders.dart';
+import 'package:pickup/screens/rewards/view/rewards_page.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -24,18 +26,16 @@ class HomeView extends StatelessWidget {
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         backgroundColor: AlpacaColor.white100Color,
-        body: IndexedStack(
-          index: selectedTab.index,
-          children: [
-            const SafeArea(child: DiscoverPage()),
-            const SafeArea(child: OrdersPage()),
-            SafeArea(
-              child: ConstructionWidget(title: context.l10n.navigationVouchers),
-            ),
-            SafeArea(
-              child: ConstructionWidget(title: context.l10n.navigationFriends),
-            ),
-          ],
+        body: SafeArea(
+          child: IndexedStack(
+            index: selectedTab.index,
+            children: const [
+              DiscoverPage(),
+              OrdersPage(),
+              HiddenWidget(child: RewardsPage()),
+              HiddenWidget(child: FriendsPage()),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

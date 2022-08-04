@@ -11,9 +11,7 @@ import 'package:pickup/screens/checkout/cubits/checkout_cubit/checkout_cubit.dar
 import 'package:pickup/screens/checkout/cubits/checkout_payment_cubit/checkout_payment_cubit.dart';
 import 'package:pickup/screens/checkout/cubits/checkout_timer_cubit/checkout_time_cubit.dart';
 import 'package:pickup/screens/checkout/presentation/screen/checkout_confirmation_page.dart';
-import 'package:pickup/screens/checkout/presentation/widgets/address_directions.dart';
 import 'package:pickup/screens/checkout/presentation/widgets/checkout_timer.dart';
-import 'package:pickup/screens/checkout/presentation/widgets/contact_details.dart';
 import 'package:pickup/screens/checkout/presentation/widgets/items_overview.dart';
 import 'package:pickup/screens/checkout/presentation/widgets/price_summary.dart';
 import 'package:pickup/screens/checkout_navbar/checkout_navbar.dart';
@@ -104,10 +102,7 @@ class _Content extends StatelessWidget {
   Widget build(BuildContext context) {
     final storeName =
         context.select((CheckoutCubit cubit) => cubit.state.menu.menu!.menu!);
-
-    final googleMapsLink = context
-        .select((CheckoutCubit cubit) => cubit.state.menu.googleMapsLink)!;
-
+        
     return Column(
       children: [
         CheckoutNavbar(
@@ -115,27 +110,25 @@ class _Content extends StatelessWidget {
           pageOverviewName: context.l10n.orderOverview,
         ),
         Flexible(
-          child: ListView(
-            children: [
-              CheckoutRowHeader(
-                header: context.l10n.checkoutCartItems,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                buttonText: context.l10n.edit,
-              ),
-              const ItemsOverview(),
-              const Divider(),
-              CheckoutTimer(),
-              AddressDirection(
-                googleMapsLink: googleMapsLink,
-              ),
-              const ContactDetails(),
-              const PriceSummary(),
-              Container(
-                height: 65,
-              )
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CheckoutRowHeader(
+                  header: context.l10n.checkoutCartItems,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  buttonText: context.l10n.edit,
+                ),
+                const ItemsOverview(),
+                CheckoutTimer(),
+                const Divider(),
+                const PriceSummary(),
+                Container(
+                  height: 65,
+                )
+              ],
+            ),
           ),
         ),
       ],

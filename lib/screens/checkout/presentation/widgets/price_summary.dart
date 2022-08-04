@@ -41,12 +41,12 @@ class PriceSummary extends StatelessWidget {
                 PriceCalulcation.getPriceOfItems(checkoutItems),
               ),
             ),
-            _ItemSummary(
+            /*_ItemSummary(
               labelText: context.l10n.discount,
               price: Utilities.currencyFormat(
                 0.0,
               ),
-            ),
+            ),*/
           ],
         ),
       ),

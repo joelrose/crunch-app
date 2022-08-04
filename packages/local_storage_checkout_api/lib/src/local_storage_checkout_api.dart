@@ -5,6 +5,7 @@ import 'package:hermes_repository/hermes_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import "package:collection/collection.dart";
 
 class CheckoutItemNotFound implements Exception {}
 
@@ -35,9 +36,12 @@ class LocalStorageCheckoutApi {
     final checkoutItemsJson = _getValue(kCheckoutCollectionKey);
     if (checkoutItemsJson != null) {
       final checkoutItems = List<Map>.from(
-              json.decode(checkoutItemsJson) as List,)
-          .map((jsonMap) =>
-              CreateOrderItemDto.fromJson(Map<String, dynamic>.from(jsonMap)),)
+        json.decode(checkoutItemsJson) as List,
+      )
+          .map(
+            (jsonMap) =>
+                CreateOrderItemDto.fromJson(Map<String, dynamic>.from(jsonMap)),
+          )
           .toList();
       _checkoutStreamController.add(checkoutItems);
     } else {
@@ -79,9 +83,26 @@ class LocalStorageCheckoutApi {
     return _setValue(kCheckoutCollectionKey, json.encode(items));
   }
 
-  Future<void> updateCheckoutItems(
-    List<CreateOrderItemDto> checkoutItems,
+  Future<void> addItem(
+    CreateOrderItemDto item,
   ) async {
+    final checkoutItems = [..._checkoutStreamController.value];
+
+    final checkoutItem = checkoutItems.firstWhereOrNull(
+      (listItem) =>
+          listItem.equals(item) &&
+          const DeepCollectionEquality().equals(item.items, listItem.items),
+    );
+
+    if (checkoutItem == null) {
+      checkoutItems.add(item);
+    } else {
+      checkoutItems[checkoutItems.indexOf(checkoutItem)] =
+          checkoutItem.copyWith(
+        quantity: checkoutItem.quantity! + item.quantity!,
+      );
+    }
+
     _checkoutStreamController.add(checkoutItems);
     return _setValue(kCheckoutCollectionKey, json.encode(checkoutItems));
   }

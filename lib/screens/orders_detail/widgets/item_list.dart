@@ -42,7 +42,10 @@ class _Item extends StatelessWidget {
           children: [
             Text(
               item.name!,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(color: AlpacaColor.darkNavyColor),
             ),
             if (item.items != null)
               Text(
@@ -123,7 +126,14 @@ class _ItemDescription extends StatelessWidget {
         buffer.write('${item.name!}, ');
       }
 
-      return buffer.toString();
+      final string = buffer.toString();
+
+      return string == ''
+          ? string
+          : string.substring(
+              0,
+              string.length - 2,
+            );
     }
 
     return '';

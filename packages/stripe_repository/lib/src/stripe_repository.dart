@@ -7,16 +7,22 @@ class HermesApiRequestException implements Exception {}
 class HermesApiResponseException implements Exception {}
 
 class StripeRepository {
-  StripeRepository({required this.hermesRepository});
+  StripeRepository({required HermesRepository hermesRepository})
+      : _hermesRepository = hermesRepository;
 
-  final HermesRepository hermesRepository;
+  final HermesRepository _hermesRepository;
+
+  late final bool isTestEnvironment;
 
   Future<void> setupStripe({
     required String stripeKey,
     required String merchantIdentifier,
+    required bool isTestEnvironment,
   }) async {
     Stripe.publishableKey = stripeKey;
     Stripe.merchantIdentifier = merchantIdentifier;
+
+    this.isTestEnvironment = isTestEnvironment;
 
     await Stripe.instance.applySettings();
   }
@@ -25,7 +31,7 @@ class StripeRepository {
     required String merchantId,
     required List<CreateOrderItemDto> checkoutItems,
   }) async {
-    final response = await hermesRepository.client.apiOrdersPost(
+    final response = await _hermesRepository.client.apiOrdersPost(
       body: CreateOrderRequestDto(
         merchantId: merchantId,
         items: checkoutItems,
@@ -47,7 +53,7 @@ class StripeRepository {
         applePay: true,
         googlePay: true,
         style: ThemeMode.light,
-        testEnv: true,
+        testEnv: isTestEnvironment,
         merchantCountryCode: 'DE',
         merchantDisplayName: 'Crunch',
         paymentIntentClientSecret: clientSecret,

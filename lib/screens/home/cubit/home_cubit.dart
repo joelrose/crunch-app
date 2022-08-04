@@ -6,5 +6,10 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(const HomeState());
 
-  void setTab(HomeTab tab) => emit(HomeState(tab: tab));
+  void setTab(HomeTab tab) => emit(
+        HomeState(
+          tab: tab,
+          reTab: state.tab == tab ? state.reTab + 1 : 0,
+        ),
+      );
 }

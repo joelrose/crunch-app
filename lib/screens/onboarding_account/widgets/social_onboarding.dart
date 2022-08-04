@@ -88,13 +88,12 @@ class SocialOnboarding extends StatelessWidget {
             (route) => false,
           );
         } else {
-          Navigator.of(context).pushAndRemoveUntil(
+          Navigator.of(context).push(
             OnboardingCreateAccountPage.route(
               data: const CreateAccountData(
                 isSocialLogin: true,
               ),
             ),
-            (route) => false,
           );
         }
       } else {

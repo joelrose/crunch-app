@@ -45,6 +45,10 @@ class OrdersListView extends StatelessWidget {
                             ),
                             child: Text(
                               '#${order.id!.substring(0, 3)}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(),
                             ),
                           ),
                         ),

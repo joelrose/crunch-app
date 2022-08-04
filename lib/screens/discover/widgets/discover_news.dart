@@ -12,7 +12,7 @@ class DiscoverNews extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.fromLTRB(18, 14, 18, 0),
       width: double.infinity,
-      height: 123,
+      height: 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: AlpacaColor.primary100.withOpacity(1),

@@ -20,13 +20,13 @@ abstract class CheckoutBasketItemEvent extends CheckoutBasketEvent {
   List<Object> get props => [itemIndex];
 }
 
-class CheckoutBasketItemUpdated extends CheckoutBasketEvent {
-  const CheckoutBasketItemUpdated({required this.checkoutItems});
+class CheckoutBasketItemAdded extends CheckoutBasketEvent {
+  const CheckoutBasketItemAdded({required this.item});
 
-  final List<CreateOrderItemDto> checkoutItems;
+  final CreateOrderItemDto item;
 
   @override
-  List<Object> get props => [checkoutItems];
+  List<Object> get props => [item];
 }
 
 class CheckoutBasketItemDeleted extends CheckoutBasketItemEvent {
