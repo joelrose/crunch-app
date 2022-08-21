@@ -84,7 +84,7 @@ class OrdersListView extends StatelessWidget {
                         children: [
                           Text(
                             DateFormat('dd.MM.yyyy, kk:mm')
-                                .format(order.estimatedPickUpTime!),
+                                .format(order.estimatedPickUpTime!.toLocal()),
                           ),
                           Text(
                             ' - ${order.status!.string}',

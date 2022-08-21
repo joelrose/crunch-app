@@ -9,7 +9,7 @@ Future<void> showFeedbackForm(BuildContext context) {
       final query = MediaQuery.of(context);
       final height = query.size.height;
 
-      final factor = (500 + query.viewPadding.bottom) / height;
+      final factor = (520 + query.viewPadding.bottom) / height;
 
       return FractionallySizedBox(
         heightFactor: factor,

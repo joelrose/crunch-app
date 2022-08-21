@@ -24,8 +24,9 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
     availableOpeningTimes.sort((a, b) => a.hour.compareTo(b.hour));
 
     return CheckoutTimeCubit._internal(
-      pickupTime: currentTime.add(const Duration(minutes: 20)),
-      currentSelectedHour: availableOpeningTimes[0],
+      pickupTime: currentTime, // currentTime.add(const Duration(minutes: 20)),
+      currentSelectedHour:
+          const OpeningHour(0, []), //  availableOpeningTimes[0],
       currentSelectedMinuteIndex: 0,
       availableOpeningTimes: availableOpeningTimes,
     );

@@ -17,7 +17,7 @@ class FriendsState extends Equatable {
           isBestFriend: true,
         ),
         const Friend(
-          name: 'Mia M',
+          name: 'Lena S',
           isBestFriend: true,
         ),
         const Friend(
