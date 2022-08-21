@@ -135,7 +135,7 @@ DeliverectAvailabilityModel _$DeliverectAvailabilityModelFromJson(
       id: json['id'] as String?,
       createdAt: json['createdAt'] == null
           ? null
-          : DateTime.parse(json['createdAt'] as String),
+          : DateTime.parse((json['createdAt'] as String) + 'Z'),
 
       // FIXED MANUALLY
       dayOfWeek: deliverectDayFromJson((json['dayOfWeek'] as int).toString()),
@@ -167,7 +167,7 @@ DeliverectCategoryModelDto _$DeliverectCategoryModelDtoFromJson(
       id: json['id'] as String?,
       createdAt: json['createdAt'] == null
           ? null
-          : DateTime.parse(json['createdAt'] as String),
+          : DateTime.parse((json['createdAt'] as String) + 'Z'),
       categoryId: json['categoryId'] as String?,
       account: json['account'] as String?,
       description: json['description'] as String?,
@@ -415,7 +415,7 @@ GetOrderResponseDto _$GetOrderResponseDtoFromJson(Map<String, dynamic> json) =>
       price: (json['price'] as num?)?.toDouble(),
       estimatedPickUpTime: json['estimatedPickUpTime'] == null
           ? null
-          : DateTime.parse(json['estimatedPickUpTime'] as String),
+          : DateTime.parse((json['estimatedPickUpTime'] as String) + 'Z'),
       merchant: json['merchant'] == null
           ? null
           : MerchantModelDto.fromJson(json['merchant'] as Map<String, dynamic>),
@@ -449,7 +449,7 @@ GetUserResponseDto _$GetUserResponseDtoFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       createdAt: json['createdAt'] == null
           ? null
-          : DateTime.parse(json['createdAt'] as String),
+          : DateTime.parse((json['createdAt'] as String) + 'Z'),
       firstName: json['firstName'] as String?,
       lastName: json['lastName'] as String?,
     );
@@ -505,7 +505,7 @@ OrderItemModel _$OrderItemModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       createdAt: json['createdAt'] == null
           ? null
-          : DateTime.parse(json['createdAt'] as String),
+          : DateTime.parse((json['createdAt'] as String) + 'Z'),
       plu: json['plu'] as String?,
       name: json['name'] as String?,
       price: json['price'] as int?,
