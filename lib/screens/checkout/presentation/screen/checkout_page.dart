@@ -32,9 +32,7 @@ class CheckoutPage extends StatelessWidget {
           ),
           BlocProvider(
             create: (_) => CheckoutTimeCubit(
-              currentTime: kDebugMode
-                  ? DateTime(2022, 5, 12, 9, 10)
-                  : DateTime.now(), // TODO: replace with DateTime.now()
+              currentTime: DateTime.now(),
               openingHours: menu.menu!.availabilities!,
             ),
           ),
