@@ -1,5 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/onboarding_account/onboarding_account.dart';
 import 'package:pickup/screens/onboarding_explanation/onboarding_explanation.dart';
@@ -99,9 +100,9 @@ class _Image extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.50,
-      child: Image.asset(
-        'assets/onboarding/splash-graphic.png',
+      height: MediaQuery.of(context).size.height * 0.6,
+      child: SvgPicture.asset(
+        'assets/logo/logo-wall.svg',
         fit: BoxFit.cover,
         alignment: Alignment.bottomCenter,
       ),
