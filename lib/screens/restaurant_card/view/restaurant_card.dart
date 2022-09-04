@@ -31,7 +31,7 @@ class RestaurantCard extends StatelessWidget {
         elevation: 2,
         borderRadius: BorderRadius.circular(10),
         child: SizedBox(
-          height: 210,
+          height: 220,
           width: 250,
           child: Column(
             children: [
@@ -115,10 +115,14 @@ class RestaurantCard extends StatelessWidget {
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                restaurant.menu!.menu!,
-                                style: Theme.of(context).textTheme.headline3,
+                              SizedBox(
+                                width: 150,
+                                child: Text(
+                                  restaurant.menu!.menu!,
+                                  style: Theme.of(context).textTheme.headline3,
+                                ),
                               ),
                               if (restaurant.rating != null) ...[
                                 Container(
@@ -156,10 +160,10 @@ class RestaurantCard extends StatelessWidget {
                               ]
                             ],
                           ),
-                          Text(
+                          /*Text(
                             'Noodles, pasta, vegan', //TODO
                             style: Theme.of(context).textTheme.subtitle2,
-                          )
+                          )*/
                         ],
                       ),
                     ),
