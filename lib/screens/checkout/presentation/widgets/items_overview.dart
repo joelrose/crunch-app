@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/shared/price_calculation.dart';
 import 'package:pickup/shared/utilities.dart';
@@ -62,9 +63,9 @@ class _Item extends StatelessWidget {
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.only(right: 10),
           child: Text(
-            'Delete item',
+            context.l10n.deleteItem,
             style: Theme.of(context).textTheme.headline4!.copyWith(
-                  color: AlpacaColor.blackColor,
+                  color: AlpacaColor.white100Color,
                 ),
           ),
         ),
