@@ -22,4 +22,7 @@ class CheckoutRepository {
 
   Future<void> addItem(CreateOrderItemDto item) =>
       _checkoutApi.addItem(item);
+
+  Future<void> clear() =>
+      _checkoutApi.clear();
 }

@@ -43,3 +43,7 @@ class CheckoutBasketItemQuantityDecremented extends CheckoutBasketItemEvent {
   const CheckoutBasketItemQuantityDecremented({required int itemIndex})
       : super(itemIndex: itemIndex);
 }
+
+class CheckoutBasketClear extends CheckoutBasketEvent {
+  const CheckoutBasketClear();
+}
