@@ -19,7 +19,7 @@ class RestaurantListView extends StatelessWidget {
             padding: isHorizontal
                 ? const EdgeInsets.symmetric(horizontal: 20)
                 : EdgeInsets.zero,
-            height: 195,
+            height: 200,
             child: ListView.separated(
               clipBehavior: Clip.none,
               scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,
@@ -40,7 +40,7 @@ class RestaurantListView extends StatelessWidget {
         return SkeletonLoader(
           builder: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
-            height: 195,
+            height: 220,
             child: ListView.separated(
               clipBehavior: Clip.none,
               scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,

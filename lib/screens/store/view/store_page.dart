@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
+import 'package:pickup/screens/app/bloc/checkout_basket_bloc.dart';
 import 'package:pickup/screens/store/cubit/store_cubit.dart';
 import 'package:pickup/screens/store/view/store_view.dart';
 
@@ -13,6 +14,8 @@ class StorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<CheckoutBasketBloc>().add(const CheckoutBasketClear());
+
     return BlocProvider(
       create: (_) => StoreCubit(
         context.read<HermesRepository>(),
