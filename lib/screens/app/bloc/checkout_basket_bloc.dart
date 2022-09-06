@@ -16,6 +16,7 @@ class CheckoutBasketBloc
     on<CheckoutBasketItemQuantityIncremented>(_onItemIncremented);
     on<CheckoutBasketItemDeleted>(_onItemDeleted);
     on<CheckoutBasketItemAdded>(_onItemAdded);
+    on<CheckoutBasketClear>(_onClear);
   }
 
   final CheckoutRepository _checkoutRepository;
@@ -64,6 +65,13 @@ class CheckoutBasketBloc
     Emitter<CheckoutBasketState> emit,
   ) async {
     await _checkoutRepository.addItem(event.item);
+  }
+
+  Future<void> _onClear(
+    CheckoutBasketClear event,
+    Emitter<CheckoutBasketState> emit,
+  ) async {
+    await _checkoutRepository.clear();
   }
 
   int getAmount(String plu) {
