@@ -37,11 +37,11 @@ class StoreInformation extends StatelessWidget {
               ],
             ),
           ),
-          StoreInformationItem(
+          /*StoreInformationItem(
             icon: 'assets/icons/clock-opening-times.svg',
             title: context.l10n.storeOpenTimes,
             description: _getOpeningTimes(context, model.menu!.availabilities!),
-          ),
+          ),*/
           StoreInformationItem(
             icon: 'assets/icons/phone-store-address.svg',
             title: context.l10n.storeContactNumber,
@@ -57,7 +57,7 @@ class StoreInformation extends StatelessWidget {
     );
   }
 
-  String _getOpeningTimes(
+  /*String _getOpeningTimes(
     BuildContext context,
     List<DeliverectAvailabilityModel> availabilities,
   ) {
@@ -69,7 +69,7 @@ class StoreInformation extends StatelessWidget {
         )
         .toList();
 
-    String openingTimes = context.l10n.closed;
+    /*String openingTimes = context.l10n.closed;
     for (final hour in todaysOpeningHours) {
       final startTime = hour.startTime!.split(':');
       // final endTime = hour.startTime!.split(':');
@@ -84,6 +84,6 @@ class StoreInformation extends StatelessWidget {
       }
     }
 
-    return openingTimes;
-  }
+    return openingTimes;*/
+  }*/
 }

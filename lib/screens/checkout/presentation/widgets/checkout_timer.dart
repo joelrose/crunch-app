@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/checkout/cubits/checkout_timer_cubit/checkout_time_cubit.dart';
-import 'package:pickup/screens/checkout/util/extensions.dart';
 import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 
 class CheckoutTimer extends StatelessWidget {
@@ -56,7 +55,7 @@ class CheckoutTimer extends StatelessWidget {
     );
   }
 }
-
+/*
 class PickUpTimeBottomSheet extends StatefulWidget {
   const PickUpTimeBottomSheet({
     Key? key,
@@ -264,3 +263,4 @@ class _PickUpTimeBottomSheetState extends State<PickUpTimeBottomSheet> {
     );
   }
 }
+*/

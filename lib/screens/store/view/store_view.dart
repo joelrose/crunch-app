@@ -23,132 +23,155 @@ class StoreView extends StatelessWidget {
     return BlocBuilder<StoreCubit, StoreState>(
       builder: (context, state) {
         if (state.status.isSuccess || state.status.isReload) {
-          final model = state.menu!;
-
-          return Builder(
-            builder: (context) {
-              final checkoutItems = context.select(
-                (CheckoutBasketBloc bloc) => bloc.state.checkoutItems,
-              );
-
-              final storeFloatingButtonText = context.l10n
-                  .storeFloatingButtonText(_getItemsInCart(checkoutItems));
-              final floatingButtonText = '$storeFloatingButtonText ->';
-
-              return PageWrapper(
-                floatingActionButtonWidget: Visibility(
-                  visible: checkoutItems.isNotEmpty,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: CheckoutButton(
-                      onPressed: () {
-                        HapticFeedback.mediumImpact();
-                        Navigator.of(context).push(
-                          CheckoutPage.route(
-                            menu: model,
-                          ),
-                        );
-                      },
-                      buttonText: floatingButtonText,
-                      priceText: Utilities.currencyFormat(
-                        PriceCalulcation.getPriceOfItems(checkoutItems),
-                      ),
-                      textColor: AlpacaColor.white100Color,
-                    ),
-                  ),
-                ),
-                padding: EdgeInsets.zero,
-                backgroundColor: AlpacaColor.white100Color,
-                statusBarStyle: SystemUiOverlayStyle.dark,
-                child: AlpacaStretchyHeader(
-                  image: model.menu?.menuImageUrl ?? '',
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const StoreOverview(),
-                        const Divider(height: 0),
-                        const StoreMenueList(),
-                        if (checkoutItems.isNotEmpty)
-                          const SizedBox(
-                            height: 80,
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
+          return _Content(menu: state.menu!);
         } else {
-          return Container(
-            color: Colors.white,
-            child: SkeletonLoader(
-              builder: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    width: 140,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    margin: const EdgeInsets.only(left: 30),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    width: 112,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    margin: const EdgeInsets.only(left: 30),
-                  ),
-                  const SizedBox(height: 15),
-                  const Divider(
-                    color: Colors.white,
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    width: 80,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    margin: const EdgeInsets.only(left: 30),
-                  ),
-                  const SizedBox(height: 10),
-                  const Divider(
-                    color: Colors.white,
-                  ),
-                  _buildSkeletonTile(),
-                  _buildSkeletonTile(),
-                ],
-              ),
-              highlightColor: const Color(0xFFF1EFEF),
-            ),
-          );
+          return const _SkeletonView();
         }
       },
     );
   }
+}
 
-  Widget _buildSkeletonTile() {
+class _Content extends StatelessWidget {
+  const _Content({Key? key, required this.menu}) : super(key: key);
+
+  final GetMenuResponseDto menu;
+
+  @override
+  Widget build(BuildContext context) {
+    final checkoutItems = context.select(
+      (CheckoutBasketBloc bloc) => bloc.state.checkoutItems,
+    );
+
+    final storeFloatingButtonText =
+        context.l10n.storeFloatingButtonText(_getItemsInCart(checkoutItems));
+    final floatingButtonText = '$storeFloatingButtonText ->';
+
+    return PageWrapper(
+      floatingActionButtonWidget: Visibility(
+        visible: checkoutItems.isNotEmpty,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: CheckoutButton(
+            onPressed: () {
+              HapticFeedback.mediumImpact();
+              Navigator.of(context).push(
+                CheckoutPage.route(
+                  menu: menu,
+                ),
+              );
+            },
+            buttonText: floatingButtonText,
+            priceText: Utilities.currencyFormat(
+              PriceCalulcation.getPriceOfItems(checkoutItems),
+            ),
+            textColor: AlpacaColor.white100Color,
+          ),
+        ),
+      ),
+      padding: EdgeInsets.zero,
+      backgroundColor: AlpacaColor.white100Color,
+      statusBarStyle: SystemUiOverlayStyle.dark,
+      child: AlpacaStretchyHeader(
+        image: menu.menu?.menuImageUrl ?? '',
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const StoreOverview(),
+              const Divider(height: 0),
+              const StoreMenueList(),
+              if (checkoutItems.isNotEmpty)
+                const SizedBox(
+                  height: 80,
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  int _getItemsInCart(List<CreateOrderItemDto>? checkoutItems) {
+    return checkoutItems!.fold(0, (p, c) => p + c.quantity!);
+  }
+}
+
+class _SkeletonView extends StatelessWidget {
+  const _SkeletonView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: SkeletonLoader(
+        builder: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
+            const SizedBox(
+              height: 26,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              width: 140,
+              height: 25,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              margin: const EdgeInsets.only(left: 30),
+            ),
+            const SizedBox(height: 15),
+            Container(
+              width: 112,
+              height: 20,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              margin: const EdgeInsets.only(left: 30),
+            ),
+            const SizedBox(height: 15),
+            const Divider(
+              color: Colors.white,
+            ),
+            const SizedBox(height: 15),
+            Container(
+              width: 80,
+              height: 25,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              margin: const EdgeInsets.only(left: 30),
+            ),
+            const SizedBox(height: 10),
+            const Divider(
+              color: Colors.white,
+            ),
+            const _SkeletonTile(),
+            const _SkeletonTile(),
+          ],
+        ),
+        highlightColor: const Color(0xFFF1EFEF),
+      ),
+    );
+  }
+}
+
+class _SkeletonTile extends StatelessWidget {
+  const _SkeletonTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         const SizedBox(height: 15),
@@ -231,9 +254,5 @@ class StoreView extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  int _getItemsInCart(List<CreateOrderItemDto>? checkoutItems) {
-    return checkoutItems!.fold(0, (p, c) => p + c.quantity!);
   }
 }

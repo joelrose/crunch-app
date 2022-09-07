@@ -82,7 +82,7 @@ class _SliderState extends State<_Slider> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _pages = [
+    final List<Widget> pages = [
       SlideWidget(
         title: context.l10n.explanationTitle1,
         description: context.l10n.explanationDescription1,
@@ -105,17 +105,17 @@ class _SliderState extends State<_Slider> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.65,
           child: PageView.builder(
-            itemCount: _pages.length,
+            itemCount: pages.length,
             controller: _pageController,
             physics: const ClampingScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              return _pages[index % _pages.length];
+              return pages[index % pages.length];
             },
           ),
         ),
         DotsIndicator(
           controller: _pageController,
-          itemCount: _pages.length,
+          itemCount: pages.length,
           normalColor: Theme.of(context).scaffoldBackgroundColor,
           onPageSelected: (int page) => _pageController.animateToPage(
             page,

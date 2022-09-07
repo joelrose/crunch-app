@@ -169,6 +169,7 @@ class _ItemContent extends StatelessWidget {
                       height: 10,
                     ),
                     if (product.description != null &&
+                        product.description != ' ' &&
                         product.description != '') ...[
                       Text(
                         product.description!,

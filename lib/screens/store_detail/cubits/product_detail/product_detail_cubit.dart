@@ -49,14 +49,14 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
   final int _optionIndex;
 
   void _setup(List<CreateOrderItemDto> orderItems) {
-    final _value = _categoryOptions.elementAt(_optionIndex).childProduct!;
+    final value = _categoryOptions.elementAt(_optionIndex).childProduct!;
 
     final orderDto = orderItems[_categoryIndex].items!;
 
     final isRadio = _category.min == 1 && _category.max == 1;
-    final isSnoozed = _value.snoozed!;
+    final isSnoozed = value.snoozed!;
     final isSelected = orderDto.indexWhere(
-          (element) => element.plu == _value.plu!,
+          (element) => element.plu == value.plu!,
         ) !=
         -1;
 
@@ -66,7 +66,7 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
         isRadio: isRadio,
         isSnoozed: isSnoozed,
         isSelected: isSelected,
-        item: _value,
+        item: value,
         orderDto: orderDto,
       ),
     );

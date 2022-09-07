@@ -115,7 +115,7 @@ class _Item extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (item.items != null) ...[
+                if (item.items != null && item.items!.isNotEmpty) ...[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

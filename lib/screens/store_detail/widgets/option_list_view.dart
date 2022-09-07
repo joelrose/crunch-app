@@ -1,7 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/store_detail/cubits/cubits.dart';
 import 'package:pickup/screens/store_detail/widgets/option_item.dart';
 

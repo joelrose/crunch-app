@@ -16,7 +16,7 @@ class PriceSummary extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           border: Border.all(color: AlpacaColor.lightGreyColor90),
           borderRadius: BorderRadius.circular(8),
