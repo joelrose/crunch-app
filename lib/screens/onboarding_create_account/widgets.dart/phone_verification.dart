@@ -72,6 +72,8 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   }
 
   Future<void> _sendVerification() async {
+    context.read<LoadingOverlayRepository>().show();
+
     await context
         .read<AuthenticationRepository>()
         .firebaseAuth
@@ -82,10 +84,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
 
             startTimer();
 
-            final loadingOverlayRepository =
-                context.read<LoadingOverlayRepository>();
-
-            loadingOverlayRepository.hide();
+            context.read<LoadingOverlayRepository>().hide();
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
           verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
@@ -96,6 +95,8 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
   }
 
   Future<void> _verifyNumber(String code) async {
+    context.read<LoadingOverlayRepository>().show();
+
     final credential = PhoneAuthProvider.credential(
       verificationId: _verificationId ?? '',
       smsCode: code,
@@ -107,12 +108,16 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
           .firebaseAuth
           .signInWithCredential(credential);
 
-      if (!mounted) return;
+      if (!mounted) {
+        return;
+      }
 
       final account =
           await context.read<HermesRepository>().client.apiUsersGet();
 
       if (!mounted) return;
+
+      context.read<LoadingOverlayRepository>().hide();
 
       if (account.isSuccessful) {
         Navigator.of(context).pushNamedAndRemoveUntil(
@@ -123,6 +128,8 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
         context.read<OnboardingCreateAccountCubit>().nextStep();
       }
     } catch (exception) {
+      context.read<LoadingOverlayRepository>().hide();
+
       _errorController.add(
         ErrorAnimationType.shake,
       );
