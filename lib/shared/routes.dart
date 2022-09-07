@@ -14,7 +14,7 @@ class Router {
           builder: (_) => const LoadingScreen(),
         );
       case HomePage.route:
-        return PageRouteBuilder(pageBuilder: (c, a1, a2) => const HomePage());
+        return CupertinoPageRoute(builder: (_) => const HomePage());
       case ProfilePage.route:
         return CupertinoPageRoute(builder: (_) => ProfilePage());
       case StorePage.route:
