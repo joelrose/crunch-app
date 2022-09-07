@@ -3,7 +3,6 @@ import 'package:fleasy/fleasy.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/checkout/domain/entities/opening_hour.dart';
-import 'package:pickup/screens/checkout/util/helper.dart';
 
 part 'checkout_time_state.dart';
 
@@ -17,24 +16,24 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
     openingHours.removeWhere(
       (element) => element.dayOfWeek!.index != currentTime.weekday,
     );
-    final availableOpeningTimes = getOpeningHours(
+    /*final availableOpeningTimes = getOpeningHours(
       currentDateTime: currentTime,
       availabilityModels: openingHours,
     );
-    availableOpeningTimes.sort((a, b) => a.hour.compareTo(b.hour));
+    availableOpeningTimes.sort((a, b) => a.hour.compareTo(b.hour));*/
 
     return CheckoutTimeCubit._internal(
       pickupTime: currentTime, // currentTime.add(const Duration(minutes: 20)),
       currentSelectedHour:
           const OpeningHour(0, []), //  availableOpeningTimes[0],
       currentSelectedMinuteIndex: 0,
-      availableOpeningTimes: availableOpeningTimes,
+      //availableOpeningTimes: availableOpeningTimes,
     );
   }
 
   CheckoutTimeCubit._internal({
     required DateTime pickupTime,
-    required List<OpeningHour> availableOpeningTimes,
+    //required List<OpeningHour> availableOpeningTimes,
     required OpeningHour currentSelectedHour,
     required int currentSelectedMinuteIndex,
   }) : super(
@@ -42,7 +41,7 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
             pickupTime,
             currentSelectedHour,
             currentSelectedMinuteIndex,
-            availableOpeningTimes,
+           // availableOpeningTimes,
           ),
         );
 
@@ -55,7 +54,7 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
       ),
     );
   }
-
+/*
   void updateCurrentSelectedHour(
     int hourIndex,
   ) {
@@ -87,5 +86,5 @@ class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
       );
       //minuteController.jumpToItem(newMinuteIndex);
     }
-  }
+  }*/
 }

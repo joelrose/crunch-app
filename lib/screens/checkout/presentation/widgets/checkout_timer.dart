@@ -55,7 +55,7 @@ class CheckoutTimer extends StatelessWidget {
     );
   }
 }
-
+/*
 class PickUpTimeBottomSheet extends StatefulWidget {
   const PickUpTimeBottomSheet({
     Key? key,
@@ -263,3 +263,4 @@ class _PickUpTimeBottomSheetState extends State<PickUpTimeBottomSheet> {
     );
   }
 }
+*/

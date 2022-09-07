@@ -14,6 +14,8 @@ import 'package:pickup/screens/checkout/presentation/screen/checkout_page.dart';
 
 import '../../../helpers/pump_app.dart';
 
+/*
+
 final mockMenuModel = GetMenuResponseDto(
   id: 'id',
   googleMapsLink: 'googleMapsLink',
@@ -155,3 +157,4 @@ void main() {
     },
   );
 }
+*/
