@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/home/home.dart';
 
 class StepPlaceholder extends StatelessWidget {
@@ -19,7 +20,7 @@ class StepPlaceholder extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(right: size.width * 0.2),
           child: Text(
-            'You’re all set!',
+            context.l10n.onboardingPlaceholderTitle,
             style: theme.headline1!.merge(
               const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -34,7 +35,7 @@ class StepPlaceholder extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 40, top: 10),
           child: Text(
-            '''We have sent you a verification email to your email address - please make sure to verify your email address within 24 hours. \n\nEnjoy crunch!''',
+            context.l10n.onboardingPlaceholderText,
             style: theme.headline5,
           ),
         ),
@@ -44,7 +45,7 @@ class StepPlaceholder extends StatelessWidget {
         ),
         Container(height: 40),
         ActionButton(
-          buttonText: 'Start exploring',
+          buttonText: context.l10n.onboardingPlaceholderCTA,
           onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
             HomePage.route,
             (route) => false,

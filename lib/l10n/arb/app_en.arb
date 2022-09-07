@@ -112,5 +112,8 @@
    "dataPrivacy": "Data Privacy",
    "contactUs": "Contact us",
    "visitOurWebsite": "Visit our website",
-   "deleteItem": "Delete item"
+   "deleteItem": "Delete item",
+   "onboardingPlaceholderTitle": "You're all set!",
+   "onboardingPlaceholderText": "We are very happy that you are trying Crunch. We are currently building a few more features that you will be able to use soon. Until then, you can choose a few restaurants and place your order. We wish you a good appetite!",
+   "onboardingPlaceholderCTA": "Start now"
 }

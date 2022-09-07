@@ -37,9 +37,13 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
 
   late Timer? _timer;
 
+  late FocusNode _focusNode;
+
   @override
   void initState() {
     super.initState();
+
+    _focusNode = FocusNode();
 
     _sendVerification();
   }
@@ -85,6 +89,8 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
             startTimer();
 
             context.read<LoadingOverlayRepository>().hide();
+
+            _focusNode.requestFocus();
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
           verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
@@ -237,7 +243,6 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
       keyboardType: TextInputType.number,
       controller: _textController,
       errorAnimationController: _errorController,
-      autoFocus: true,
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
         borderRadius: BorderRadius.circular(5),
@@ -259,6 +264,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
       },
       appContext: context,
       onChanged: (String value) {},
+      focusNode: _focusNode,
     );
   }
 }
