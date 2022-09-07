@@ -5,7 +5,7 @@ import 'package:hermes_repository/hermes_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import "package:collection/collection.dart";
+import 'package:collection/collection.dart';
 
 class CheckoutItemNotFound implements Exception {}
 

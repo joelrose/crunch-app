@@ -24,7 +24,7 @@ class DiscoverView extends StatelessWidget {
             height: 70,
           ),
           Expanded(
-            child: Container(
+            child: DecoratedBox(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
