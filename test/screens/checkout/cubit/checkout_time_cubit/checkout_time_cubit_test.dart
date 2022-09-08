@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/screens/checkout/cubits/checkout_timer_cubit/checkout_time_cubit.dart';
 import 'package:pickup/screens/checkout/domain/entities/opening_hour.dart';
-
+/*
 CheckoutTimeCubit buildCubit({
   required DateTime currentTime,
   required List<DeliverectAvailabilityModel> openingHours,
@@ -121,3 +121,4 @@ void main() {
     );
   });
 }
+*/

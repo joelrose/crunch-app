@@ -139,8 +139,8 @@ DeliverectAvailabilityModel _$DeliverectAvailabilityModelFromJson(
 
       // FIXED MANUALLY
       dayOfWeek: deliverectDayFromJson((json['dayOfWeek'] as int).toString()),
-      endTime: json['endTime'] as String?,
-      startTime: json['startTime'] as String?,
+      startTimestamp: json['startTimestamp'] as int?,
+      endTimestamp: json['endTimestamp'] as int?,
     );
 
 Map<String, dynamic> _$DeliverectAvailabilityModelToJson(
@@ -156,8 +156,8 @@ Map<String, dynamic> _$DeliverectAvailabilityModelToJson(
   writeNotNull('id', instance.id);
   writeNotNull('createdAt', instance.createdAt?.toIso8601String());
   writeNotNull('dayOfWeek', deliverectDayToJson(instance.dayOfWeek));
-  writeNotNull('endTime', instance.endTime);
-  writeNotNull('startTime', instance.startTime);
+  writeNotNull('startTimestamp', instance.startTimestamp);
+  writeNotNull('endTimestamp', instance.endTimestamp);
   return val;
 }
 
@@ -253,11 +253,6 @@ Map<String, dynamic> _$DeliverectMenuDtoToJson(DeliverectMenuDto instance) {
 
 DeliverectMenusDto _$DeliverectMenusDtoFromJson(Map<String, dynamic> json) =>
     DeliverectMenusDto(
-      availabilities: (json['availabilities'] as List<dynamic>?)
-              ?.map((e) => DeliverectAvailabilityModel.fromJson(
-                  e as Map<String, dynamic>,),)
-              .toList() ??
-          [],
       description: json['description'] as String?,
       menu: json['menu'] as String?,
       menuId: json['menuId'] as String?,
@@ -274,8 +269,6 @@ Map<String, dynamic> _$DeliverectMenusDtoToJson(DeliverectMenusDto instance) {
     }
   }
 
-  writeNotNull('availabilities',
-      instance.availabilities?.map((e) => e.toJson()).toList(),);
   writeNotNull('description', instance.description);
   writeNotNull('menu', instance.menu);
   writeNotNull('menuId', instance.menuId);
@@ -385,6 +378,7 @@ GetMenusResponseDto _$GetMenusResponseDtoFromJson(Map<String, dynamic> json) =>
       rating: (json['rating'] as num?)?.toDouble(),
       reviewCount: json['reviewCount'] as String?,
       averagePickUpTime: json['averagePickUpTime'] as String?,
+      isOpen: json['isOpen'] as bool?,
       menu: json['menu'] == null
           ? null
           : DeliverectMenusDto.fromJson(json['menu'] as Map<String, dynamic>),
@@ -403,6 +397,7 @@ Map<String, dynamic> _$GetMenusResponseDtoToJson(GetMenusResponseDto instance) {
   writeNotNull('rating', instance.rating);
   writeNotNull('reviewCount', instance.reviewCount);
   writeNotNull('averagePickUpTime', instance.averagePickUpTime);
+  writeNotNull('isOpen', instance.isOpen);
   writeNotNull('menu', instance.menu?.toJson());
   return val;
 }

@@ -5,25 +5,25 @@ class CheckoutTimeState extends Equatable {
     this.pickupTime,
     this.currentSelectedHour,
     this.currentSelectedMinuteIndex,
-    this.availableOpeningTimes,
+   // this.availableOpeningTimes,
   );
 
   final DateTime pickupTime;
   final OpeningHour currentSelectedHour;
   final int currentSelectedMinuteIndex;
-  final List<OpeningHour> availableOpeningTimes;
+  //final List<OpeningHour> availableOpeningTimes;
 
   CheckoutTimeState copyWith({
     DateTime? pickupTime,
     OpeningHour? currentSelectedHour,
     int? currentSelectedMinuteIndex,
-    List<OpeningHour>? availableOpeningTimes,
+    //List<OpeningHour>? availableOpeningTimes,
   }) {
     return CheckoutTimeState(
       pickupTime ?? this.pickupTime,
       currentSelectedHour ?? this.currentSelectedHour,
       currentSelectedMinuteIndex ?? this.currentSelectedMinuteIndex,
-      availableOpeningTimes ?? this.availableOpeningTimes,
+      //availableOpeningTimes ?? this.availableOpeningTimes,
     );
   }
 
@@ -32,6 +32,6 @@ class CheckoutTimeState extends Equatable {
         pickupTime,
         currentSelectedHour,
         currentSelectedMinuteIndex,
-        availableOpeningTimes
+        //availableOpeningTimes
       ];
 }

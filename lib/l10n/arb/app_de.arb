@@ -68,7 +68,7 @@
    "ordersEmpty": "Du hast noch keine Bestellungen getätigt.",
    "constructionTitle": "Hey, wir bauen hier etwas tolles. Bleib gespannt!",
    "discoverSubtitle": "Mit der Crunch Beta kannst du Essen zum Mitnehmen bestellen.",
-   "discoverTitle": "Schön, dass du das bist!",
+   "discoverTitle": "Schön, dass du da bist!",
    "viewAll": "Alle anzeigen",
    "searchBarHint": "Suche ...",
    "logout": "Ausloggen",
@@ -114,5 +114,8 @@
    "termsAndConditions": "Allgemeine Geschäftsbedingungen",
    "dataPrivacy": "Datenschutzerklärung",
    "contactUs": "Kontaktiere uns",
-   "visitOurWebsite": "Besuche unsere Website"
+   "visitOurWebsite": "Besuche unsere Website",
+   "onboardingPlaceholderTitle": "Du bist startklar!",
+   "onboardingPlaceholderText": "Wir freuen uns sehr, dass Du Crunch ausprobierst. Wir bauen gerade noch ein paar Features, die Du in Kürze nutzen kannst. Bis dahin kannst Du Dir schon mal ein paar Restaurants aussuchen und Deine Bestellung aufgeben. \nWir wünschen Dir einen guten Appetit!",
+   "onboardingPlaceholderCTA": "Jetzt starten"
 }

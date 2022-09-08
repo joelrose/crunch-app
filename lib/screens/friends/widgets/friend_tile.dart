@@ -25,7 +25,7 @@ class FriendTile extends StatelessWidget {
     final name = '${splitName.first} $lastName';
 
     return Material(
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           color: color.secondaryColor,
           borderRadius: BorderRadius.circular(20),

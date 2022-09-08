@@ -6,7 +6,7 @@ class OnboardingCreateAccountState extends Equatable {
   OnboardingCreateAccountState({
     OnboardingStep? step,
     required this.data,
-  })  : maxSteps = data.isSocialLogin ? 2 : 3,
+  })  : maxSteps = 2,
         step = step ??
             (data.isSocialLogin
                 ? OnboardingStep.name

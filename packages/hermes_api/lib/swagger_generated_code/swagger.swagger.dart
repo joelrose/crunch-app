@@ -379,8 +379,8 @@ class DeliverectAvailabilityModel {
     this.id,
     this.createdAt,
     this.dayOfWeek,
-    this.endTime,
-    this.startTime,
+    this.startTimestamp,
+    this.endTimestamp,
   });
 
   factory DeliverectAvailabilityModel.fromJson(Map<String, dynamic> json) =>
@@ -397,10 +397,10 @@ class DeliverectAvailabilityModel {
     fromJson: deliverectDayFromJson,
   )
   final enums.DeliverectDay? dayOfWeek;
-  @JsonKey(name: 'endTime', includeIfNull: false)
-  final String? endTime;
-  @JsonKey(name: 'startTime', includeIfNull: false)
-  final String? startTime;
+  @JsonKey(name: 'startTimestamp', includeIfNull: false)
+  final int? startTimestamp;
+  @JsonKey(name: 'endTimestamp', includeIfNull: false)
+  final int? endTimestamp;
   static const fromJsonFactory = _$DeliverectAvailabilityModelFromJson;
   static const toJsonFactory = _$DeliverectAvailabilityModelToJson;
   Map<String, dynamic> toJson() => _$DeliverectAvailabilityModelToJson(this);
@@ -417,12 +417,12 @@ class DeliverectAvailabilityModel {
             (identical(other.dayOfWeek, dayOfWeek) ||
                 const DeepCollectionEquality()
                     .equals(other.dayOfWeek, dayOfWeek)) &&
-            (identical(other.endTime, endTime) ||
+            (identical(other.startTimestamp, startTimestamp) ||
                 const DeepCollectionEquality()
-                    .equals(other.endTime, endTime)) &&
-            (identical(other.startTime, startTime) ||
+                    .equals(other.startTimestamp, startTimestamp)) &&
+            (identical(other.endTimestamp, endTimestamp) ||
                 const DeepCollectionEquality()
-                    .equals(other.startTime, startTime)));
+                    .equals(other.endTimestamp, endTimestamp)));
   }
 
   @override
@@ -430,26 +430,24 @@ class DeliverectAvailabilityModel {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(dayOfWeek) ^
-      const DeepCollectionEquality().hash(endTime) ^
-      const DeepCollectionEquality().hash(startTime) ^
+      const DeepCollectionEquality().hash(startTimestamp) ^
+      const DeepCollectionEquality().hash(endTimestamp) ^
       runtimeType.hashCode;
 }
 
 extension $DeliverectAvailabilityModelExtension on DeliverectAvailabilityModel {
-  DeliverectAvailabilityModel copyWith({
-    String? id,
-    DateTime? createdAt,
-    enums.DeliverectDay? dayOfWeek,
-    String? endTime,
-    String? startTime,
-  }) {
+  DeliverectAvailabilityModel copyWith(
+      {String? id,
+      DateTime? createdAt,
+      enums.DeliverectDay? dayOfWeek,
+      int? startTimestamp,
+      int? endTimestamp}) {
     return DeliverectAvailabilityModel(
-      id: id ?? this.id,
-      createdAt: createdAt ?? this.createdAt,
-      dayOfWeek: dayOfWeek ?? this.dayOfWeek,
-      endTime: endTime ?? this.endTime,
-      startTime: startTime ?? this.startTime,
-    );
+        id: id ?? this.id,
+        createdAt: createdAt ?? this.createdAt,
+        dayOfWeek: dayOfWeek ?? this.dayOfWeek,
+        startTimestamp: startTimestamp ?? this.startTimestamp,
+        endTimestamp: endTimestamp ?? this.endTimestamp);
   }
 }
 
@@ -1096,6 +1094,7 @@ class GetMenusResponseDto {
     this.rating,
     this.reviewCount,
     this.averagePickUpTime,
+    this.isOpen,
     this.menu,
   });
 
@@ -1110,6 +1109,8 @@ class GetMenusResponseDto {
   final String? reviewCount;
   @JsonKey(name: 'averagePickUpTime', includeIfNull: false)
   final String? averagePickUpTime;
+  @JsonKey(name: 'isOpen', includeIfNull: false)
+  final bool? isOpen;
   @JsonKey(name: 'menu', includeIfNull: false)
   final DeliverectMenusDto? menu;
   static const fromJsonFactory = _$GetMenusResponseDtoFromJson;
@@ -1130,6 +1131,8 @@ class GetMenusResponseDto {
             (identical(other.averagePickUpTime, averagePickUpTime) ||
                 const DeepCollectionEquality()
                     .equals(other.averagePickUpTime, averagePickUpTime)) &&
+            (identical(other.isOpen, isOpen) ||
+                const DeepCollectionEquality().equals(other.isOpen, isOpen)) &&
             (identical(other.menu, menu) ||
                 const DeepCollectionEquality().equals(other.menu, menu)));
   }
@@ -1140,25 +1143,26 @@ class GetMenusResponseDto {
       const DeepCollectionEquality().hash(rating) ^
       const DeepCollectionEquality().hash(reviewCount) ^
       const DeepCollectionEquality().hash(averagePickUpTime) ^
+      const DeepCollectionEquality().hash(isOpen) ^
       const DeepCollectionEquality().hash(menu) ^
       runtimeType.hashCode;
 }
 
 extension $GetMenusResponseDtoExtension on GetMenusResponseDto {
-  GetMenusResponseDto copyWith({
-    String? id,
-    double? rating,
-    String? reviewCount,
-    String? averagePickUpTime,
-    DeliverectMenusDto? menu,
-  }) {
+  GetMenusResponseDto copyWith(
+      {String? id,
+      double? rating,
+      String? reviewCount,
+      String? averagePickUpTime,
+      bool? isOpen,
+      DeliverectMenusDto? menu}) {
     return GetMenusResponseDto(
-      id: id ?? this.id,
-      rating: rating ?? this.rating,
-      reviewCount: reviewCount ?? this.reviewCount,
-      averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
-      menu: menu ?? this.menu,
-    );
+        id: id ?? this.id,
+        rating: rating ?? this.rating,
+        reviewCount: reviewCount ?? this.reviewCount,
+        averagePickUpTime: averagePickUpTime ?? this.averagePickUpTime,
+        isOpen: isOpen ?? this.isOpen,
+        menu: menu ?? this.menu);
   }
 }
 

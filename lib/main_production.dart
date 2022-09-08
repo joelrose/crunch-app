@@ -25,27 +25,27 @@ Future<void> main() async {
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  final _authenticationRepository = AuthenticationRepository();
+  final authenticationRepository = AuthenticationRepository();
 
-  final _oneSignalRepository = OneSignalRepository(
-    authenticationRepository: _authenticationRepository,
+  final oneSignalRepository = OneSignalRepository(
+    authenticationRepository: authenticationRepository,
   );
 
-  final _hermesRepository = HermesRepository(
+  final hermesRepository = HermesRepository(
     apiUrl: dotenv.get('API_URL'),
-    authenticationRepository: _authenticationRepository,
+    authenticationRepository: authenticationRepository,
   );
 
-  final _stripeRepository = StripeRepository(
-    hermesRepository: _hermesRepository,
+  final stripeRepository = StripeRepository(
+    hermesRepository: hermesRepository,
   );
 
-  final _checkoutRepository = CheckoutRepository(
+  final checkoutRepository = CheckoutRepository(
     checkoutApi:
         LocalStorageCheckoutApi(plugin: await SharedPreferences.getInstance()),
   );
 
-  _stripeRepository.setupStripe(
+  stripeRepository.setupStripe(
     merchantIdentifier: dotenv.env['STRIPE_MERCHANT_IDENTIFIER']!,
     stripeKey: dotenv.env['STRIPE_KEY']!,
     isTestEnvironment: false,
@@ -54,11 +54,11 @@ Future<void> main() async {
   runZonedGuarded(
     () async => runApp(
       App(
-        authenticationRepository: _authenticationRepository,
-        checkoutRepository: _checkoutRepository,
-        oneSignalRepository: _oneSignalRepository,
-        hermesRepository: _hermesRepository,
-        stripeRepository: _stripeRepository,
+        authenticationRepository: authenticationRepository,
+        checkoutRepository: checkoutRepository,
+        oneSignalRepository: oneSignalRepository,
+        hermesRepository: hermesRepository,
+        stripeRepository: stripeRepository,
         loadingOverlayRepository: LoadingOverlayRepository(),
       ),
     ),
