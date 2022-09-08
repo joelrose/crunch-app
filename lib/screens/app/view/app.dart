@@ -1,4 +1,5 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:app_outdated_repository/app_outdated_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:checkout_repository/checkout_repository.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -8,7 +9,8 @@ import 'package:hermes_repository/hermes_repository.dart';
 import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
-import 'package:pickup/screens/app/bloc/checkout_basket_bloc.dart';
+import 'package:pickup/screens/app/bloc/app_outdated/app_outdated_bloc.dart';
+import 'package:pickup/screens/app/bloc/checkout_basket/checkout_basket_bloc.dart';
 import 'package:pickup/screens/app/cubit/language/language_cubit.dart';
 import 'package:pickup/screens/app/cubit/user/user_cubit.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
@@ -25,12 +27,14 @@ class App extends StatelessWidget {
     required StripeRepository stripeRepository,
     required CheckoutRepository checkoutRepository,
     required LoadingOverlayRepository loadingOverlayRepository,
+    required AppOutdatedRepository appOutdatedRepository,
   })  : _authenticationRepository = authenticationRepository,
         _oneSignalRepository = oneSignalRepository,
         _hermesRepository = hermesRepository,
         _stripeRepository = stripeRepository,
         _checkoutRepository = checkoutRepository,
         _loadingOverlayRepository = loadingOverlayRepository,
+        _appOutdatedRepository = appOutdatedRepository,
         super(key: key);
 
   final AuthenticationRepository _authenticationRepository;
@@ -39,6 +43,7 @@ class App extends StatelessWidget {
   final StripeRepository _stripeRepository;
   final CheckoutRepository _checkoutRepository;
   final LoadingOverlayRepository _loadingOverlayRepository;
+  final AppOutdatedRepository _appOutdatedRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +55,7 @@ class App extends StatelessWidget {
         RepositoryProvider.value(value: _stripeRepository),
         RepositoryProvider.value(value: _checkoutRepository),
         RepositoryProvider.value(value: _loadingOverlayRepository),
+        RepositoryProvider.value(value: _appOutdatedRepository),
       ],
       child: const AppView(),
     );
@@ -75,6 +81,13 @@ class AppView extends StatelessWidget {
             checkoutRepository: context.read<CheckoutRepository>(),
           )..add(
               const CheckoutBasketSubscriptionRequested(),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => AppOutdatedBloc(
+            appOutdatedRepository: context.read<AppOutdatedRepository>(),
+          )..add(
+              const AppOutdatedSubscriptionRequested(),
             ),
         ),
         BlocProvider(create: (context) => LanguageCubit()),
