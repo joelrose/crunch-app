@@ -107,9 +107,7 @@
    "feedbackSliderUnlikely": "Weniger wahrscheinlich",
    "feedbackSliderLikely": "Sehr wahrscheinlich",
    "feedbackTextfieldHint": "Was erwartest du von diesem Feature?\nHast du genaue Vorstellungen?",
-
    "deleteItem": "Artikel löschen",
-
    "language": "Sprache",
    "termsAndConditions": "Allgemeine Geschäftsbedingungen",
    "dataPrivacy": "Datenschutzerklärung",
@@ -117,5 +115,7 @@
    "visitOurWebsite": "Besuche unsere Website",
    "onboardingPlaceholderTitle": "Du bist startklar!",
    "onboardingPlaceholderText": "Wir freuen uns sehr, dass Du Crunch ausprobierst. Wir bauen gerade noch ein paar Features, die Du in Kürze nutzen kannst. Bis dahin kannst Du Dir schon mal ein paar Restaurants aussuchen und Deine Bestellung aufgeben. \nWir wünschen Dir einen guten Appetit!",
-   "onboardingPlaceholderCTA": "Jetzt starten"
+   "onboardingPlaceholderCTA": "Jetzt starten",
+   "appOutdatedTitle": "Sieht aus als wäre deine App-Version veraltet",
+   "appOutdatedSubtitle": "Bitte gehe in Testflight und update deine Crunch App. Wenn du Probleme hast, schreib uns bitte eine Mail an help@getcrunch.tech."
 }
