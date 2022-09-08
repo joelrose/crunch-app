@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_outdated_repository/app_outdated_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:checkout_repository/checkout_repository.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -9,6 +10,7 @@ import 'package:hermes_repository/hermes_repository.dart';
 import 'package:loading_overlay_repository/loading_overlay_repository.dart';
 import 'package:local_storage_checkout_api/local_storage_checkout_api.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/shared/enum/enviroment.dart';
 import 'package:stripe_repository/stripe_repository.dart';
@@ -27,13 +29,19 @@ Future<void> main() async {
 
   final authenticationRepository = AuthenticationRepository();
 
+  final appOutdatedRepository = AppOutdatedRepository();
+
   final oneSignalRepository = OneSignalRepository(
     authenticationRepository: authenticationRepository,
   );
 
+  final packageInfo = await PackageInfo.fromPlatform();
+
   final hermesRepository = HermesRepository(
+    appVersion: '${packageInfo.version} (${packageInfo.buildNumber})',
     apiUrl: dotenv.get('API_URL'),
     authenticationRepository: authenticationRepository,
+    appOutdatedRepository: appOutdatedRepository,
   );
 
   final stripeRepository = StripeRepository(
@@ -54,6 +62,7 @@ Future<void> main() async {
   runZonedGuarded(
     () async => runApp(
       App(
+        appOutdatedRepository: appOutdatedRepository,
         authenticationRepository: authenticationRepository,
         checkoutRepository: checkoutRepository,
         oneSignalRepository: oneSignalRepository,
