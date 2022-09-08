@@ -154,6 +154,8 @@ PODS:
     - Flutter
     - OneSignalXCFramework (= 3.10.1)
   - OneSignalXCFramework (3.10.1)
+  - package_info_plus (0.4.5):
+    - Flutter
   - path_provider_ios (0.0.1):
     - Flutter
   - phone_number (0.12.0):
@@ -202,6 +204,7 @@ DEPENDENCIES:
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - phone_number (from `.symlinks/plugins/phone_number/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
@@ -257,6 +260,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
   onesignal_flutter:
     :path: ".symlinks/plugins/onesignal_flutter/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   phone_number:
@@ -300,6 +305,7 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   onesignal_flutter: a89207b9d7e97cc9d7d12bcfb4a25f62aedc445b
   OneSignalXCFramework: fe027712118f2862ab193b72270487f11450ea63
+  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   phone_number: 7e56d6e4e43fbe37507512a3aab3f11cf082af69
   PhoneNumberKit: 441e8b26ec88d598e3591de9061eff18f5dd12e8

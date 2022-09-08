@@ -21,6 +21,7 @@ class MockHermesService implements HermesRepository {
     );
   }
 
+  String? appVersion;
   late ChopperClient _chopperClient;
 
   @override
