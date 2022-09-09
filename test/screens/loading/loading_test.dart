@@ -33,7 +33,7 @@ void main() {
       expect(find.byType(SvgPicture), findsOneWidget);
     });
 
-    testWidgets('loading screen loaded unauthenticated', (tester) async {
+/*    testWidgets('loading screen loaded unauthenticated', (tester) async {
       when(() => mockAuthService.getUser).thenAnswer(
         (_) => Future.value(),
       );
@@ -82,6 +82,6 @@ void main() {
           any(),
         ),
       ).called(1);
-    });
+    });*/
   });
 }

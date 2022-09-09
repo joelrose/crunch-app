@@ -37,7 +37,7 @@ void main() {
           routes.Router.generateRoute(
             const RouteSettings(name: HomePage.route),
           ),
-          isA<PageRouteBuilder<void>>(),
+          isA<CupertinoPageRoute<void>>(),
         );
       },
     );

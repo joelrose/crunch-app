@@ -14,6 +14,8 @@ import 'package:pickup/screens/checkout/presentation/screen/checkout_page.dart';
 
 import '../../../helpers/pump_app.dart';
 
+void main() {}
+
 /*
 
 final mockMenuModel = GetMenuResponseDto(

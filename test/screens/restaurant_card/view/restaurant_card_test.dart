@@ -18,6 +18,7 @@ final GetMenusResponseDto mockRestaurantModel = GetMenusResponseDto(
   id: '879398514',
   rating: 4.5,
   reviewCount: '10',
+  isOpen: true,
 );
 
 void main() {
