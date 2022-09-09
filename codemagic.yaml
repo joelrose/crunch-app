@@ -193,7 +193,7 @@ workflows:
         channel: '#codemagic-pipeline'
         notify_on_build_start: false
       firebase:
-        firebase_token: Encrypted(Z0FBQUFBQmloTW1JeE1WZUFHQzNKWjFkUTZqS1JycHQxa053M3lsckc3QlExcFA0X056VnVGekcyV1VKbURLYVpLSUgwR1dNaENFZ2l1eVFuQVNnQ2R6OUZuY3BiQ0RzMlhjZjlTUmx0enJibzI5c05iTHR4cVg5QkM0VkhHclpNcm1qZmJDRlM3cjNDaFpKdlBCQnNZWTlZVFNGanFKT3AtVVpYSDJwZUJQSGVGOHMxcDM5UmZNVlpkYkpDZV9zWlBvcDV0d3ZBYXp6V2p1cTkyV0RlSjEybGRZamdpdXlvdz09)
+        firebase_token: Encrypted(Z0FBQUFBQmloTW1IbU5MTUcyaVVmOUx6SUpkNzhJc2JuazJnemRsZ0U0X3ZsdHRXUWJ1THFDbktEMWVCOUN0dDlacm11cWpnOW5zaHBHUGttN3JvaUdrUzNQMGI0ejRQRW0yMmFiOGRMTzR2UUsxdmdLSzBqeVE4TlJLc0FZZVhUaUllTGF2dVFSWVFVdlc2YXI5Wld5VXpJcFo0MlhGNjJVYnptYjdYQklUa2l2WVJwd041R3RDaWtHRjNLM1NPanBhSEJWUjhBWGJKWS1SRUoxai1nNlNvblJmb25zb205dz09)
         android:
           app_id: 1:899655281519:android:e5417a5437e18a0e77569a
           groups:
