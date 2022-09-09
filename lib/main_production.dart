@@ -38,7 +38,7 @@ Future<void> main() async {
   final packageInfo = await PackageInfo.fromPlatform();
 
   final hermesRepository = HermesRepository(
-    appVersion: '${packageInfo.version} (${packageInfo.buildNumber})',
+    appVersion: packageInfo.buildNumber,
     apiUrl: dotenv.get('API_URL'),
     authenticationRepository: authenticationRepository,
     appOutdatedRepository: appOutdatedRepository,
