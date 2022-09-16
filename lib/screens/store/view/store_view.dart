@@ -23,7 +23,7 @@ class StoreView extends StatelessWidget {
     return BlocBuilder<StoreCubit, StoreState>(
       builder: (context, state) {
         if (state.status.isSuccess || state.status.isReload) {
-          return _Content(menu: state.menu!);
+          return _Content(store: state.store!);
         } else {
           return const _SkeletonView();
         }
@@ -33,9 +33,9 @@ class StoreView extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
-  const _Content({Key? key, required this.menu}) : super(key: key);
+  const _Content({Key? key, required this.store}) : super(key: key);
 
-  final GetMenuResponseDto menu;
+  final GetStoreResponse store;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class _Content extends StatelessWidget {
               HapticFeedback.mediumImpact();
               Navigator.of(context).push(
                 CheckoutPage.route(
-                  menu: menu,
+                  store: store,
                 ),
               );
             },
@@ -73,7 +73,7 @@ class _Content extends StatelessWidget {
       backgroundColor: AlpacaColor.white100Color,
       statusBarStyle: SystemUiOverlayStyle.dark,
       child: AlpacaStretchyHeader(
-        image: menu.menu?.menuImageUrl ?? '',
+        image: store.imageUrl ?? '',
         child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           child: Column(
@@ -93,7 +93,7 @@ class _Content extends StatelessWidget {
     );
   }
 
-  int _getItemsInCart(List<CreateOrderItemDto>? checkoutItems) {
+  int _getItemsInCart(List<OrderItem>? checkoutItems) {
     return checkoutItems!.fold(0, (p, c) => p + c.quantity!);
   }
 }

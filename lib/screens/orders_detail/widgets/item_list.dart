@@ -6,7 +6,7 @@ import 'package:pickup/shared/shared.dart';
 class ItemList extends StatelessWidget {
   const ItemList({Key? key, required this.items}) : super(key: key);
 
-  final List<OrderItemModel> items;
+  final List<OrderItem> items;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class ItemList extends StatelessWidget {
 class _Item extends StatelessWidget {
   const _Item({Key? key, required this.item}) : super(key: key);
 
-  final OrderItemModel item;
+  final OrderItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _Item extends StatelessWidget {
                   .headline4!
                   .copyWith(color: AlpacaColor.darkNavyColor),
             ),
-            if (item.items != null)
+            if (item.subItems != null)
               Text(
                 Utilities.currencyFormat(_getPriceOfItem(item)),
                 style: Theme.of(context)
@@ -68,13 +68,13 @@ class _Item extends StatelessWidget {
   }
 
   // TODO: temp fix
-  int _getPriceOfItem(OrderItemModel item) {
+  int _getPriceOfItem(OrderItem item) {
     _assertItem(item);
 
-    return item.quantity! * (_getPriceOfItems(item.items) + (item.price!));
+    return item.quantity! * (_getPriceOfItems(item.subItems) + (item.price!));
   }
 
-  int _getPriceOfItems(List<OrderItemModel>? items) {
+  int _getPriceOfItems(List<OrderItem>? items) {
     if (items == null || items.isEmpty) {
       return 0;
     }
@@ -84,13 +84,13 @@ class _Item extends StatelessWidget {
       _assertItem(item);
 
       optionPrice +=
-          item.quantity! * (_getPriceOfItems(item.items) + item.price!);
+          item.quantity! * (_getPriceOfItems(item.subItems) + item.price!);
     }
 
     return optionPrice;
   }
 
-  void _assertItem(OrderItemModel item) {
+  void _assertItem(OrderItem item) {
     assert(item.quantity != null && item.quantity != 0);
     assert(item.price != null);
   }
@@ -99,7 +99,7 @@ class _Item extends StatelessWidget {
 class _ItemDescription extends StatelessWidget {
   const _ItemDescription(this.item, {Key? key}) : super(key: key);
 
-  final OrderItemModel item;
+  final OrderItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -118,11 +118,11 @@ class _ItemDescription extends StatelessWidget {
     );
   }
 
-  String _getDescription(OrderItemModel item) {
-    if (item.items != null) {
+  String _getDescription(OrderItem item) {
+    if (item.subItems != null) {
       final buffer = StringBuffer();
 
-      for (final item in item.items!) {
+      for (final item in item.subItems!) {
         buffer.write('${item.name!}, ');
       }
 

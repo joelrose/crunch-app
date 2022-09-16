@@ -6,43 +6,16 @@ part of 'swagger.swagger.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CategoryRelationModelDto _$CategoryRelationModelDtoFromJson(
-        Map<String, dynamic> json,) =>
-    CategoryRelationModelDto(
-      product: json['product'] == null
-          ? null
-          : DeliverectProductModelDto.fromJson(
-              json['product'] as Map<String, dynamic>,),
-    );
-
-Map<String, dynamic> _$CategoryRelationModelDtoToJson(
-    CategoryRelationModelDto instance,) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('product', instance.product?.toJson());
-  return val;
-}
-
-CreateOrderItemDto _$CreateOrderItemDtoFromJson(Map<String, dynamic> json) =>
-    CreateOrderItemDto(
-      plu: json['plu'] as String?,
-      name: json['name'] as String?,
-      price: json['price'] as int?,
-      quantity: json['quantity'] as int?,
-      items: (json['items'] as List<dynamic>?)
-              ?.map(
-                  (e) => CreateOrderItemDto.fromJson(e as Map<String, dynamic>),)
+CreateOrderRequest _$CreateOrderRequestFromJson(Map<String, dynamic> json) =>
+    CreateOrderRequest(
+      orderItems: (json['orderItems'] as List<dynamic>?)
+              ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      storeId: json['storeId'] as String?,
     );
 
-Map<String, dynamic> _$CreateOrderItemDtoToJson(CreateOrderItemDto instance) {
+Map<String, dynamic> _$CreateOrderRequestToJson(CreateOrderRequest instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -51,216 +24,112 @@ Map<String, dynamic> _$CreateOrderItemDtoToJson(CreateOrderItemDto instance) {
     }
   }
 
-  writeNotNull('plu', instance.plu);
-  writeNotNull('name', instance.name);
-  writeNotNull('price', instance.price);
-  writeNotNull('quantity', instance.quantity);
-  writeNotNull('items', instance.items?.map((e) => e.toJson()).toList());
-  return val;
-}
-
-CreateOrderRequestDto _$CreateOrderRequestDtoFromJson(
-        Map<String, dynamic> json,) =>
-    CreateOrderRequestDto(
-      merchantId: json['merchantId'] as String?,
-      items: (json['items'] as List<dynamic>?)
-              ?.map(
-                  (e) => CreateOrderItemDto.fromJson(e as Map<String, dynamic>),)
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$CreateOrderRequestDtoToJson(
-    CreateOrderRequestDto instance,) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('merchantId', instance.merchantId);
-  writeNotNull('items', instance.items?.map((e) => e.toJson()).toList());
-  return val;
-}
-
-CreateOrderResponseDto _$CreateOrderResponseDtoFromJson(
-        Map<String, dynamic> json,) =>
-    CreateOrderResponseDto(
-      clientSecret: json['clientSecret'] as String?,
-    );
-
-Map<String, dynamic> _$CreateOrderResponseDtoToJson(
-    CreateOrderResponseDto instance,) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('clientSecret', instance.clientSecret);
-  return val;
-}
-
-CreateUserRequestDto _$CreateUserRequestDtoFromJson(
-        Map<String, dynamic> json,) =>
-    CreateUserRequestDto(
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
-      languageCode: json['languageCode'] as String?,
-    );
-
-Map<String, dynamic> _$CreateUserRequestDtoToJson(
-    CreateUserRequestDto instance,) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('firstName', instance.firstName);
-  writeNotNull('lastName', instance.lastName);
-  writeNotNull('languageCode', instance.languageCode);
-  return val;
-}
-
-DeliverectAvailabilityModel _$DeliverectAvailabilityModelFromJson(
-        Map<String, dynamic> json,) =>
-    DeliverectAvailabilityModel(
-      id: json['id'] as String?,
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse((json['createdAt'] as String) + 'Z'),
-
-      // FIXED MANUALLY
-      dayOfWeek: deliverectDayFromJson((json['dayOfWeek'] as int).toString()),
-      startTimestamp: json['startTimestamp'] as int?,
-      endTimestamp: json['endTimestamp'] as int?,
-    );
-
-Map<String, dynamic> _$DeliverectAvailabilityModelToJson(
-    DeliverectAvailabilityModel instance,) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
-  writeNotNull('dayOfWeek', deliverectDayToJson(instance.dayOfWeek));
-  writeNotNull('startTimestamp', instance.startTimestamp);
-  writeNotNull('endTimestamp', instance.endTimestamp);
-  return val;
-}
-
-DeliverectCategoryModelDto _$DeliverectCategoryModelDtoFromJson(
-        Map<String, dynamic> json,) =>
-    DeliverectCategoryModelDto(
-      id: json['id'] as String?,
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse((json['createdAt'] as String) + 'Z'),
-      categoryId: json['categoryId'] as String?,
-      account: json['account'] as String?,
-      description: json['description'] as String?,
-      imageUrl: json['imageUrl'] as String?,
-      level: json['level'] as int?,
-      menu: json['menu'] as String?,
-      name: json['name'] as String?,
-      sortOrder: json['sortOrder'] as int?,
-      products: (json['products'] as List<dynamic>?)
-              ?.map((e) =>
-                  CategoryRelationModelDto.fromJson(e as Map<String, dynamic>),)
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$DeliverectCategoryModelDtoToJson(
-    DeliverectCategoryModelDto instance,) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
-  writeNotNull('categoryId', instance.categoryId);
-  writeNotNull('account', instance.account);
-  writeNotNull('description', instance.description);
-  writeNotNull('imageUrl', instance.imageUrl);
-  writeNotNull('level', instance.level);
-  writeNotNull('menu', instance.menu);
-  writeNotNull('name', instance.name);
-  writeNotNull('sortOrder', instance.sortOrder);
-  writeNotNull('products', instance.products?.map((e) => e.toJson()).toList());
-  return val;
-}
-
-DeliverectMenuDto _$DeliverectMenuDtoFromJson(Map<String, dynamic> json) =>
-    DeliverectMenuDto(
-      availabilities: (json['availabilities'] as List<dynamic>?)
-              ?.map((e) => DeliverectAvailabilityModel.fromJson(
-                  e as Map<String, dynamic>,),)
-              .toList() ??
-          [],
-      categories: (json['categories'] as List<dynamic>?)
-              ?.map((e) => DeliverectCategoryModelDto.fromJson(
-                  e as Map<String, dynamic>,),)
-              .toList() ??
-          [],
-      channelLinkId: json['channelLinkId'] as String?,
-      currency: json['currency'] as int?,
-      description: json['description'] as String?,
-      menu: json['menu'] as String?,
-      menuId: json['menuId'] as String?,
-      menuImageUrl: json['menuImageUrl'] as String?,
-      menuType: json['menuType'] as int?,
-    );
-
-Map<String, dynamic> _$DeliverectMenuDtoToJson(DeliverectMenuDto instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('availabilities',
-      instance.availabilities?.map((e) => e.toJson()).toList(),);
   writeNotNull(
-      'categories', instance.categories?.map((e) => e.toJson()).toList(),);
-  writeNotNull('channelLinkId', instance.channelLinkId);
-  writeNotNull('currency', instance.currency);
-  writeNotNull('description', instance.description);
-  writeNotNull('menu', instance.menu);
-  writeNotNull('menuId', instance.menuId);
-  writeNotNull('menuImageUrl', instance.menuImageUrl);
-  writeNotNull('menuType', instance.menuType);
+      'orderItems', instance.orderItems?.map((e) => e.toJson()).toList());
+  writeNotNull('storeId', instance.storeId);
   return val;
 }
 
-DeliverectMenusDto _$DeliverectMenusDtoFromJson(Map<String, dynamic> json) =>
-    DeliverectMenusDto(
-      description: json['description'] as String?,
-      menu: json['menu'] as String?,
-      menuId: json['menuId'] as String?,
-      menuImageUrl: json['menuImageUrl'] as String?,
-      menuType: json['menuType'] as int?,
+CreateOrderResponse _$CreateOrderResponseFromJson(Map<String, dynamic> json) =>
+    CreateOrderResponse(
+      stripeClientSecret: json['stripeClientSecret'] as String?,
     );
 
-Map<String, dynamic> _$DeliverectMenusDtoToJson(DeliverectMenusDto instance) {
+Map<String, dynamic> _$CreateOrderResponseToJson(CreateOrderResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('stripeClientSecret', instance.stripeClientSecret);
+  return val;
+}
+
+CreateUserRequest _$CreateUserRequestFromJson(Map<String, dynamic> json) =>
+    CreateUserRequest(
+      firstname: json['firstname'] as String?,
+      languageCode: json['language_code'] as String?,
+      lastname: json['lastname'] as String?,
+    );
+
+Map<String, dynamic> _$CreateUserRequestToJson(CreateUserRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('firstname', instance.firstname);
+  writeNotNull('language_code', instance.languageCode);
+  writeNotNull('lastname', instance.lastname);
+  return val;
+}
+
+GetOrdersResponse _$GetOrdersResponseFromJson(Map<String, dynamic> json) =>
+    GetOrdersResponse(
+      createdAt: json['createdAt'] as String?,
+      estimatedPickupTime: json['estimatedPickupTime'] as String?,
+      googleMapsLink: json['googleMapsLink'] as String?,
+      id: json['id'] as int?,
+      isPaid: json['isPaid'] as bool?,
+      orderItems: (json['orderItems'] as List<dynamic>?)
+              ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      price: json['price'] as int?,
+      status: json['status'] as int?,
+      storeAddress: json['storeAddress'] as String?,
+      storeDescription: json['storeDescription'] as String?,
+      storeImageUrl: json['storeImageUrl'] as String?,
+      storeName: json['storeName'] as String?,
+      storePhoneNumber: json['storePhoneNumber'] as String?,
+    );
+
+Map<String, dynamic> _$GetOrdersResponseToJson(GetOrdersResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('createdAt', instance.createdAt);
+  writeNotNull('estimatedPickupTime', instance.estimatedPickupTime);
+  writeNotNull('googleMapsLink', instance.googleMapsLink);
+  writeNotNull('id', instance.id);
+  writeNotNull('isPaid', instance.isPaid);
+  writeNotNull(
+      'orderItems', instance.orderItems?.map((e) => e.toJson()).toList());
+  writeNotNull('price', instance.price);
+  writeNotNull('status', instance.status);
+  writeNotNull('storeAddress', instance.storeAddress);
+  writeNotNull('storeDescription', instance.storeDescription);
+  writeNotNull('storeImageUrl', instance.storeImageUrl);
+  writeNotNull('storeName', instance.storeName);
+  writeNotNull('storePhoneNumber', instance.storePhoneNumber);
+  return val;
+}
+
+GetStoreCategory _$GetStoreCategoryFromJson(Map<String, dynamic> json) =>
+    GetStoreCategory(
+      description: json['description'] as String?,
+      id: json['id'] as int?,
+      imageUrl: json['imageUrl'] as String?,
+      name: json['name'] as String?,
+      products: (json['products'] as List<dynamic>?)
+              ?.map((e) => GetStoreProduct.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      sortOrder: json['sortOrder'] as int?,
+    );
+
+Map<String, dynamic> _$GetStoreCategoryToJson(GetStoreCategory instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -270,43 +139,60 @@ Map<String, dynamic> _$DeliverectMenusDtoToJson(DeliverectMenusDto instance) {
   }
 
   writeNotNull('description', instance.description);
-  writeNotNull('menu', instance.menu);
-  writeNotNull('menuId', instance.menuId);
-  writeNotNull('menuImageUrl', instance.menuImageUrl);
-  writeNotNull('menuType', instance.menuType);
+  writeNotNull('id', instance.id);
+  writeNotNull('imageUrl', instance.imageUrl);
+  writeNotNull('name', instance.name);
+  writeNotNull('products', instance.products?.map((e) => e.toJson()).toList());
+  writeNotNull('sortOrder', instance.sortOrder);
   return val;
 }
 
-DeliverectProductModelDto _$DeliverectProductModelDtoFromJson(
-        Map<String, dynamic> json,) =>
-    DeliverectProductModelDto(
-      productId: json['productId'] as String?,
-      account: json['account'] as String?,
-      deliveryTax: json['deliveryTax'] as int?,
+GetStoreOpeningHour _$GetStoreOpeningHourFromJson(Map<String, dynamic> json) =>
+    GetStoreOpeningHour(
+      dayOfWeek: json['dayOfWeek'] as int?,
+      endTimestamp: json['endTimestamp'] as int?,
+      startTimestamp: json['startTimestamp'] as int?,
+    );
+
+Map<String, dynamic> _$GetStoreOpeningHourToJson(GetStoreOpeningHour instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('dayOfWeek', instance.dayOfWeek);
+  writeNotNull('endTimestamp', instance.endTimestamp);
+  writeNotNull('startTimestamp', instance.startTimestamp);
+  return val;
+}
+
+GetStoreProduct _$GetStoreProductFromJson(Map<String, dynamic> json) =>
+    GetStoreProduct(
       description: json['description'] as String?,
+      id: json['id'] as int?,
       imageUrl: json['imageUrl'] as String?,
-      location: json['location'] as String?,
       max: json['max'] as int?,
       min: json['min'] as int?,
-      multiply: json['multiply'] as int?,
       multiMax: json['multiMax'] as int?,
+      multiply: json['multiply'] as int?,
       name: json['name'] as String?,
       plu: json['plu'] as String?,
       price: json['price'] as int?,
       productType: json['productType'] as int?,
-      snoozed: json['snoozed'] as bool?,
-      sortOrder: json['sortOrder'] as int?,
-      takeawayTax: json['takeawayTax'] as int?,
-      visible: json['visible'] as bool?,
-      childProducts: (json['childProducts'] as List<dynamic>?)
-              ?.map((e) =>
-                  ProductRelationModelDto.fromJson(e as Map<String, dynamic>),)
+      products: (json['products'] as List<dynamic>?)
+              ?.map((e) => GetStoreProduct.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      snoozed: json['snoozed'] as bool?,
+      sortOrder: json['sortOrder'] as int?,
+      tax: json['tax'] as int?,
+      visible: json['visible'] as bool?,
     );
 
-Map<String, dynamic> _$DeliverectProductModelDtoToJson(
-    DeliverectProductModelDto instance,) {
+Map<String, dynamic> _$GetStoreProductToJson(GetStoreProduct instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -315,141 +201,50 @@ Map<String, dynamic> _$DeliverectProductModelDtoToJson(
     }
   }
 
-  writeNotNull('productId', instance.productId);
-  writeNotNull('account', instance.account);
-  writeNotNull('deliveryTax', instance.deliveryTax);
   writeNotNull('description', instance.description);
+  writeNotNull('id', instance.id);
   writeNotNull('imageUrl', instance.imageUrl);
-  writeNotNull('location', instance.location);
   writeNotNull('max', instance.max);
   writeNotNull('min', instance.min);
-  writeNotNull('multiply', instance.multiply);
   writeNotNull('multiMax', instance.multiMax);
+  writeNotNull('multiply', instance.multiply);
   writeNotNull('name', instance.name);
   writeNotNull('plu', instance.plu);
   writeNotNull('price', instance.price);
   writeNotNull('productType', instance.productType);
+  writeNotNull('products', instance.products?.map((e) => e.toJson()).toList());
   writeNotNull('snoozed', instance.snoozed);
   writeNotNull('sortOrder', instance.sortOrder);
-  writeNotNull('takeawayTax', instance.takeawayTax);
+  writeNotNull('tax', instance.tax);
   writeNotNull('visible', instance.visible);
-  writeNotNull(
-      'childProducts', instance.childProducts?.map((e) => e.toJson()).toList(),);
   return val;
 }
 
-GetMenuResponseDto _$GetMenuResponseDtoFromJson(Map<String, dynamic> json) =>
-    GetMenuResponseDto(
-      id: json['id'] as String?,
-      phoneNumber: json['phoneNumber'] as String?,
-      rating: (json['rating'] as num?)?.toDouble(),
-      reviewCount: json['reviewCount'] as String?,
-      averagePickUpTime: json['averagePickUpTime'] as String?,
+GetStoreResponse _$GetStoreResponseFromJson(Map<String, dynamic> json) =>
+    GetStoreResponse(
       address: json['address'] as String?,
-      googleMapsLink: json['googleMapsLink'] as String?,
-      menu: json['menu'] == null
-          ? null
-          : DeliverectMenuDto.fromJson(json['menu'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$GetMenuResponseDtoToJson(GetMenuResponseDto instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  writeNotNull('phoneNumber', instance.phoneNumber);
-  writeNotNull('rating', instance.rating);
-  writeNotNull('reviewCount', instance.reviewCount);
-  writeNotNull('averagePickUpTime', instance.averagePickUpTime);
-  writeNotNull('address', instance.address);
-  writeNotNull('googleMapsLink', instance.googleMapsLink);
-  writeNotNull('menu', instance.menu?.toJson());
-  return val;
-}
-
-GetMenusResponseDto _$GetMenusResponseDtoFromJson(Map<String, dynamic> json) =>
-    GetMenusResponseDto(
-      id: json['id'] as String?,
-      rating: (json['rating'] as num?)?.toDouble(),
-      reviewCount: json['reviewCount'] as String?,
-      averagePickUpTime: json['averagePickUpTime'] as String?,
-      isOpen: json['isOpen'] as bool?,
-      menu: json['menu'] == null
-          ? null
-          : DeliverectMenusDto.fromJson(json['menu'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$GetMenusResponseDtoToJson(GetMenusResponseDto instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  writeNotNull('rating', instance.rating);
-  writeNotNull('reviewCount', instance.reviewCount);
-  writeNotNull('averagePickUpTime', instance.averagePickUpTime);
-  writeNotNull('isOpen', instance.isOpen);
-  writeNotNull('menu', instance.menu?.toJson());
-  return val;
-}
-
-GetOrderResponseDto _$GetOrderResponseDtoFromJson(Map<String, dynamic> json) =>
-    GetOrderResponseDto(
-      id: json['id'] as String?,
-      // TODO: manually edited
-      status: deliverectOrderStatusFromJson((json['status'] as int).toString()),
-      price: (json['price'] as num?)?.toDouble(),
-      estimatedPickUpTime: json['estimatedPickUpTime'] == null
-          ? null
-          : DateTime.parse((json['estimatedPickUpTime'] as String) + 'Z'),
-      merchant: json['merchant'] == null
-          ? null
-          : MerchantModelDto.fromJson(json['merchant'] as Map<String, dynamic>),
-      items: (json['items'] as List<dynamic>?)
-              ?.map((e) => OrderItemModel.fromJson(e as Map<String, dynamic>))
+      averagePickupTime: json['averagePickupTime'] as int?,
+      averageReview: (json['averageReview'] as num?)?.toDouble(),
+      categories: (json['categories'] as List<dynamic>?)
+              ?.map((e) => GetStoreCategory.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-    );
-
-Map<String, dynamic> _$GetOrderResponseDtoToJson(GetOrderResponseDto instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  writeNotNull('status', deliverectOrderStatusToJson(instance.status));
-  writeNotNull('price', instance.price);
-  writeNotNull(
-      'estimatedPickUpTime', instance.estimatedPickUpTime?.toIso8601String(),);
-  writeNotNull('merchant', instance.merchant?.toJson());
-  writeNotNull('items', instance.items?.map((e) => e.toJson()).toList());
-  return val;
-}
-
-GetUserResponseDto _$GetUserResponseDtoFromJson(Map<String, dynamic> json) =>
-    GetUserResponseDto(
+      description: json['description'] as String?,
+      googleMapsLink: json['googleMapsLink'] as String?,
       id: json['id'] as String?,
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse((json['createdAt'] as String) + 'Z'),
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      isAvailable: json['isAvailable'] as bool?,
+      name: json['name'] as String?,
+      openingHours: (json['openingHours'] as List<dynamic>?)
+              ?.map((e) =>
+                  GetStoreOpeningHour.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      phoneNumber: json['phoneNumber'] as String?,
+      reviewCount: json['reviewCount'] as int?,
     );
 
-Map<String, dynamic> _$GetUserResponseDtoToJson(GetUserResponseDto instance) {
+Map<String, dynamic> _$GetStoreResponseToJson(GetStoreResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -458,25 +253,41 @@ Map<String, dynamic> _$GetUserResponseDtoToJson(GetUserResponseDto instance) {
     }
   }
 
+  writeNotNull('address', instance.address);
+  writeNotNull('averagePickupTime', instance.averagePickupTime);
+  writeNotNull('averageReview', instance.averageReview);
+  writeNotNull(
+      'categories', instance.categories?.map((e) => e.toJson()).toList());
+  writeNotNull('description', instance.description);
+  writeNotNull('googleMapsLink', instance.googleMapsLink);
   writeNotNull('id', instance.id);
-  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
-  writeNotNull('firstName', instance.firstName);
-  writeNotNull('lastName', instance.lastName);
+  writeNotNull('imageUrl', instance.imageUrl);
+  writeNotNull('isAvailable', instance.isAvailable);
+  writeNotNull('name', instance.name);
+  writeNotNull(
+      'openingHours', instance.openingHours?.map((e) => e.toJson()).toList());
+  writeNotNull('phoneNumber', instance.phoneNumber);
+  writeNotNull('reviewCount', instance.reviewCount);
   return val;
 }
 
-MerchantModelDto _$MerchantModelDtoFromJson(Map<String, dynamic> json) =>
-    MerchantModelDto(
+GetStoresOverviewResponse _$GetStoresOverviewResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetStoresOverviewResponse(
+      address: json['address'] as String?,
+      averagePickupTime: json['averagePickupTime'] as int?,
+      averageReview: (json['averageReview'] as num?)?.toDouble(),
+      description: json['description'] as String?,
+      googleMapsLink: json['googleMapsLink'] as String?,
+      id: json['id'] as String?,
+      imageUrl: json['imageUrl'] as String?,
       name: json['name'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
-      rating: (json['rating'] as num?)?.toDouble(),
-      reviewCount: json['reviewCount'] as String?,
-      averagePickUpTime: json['averagePickUpTime'] as String?,
-      address: json['address'] as String?,
-      googleMapsLink: json['googleMapsLink'] as String?,
+      reviewCount: json['reviewCount'] as int?,
     );
 
-Map<String, dynamic> _$MerchantModelDtoToJson(MerchantModelDto instance) {
+Map<String, dynamic> _$GetStoresOverviewResponseToJson(
+    GetStoresOverviewResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -485,37 +296,32 @@ Map<String, dynamic> _$MerchantModelDtoToJson(MerchantModelDto instance) {
     }
   }
 
+  writeNotNull('address', instance.address);
+  writeNotNull('averagePickupTime', instance.averagePickupTime);
+  writeNotNull('averageReview', instance.averageReview);
+  writeNotNull('description', instance.description);
+  writeNotNull('googleMapsLink', instance.googleMapsLink);
+  writeNotNull('id', instance.id);
+  writeNotNull('imageUrl', instance.imageUrl);
   writeNotNull('name', instance.name);
   writeNotNull('phoneNumber', instance.phoneNumber);
-  writeNotNull('rating', instance.rating);
   writeNotNull('reviewCount', instance.reviewCount);
-  writeNotNull('averagePickUpTime', instance.averagePickUpTime);
-  writeNotNull('address', instance.address);
-  writeNotNull('googleMapsLink', instance.googleMapsLink);
   return val;
 }
 
-OrderItemModel _$OrderItemModelFromJson(Map<String, dynamic> json) =>
-    OrderItemModel(
-      id: json['id'] as String?,
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse((json['createdAt'] as String) + 'Z'),
-      plu: json['plu'] as String?,
+OrderItem _$OrderItemFromJson(Map<String, dynamic> json) => OrderItem(
+      id: json['id'] as int?,
       name: json['name'] as String?,
+      plu: json['plu'] as String?,
       price: json['price'] as int?,
       quantity: json['quantity'] as int?,
-      parent: json['parent'] == null
-          ? null
-          : OrderItemModel.fromJson(json['parent'] as Map<String, dynamic>),
-      parentId: json['parentId'] as String?,
-      items: (json['items'] as List<dynamic>?)
-              ?.map((e) => OrderItemModel.fromJson(e as Map<String, dynamic>))
+      subItems: (json['subItems'] as List<dynamic>?)
+              ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
 
-Map<String, dynamic> _$OrderItemModelToJson(OrderItemModel instance) {
+Map<String, dynamic> _$OrderItemToJson(OrderItem instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -525,28 +331,24 @@ Map<String, dynamic> _$OrderItemModelToJson(OrderItemModel instance) {
   }
 
   writeNotNull('id', instance.id);
-  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
-  writeNotNull('plu', instance.plu);
   writeNotNull('name', instance.name);
+  writeNotNull('plu', instance.plu);
   writeNotNull('price', instance.price);
   writeNotNull('quantity', instance.quantity);
-  writeNotNull('parent', instance.parent?.toJson());
-  writeNotNull('parentId', instance.parentId);
-  writeNotNull('items', instance.items?.map((e) => e.toJson()).toList());
+  writeNotNull('subItems', instance.subItems?.map((e) => e.toJson()).toList());
   return val;
 }
 
-ProductRelationModelDto _$ProductRelationModelDtoFromJson(
-        Map<String, dynamic> json,) =>
-    ProductRelationModelDto(
-      childProduct: json['childProduct'] == null
-          ? null
-          : DeliverectProductModelDto.fromJson(
-              json['childProduct'] as Map<String, dynamic>,),
+User _$UserFromJson(Map<String, dynamic> json) => User(
+      createdAt: json['createdAt'] as String?,
+      firebaseId: json['firebaseId'] as String?,
+      firstname: json['firstname'] as String?,
+      id: json['id'] as int?,
+      languageCode: json['languageCode'] as String?,
+      lastname: json['lastname'] as String?,
     );
 
-Map<String, dynamic> _$ProductRelationModelDtoToJson(
-    ProductRelationModelDto instance,) {
+Map<String, dynamic> _$UserToJson(User instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -555,20 +357,21 @@ Map<String, dynamic> _$ProductRelationModelDtoToJson(
     }
   }
 
-  writeNotNull('childProduct', instance.childProduct?.toJson());
+  writeNotNull('createdAt', instance.createdAt);
+  writeNotNull('firebaseId', instance.firebaseId);
+  writeNotNull('firstname', instance.firstname);
+  writeNotNull('id', instance.id);
+  writeNotNull('languageCode', instance.languageCode);
+  writeNotNull('lastname', instance.lastname);
   return val;
 }
 
-UpdateStatusOrderModel _$UpdateStatusOrderModelFromJson(
-        Map<String, dynamic> json,) =>
-    UpdateStatusOrderModel(
-      orderId: json['orderId'] as String?,
-      orderStatus:
-          deliverectOrderStatusFromJson(json['orderStatus'] as String?),
+WhitelistRequest _$WhitelistRequestFromJson(Map<String, dynamic> json) =>
+    WhitelistRequest(
+      identifier: json['identifier'] as String?,
     );
 
-Map<String, dynamic> _$UpdateStatusOrderModelToJson(
-    UpdateStatusOrderModel instance,) {
+Map<String, dynamic> _$WhitelistRequestToJson(WhitelistRequest instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -577,8 +380,6 @@ Map<String, dynamic> _$UpdateStatusOrderModelToJson(
     }
   }
 
-  writeNotNull('orderId', instance.orderId);
-  writeNotNull(
-      'orderStatus', deliverectOrderStatusToJson(instance.orderStatus),);
+  writeNotNull('identifier', instance.identifier);
   return val;
 }

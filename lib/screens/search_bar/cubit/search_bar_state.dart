@@ -7,14 +7,14 @@ class SearchBarState extends Equatable {
     this.query = '',
   });
 
-  final List<GetMenusResponseDto> stores;
+  final List<GetStoresOverviewResponse> stores;
 
   final bool isAppBarVisible;
 
   final String query;
 
   SearchBarState copyWith({
-    List<GetMenusResponseDto>? stores,
+    List<GetStoresOverviewResponse>? stores,
     bool? isAppBarVisible,
     String? query,
   }) {

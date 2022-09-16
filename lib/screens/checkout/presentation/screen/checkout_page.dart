@@ -21,24 +21,24 @@ class CheckoutPage extends StatelessWidget {
   const CheckoutPage({Key? key}) : super(key: key);
 
   static Route<void> route({
-    required GetMenuResponseDto menu,
+    required GetStoreResponse store,
   }) {
     return MaterialPageRoute(
       builder: (_) => MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => CheckoutCubit(menu: menu),
+            create: (_) => CheckoutCubit(store: store),
           ),
           BlocProvider(
             create: (_) => CheckoutTimeCubit(
               currentTime: DateTime.now(),
-              openingHours: menu.menu!.availabilities!,
+              openingHours: store.openingHours!,
             ),
           ),
           BlocProvider(
             create: (context) => CheckoutPaymentCubit(
               stripeRepository: context.read<StripeRepository>(),
-              merchantId: menu.id!,
+              storeId: store.id!,
             ),
           ),
         ],
@@ -56,7 +56,7 @@ class CheckoutPage extends StatelessWidget {
             CheckoutConfirmationPage.route(
               pickUpTime: context.read<CheckoutTimeCubit>().state.pickupTime,
               googleMapsLink:
-                  context.read<CheckoutCubit>().state.menu.googleMapsLink!,
+                  context.read<CheckoutCubit>().state.store.googleMapsLink!,
             ),
           );
           context.read<LoadingOverlayRepository>().hide();
@@ -98,7 +98,7 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final storeName =
-        context.select((CheckoutCubit cubit) => cubit.state.menu.menu!.menu!);
+        context.select((CheckoutCubit cubit) => cubit.state.store.name);
         
     return Column(
       children: [

@@ -8,7 +8,7 @@ part 'store_detail_state.dart';
 
 class StoreDetailCubit extends Cubit<StoreDetailState> {
   StoreDetailCubit({
-    required DeliverectProductModelDto item,
+    required GetStoreProduct item,
   }) : super(
           StoreDetailState(
             item: item,
@@ -19,29 +19,29 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   }
 
   void init() {
-    final List<CreateOrderItemDto> orderItems = [];
+    final List<OrderItem> orderItems = [];
 
     final product = state.item;
 
-    if (product.childProducts != null) {
-      for (final child in product.childProducts!) {
-        final firstOption = child.childProduct!.childProducts!.firstWhereOrNull(
-          (element) => !element.childProduct!.snoozed!,
+    if (product.products != null) {
+      for (final child in product.products!) {
+        final firstOption = child.products!.firstWhereOrNull(
+          (element) => !element.snoozed!,
         );
 
-        final itemTitleAndOptions = CreateOrderItemDto(
+        final itemTitleAndOptions = OrderItem(
           plu: product.plu,
           price: 0,
           name: product.name,
           quantity: 1,
-          items: child.childProduct!.min == 1 && firstOption != null
+          subItems: child.min == 1 && firstOption != null
               ? [
-                  CreateOrderItemDto(
-                    plu: firstOption.childProduct!.plu,
-                    price: firstOption.childProduct!.price,
-                    name: firstOption.childProduct!.name,
+                  OrderItem(
+                    plu: firstOption.plu,
+                    price: firstOption.price,
+                    name: firstOption.name,
                     quantity: 1,
-                    items: [],
+                    subItems: [],
                   )
                 ]
               : [],
@@ -90,25 +90,25 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
     );
   }
 
-  CreateOrderItemDto createOrderItemDto() {
+  OrderItem createOrderItemDto() {
     final item = state.item;
 
-    return CreateOrderItemDto(
+    return OrderItem(
       plu: item.plu,
       price: item.price,
       name: item.name,
       quantity: state.basketAmount,
-      items: _convertToOrderDto(),
+      subItems: _convertToOrderDto(),
     );
   }
 
-  List<CreateOrderItemDto> _convertToOrderDto() {
-    final List<CreateOrderItemDto> returnValue = [];
+  List<OrderItem> _convertToOrderDto() {
+    final List<OrderItem> returnValue = [];
 
     for (final optionCategory in state.orderItems) {
-      if (optionCategory.items != null) {
-        optionCategory.items!.sort((a, b) => a.name!.compareTo(b.name!));
-        returnValue.addAll(optionCategory.items!);
+      if (optionCategory.subItems != null) {
+        optionCategory.subItems!.sort((a, b) => a.name!.compareTo(b.name!));
+        returnValue.addAll(optionCategory.subItems!);
       }
     }
     return returnValue;
@@ -131,20 +131,22 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
 
   // ORDERITEM
 
-  void addRadioOrderItem(int categoryIndex, CreateOrderItemDto item) {
-    final dto = state.orderItems[categoryIndex].items!;
+  void addRadioOrderItem(int categoryIndex, OrderItem item) {
+    final dto = state.orderItems[categoryIndex].subItems!;
 
     dto.clear();
 
     dto.add(item);
 
-    state.orderItems[categoryIndex].items = dto;
+    state.orderItems[categoryIndex] = state.orderItems[categoryIndex].copyWith(
+      subItems: dto,
+    );
 
     _emitNewState();
   }
 
-  void addCheckBoxOrderItem(int categoryIndex, CreateOrderItemDto item) {
-    final dto = state.orderItems[categoryIndex].items!;
+  void addCheckBoxOrderItem(int categoryIndex, OrderItem item) {
+    final dto = state.orderItems[categoryIndex].subItems!;
 
     final index = dto.indexWhere(
       (element) => element.plu == item.plu!,
@@ -156,20 +158,22 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
       dto.add(item);
     }
 
-    state.orderItems[categoryIndex].items = dto;
+    state.orderItems[categoryIndex] = state.orderItems[categoryIndex].copyWith(
+      subItems: dto,
+    );
 
     _emitNewState();
   }
 
   void decreaseOrderItem(int categoryIndex, String? plu) {
-    final dto = state.orderItems[categoryIndex].items!;
+    final dto = state.orderItems[categoryIndex].subItems!;
 
-    final index = dto.firstWhereOrNull(
+    var index = dto.firstWhereOrNull(
       (element) => element.plu == plu,
     );
 
     if (index != null && index.quantity != 1) {
-      index.quantity = index.quantity! - 1;
+      index = index.copyWith(quantity: index.quantity! - 1);
     } else {
       dto.remove(index);
     }
@@ -178,14 +182,14 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   }
 
   void increaseOrderItem(int categoryIndex, String? plu, int maximalQuantity) {
-    final dto = state.orderItems[categoryIndex].items!;
+    final dto = state.orderItems[categoryIndex].subItems!;
 
-    final index = dto.firstWhereOrNull(
+    var index = dto.firstWhereOrNull(
       (element) => element.plu == plu!,
     );
 
     if (index != null && index.quantity! < maximalQuantity) {
-      index.quantity = index.quantity! + 1;
+      index = index.copyWith(quantity: index.quantity! + 1);
     }
 
     _emitNewState();

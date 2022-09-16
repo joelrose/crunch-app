@@ -3,9 +3,9 @@ import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/shared/price_calculation.dart';
 
 void main() {
-  final singleItem1 = CreateOrderItemDto(price: 10, quantity: 1);
-  final singleItem2 = CreateOrderItemDto(price: 0, quantity: 10);
-  final singleItem3 = CreateOrderItemDto(price: 10, quantity: 10);
+  final singleItem1 = OrderItem(price: 10, quantity: 1);
+  final singleItem2 = OrderItem(price: 0, quantity: 10);
+  final singleItem3 = OrderItem(price: 10, quantity: 10);
 
   final itemList1 = [singleItem1];
   final itemList2 = [singleItem1, singleItem2, singleItem3];
@@ -34,22 +34,22 @@ void main() {
 
   test('Price Calculation: assertItem', () {
     expect(
-      () => PriceCalulcation.assertItem(CreateOrderItemDto()),
+      () => PriceCalulcation.assertItem(OrderItem()),
       throwsAssertionError,
     );
 
     expect(
-      () => PriceCalulcation.assertItem(CreateOrderItemDto(quantity: 1)),
+      () => PriceCalulcation.assertItem(OrderItem(quantity: 1)),
       throwsAssertionError,
     );
 
     expect(
-      () => PriceCalulcation.assertItem(CreateOrderItemDto(quantity: 0)),
+      () => PriceCalulcation.assertItem(OrderItem(quantity: 0)),
       throwsAssertionError,
     );
 
     expect(
-      () => PriceCalulcation.assertItem(CreateOrderItemDto(price: 0)),
+      () => PriceCalulcation.assertItem(OrderItem(price: 0)),
       throwsAssertionError,
     );
   });

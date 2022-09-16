@@ -53,7 +53,7 @@ class OrdersView extends StatelessWidget {
 class _ListView extends StatelessWidget {
   const _ListView({Key? key, required this.orders}) : super(key: key);
 
-  final List<GetOrderResponseDto> orders;
+  final List<GetOrdersResponse> orders;
 
   @override
   Widget build(BuildContext context) {

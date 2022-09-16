@@ -10,13 +10,13 @@ part 'product_detail_state.dart';
 class ProductDetailCubit extends Cubit<ProductDetailState> {
   ProductDetailCubit({
     required StoreDetailCubit storeDetailCubit,
-    required DeliverectProductModelDto category,
+    required GetStoreProduct category,
     required int optionIndex,
     required int categoryIndex,
   })  : _category = category,
         _optionIndex = optionIndex,
         _categoryIndex = categoryIndex,
-        _categoryOptions = category.childProducts!,
+        _categoryOptions = category.products!,
         _storeDetailCubit = storeDetailCubit,
         super(const ProductDetailState()) {
     _setup(storeDetailCubit.state.orderItems);
@@ -37,10 +37,10 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
   final StoreDetailCubit _storeDetailCubit;
 
   // _category.childProducts!
-  final List<ProductRelationModelDto> _categoryOptions;
+  final List<GetStoreProduct> _categoryOptions;
 
   // category of the option item
-  final DeliverectProductModelDto _category;
+  final GetStoreProduct _category;
 
   // orderItem index of the current category
   final int _categoryIndex;
@@ -48,10 +48,10 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
   // index of the current category item in the StoreDetailCubit orderItem
   final int _optionIndex;
 
-  void _setup(List<CreateOrderItemDto> orderItems) {
-    final value = _categoryOptions.elementAt(_optionIndex).childProduct!;
+  void _setup(List<OrderItem> orderItems) {
+    final value = _categoryOptions.elementAt(_optionIndex);
 
-    final orderDto = orderItems[_categoryIndex].items!;
+    final orderDto = orderItems[_categoryIndex].subItems!;
 
     final isRadio = _category.min == 1 && _category.max == 1;
     final isSnoozed = value.snoozed!;
@@ -73,9 +73,9 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
   }
 
   void onTappedRadio() {
-    final value = _categoryOptions.elementAt(_optionIndex).childProduct!;
+    final value = _categoryOptions.elementAt(_optionIndex);
 
-    final newItem = CreateOrderItemDto(
+    final newItem = OrderItem(
       name: value.name,
       price: value.price,
       plu: value.plu,
@@ -86,14 +86,14 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
   }
 
   void onTappedCheckBox() {
-    final value = _categoryOptions.elementAt(_optionIndex).childProduct!;
+    final value = _categoryOptions.elementAt(_optionIndex);
 
-    final item = CreateOrderItemDto(
+    final item = OrderItem(
       name: value.name,
       price: value.price,
       plu: value.plu,
       quantity: 1,
-      items: [],
+      subItems: [],
     );
 
     _storeDetailCubit.addCheckBoxOrderItem(_categoryIndex, item);

@@ -18,6 +18,6 @@ class CheckoutItemOptionsModel {
     required this.categoryPlu,
   });
 
-  CreateOrderItemDto option;
+  OrderItem option;
   String categoryPlu;
 }

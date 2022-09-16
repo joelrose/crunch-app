@@ -12,9 +12,9 @@ class HermesRepository {
     required String appVersion,
   }) {
     _chopperClient = ChopperClient(
-      baseUrl: apiUrl,
-      services: [Swagger.create(ChopperClient())],
-      converter: JsonSerializableConverter(SwaggerJsonDecoderMappings),
+      baseUrl: apiUrl + '/api/v1',
+      services: [Swagger.create()],
+      converter: JsonSerializableConverter(generatedMapping),
       interceptors: [
         VersionRequestInterceptor(
           appVersion: appVersion,
@@ -22,7 +22,8 @@ class HermesRepository {
         TokenRequestInterceptor(
           authenticationRepository: authenticationRepository,
         ),
-        VersionResponseInterceptor(appOutdatedRepository: appOutdatedRepository),
+        VersionResponseInterceptor(
+            appOutdatedRepository: appOutdatedRepository),
       ],
     );
   }
@@ -30,58 +31,6 @@ class HermesRepository {
   late final ChopperClient _chopperClient;
 
   Swagger get client => _chopperClient.getService<Swagger>();
-
-  Future<GetMenuResponseDto> apiMenusMenuIdGet({
-    required String storeId,
-  }) async {
-    void _sortItems(List<ProductRelationModelDto>? list) {
-      if (list == null) {
-        return;
-      }
-
-      list.sort(
-        (a, b) =>
-            a.childProduct!.sortOrder!.compareTo(b.childProduct!.sortOrder!),
-      );
-
-      for (final element in list) {
-        _sortItems(element.childProduct!.childProducts);
-      }
-    }
-
-    try {
-      final request = await client.apiMenusMenuIdGet(
-        menuId: storeId,
-      );
-
-      if (request.isSuccessful) {
-        request.body?.menu?.categories?.sort(
-          (a, b) => a.sortOrder!.compareTo(b.sortOrder!),
-        );
-
-        if (request.body?.menu?.categories != null) {
-          for (final category in request.body!.menu!.categories!) {
-            if (category.products != null) {
-              category.products?.sort(
-                (a, b) =>
-                    a.product!.sortOrder!.compareTo(b.product!.sortOrder!),
-              );
-
-              for (final product in category.products!) {
-                _sortItems(product.product?.childProducts);
-              }
-            }
-          }
-        }
-
-        return request.body!;
-      } else {
-        throw Exception();
-      }
-    } catch (exception) {
-      throw Exception();
-    }
-  }
 }
 
 class VersionRequestInterceptor implements RequestInterceptor {

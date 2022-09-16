@@ -5,24 +5,20 @@ import 'package:pickup/screens/search_bar/cubit/search_bar_cubit.dart';
 
 void main() {
   group('SearchBarCubit', () {
-    final store1 = GetMenusResponseDto(
+    final store1 = GetStoresOverviewResponse(
       id: 'id',
-      rating: 3,
-      reviewCount: '12',
-      averagePickUpTime: '12',
-      menu: DeliverectMenusDto(
-        menu: 'test',
-      ),
+      averageReview: 3,
+      reviewCount: 12,
+      averagePickupTime:12,
+      name: 'test',
     );
 
-    final store2 = GetMenusResponseDto(
+    final store2 = GetStoresOverviewResponse(
       id: 'id',
-      rating: 3,
-      reviewCount: '12',
-      averagePickUpTime: '12',
-      menu: DeliverectMenusDto(
-        menu: 'hello',
-      ),
+      averageReview: 3,
+      reviewCount: 12,
+      averagePickupTime:12,
+      name: 'hello',
     );
 
     final stores = [
@@ -82,13 +78,13 @@ void main() {
       '.clearSearch emits empty query & resets stores',
       build: () => SearchBarCubit(stores),
       act: (cubit) {
-        cubit.search(store1.menu!.menu!);
+        cubit.search(store1.name!);
         cubit.clearSearch();
       },
       expect: () => [
         SearchBarState(
           stores: [store1],
-          query: store1.menu!.menu!,
+          query: store1.name!,
         ),
         SearchBarState(
           stores: stores,

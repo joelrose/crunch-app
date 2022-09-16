@@ -12,15 +12,15 @@ extension OrdersStatusX on OrdersStatus {
 class OrdersState extends Equatable {
   OrdersState({
     this.status = OrdersStatus.initial,
-    List<GetOrderResponseDto>? orders,
+    List<GetOrdersResponse>? orders,
   }) : orders = orders ?? [];
 
   final OrdersStatus status;
-  final List<GetOrderResponseDto> orders;
+  final List<GetOrdersResponse> orders;
 
   OrdersState copyWith({
     OrdersStatus? status,
-    List<GetOrderResponseDto>? orders,
+    List<GetOrdersResponse>? orders,
   }) {
     return OrdersState(
       status: status ?? this.status,

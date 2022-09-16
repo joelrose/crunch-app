@@ -8,7 +8,7 @@ class CreateStoreData {
     required this.merchantId,
   });
 
-  final List<CreateOrderItemDto> checkoutItems;
+  final List<OrderItem> checkoutItems;
   final String storeName;
   final String googleMaps;
   final String merchantId;

@@ -7,7 +7,7 @@ import 'package:pickup/shared/utilities.dart';
 class OrdersListView extends StatelessWidget {
   const OrdersListView({Key? key, required this.order}) : super(key: key);
 
-  final GetOrderResponseDto order;
+  final GetOrdersResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class OrdersListView extends StatelessWidget {
                               vertical: 12,
                             ),
                             child: Text(
-                              '#${order.id!.substring(0, 3)}',
+                              '#${order.id!.toString()}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
@@ -56,11 +56,11 @@ class OrdersListView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              order.merchant!.name!,
+                              order.storeName!,
                               style: theme.textTheme.headline3,
                             ),
                             Text(
-                              order.merchant!.address!,
+                              order.storeAddress!,
                               style: theme.textTheme.headline5,
                             ),
                           ],
@@ -83,11 +83,13 @@ class OrdersListView extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            DateFormat('dd.MM.yyyy, kk:mm')
-                                .format(order.estimatedPickUpTime!.toLocal()),
+                            DateFormat('dd.MM.yyyy, kk:mm').format(
+                              DateTime.parse(order.estimatedPickupTime!)
+                                  .toLocal(),
+                            ),
                           ),
                           Text(
-                            ' - ${order.status!.string}',
+                            ' - ${order.status!}',
                           ),
                         ],
                       ),

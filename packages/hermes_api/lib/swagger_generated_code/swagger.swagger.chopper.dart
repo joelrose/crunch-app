@@ -17,81 +17,85 @@ class _$Swagger extends Swagger {
   final definitionType = Swagger;
 
   @override
-  Future<Response<List<GetMenusResponseDto>>> apiMenusGet() {
-    final $url = '/api/menus';
-    final $request = Request('GET', $url, client.baseUrl);
-    return client
-        .send<List<GetMenusResponseDto>, GetMenusResponseDto>($request);
+  Future<Response<List<GetOrdersResponse>>> _ordersGet(
+      {String? authorization}) {
+    final $url = '/orders';
+    final $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<List<GetOrdersResponse>, GetOrdersResponse>($request);
   }
 
   @override
-  Future<Response<GetMenuResponseDto>> apiMenusMenuIdGet(
-      {required String? menuId,}) {
-    final $url = '/api/menus/$menuId';
-    final $request = Request('GET', $url, client.baseUrl);
-    return client.send<GetMenuResponseDto, GetMenuResponseDto>($request);
+  Future<Response<CreateOrderResponse>> _ordersPost(
+      {required CreateOrderRequest? request, String? authorization}) {
+    final $url = '/orders';
+    final $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+
+    final $body = request;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<CreateOrderResponse, CreateOrderResponse>($request);
   }
 
   @override
-  Future<Response<CreateOrderResponseDto>> apiOrdersPost(
-      {required CreateOrderRequestDto? body,}) {
-    final $url = '/api/orders';
-    final $body = body;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client
-        .send<CreateOrderResponseDto, CreateOrderResponseDto>($request);
+  Future<Response<GetStoreResponse>> _storeIdGet(
+      {required String? id, String? authorization}) {
+    final $url = '/store/${id}';
+    final $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<GetStoreResponse, GetStoreResponse>($request);
   }
 
   @override
-  Future<Response<bool>> apiOrdersPut({required UpdateStatusOrderModel? body}) {
-    final $url = '/api/orders';
-    final $body = body;
-    final $request = Request('PUT', $url, client.baseUrl, body: $body);
-    return client.send<bool, bool>($request);
+  Future<Response<List<GetStoresOverviewResponse>>> _storesGet(
+      {String? authorization}) {
+    final $url = '/stores';
+    final $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<List<GetStoresOverviewResponse>,
+        GetStoresOverviewResponse>($request);
   }
 
   @override
-  Future<Response<List<GetOrderResponseDto>>> apiOrdersGet() {
-    final $url = '/api/orders';
-    final $request = Request('GET', $url, client.baseUrl);
-    return client
-        .send<List<GetOrderResponseDto>, GetOrderResponseDto>($request);
+  Future<Response<User>> _usersGet({String? authorization}) {
+    final $url = '/users';
+    final $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<User, User>($request);
   }
 
   @override
-  Future<Response<GetOrderResponseDto>> apiOrdersOrderIdGet(
-      {required String? orderId,}) {
-    final $url = '/api/orders/$orderId';
-    final $request = Request('GET', $url, client.baseUrl);
-    return client.send<GetOrderResponseDto, GetOrderResponseDto>($request);
+  Future<Response<dynamic>> _usersPost(
+      {required CreateUserRequest? request, String? authorization}) {
+    final $url = '/users';
+    final $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+
+    final $body = request;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
-  Future<Response<bool>> apiUsersPost({required CreateUserRequestDto? body}) {
-    final $url = '/api/users';
-    final $body = body;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<bool, bool>($request);
-  }
-
-  @override
-  Future<Response<bool>> apiUsersDelete() {
-    final $url = '/api/users';
-    final $request = Request('DELETE', $url, client.baseUrl);
-    return client.send<bool, bool>($request);
-  }
-
-  @override
-  Future<Response<GetUserResponseDto>> apiUsersGet() {
-    final $url = '/api/users';
-    final $request = Request('GET', $url, client.baseUrl);
-    return client.send<GetUserResponseDto, GetUserResponseDto>($request);
-  }
-
-  @override
-  Future<Response<bool>> apiWhitelistuserPost({required String? body}) {
-    final $url = '/api/whitelistuser';
-    final $body = body;
+  Future<Response<bool>> _whitelistPost({required WhitelistRequest? request}) {
+    final $url = '/whitelist';
+    final $body = request;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<bool, bool>($request);
   }

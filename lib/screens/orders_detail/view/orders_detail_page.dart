@@ -14,7 +14,7 @@ class OrdersDetailPage extends StatelessWidget {
     required this.order,
   }) : super(key: key);
 
-  final GetOrderResponseDto order;
+  final GetOrdersResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +32,17 @@ class OrdersDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CheckoutNavbar(
-                storeName: order.merchant!.name,
+                storeName: order.storeName ?? '',
                 pageOverviewName: context.l10n.orderOverview,
               ),
-              CrunchMap(
-                googleMapsLink: order.merchant!.googleMapsLink!,
-                name: order.merchant!.name!,
+               CrunchMap(
+                googleMapsLink: order.googleMapsLink ?? '',
+                name: order.storeName ?? '',
               ),
               Detail(order: order),
               const Divider(),
               ItemList(
-                items: order.items!,
+                items: order.orderItems!,
               ),
               ActionButton(
                 key: const Key('support_button'),

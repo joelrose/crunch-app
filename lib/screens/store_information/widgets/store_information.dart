@@ -1,7 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/store_information/cubit/cubit.dart';
 import 'package:pickup/screens/store_information/widgets/store_information_item.dart';
@@ -12,7 +11,7 @@ class StoreInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.select(
-      (StoreInformationCubit cubit) => cubit.state.menu,
+      (StoreInformationCubit cubit) => cubit.state.store,
     );
 
     return Padding(

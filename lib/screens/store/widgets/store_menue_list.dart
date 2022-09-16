@@ -14,8 +14,8 @@ class StoreMenueList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final menueCategories = context
-        .select((StoreCubit cubit) => cubit.state.menu!.menu!.categories)!;
+    final menueCategories =
+        context.select((StoreCubit cubit) => cubit.state.store!.categories!);
 
     return ListView.builder(
       itemCount: menueCategories.length,
@@ -33,7 +33,7 @@ class StoreMenueList extends StatelessWidget {
 class _Item extends StatelessWidget {
   const _Item({Key? key, required this.category}) : super(key: key);
 
-  final DeliverectCategoryModelDto category;
+  final GetStoreCategory category;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class _Item extends StatelessWidget {
           shrinkWrap: true,
           itemBuilder: (context, i) {
             return _ItemButton(
-              product: category.products![i].product!,
+              product: category.products![i],
             );
           },
         ),
@@ -67,16 +67,16 @@ class _Item extends StatelessWidget {
 class _ItemButton extends StatelessWidget {
   const _ItemButton({Key? key, required this.product}) : super(key: key);
 
-  final DeliverectProductModelDto product;
+  final GetStoreProduct product;
 
   @override
   Widget build(BuildContext context) {
     final menuImageUrl = context
-        .select((StoreCubit cubit) => cubit.state.menu!.menu!.menuImageUrl);
+        .select((StoreCubit cubit) => cubit.state.store!.imageUrl!);
 
     return TextButton(
       onPressed:
-          product.snoozed! ? null : () => showModal(context, menuImageUrl!),
+          product.snoozed! ? null : () => showModal(context, menuImageUrl),
       style: TextButton.styleFrom(
         primary: AlpacaColor.primary100,
         padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
@@ -110,7 +110,7 @@ class _ItemButton extends StatelessWidget {
 class _ItemContent extends StatelessWidget {
   const _ItemContent({Key? key, required this.product}) : super(key: key);
 
-  final DeliverectProductModelDto product;
+  final GetStoreProduct product;
 
   @override
   Widget build(BuildContext context) {
@@ -207,14 +207,14 @@ class _ItemContent extends StatelessWidget {
     );
   }
 
-  bool hasProductInBasket(List<CreateOrderItemDto> checkoutItems) {
+  bool hasProductInBasket(List<OrderItem> checkoutItems) {
     return checkoutItems.indexWhere(
           (checkouItem) => checkouItem.plu == product.plu,
         ) !=
         -1;
   }
 
-  int _amountInTheBasket(List<CreateOrderItemDto> checkoutItems, String plu) {
+  int _amountInTheBasket(List<OrderItem> checkoutItems, String plu) {
     final items = checkoutItems.where(
       (listItem) => plu == listItem.plu,
     );

@@ -9,16 +9,13 @@ import 'package:pickup/screens/store/store.dart';
 
 import '../../../helpers/pump_app.dart';
 
-final GetMenusResponseDto mockRestaurantModel = GetMenusResponseDto(
-  averagePickUpTime: '15',
-  menu: DeliverectMenusDto(
-    menuImageUrl: 'https://picsum.photos/250?image=9',
-    menu: 'test',
-  ),
+final GetStoresOverviewResponse mockRestaurantModel = GetStoresOverviewResponse(
+  name: 'test',
+  imageUrl: 'https://picsum.photos/250?image=9',
   id: '879398514',
-  rating: 4.5,
-  reviewCount: '10',
-  isOpen: true,
+  averagePickupTime: 15,
+  averageReview: 4.5,
+  reviewCount: 10,
 );
 
 void main() {

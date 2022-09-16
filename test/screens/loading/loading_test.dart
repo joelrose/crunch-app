@@ -3,7 +3,6 @@ import 'package:fake_async/fake_async.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
-import 'package:pickup/screens/home/home.dart';
 import 'package:pickup/screens/loading/loading.dart';
 
 import '../../helpers/helpers.dart';
