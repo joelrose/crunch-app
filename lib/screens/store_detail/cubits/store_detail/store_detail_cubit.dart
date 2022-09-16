@@ -168,14 +168,15 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   void decreaseOrderItem(int categoryIndex, String? plu) {
     final dto = state.orderItems[categoryIndex].subItems!;
 
-    var index = dto.firstWhereOrNull(
+    final item = dto.firstWhereOrNull(
       (element) => element.plu == plu,
     );
 
-    if (index != null && index.quantity != 1) {
-      index = index.copyWith(quantity: index.quantity! - 1);
+    if (item != null && item.quantity != 1) {
+      state.orderItems[categoryIndex].subItems![dto.indexOf(item)] =
+          item.copyWith(quantity: item.quantity! - 1);
     } else {
-      dto.remove(index);
+       state.orderItems[categoryIndex].subItems!.remove(item);
     }
 
     _emitNewState();
@@ -184,12 +185,13 @@ class StoreDetailCubit extends Cubit<StoreDetailState> {
   void increaseOrderItem(int categoryIndex, String? plu, int maximalQuantity) {
     final dto = state.orderItems[categoryIndex].subItems!;
 
-    var index = dto.firstWhereOrNull(
+    final item = dto.firstWhereOrNull(
       (element) => element.plu == plu!,
     );
 
-    if (index != null && index.quantity! < maximalQuantity) {
-      index = index.copyWith(quantity: index.quantity! + 1);
+    if (item != null && item.quantity! < maximalQuantity) {
+      state.orderItems[categoryIndex].subItems![dto.indexOf(item)] =
+          item.copyWith(quantity: item.quantity! + 1);
     }
 
     _emitNewState();
