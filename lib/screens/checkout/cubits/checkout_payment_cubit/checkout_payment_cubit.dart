@@ -28,8 +28,12 @@ class CheckoutPaymentCubit extends Cubit<CheckoutPaymentState> {
       );
 
       emit(const CheckoutPaymentState(PaymentStatus.paid));
-    } catch (exception) {
-      emit(const CheckoutPaymentState(PaymentStatus.failed));
+    } catch (e) {
+      if (e is PaymentCancelled) {
+        emit(const CheckoutPaymentState(PaymentStatus.cancelled));
+      } else if (e is PaymentFailed) {
+        emit(const CheckoutPaymentState(PaymentStatus.failed));
+      }
     }
   }
 }

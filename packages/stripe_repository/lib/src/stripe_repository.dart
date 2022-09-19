@@ -6,6 +6,10 @@ class HermesApiRequestException implements Exception {}
 
 class HermesApiResponseException implements Exception {}
 
+class PaymentCancelled implements Exception {}
+
+class PaymentFailed implements Exception {}
+
 class StripeRepository {
   StripeRepository({required HermesRepository hermesRepository})
       : _hermesRepository = hermesRepository;
@@ -62,8 +66,14 @@ class StripeRepository {
 
     try {
       await Stripe.instance.presentPaymentSheet();
-    } on StripeException {
-      rethrow;
+    } catch (exception) {
+      if (exception is StripeException) {
+        if (exception.error.code == FailureCode.Canceled) {
+          throw PaymentCancelled();
+        }
+      }
+
+      throw PaymentFailed();
     }
   }
 }

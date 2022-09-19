@@ -69,6 +69,8 @@ class CheckoutPage extends StatelessWidget {
             content: Text(context.l10n.connectionPaymentFail),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        } else if (state.status.isCancelled) {
+          context.read<LoadingOverlayRepository>().hide();
         }
       },
       child: PageWrapper(
