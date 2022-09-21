@@ -1,5 +1,3 @@
-import 'package:alpaca/alpaca.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hermes_repository/hermes_repository.dart';
@@ -9,7 +7,7 @@ import 'package:pickup/screens/checkout_row_header/checkout_row_header.dart';
 
 class CheckoutTimer extends StatelessWidget {
   CheckoutTimer({Key? key, this.availableOpenings}) : super(key: key);
-  final List<DeliverectAvailabilityModel>? availableOpenings;
+  final List<GetStoreOpeningHour>? availableOpenings;
 
   final FixedExtentScrollController _minuteController =
       FixedExtentScrollController();

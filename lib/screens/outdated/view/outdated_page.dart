@@ -1,7 +1,6 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickup/l10n/l10n.dart';
 
@@ -19,15 +18,13 @@ class OutdatedPage extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return PageWrapper(
       backgroundColor: AlpacaColor.primary100,
-      statusBarStyle: SystemUiOverlayStyle.dark,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SvgPicture.asset(
             'assets/update.svg',
             width: width * 0.7,
           ),
-          const SizedBox(height: 80),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(

@@ -1,10 +1,10 @@
 part of 'store_information_cubit.dart';
 
 class StoreInformationState extends Equatable {
-  const StoreInformationState(this.menu);
+  const StoreInformationState(this.store);
 
-  final GetMenuResponseDto menu;
+  final GetStoreResponse store;
 
   @override
-  List<Object> get props => [menu];
+  List<Object> get props => [store];
 }

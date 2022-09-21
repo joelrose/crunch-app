@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hermes_repository/hermes_repository.dart';
+import 'package:hermes_repository/hermes_repository.dart' as api;
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/cubit/language/language_cubit.dart';
@@ -93,7 +93,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserCubit, BaseState<GetUserResponseDto>>(
+    return BlocBuilder<UserCubit, BaseState<api.User>>(
       builder: (context, state) {
         if (state.status.isSuccessful) {
           return Stack(
@@ -106,8 +106,8 @@ class _Header extends StatelessWidget {
                       radius: 40,
                       backgroundColor: AlpacaColor.primary20,
                       child: Text(
-                        state.model!.firstName!.substring(0, 1) +
-                            state.model!.lastName!.substring(0, 1),
+                        state.model!.firstname!.substring(0, 1) +
+                            state.model!.lastname!.substring(0, 1),
                         style: Theme.of(context).textTheme.headline4!.copyWith(
                               color: const Color(0xff33047B),
                             ),
@@ -117,7 +117,7 @@ class _Header extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      '${state.model!.firstName!} ${state.model!.lastName!}',
+                      '${state.model!.firstname!} ${state.model!.lastname!}',
                       style: Theme.of(context).textTheme.headline4!.copyWith(
                             color: AlpacaColor.darkNavyColor,
                           ),

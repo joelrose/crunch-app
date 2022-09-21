@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
+import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/app.dart';
 import 'package:pickup/screens/app/bloc/app_outdated/app_outdated_bloc.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';

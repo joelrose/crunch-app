@@ -1,4 +1,3 @@
-import 'package:authentication_repository/src/authentication_repository.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -16,8 +15,8 @@ class MockHermesService implements HermesRepository {
         }
         return http.Response(response, statusCode);
       }),
-      services: [Swagger.create(ChopperClient())],
-      converter: JsonSerializableConverter(SwaggerJsonDecoderMappings),
+      services: [Swagger.create()],
+      converter: JsonSerializableConverter(generatedMapping),
     );
   }
 
@@ -26,13 +25,4 @@ class MockHermesService implements HermesRepository {
 
   @override
   Swagger get client => _chopperClient.getService<Swagger>();
-
-  @override
-  AuthenticationRepository get authenticationRepository =>
-      throw UnimplementedError();
-
-  @override
-  Future<GetMenuResponseDto> apiMenusMenuIdGet({required String storeId}) {
-    throw UnimplementedError();
-  }
 }

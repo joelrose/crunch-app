@@ -4,32 +4,32 @@ import 'package:hermes_repository/hermes_repository.dart';
 
 part '../../../../shared/base_state.dart';
 
-class UserCubit extends Cubit<BaseState<GetUserResponseDto>> {
+class UserCubit extends Cubit<BaseState<User>> {
   UserCubit({
     required HermesRepository hermesRepository,
   })  : _hermesRepository = hermesRepository,
-        super(const BaseState<GetUserResponseDto>());
+        super(const BaseState<User>());
 
   final HermesRepository _hermesRepository;
 
   Future<void> fetchUser() async {
-    emit(const BaseState<GetUserResponseDto>(status: BaseStatus.loading));
+    emit(const BaseState<User>(status: BaseStatus.loading));
 
     try {
-      final response = await _hermesRepository.client.apiUsersGet();
+      final response = await _hermesRepository.client.usersGet();
 
       if (response.isSuccessful) {
         emit(
-          BaseState<GetUserResponseDto>(
+          BaseState<User>(
             status: BaseStatus.successful,
             model: response.body,
           ),
         );
       } else {
-        emit(const BaseState<GetUserResponseDto>(status: BaseStatus.failed));
+        emit(const BaseState<User>(status: BaseStatus.failed));
       }
     } catch (e) {
-      emit(const BaseState<GetUserResponseDto>(status: BaseStatus.failed));
+      emit(const BaseState<User>(status: BaseStatus.failed));
     }
   }
 }

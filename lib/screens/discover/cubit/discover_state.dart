@@ -12,15 +12,15 @@ extension DiscoverStatusX on DiscoverStatus {
 class DiscoverState extends Equatable {
   DiscoverState({
     this.status = DiscoverStatus.initial,
-    List<GetMenusResponseDto>? stores,
+    List<GetStoresOverviewResponse>? stores,
   }) : stores = stores ?? [];
 
   final DiscoverStatus status;
-  final List<GetMenusResponseDto> stores;
+  final List<GetStoresOverviewResponse> stores;
 
   DiscoverState copyWith({
     DiscoverStatus? status,
-    List<GetMenusResponseDto>? stores,
+    List<GetStoresOverviewResponse>? stores,
   }) {
     return DiscoverState(
       status: status ?? this.status,

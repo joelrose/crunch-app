@@ -10,12 +10,12 @@ class StoreOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.select((StoreCubit cubit) => cubit.state.menu!);
+    final store = context.select((StoreCubit cubit) => cubit.state.store!);
 
     return TextButton(
       onPressed: () => Navigator.of(context).push(
         StoreInformationPage.route(
-          menu: model,
+          store: store,
         ),
       ),
       style: TextButton.styleFrom(
@@ -33,7 +33,7 @@ class StoreOverview extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      model.menu!.menu!,
+                      store.name!,
                       style: Theme.of(context).textTheme.headline2,
                     ),
                   ],
@@ -46,8 +46,8 @@ class StoreOverview extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         StoreRating(
-                          rating: model.rating!.toString(),
-                          reviewCount: model.reviewCount!,
+                          rating: store.reviewCount.toString(),
+                          reviewCount: store.reviewCount.toString(),
                         ),
                       ],
                     ),

@@ -27,7 +27,7 @@ class CheckoutBasketBloc
   ) async {
     emit(state.copyWith(status: () => CheckoutBasketStatus.loading));
 
-    await emit.forEach<List<CreateOrderItemDto>>(
+    await emit.forEach<List<OrderItem>>(
       _checkoutRepository.getCheckoutItems(),
       onData: (checkoutItems) => state.copyWith(
         status: () => CheckoutBasketStatus.success,

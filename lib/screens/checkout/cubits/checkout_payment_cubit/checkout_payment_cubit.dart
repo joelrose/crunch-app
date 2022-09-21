@@ -8,28 +8,32 @@ part 'checkout_payment_state.dart';
 class CheckoutPaymentCubit extends Cubit<CheckoutPaymentState> {
   CheckoutPaymentCubit({
     required StripeRepository stripeRepository,
-    required String merchantId,
+    required String storeId,
   })  : _stripeRepository = stripeRepository,
-        _merchantId = merchantId,
+        _storeId = storeId,
         super(const CheckoutPaymentState(PaymentStatus.initial));
 
   final StripeRepository _stripeRepository;
-  final String _merchantId;
+  final String _storeId;
 
   Future<void> checkout(
-    List<CreateOrderItemDto> checkoutItems,
+    List<OrderItem> checkoutItems,
   ) async {
     emit(const CheckoutPaymentState(PaymentStatus.loading));
 
     try {
       await _stripeRepository.presentPaymentSheet(
-        merchantId: _merchantId,
+        storeId: _storeId,
         checkoutItems: checkoutItems,
       );
 
       emit(const CheckoutPaymentState(PaymentStatus.paid));
-    } catch (exception) {
-      emit(const CheckoutPaymentState(PaymentStatus.failed));
+    } catch (e) {
+      if (e is PaymentCancelled) {
+        emit(const CheckoutPaymentState(PaymentStatus.cancelled));
+      } else if (e is PaymentFailed) {
+        emit(const CheckoutPaymentState(PaymentStatus.failed));
+      }
     }
   }
 }

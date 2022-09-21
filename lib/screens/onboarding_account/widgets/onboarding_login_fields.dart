@@ -166,8 +166,11 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
 
           final hermesRepository = context.read<HermesRepository>();
 
-          final response = await hermesRepository.client
-              .apiWhitelistuserPost(body: phoneNumber);
+          final response = await hermesRepository.client.whitelistPost(
+            request: WhitelistRequest(
+              identifier: phoneNumber,
+            ),
+          );
 
           if (response.isSuccessful && response.body == true) {
             // TODO: replace this with a cubit

@@ -6,6 +6,10 @@ class HermesApiRequestException implements Exception {}
 
 class HermesApiResponseException implements Exception {}
 
+class PaymentCancelled implements Exception {}
+
+class PaymentFailed implements Exception {}
+
 class StripeRepository {
   StripeRepository({required HermesRepository hermesRepository})
       : _hermesRepository = hermesRepository;
@@ -28,13 +32,13 @@ class StripeRepository {
   }
 
   Future<void> presentPaymentSheet({
-    required String merchantId,
-    required List<CreateOrderItemDto> checkoutItems,
+    required String storeId,
+    required List<OrderItem> checkoutItems,
   }) async {
-    final response = await _hermesRepository.client.apiOrdersPost(
-      body: CreateOrderRequestDto(
-        merchantId: merchantId,
-        items: checkoutItems,
+    final response = await _hermesRepository.client.ordersPost(
+      request: CreateOrderRequest(
+        storeId: storeId,
+        orderItems: checkoutItems,
       ),
     );
 
@@ -42,7 +46,7 @@ class StripeRepository {
       throw HermesApiRequestException();
     }
 
-    final clientSecret = response.body?.clientSecret;
+    final clientSecret = response.body?.stripeClientSecret;
 
     if (clientSecret == null) {
       throw HermesApiResponseException();
@@ -62,8 +66,14 @@ class StripeRepository {
 
     try {
       await Stripe.instance.presentPaymentSheet();
-    } on StripeException {
-      rethrow;
+    } catch (exception) {
+      if (exception is StripeException) {
+        if (exception.error.code == FailureCode.Canceled) {
+          throw PaymentCancelled();
+        }
+      }
+
+      throw PaymentFailed();
     }
   }
 }

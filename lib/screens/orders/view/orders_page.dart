@@ -25,7 +25,7 @@ class OrdersPage extends StatelessWidget {
                 case '/detail':
                   final data = settings.arguments!;
 
-                  return OrdersDetailPage(order: data as GetOrderResponseDto);
+                  return OrdersDetailPage(order: data as GetOrdersResponse);
               }
               return Container();
             },

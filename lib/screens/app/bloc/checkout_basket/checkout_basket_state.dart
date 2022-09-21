@@ -9,11 +9,11 @@ class CheckoutBasketState extends Equatable {
   });
 
   final CheckoutBasketStatus status;
-  final List<CreateOrderItemDto> checkoutItems;
+  final List<OrderItem> checkoutItems;
 
   CheckoutBasketState copyWith({
     CheckoutBasketStatus Function()? status,
-    List<CreateOrderItemDto> Function()? checkoutItems,
+    List<OrderItem> Function()? checkoutItems,
   }) {
     return CheckoutBasketState(
       status: status != null ? status() : this.status,

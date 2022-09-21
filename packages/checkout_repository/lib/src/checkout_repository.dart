@@ -8,7 +8,7 @@ class CheckoutRepository {
   final LocalStorageCheckoutApi _checkoutApi;
 
   /// Provides a [Stream] of all checkout items.
-  Stream<List<CreateOrderItemDto>> getCheckoutItems() =>
+  Stream<List<OrderItem>> getCheckoutItems() =>
       _checkoutApi.getCheckoutItems();
 
   Future<void> deleteItem(int itemIndex) =>
@@ -20,9 +20,7 @@ class CheckoutRepository {
   Future<void> incrementItemQuantity(int itemIndex) =>
       _checkoutApi.incrementItemQuantityByIndex(itemIndex);
 
-  Future<void> addItem(CreateOrderItemDto item) =>
-      _checkoutApi.addItem(item);
+  Future<void> addItem(OrderItem item) => _checkoutApi.addItem(item);
 
-  Future<void> clear() =>
-      _checkoutApi.clear();
+  Future<void> clear() => _checkoutApi.clear();
 }

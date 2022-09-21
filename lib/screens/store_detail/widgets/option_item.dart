@@ -14,10 +14,10 @@ class OptionItem extends StatelessWidget {
     final categoryState =
         context.select((ProductOptionCubit cubit) => cubit.state);
 
-    final categoryOptions = categoryState.optionCategory.childProducts!;
+    final categoryOptions = categoryState.optionCategory.products;
 
     return ListView.separated(
-      itemCount: categoryOptions.length,
+      itemCount: categoryOptions!.length,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       separatorBuilder: (context, index) {

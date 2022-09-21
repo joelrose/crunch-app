@@ -17,81 +17,55 @@ class _$Swagger extends Swagger {
   final definitionType = Swagger;
 
   @override
-  Future<Response<List<GetMenusResponseDto>>> apiMenusGet() {
-    final $url = '/api/menus';
+  Future<Response<List<GetOrdersResponse>>> _ordersGet() {
+    final $url = '/orders';
     final $request = Request('GET', $url, client.baseUrl);
-    return client
-        .send<List<GetMenusResponseDto>, GetMenusResponseDto>($request);
+    return client.send<List<GetOrdersResponse>, GetOrdersResponse>($request);
   }
 
   @override
-  Future<Response<GetMenuResponseDto>> apiMenusMenuIdGet(
-      {required String? menuId,}) {
-    final $url = '/api/menus/$menuId';
-    final $request = Request('GET', $url, client.baseUrl);
-    return client.send<GetMenuResponseDto, GetMenuResponseDto>($request);
-  }
-
-  @override
-  Future<Response<CreateOrderResponseDto>> apiOrdersPost(
-      {required CreateOrderRequestDto? body,}) {
-    final $url = '/api/orders';
-    final $body = body;
+  Future<Response<CreateOrderResponse>> _ordersPost(
+      {required CreateOrderRequest? request}) {
+    final $url = '/orders';
+    final $body = request;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client
-        .send<CreateOrderResponseDto, CreateOrderResponseDto>($request);
+    return client.send<CreateOrderResponse, CreateOrderResponse>($request);
   }
 
   @override
-  Future<Response<bool>> apiOrdersPut({required UpdateStatusOrderModel? body}) {
-    final $url = '/api/orders';
-    final $body = body;
-    final $request = Request('PUT', $url, client.baseUrl, body: $body);
-    return client.send<bool, bool>($request);
-  }
-
-  @override
-  Future<Response<List<GetOrderResponseDto>>> apiOrdersGet() {
-    final $url = '/api/orders';
+  Future<Response<GetStoreResponse>> _storeIdGet({required String? id}) {
+    final $url = '/store/${id}';
     final $request = Request('GET', $url, client.baseUrl);
-    return client
-        .send<List<GetOrderResponseDto>, GetOrderResponseDto>($request);
+    return client.send<GetStoreResponse, GetStoreResponse>($request);
   }
 
   @override
-  Future<Response<GetOrderResponseDto>> apiOrdersOrderIdGet(
-      {required String? orderId,}) {
-    final $url = '/api/orders/$orderId';
+  Future<Response<List<GetStoresOverviewResponse>>> _storesGet() {
+    final $url = '/stores';
     final $request = Request('GET', $url, client.baseUrl);
-    return client.send<GetOrderResponseDto, GetOrderResponseDto>($request);
+    return client.send<List<GetStoresOverviewResponse>,
+        GetStoresOverviewResponse>($request);
   }
 
   @override
-  Future<Response<bool>> apiUsersPost({required CreateUserRequestDto? body}) {
-    final $url = '/api/users';
-    final $body = body;
+  Future<Response<User>> _usersGet() {
+    final $url = '/users';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<User, User>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _usersPost({required CreateUserRequest? request}) {
+    final $url = '/users';
+    final $body = request;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<bool, bool>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
-  Future<Response<bool>> apiUsersDelete() {
-    final $url = '/api/users';
-    final $request = Request('DELETE', $url, client.baseUrl);
-    return client.send<bool, bool>($request);
-  }
-
-  @override
-  Future<Response<GetUserResponseDto>> apiUsersGet() {
-    final $url = '/api/users';
-    final $request = Request('GET', $url, client.baseUrl);
-    return client.send<GetUserResponseDto, GetUserResponseDto>($request);
-  }
-
-  @override
-  Future<Response<bool>> apiWhitelistuserPost({required String? body}) {
-    final $url = '/api/whitelistuser';
-    final $body = body;
+  Future<Response<bool>> _whitelistPost({required WhitelistRequest? request}) {
+    final $url = '/whitelist';
+    final $body = request;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<bool, bool>($request);
   }

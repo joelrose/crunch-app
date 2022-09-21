@@ -11,11 +11,12 @@ typedef ListIndex = int Function(int);
 class CheckoutTimeCubit extends Cubit<CheckoutTimeState> {
   factory CheckoutTimeCubit({
     required DateTime currentTime,
-    required List<DeliverectAvailabilityModel> openingHours,
+    required List<GetStoreOpeningHour> openingHours,
   }) {
     openingHours.removeWhere(
-      (element) => element.dayOfWeek!.index != currentTime.weekday,
+      (element) => element.dayOfWeek! != currentTime.weekday,
     );
+
     /*final availableOpeningTimes = getOpeningHours(
       currentDateTime: currentTime,
       availabilityModels: openingHours,

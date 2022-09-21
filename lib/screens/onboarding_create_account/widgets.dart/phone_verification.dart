@@ -119,7 +119,7 @@ class _StepPhoneVerificationState extends State<StepPhoneVerification> {
       }
 
       final account =
-          await context.read<HermesRepository>().client.apiUsersGet();
+          await context.read<HermesRepository>().client.usersGet();
 
       if (!mounted) return;
 

@@ -16,14 +16,14 @@ class StoreCubit extends Cubit<StoreState> {
     emit(state.copyWith(status: StoreStatus.loading));
 
     try {
-      final menu = await _hermesRepository.apiMenusMenuIdGet(
-        storeId: storeId,
+      final store = await _hermesRepository.client.storeIdGet(
+        id: storeId,
       );
 
       emit(
         state.copyWith(
           status: StoreStatus.success,
-          menu: menu,
+          store: store.body,
         ),
       );
     } on Exception {
