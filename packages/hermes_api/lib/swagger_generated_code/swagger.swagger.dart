@@ -31,6 +31,18 @@ abstract class Swagger extends ChopperService {
     return _$Swagger(newClient);
   }
 
+  ///Get all orders from a store
+  Future<chopper.Response<List<GetOrdersResponse>>> dashboardOrdersGet() {
+    generatedMapping.putIfAbsent(
+        GetOrdersResponse, () => GetOrdersResponse.fromJsonFactory);
+
+    return _dashboardOrdersGet();
+  }
+
+  ///Get all orders from a store
+  @Get(path: '/dashboard/orders')
+  Future<chopper.Response<List<GetOrdersResponse>>> _dashboardOrdersGet();
+
   ///Get all orders from a user
   Future<chopper.Response<List<GetOrdersResponse>>> ordersGet() {
     generatedMapping.putIfAbsent(

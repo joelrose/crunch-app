@@ -119,7 +119,7 @@ Map<String, dynamic> _$GetOrdersResponseToJson(GetOrdersResponse instance) {
 GetStoreCategory _$GetStoreCategoryFromJson(Map<String, dynamic> json) =>
     GetStoreCategory(
       description: json['description'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] as String?,
       imageUrl: json['imageUrl'] as String?,
       name: json['name'] as String?,
       products: (json['products'] as List<dynamic>?)
@@ -172,7 +172,7 @@ Map<String, dynamic> _$GetStoreOpeningHourToJson(GetStoreOpeningHour instance) {
 GetStoreProduct _$GetStoreProductFromJson(Map<String, dynamic> json) =>
     GetStoreProduct(
       description: json['description'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] as String?,
       imageUrl: json['imageUrl'] as String?,
       max: json['max'] as int?,
       min: json['min'] as int?,
@@ -233,7 +233,6 @@ GetStoreResponse _$GetStoreResponseFromJson(Map<String, dynamic> json) =>
       googleMapsLink: json['googleMapsLink'] as String?,
       id: json['id'] as String?,
       imageUrl: json['imageUrl'] as String?,
-      isAvailable: json['isAvailable'] as bool?,
       name: json['name'] as String?,
       openingHours: (json['openingHours'] as List<dynamic>?)
               ?.map((e) =>
@@ -262,7 +261,6 @@ Map<String, dynamic> _$GetStoreResponseToJson(GetStoreResponse instance) {
   writeNotNull('googleMapsLink', instance.googleMapsLink);
   writeNotNull('id', instance.id);
   writeNotNull('imageUrl', instance.imageUrl);
-  writeNotNull('isAvailable', instance.isAvailable);
   writeNotNull('name', instance.name);
   writeNotNull(
       'openingHours', instance.openingHours?.map((e) => e.toJson()).toList());
@@ -281,6 +279,7 @@ GetStoresOverviewResponse _$GetStoresOverviewResponseFromJson(
       googleMapsLink: json['googleMapsLink'] as String?,
       id: json['id'] as String?,
       imageUrl: json['imageUrl'] as String?,
+      isAvailable: json['isAvailable'] as bool?,
       name: json['name'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
       reviewCount: json['reviewCount'] as int?,
@@ -303,6 +302,7 @@ Map<String, dynamic> _$GetStoresOverviewResponseToJson(
   writeNotNull('googleMapsLink', instance.googleMapsLink);
   writeNotNull('id', instance.id);
   writeNotNull('imageUrl', instance.imageUrl);
+  writeNotNull('isAvailable', instance.isAvailable);
   writeNotNull('name', instance.name);
   writeNotNull('phoneNumber', instance.phoneNumber);
   writeNotNull('reviewCount', instance.reviewCount);
@@ -310,7 +310,7 @@ Map<String, dynamic> _$GetStoresOverviewResponseToJson(
 }
 
 OrderItem _$OrderItemFromJson(Map<String, dynamic> json) => OrderItem(
-      id: json['id'] as int?,
+      id: json['id'] as String?,
       name: json['name'] as String?,
       plu: json['plu'] as String?,
       price: json['price'] as int?,
@@ -381,5 +381,34 @@ Map<String, dynamic> _$WhitelistRequestToJson(WhitelistRequest instance) {
   }
 
   writeNotNull('identifier', instance.identifier);
+  return val;
+}
+
+MenusMenuRedisModel _$MenusMenuRedisModelFromJson(Map<String, dynamic> json) =>
+    MenusMenuRedisModel(
+      categories: (json['categories'] as List<dynamic>?)
+              ?.map((e) => GetStoreCategory.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      openingHours: (json['openingHours'] as List<dynamic>?)
+              ?.map((e) =>
+                  GetStoreOpeningHour.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$MenusMenuRedisModelToJson(MenusMenuRedisModel instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'categories', instance.categories?.map((e) => e.toJson()).toList());
+  writeNotNull(
+      'openingHours', instance.openingHours?.map((e) => e.toJson()).toList());
   return val;
 }

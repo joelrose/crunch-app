@@ -379,7 +379,7 @@ class GetStoreCategory {
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   @JsonKey(name: 'id', includeIfNull: false)
-  final int? id;
+  final String? id;
   @JsonKey(name: 'imageUrl', includeIfNull: false)
   final String? imageUrl;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -432,7 +432,7 @@ class GetStoreCategory {
 extension $GetStoreCategoryExtension on GetStoreCategory {
   GetStoreCategory copyWith(
       {String? description,
-      int? id,
+      String? id,
       String? imageUrl,
       String? name,
       List<GetStoreProduct>? products,
@@ -448,7 +448,7 @@ extension $GetStoreCategoryExtension on GetStoreCategory {
 
   GetStoreCategory copyWithWrapped(
       {Wrapped<String?>? description,
-      Wrapped<int?>? id,
+      Wrapped<String?>? id,
       Wrapped<String?>? imageUrl,
       Wrapped<String?>? name,
       Wrapped<List<GetStoreProduct>?>? products,
@@ -561,7 +561,7 @@ class GetStoreProduct {
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   @JsonKey(name: 'id', includeIfNull: false)
-  final int? id;
+  final String? id;
   @JsonKey(name: 'imageUrl', includeIfNull: false)
   final String? imageUrl;
   @JsonKey(name: 'max', includeIfNull: false)
@@ -668,7 +668,7 @@ class GetStoreProduct {
 extension $GetStoreProductExtension on GetStoreProduct {
   GetStoreProduct copyWith(
       {String? description,
-      int? id,
+      String? id,
       String? imageUrl,
       int? max,
       int? min,
@@ -704,7 +704,7 @@ extension $GetStoreProductExtension on GetStoreProduct {
 
   GetStoreProduct copyWithWrapped(
       {Wrapped<String?>? description,
-      Wrapped<int?>? id,
+      Wrapped<String?>? id,
       Wrapped<String?>? imageUrl,
       Wrapped<int?>? max,
       Wrapped<int?>? min,
@@ -752,7 +752,6 @@ class GetStoreResponse {
     this.googleMapsLink,
     this.id,
     this.imageUrl,
-    this.isAvailable,
     this.name,
     this.openingHours,
     this.phoneNumber,
@@ -781,8 +780,6 @@ class GetStoreResponse {
   final String? id;
   @JsonKey(name: 'imageUrl', includeIfNull: false)
   final String? imageUrl;
-  @JsonKey(name: 'isAvailable', includeIfNull: false)
-  final bool? isAvailable;
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(
@@ -825,9 +822,6 @@ class GetStoreResponse {
             (identical(other.imageUrl, imageUrl) ||
                 const DeepCollectionEquality()
                     .equals(other.imageUrl, imageUrl)) &&
-            (identical(other.isAvailable, isAvailable) ||
-                const DeepCollectionEquality()
-                    .equals(other.isAvailable, isAvailable)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.openingHours, openingHours) ||
@@ -854,7 +848,6 @@ class GetStoreResponse {
       const DeepCollectionEquality().hash(googleMapsLink) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(imageUrl) ^
-      const DeepCollectionEquality().hash(isAvailable) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(openingHours) ^
       const DeepCollectionEquality().hash(phoneNumber) ^
@@ -872,7 +865,6 @@ extension $GetStoreResponseExtension on GetStoreResponse {
       String? googleMapsLink,
       String? id,
       String? imageUrl,
-      bool? isAvailable,
       String? name,
       List<GetStoreOpeningHour>? openingHours,
       String? phoneNumber,
@@ -886,7 +878,6 @@ extension $GetStoreResponseExtension on GetStoreResponse {
         googleMapsLink: googleMapsLink ?? this.googleMapsLink,
         id: id ?? this.id,
         imageUrl: imageUrl ?? this.imageUrl,
-        isAvailable: isAvailable ?? this.isAvailable,
         name: name ?? this.name,
         openingHours: openingHours ?? this.openingHours,
         phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -902,7 +893,6 @@ extension $GetStoreResponseExtension on GetStoreResponse {
       Wrapped<String?>? googleMapsLink,
       Wrapped<String?>? id,
       Wrapped<String?>? imageUrl,
-      Wrapped<bool?>? isAvailable,
       Wrapped<String?>? name,
       Wrapped<List<GetStoreOpeningHour>?>? openingHours,
       Wrapped<String?>? phoneNumber,
@@ -922,8 +912,6 @@ extension $GetStoreResponseExtension on GetStoreResponse {
             : this.googleMapsLink),
         id: (id != null ? id.value : this.id),
         imageUrl: (imageUrl != null ? imageUrl.value : this.imageUrl),
-        isAvailable:
-            (isAvailable != null ? isAvailable.value : this.isAvailable),
         name: (name != null ? name.value : this.name),
         openingHours:
             (openingHours != null ? openingHours.value : this.openingHours),
@@ -944,6 +932,7 @@ class GetStoresOverviewResponse {
     this.googleMapsLink,
     this.id,
     this.imageUrl,
+    this.isAvailable,
     this.name,
     this.phoneNumber,
     this.reviewCount,
@@ -966,6 +955,8 @@ class GetStoresOverviewResponse {
   final String? id;
   @JsonKey(name: 'imageUrl', includeIfNull: false)
   final String? imageUrl;
+  @JsonKey(name: 'isAvailable', includeIfNull: false)
+  final bool? isAvailable;
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(name: 'phoneNumber', includeIfNull: false)
@@ -1000,6 +991,9 @@ class GetStoresOverviewResponse {
             (identical(other.imageUrl, imageUrl) ||
                 const DeepCollectionEquality()
                     .equals(other.imageUrl, imageUrl)) &&
+            (identical(other.isAvailable, isAvailable) ||
+                const DeepCollectionEquality()
+                    .equals(other.isAvailable, isAvailable)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.phoneNumber, phoneNumber) ||
@@ -1022,6 +1016,7 @@ class GetStoresOverviewResponse {
       const DeepCollectionEquality().hash(googleMapsLink) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(imageUrl) ^
+      const DeepCollectionEquality().hash(isAvailable) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(phoneNumber) ^
       const DeepCollectionEquality().hash(reviewCount) ^
@@ -1037,6 +1032,7 @@ extension $GetStoresOverviewResponseExtension on GetStoresOverviewResponse {
       String? googleMapsLink,
       String? id,
       String? imageUrl,
+      bool? isAvailable,
       String? name,
       String? phoneNumber,
       int? reviewCount}) {
@@ -1048,6 +1044,7 @@ extension $GetStoresOverviewResponseExtension on GetStoresOverviewResponse {
         googleMapsLink: googleMapsLink ?? this.googleMapsLink,
         id: id ?? this.id,
         imageUrl: imageUrl ?? this.imageUrl,
+        isAvailable: isAvailable ?? this.isAvailable,
         name: name ?? this.name,
         phoneNumber: phoneNumber ?? this.phoneNumber,
         reviewCount: reviewCount ?? this.reviewCount);
@@ -1061,6 +1058,7 @@ extension $GetStoresOverviewResponseExtension on GetStoresOverviewResponse {
       Wrapped<String?>? googleMapsLink,
       Wrapped<String?>? id,
       Wrapped<String?>? imageUrl,
+      Wrapped<bool?>? isAvailable,
       Wrapped<String?>? name,
       Wrapped<String?>? phoneNumber,
       Wrapped<int?>? reviewCount}) {
@@ -1078,6 +1076,8 @@ extension $GetStoresOverviewResponseExtension on GetStoresOverviewResponse {
             : this.googleMapsLink),
         id: (id != null ? id.value : this.id),
         imageUrl: (imageUrl != null ? imageUrl.value : this.imageUrl),
+        isAvailable:
+            (isAvailable != null ? isAvailable.value : this.isAvailable),
         name: (name != null ? name.value : this.name),
         phoneNumber:
             (phoneNumber != null ? phoneNumber.value : this.phoneNumber),
@@ -1101,7 +1101,7 @@ class OrderItem {
       _$OrderItemFromJson(json);
 
   @JsonKey(name: 'id', includeIfNull: false)
-  final int? id;
+  final String? id;
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(name: 'plu', includeIfNull: false)
@@ -1152,7 +1152,7 @@ class OrderItem {
 
 extension $OrderItemExtension on OrderItem {
   OrderItem copyWith(
-      {int? id,
+      {String? id,
       String? name,
       String? plu,
       int? price,
@@ -1168,7 +1168,7 @@ extension $OrderItemExtension on OrderItem {
   }
 
   OrderItem copyWithWrapped(
-      {Wrapped<int?>? id,
+      {Wrapped<String?>? id,
       Wrapped<String?>? name,
       Wrapped<String?>? plu,
       Wrapped<int?>? price,
@@ -1325,6 +1325,71 @@ extension $WhitelistRequestExtension on WhitelistRequest {
   WhitelistRequest copyWithWrapped({Wrapped<String?>? identifier}) {
     return WhitelistRequest(
         identifier: (identifier != null ? identifier.value : this.identifier));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class MenusMenuRedisModel {
+  MenusMenuRedisModel({
+    this.categories,
+    this.openingHours,
+  });
+
+  factory MenusMenuRedisModel.fromJson(Map<String, dynamic> json) =>
+      _$MenusMenuRedisModelFromJson(json);
+
+  @JsonKey(
+      name: 'categories',
+      includeIfNull: false,
+      defaultValue: <GetStoreCategory>[])
+  final List<GetStoreCategory>? categories;
+  @JsonKey(
+      name: 'openingHours',
+      includeIfNull: false,
+      defaultValue: <GetStoreOpeningHour>[])
+  final List<GetStoreOpeningHour>? openingHours;
+  static const fromJsonFactory = _$MenusMenuRedisModelFromJson;
+  static const toJsonFactory = _$MenusMenuRedisModelToJson;
+  Map<String, dynamic> toJson() => _$MenusMenuRedisModelToJson(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is MenusMenuRedisModel &&
+            (identical(other.categories, categories) ||
+                const DeepCollectionEquality()
+                    .equals(other.categories, categories)) &&
+            (identical(other.openingHours, openingHours) ||
+                const DeepCollectionEquality()
+                    .equals(other.openingHours, openingHours)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(categories) ^
+      const DeepCollectionEquality().hash(openingHours) ^
+      runtimeType.hashCode;
+}
+
+extension $MenusMenuRedisModelExtension on MenusMenuRedisModel {
+  MenusMenuRedisModel copyWith(
+      {List<GetStoreCategory>? categories,
+      List<GetStoreOpeningHour>? openingHours}) {
+    return MenusMenuRedisModel(
+        categories: categories ?? this.categories,
+        openingHours: openingHours ?? this.openingHours);
+  }
+
+  MenusMenuRedisModel copyWithWrapped(
+      {Wrapped<List<GetStoreCategory>?>? categories,
+      Wrapped<List<GetStoreOpeningHour>?>? openingHours}) {
+    return MenusMenuRedisModel(
+        categories: (categories != null ? categories.value : this.categories),
+        openingHours:
+            (openingHours != null ? openingHours.value : this.openingHours));
   }
 }
 

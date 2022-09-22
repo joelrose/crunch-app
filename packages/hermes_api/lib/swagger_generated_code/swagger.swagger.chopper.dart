@@ -17,6 +17,13 @@ class _$Swagger extends Swagger {
   final definitionType = Swagger;
 
   @override
+  Future<Response<List<GetOrdersResponse>>> _dashboardOrdersGet() {
+    final $url = '/dashboard/orders';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<List<GetOrdersResponse>, GetOrdersResponse>($request);
+  }
+
+  @override
   Future<Response<List<GetOrdersResponse>>> _ordersGet() {
     final $url = '/orders';
     final $request = Request('GET', $url, client.baseUrl);
