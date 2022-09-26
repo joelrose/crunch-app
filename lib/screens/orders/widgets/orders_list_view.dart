@@ -44,7 +44,7 @@ class OrdersListView extends StatelessWidget {
                               vertical: 12,
                             ),
                             child: Text(
-                              '#${order.id!.toString()}',
+                              '#${order.id!.substring(0, 3)}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
