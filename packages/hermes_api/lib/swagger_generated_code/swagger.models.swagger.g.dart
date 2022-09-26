@@ -75,7 +75,7 @@ GetOrdersResponse _$GetOrdersResponseFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] as String?,
       estimatedPickupTime: json['estimatedPickupTime'] as String?,
       googleMapsLink: json['googleMapsLink'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] as String?,
       isPaid: json['isPaid'] as bool?,
       orderItems: (json['orderItems'] as List<dynamic>?)
               ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
@@ -309,6 +309,34 @@ Map<String, dynamic> _$GetStoresOverviewResponseToJson(
   return val;
 }
 
+Menu _$MenuFromJson(Map<String, dynamic> json) => Menu(
+      categories: (json['categories'] as List<dynamic>?)
+              ?.map((e) => GetStoreCategory.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      openingHours: (json['opening_hours'] as List<dynamic>?)
+              ?.map((e) =>
+                  GetStoreOpeningHour.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$MenuToJson(Menu instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'categories', instance.categories?.map((e) => e.toJson()).toList());
+  writeNotNull(
+      'opening_hours', instance.openingHours?.map((e) => e.toJson()).toList());
+  return val;
+}
+
 OrderItem _$OrderItemFromJson(Map<String, dynamic> json) => OrderItem(
       id: json['id'] as String?,
       name: json['name'] as String?,
@@ -343,7 +371,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       createdAt: json['createdAt'] as String?,
       firebaseId: json['firebaseId'] as String?,
       firstname: json['firstname'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] as String?,
       languageCode: json['languageCode'] as String?,
       lastname: json['lastname'] as String?,
     );
@@ -381,34 +409,5 @@ Map<String, dynamic> _$WhitelistRequestToJson(WhitelistRequest instance) {
   }
 
   writeNotNull('identifier', instance.identifier);
-  return val;
-}
-
-MenusMenuRedisModel _$MenusMenuRedisModelFromJson(Map<String, dynamic> json) =>
-    MenusMenuRedisModel(
-      categories: (json['categories'] as List<dynamic>?)
-              ?.map((e) => GetStoreCategory.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      openingHours: (json['openingHours'] as List<dynamic>?)
-              ?.map((e) =>
-                  GetStoreOpeningHour.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$MenusMenuRedisModelToJson(MenusMenuRedisModel instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull(
-      'categories', instance.categories?.map((e) => e.toJson()).toList());
-  writeNotNull(
-      'openingHours', instance.openingHours?.map((e) => e.toJson()).toList());
   return val;
 }

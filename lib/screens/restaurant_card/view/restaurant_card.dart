@@ -17,7 +17,7 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (true) { //restaurant.isOpen!) {
+    if (restaurant.isAvailable!) {
       return Bounceable(
         key: const Key('restaurant_card'),
         onTap: () {
@@ -103,7 +103,7 @@ class RestaurantCard extends StatelessWidget {
                         color: AlpacaColor.white100Color,
                       ),
                     ),
-                    if (true) ...[ // restaurant.isOpen!) ...[
+                    if (restaurant.isAvailable!) ...[
                       Text(
                         '${restaurant.averagePickupTime} min',
                         textAlign: TextAlign.right,
@@ -139,8 +139,9 @@ class RestaurantCard extends StatelessWidget {
   }
 
   Widget _overlay(BuildContext context) {
-    final textDecoration =
-        true ? null : TextDecoration.lineThrough; // restaurant.isOpen!
+    final textDecoration = restaurant.isAvailable!
+        ? null
+        : TextDecoration.lineThrough;
 
     return Container(
       alignment: Alignment.centerLeft,

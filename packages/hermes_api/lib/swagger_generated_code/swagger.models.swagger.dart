@@ -204,7 +204,7 @@ class GetOrdersResponse {
   @JsonKey(name: 'googleMapsLink', includeIfNull: false)
   final String? googleMapsLink;
   @JsonKey(name: 'id', includeIfNull: false)
-  final int? id;
+  final String? id;
   @JsonKey(name: 'isPaid', includeIfNull: false)
   final bool? isPaid;
   @JsonKey(
@@ -295,7 +295,7 @@ extension $GetOrdersResponseExtension on GetOrdersResponse {
       {String? createdAt,
       String? estimatedPickupTime,
       String? googleMapsLink,
-      int? id,
+      String? id,
       bool? isPaid,
       List<OrderItem>? orderItems,
       int? price,
@@ -325,7 +325,7 @@ extension $GetOrdersResponseExtension on GetOrdersResponse {
       {Wrapped<String?>? createdAt,
       Wrapped<String?>? estimatedPickupTime,
       Wrapped<String?>? googleMapsLink,
-      Wrapped<int?>? id,
+      Wrapped<String?>? id,
       Wrapped<bool?>? isPaid,
       Wrapped<List<OrderItem>?>? orderItems,
       Wrapped<int?>? price,
@@ -1087,6 +1087,70 @@ extension $GetStoresOverviewResponseExtension on GetStoresOverviewResponse {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Menu {
+  Menu({
+    this.categories,
+    this.openingHours,
+  });
+
+  factory Menu.fromJson(Map<String, dynamic> json) => _$MenuFromJson(json);
+
+  @JsonKey(
+      name: 'categories',
+      includeIfNull: false,
+      defaultValue: <GetStoreCategory>[])
+  final List<GetStoreCategory>? categories;
+  @JsonKey(
+      name: 'opening_hours',
+      includeIfNull: false,
+      defaultValue: <GetStoreOpeningHour>[])
+  final List<GetStoreOpeningHour>? openingHours;
+  static const fromJsonFactory = _$MenuFromJson;
+  static const toJsonFactory = _$MenuToJson;
+  Map<String, dynamic> toJson() => _$MenuToJson(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is Menu &&
+            (identical(other.categories, categories) ||
+                const DeepCollectionEquality()
+                    .equals(other.categories, categories)) &&
+            (identical(other.openingHours, openingHours) ||
+                const DeepCollectionEquality()
+                    .equals(other.openingHours, openingHours)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(categories) ^
+      const DeepCollectionEquality().hash(openingHours) ^
+      runtimeType.hashCode;
+}
+
+extension $MenuExtension on Menu {
+  Menu copyWith(
+      {List<GetStoreCategory>? categories,
+      List<GetStoreOpeningHour>? openingHours}) {
+    return Menu(
+        categories: categories ?? this.categories,
+        openingHours: openingHours ?? this.openingHours);
+  }
+
+  Menu copyWithWrapped(
+      {Wrapped<List<GetStoreCategory>?>? categories,
+      Wrapped<List<GetStoreOpeningHour>?>? openingHours}) {
+    return Menu(
+        categories: (categories != null ? categories.value : this.categories),
+        openingHours:
+            (openingHours != null ? openingHours.value : this.openingHours));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class OrderItem {
   OrderItem({
     this.id,
@@ -1204,7 +1268,7 @@ class User {
   @JsonKey(name: 'firstname', includeIfNull: false)
   final String? firstname;
   @JsonKey(name: 'id', includeIfNull: false)
-  final int? id;
+  final String? id;
   @JsonKey(name: 'languageCode', includeIfNull: false)
   final String? languageCode;
   @JsonKey(name: 'lastname', includeIfNull: false)
@@ -1255,7 +1319,7 @@ extension $UserExtension on User {
       {String? createdAt,
       String? firebaseId,
       String? firstname,
-      int? id,
+      String? id,
       String? languageCode,
       String? lastname}) {
     return User(
@@ -1271,7 +1335,7 @@ extension $UserExtension on User {
       {Wrapped<String?>? createdAt,
       Wrapped<String?>? firebaseId,
       Wrapped<String?>? firstname,
-      Wrapped<int?>? id,
+      Wrapped<String?>? id,
       Wrapped<String?>? languageCode,
       Wrapped<String?>? lastname}) {
     return User(
@@ -1325,71 +1389,6 @@ extension $WhitelistRequestExtension on WhitelistRequest {
   WhitelistRequest copyWithWrapped({Wrapped<String?>? identifier}) {
     return WhitelistRequest(
         identifier: (identifier != null ? identifier.value : this.identifier));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class MenusMenuRedisModel {
-  MenusMenuRedisModel({
-    this.categories,
-    this.openingHours,
-  });
-
-  factory MenusMenuRedisModel.fromJson(Map<String, dynamic> json) =>
-      _$MenusMenuRedisModelFromJson(json);
-
-  @JsonKey(
-      name: 'categories',
-      includeIfNull: false,
-      defaultValue: <GetStoreCategory>[])
-  final List<GetStoreCategory>? categories;
-  @JsonKey(
-      name: 'openingHours',
-      includeIfNull: false,
-      defaultValue: <GetStoreOpeningHour>[])
-  final List<GetStoreOpeningHour>? openingHours;
-  static const fromJsonFactory = _$MenusMenuRedisModelFromJson;
-  static const toJsonFactory = _$MenusMenuRedisModelToJson;
-  Map<String, dynamic> toJson() => _$MenusMenuRedisModelToJson(this);
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is MenusMenuRedisModel &&
-            (identical(other.categories, categories) ||
-                const DeepCollectionEquality()
-                    .equals(other.categories, categories)) &&
-            (identical(other.openingHours, openingHours) ||
-                const DeepCollectionEquality()
-                    .equals(other.openingHours, openingHours)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(categories) ^
-      const DeepCollectionEquality().hash(openingHours) ^
-      runtimeType.hashCode;
-}
-
-extension $MenusMenuRedisModelExtension on MenusMenuRedisModel {
-  MenusMenuRedisModel copyWith(
-      {List<GetStoreCategory>? categories,
-      List<GetStoreOpeningHour>? openingHours}) {
-    return MenusMenuRedisModel(
-        categories: categories ?? this.categories,
-        openingHours: openingHours ?? this.openingHours);
-  }
-
-  MenusMenuRedisModel copyWithWrapped(
-      {Wrapped<List<GetStoreCategory>?>? categories,
-      Wrapped<List<GetStoreOpeningHour>?>? openingHours}) {
-    return MenusMenuRedisModel(
-        categories: (categories != null ? categories.value : this.categories),
-        openingHours:
-            (openingHours != null ? openingHours.value : this.openingHours));
   }
 }
 

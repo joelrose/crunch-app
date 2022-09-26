@@ -1,14 +1,52 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server celler server.",
-        "title": "Swagger Example API",
+        "description": "This is the Crunch Backend API",
+        "title": "Crunch Backend API",
         "contact": {},
         "version": "1.0"
     },
     "host": "localhost:8080",
     "basePath": "/api/v1",
     "paths": {
+        "/dashboard/menu": {
+            "get": {
+                "security": [
+                    {
+                        "Auth0Token": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dashboard"
+                ],
+                "summary": "Get the menu for a store",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Menu"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
         "/dashboard/orders": {
             "get": {
                 "security": [
@@ -400,7 +438,7 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "isPaid": {
                     "type": "boolean"
@@ -615,6 +653,23 @@
                 }
             }
         },
+        "Menu": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GetStoreCategory"
+                    }
+                },
+                "opening_hours": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GetStoreOpeningHour"
+                    }
+                }
+            }
+        },
         "OrderItem": {
             "type": "object",
             "properties": {
@@ -654,7 +709,7 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "languageCode": {
                     "type": "string"
@@ -669,23 +724,6 @@
             "properties": {
                 "identifier": {
                     "type": "string"
-                }
-            }
-        },
-        "menus.MenuRedisModel": {
-            "type": "object",
-            "properties": {
-                "categories": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/GetStoreCategory"
-                    }
-                },
-                "openingHours": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/GetStoreOpeningHour"
-                    }
                 }
             }
         }
