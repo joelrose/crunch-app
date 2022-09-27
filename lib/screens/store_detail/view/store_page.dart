@@ -12,7 +12,7 @@ class StoreDetailPage extends StatelessWidget {
     required this.restaurantImage,
   }) : super(key: key);
 
-  final DeliverectProductModelDto item;
+  final GetStoreProduct item;
   final String restaurantImage;
 
   @override

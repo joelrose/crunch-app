@@ -7,7 +7,7 @@ part 'product_option_state.dart';
 class ProductOptionCubit extends Cubit<ProductOptionState> {
   ProductOptionCubit({
     required int index,
-    required DeliverectProductModelDto optionCategory,
+    required GetStoreProduct optionCategory,
   }) : super(
           ProductOptionState(
             index: index,

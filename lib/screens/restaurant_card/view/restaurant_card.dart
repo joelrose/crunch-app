@@ -13,11 +13,11 @@ class RestaurantCard extends StatelessWidget {
     required this.restaurant,
   }) : super(key: key);
 
-  final GetMenusResponseDto restaurant;
+  final GetStoresOverviewResponse restaurant;
 
   @override
   Widget build(BuildContext context) {
-    if (restaurant.isOpen!) {
+    if (restaurant.isAvailable!) {
       return Bounceable(
         key: const Key('restaurant_card'),
         onTap: () {
@@ -67,7 +67,7 @@ class RestaurantCard extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: CachedNetworkImageProvider(
-                restaurant.menu?.menuImageUrl ?? '',
+                restaurant.imageUrl ?? '',
               ),
               fit: BoxFit.cover,
             ),
@@ -103,9 +103,9 @@ class RestaurantCard extends StatelessWidget {
                         color: AlpacaColor.white100Color,
                       ),
                     ),
-                    if (restaurant.isOpen!) ...[
+                    if (restaurant.isAvailable!) ...[
                       Text(
-                        '${restaurant.averagePickUpTime} min',
+                        '${restaurant.averagePickupTime} min',
                         textAlign: TextAlign.right,
                         style: Theme.of(context).textTheme.subtitle1!.merge(
                               const TextStyle(
@@ -139,8 +139,9 @@ class RestaurantCard extends StatelessWidget {
   }
 
   Widget _overlay(BuildContext context) {
-    final textDecoration =
-        restaurant.isOpen! ? null : TextDecoration.lineThrough;
+    final textDecoration = restaurant.isAvailable!
+        ? null
+        : TextDecoration.lineThrough;
 
     return Container(
       alignment: Alignment.centerLeft,
@@ -158,13 +159,13 @@ class RestaurantCard extends StatelessWidget {
               SizedBox(
                 width: 150,
                 child: Text(
-                  restaurant.menu!.menu!,
+                  restaurant.name!,
                   style: Theme.of(context).textTheme.headline3!.copyWith(
                         decoration: textDecoration,
                       ),
                 ),
               ),
-              if (restaurant.rating != null) ...[
+              if (restaurant.averageReview != null) ...[
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(48),
@@ -182,7 +183,7 @@ class RestaurantCard extends StatelessWidget {
                     width: 24,
                     height: 12,
                     child: Text(
-                      restaurant.rating.toString(),
+                      restaurant.averageReview.toString(),
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.subtitle2!.merge(
                             const TextStyle(

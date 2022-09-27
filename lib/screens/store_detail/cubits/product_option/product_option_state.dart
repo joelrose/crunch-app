@@ -7,7 +7,7 @@ class ProductOptionState extends Equatable {
   });
 
   final int index;
-  final DeliverectProductModelDto optionCategory;
+  final GetStoreProduct optionCategory;
 
   @override
   List<Object> get props => [index, optionCategory];

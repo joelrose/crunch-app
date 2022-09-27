@@ -18,4 +18,4 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.2.0
   lint: ^1.8.2
-  swagger_dart_code_generator: ^2.5.2
+  swagger_dart_code_generator: ^2.7.9

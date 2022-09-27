@@ -1,89 +1,74 @@
 import 'dart:async';
 
+import 'package:app_outdated_repository/app_outdated_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:hermes_api/hermes_api.dart';
 
 class HermesRepository {
   HermesRepository({
     required String apiUrl,
-    required this.authenticationRepository,
+    required AuthenticationRepository authenticationRepository,
+    required AppOutdatedRepository appOutdatedRepository,
+    required String appVersion,
   }) {
     _chopperClient = ChopperClient(
-      baseUrl: apiUrl,
-      services: [Swagger.create(ChopperClient())],
-      converter: JsonSerializableConverter(SwaggerJsonDecoderMappings),
-      interceptors: [_authHeader],
+      baseUrl: apiUrl + '/api/v1',
+      services: [Swagger.create()],
+      converter: JsonSerializableConverter(generatedMapping),
+      interceptors: [
+        VersionRequestInterceptor(
+          appVersion: appVersion,
+        ),
+        TokenRequestInterceptor(
+          authenticationRepository: authenticationRepository,
+        ),
+        VersionResponseInterceptor(
+            appOutdatedRepository: appOutdatedRepository),
+      ],
     );
   }
 
-  late ChopperClient _chopperClient;
-  final AuthenticationRepository authenticationRepository;
+  late final ChopperClient _chopperClient;
 
   Swagger get client => _chopperClient.getService<Swagger>();
+}
 
-  Future<Request> _authHeader(Request request) async {
-    final Map<String, String> updatedHeaders =
-        Map<String, String>.of(request.headers);
+class VersionRequestInterceptor implements RequestInterceptor {
+  VersionRequestInterceptor({required this.appVersion});
 
+  final String appVersion;
+
+  @override
+  FutureOr<Request> onRequest(Request request) async {
+    return applyHeader(request, 'X-App-Version', appVersion);
+  }
+}
+
+class TokenRequestInterceptor implements RequestInterceptor {
+  TokenRequestInterceptor({required this.authenticationRepository});
+
+  final AuthenticationRepository authenticationRepository;
+
+  @override
+  FutureOr<Request> onRequest(Request request) async {
     final token =
         await authenticationRepository.firebaseAuth.currentUser?.getIdToken();
-    updatedHeaders.putIfAbsent(
-      'Authorization',
-      () => 'Bearer $token',
-    );
 
-    return request.copyWith(headers: updatedHeaders);
+    return applyHeader(request, 'Authorization', 'Bearer $token');
   }
+}
 
-  Future<GetMenuResponseDto> apiMenusMenuIdGet({
-    required String storeId,
-  }) async {
-    void _sortItems(List<ProductRelationModelDto>? list) {
-      if (list == null) {
-        return;
-      }
+class VersionResponseInterceptor implements ResponseInterceptor {
+  VersionResponseInterceptor({required this.appOutdatedRepository});
 
-      list.sort(
-        (a, b) =>
-            a.childProduct!.sortOrder!.compareTo(b.childProduct!.sortOrder!),
-      );
+  final AppOutdatedRepository appOutdatedRepository;
 
-      for (final element in list) {
-        _sortItems(element.childProduct!.childProducts);
-      }
+  @override
+  FutureOr<Response> onResponse(Response response) {
+    if (response.statusCode == 412) {
+      appOutdatedRepository.pushOutdated();
     }
 
-    try {
-      final request = await client.apiMenusMenuIdGet(
-        menuId: storeId,
-      );
-
-      if (request.isSuccessful) {
-        request.body?.menu?.categories?.sort(
-          (a, b) => a.sortOrder!.compareTo(b.sortOrder!),
-        );
-
-        if (request.body?.menu?.categories != null) {
-          for (final category in request.body!.menu!.categories!) {
-            if (category.products != null) {
-              category.products?.sort(
-                (a, b) =>
-                    a.product!.sortOrder!.compareTo(b.product!.sortOrder!),
-              );
-
-              for (final product in category.products!) {
-                _sortItems(product.product?.childProducts);
-              }
-            }
-          }
-        }
-
-        return request.body!;
-      } else {
-        throw Exception();
-      }
-    } catch (exception) {
-      throw Exception();
-    }
+    return response;
   }
 }

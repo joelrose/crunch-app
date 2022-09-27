@@ -19,9 +19,9 @@ class ProductDetailState extends Equatable {
 
   final ProductDetailStatus status;
 
-  final DeliverectProductModelDto? item;
+  final GetStoreProduct? item;
 
-  final List<CreateOrderItemDto> orderDto;
+  final List<OrderItem> orderDto;
 
   final bool isRadio;
   final bool isSnoozed;
@@ -30,8 +30,8 @@ class ProductDetailState extends Equatable {
   // copyWith
   ProductDetailState copyWith({
     ProductDetailStatus? status,
-    DeliverectProductModelDto? item,
-    List<CreateOrderItemDto>? orderDto,
+    GetStoreProduct? item,
+    List<OrderItem>? orderDto,
     bool? isRadio,
     bool? isSnoozed,
     bool? isSelected,

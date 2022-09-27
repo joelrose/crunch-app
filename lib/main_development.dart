@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:app_outdated_repository/app_outdated_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:checkout_repository/checkout_repository.dart';
 import 'package:flutter/material.dart';
@@ -40,13 +41,17 @@ Future<void> main() async {
 
   final authenticationRepository = AuthenticationRepository();
 
+  final appOutdatedRepository = AppOutdatedRepository();
+
   final oneSignalRepository = OneSignalRepository(
     authenticationRepository: authenticationRepository,
   );
 
   final hermesRepository = HermesRepository(
+    appVersion: 'DEV',
     apiUrl: dotenv.get('API_URL'),
     authenticationRepository: authenticationRepository,
+    appOutdatedRepository: appOutdatedRepository,
   );
 
   final stripeRepository = StripeRepository(
@@ -68,6 +73,7 @@ Future<void> main() async {
     () async => BlocOverrides.runZoned(
       () async => runApp(
         App(
+          appOutdatedRepository: appOutdatedRepository,
           authenticationRepository: authenticationRepository,
           checkoutRepository: checkoutRepository,
           oneSignalRepository: oneSignalRepository,

@@ -13,22 +13,22 @@ extension StoreStatusX on StoreStatus {
 class StoreState extends Equatable {
   const StoreState({
     this.status = StoreStatus.initial,
-    this.menu,
+    this.store,
   });
 
   final StoreStatus status;
-  final GetMenuResponseDto? menu;
+  final GetStoreResponse? store;
 
   StoreState copyWith({
     StoreStatus? status,
-    GetMenuResponseDto? menu,
+    GetStoreResponse? store,
   }) {
     return StoreState(
       status: status ?? this.status,
-      menu: menu ?? this.menu,
+      store: store ?? this.store,
     );
   }
 
   @override
-  List<Object?> get props => [status, menu];
+  List<Object?> get props => [status, store];
 }

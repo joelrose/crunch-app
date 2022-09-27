@@ -5,14 +5,12 @@ import 'package:pickup/screens/search_bar/cubit/search_bar_cubit.dart';
 void main() {
   group('SearchBarState', () {
     final menu = [
-      GetMenusResponseDto(
+      GetStoresOverviewResponse(
         id: 'id',
-        rating: 3,
-        reviewCount: '12',
-        averagePickUpTime: '12',
-        menu: DeliverectMenusDto(
-          menu: '',
-        ),
+        averageReview: 3,
+        reviewCount: 12,
+        averagePickupTime: 12,
+        name: '',
       ),
     ];
     test('supports value comparison', () {

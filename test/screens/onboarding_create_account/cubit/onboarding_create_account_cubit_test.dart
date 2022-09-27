@@ -66,7 +66,7 @@ void main() {
         ),
       ],
       verify: (cubit) {
-        expect(cubit.state.maxSteps, 3);
+        expect(cubit.state.maxSteps, 2);
       },
     );
   });

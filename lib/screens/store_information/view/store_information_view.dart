@@ -11,19 +11,19 @@ class StoreInformationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final menu = context.select(
-      (StoreInformationCubit cubit) => cubit.state.menu,
+    final store = context.select(
+      (StoreInformationCubit cubit) => cubit.state.store,
     );
 
     return Column(
       children: [
         CheckoutNavbar(
-          storeName: menu.menu!.menu,
+          storeName: store.name,
           pageOverviewName: context.l10n.orderOverview,
         ),
         CrunchMap(
-          googleMapsLink: menu.googleMapsLink!,
-          name: menu.menu!.menu!,
+          googleMapsLink: store.googleMapsLink!,
+          name: store.name!,
         ),
         const StoreInformation(),
       ],

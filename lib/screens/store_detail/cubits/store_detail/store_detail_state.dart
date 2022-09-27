@@ -16,7 +16,7 @@ class StoreDetailState extends Equatable {
   final StoreDetailStatus status;
 
   // the initial item
-  final DeliverectProductModelDto item;
+  final GetStoreProduct item;
 
   // the current price of the configured order item
   final int price;
@@ -25,15 +25,15 @@ class StoreDetailState extends Equatable {
   final int basketAmount;
 
   // the customized order item
-  final List<CreateOrderItemDto> orderItems;
+  final List<OrderItem> orderItems;
 
   //
   final int magicNumber;
 
   StoreDetailState copyWith({
     StoreDetailStatus? status,
-    DeliverectProductModelDto? item,
-    List<CreateOrderItemDto>? orderItems,
+    GetStoreProduct? item,
+    List<OrderItem>? orderItems,
     int? price,
     int? basketAmount,
     int? magicNumber,

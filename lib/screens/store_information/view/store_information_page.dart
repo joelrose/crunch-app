@@ -10,11 +10,11 @@ class StoreInformationPage extends StatelessWidget {
   const StoreInformationPage({Key? key}) : super(key: key);
 
   static Route<void> route({
-    required GetMenuResponseDto menu,
+    required GetStoreResponse store,
   }) {
     return MaterialPageRoute(
       builder: (_) => BlocProvider(
-        create: (_) => StoreInformationCubit(menu),
+        create: (_) => StoreInformationCubit(store),
         child: const StoreInformationPage(),
       ),
     );

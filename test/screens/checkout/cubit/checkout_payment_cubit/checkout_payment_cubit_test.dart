@@ -14,7 +14,7 @@ void main() {
       expect(
         CheckoutPaymentCubit(
           stripeRepository: stripeRepository,
-          merchantId: 'merchantId',
+          storeId: 'storeId',
         ).state,
         const CheckoutPaymentState(PaymentStatus.initial),
       );
@@ -25,12 +25,12 @@ void main() {
       setUp: () {
         when(
           () => stripeRepository
-              .presentPaymentSheet(merchantId: 'merchantId', checkoutItems: []),
+              .presentPaymentSheet(storeId: 'storeId', checkoutItems: []),
         ).thenAnswer((_) async {});
       },
       build: () => CheckoutPaymentCubit(
         stripeRepository: stripeRepository,
-        merchantId: 'merchantId',
+        storeId: 'storeId',
       ),
       act: (cubit) => cubit.checkout([]),
       expect: () => [
@@ -44,14 +44,14 @@ void main() {
       setUp: () {
         when(
           () => stripeRepository
-              .presentPaymentSheet(merchantId: 'merchantId', checkoutItems: []),
+              .presentPaymentSheet(storeId: 'storeId', checkoutItems: []),
         ).thenAnswer((_) async {
           throw Exception();
         });
       },
       build: () => CheckoutPaymentCubit(
         stripeRepository: stripeRepository,
-        merchantId: 'merchantId',
+        storeId: 'storeId',
       ),
       act: (cubit) => cubit.checkout([]),
       expect: () => [

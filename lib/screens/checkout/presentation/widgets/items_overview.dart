@@ -49,7 +49,7 @@ class _Item extends StatelessWidget {
   const _Item(this.item, this.itemIndex, this.isEditable, {Key? key})
       : super(key: key);
 
-  final CreateOrderItemDto item;
+  final OrderItem item;
   final int itemIndex;
   final bool isEditable;
 
@@ -115,7 +115,7 @@ class _Item extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (item.items != null && item.items!.isNotEmpty) ...[
+                if (item.subItems != null && item.subItems!.isNotEmpty) ...[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -135,7 +135,7 @@ class _Item extends StatelessWidget {
 class _ItemDescription extends StatelessWidget {
   const _ItemDescription(this.item, {Key? key}) : super(key: key);
 
-  final CreateOrderItemDto item;
+  final OrderItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -154,11 +154,11 @@ class _ItemDescription extends StatelessWidget {
     );
   }
 
-  String _getDescription(CreateOrderItemDto item) {
-    if (item.items != null) {
+  String _getDescription(OrderItem item) {
+    if (item.subItems != null) {
       final buffer = StringBuffer();
 
-      for (final item in item.items!) {
+      for (final item in item.subItems!) {
         buffer.write('${item.name!}, ');
       }
 

@@ -13,3 +13,5 @@ dependencies:
     path: ../hermes_api
   authentication_repository: 
     path: ../authentication_repository
+  app_outdated_repository: 
+    path: ../app_outdated_repository

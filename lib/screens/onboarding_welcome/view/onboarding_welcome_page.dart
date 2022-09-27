@@ -1,9 +1,12 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pickup/l10n/l10n.dart';
+import 'package:pickup/screens/app/bloc/app_outdated/app_outdated_bloc.dart';
 import 'package:pickup/screens/onboarding_account/onboarding_account.dart';
 import 'package:pickup/screens/onboarding_explanation/onboarding_explanation.dart';
+import 'package:pickup/screens/outdated/outdated.dart';
 
 class OnboardingWelcomePage extends StatelessWidget {
   const OnboardingWelcomePage({Key? key}) : super(key: key);
@@ -25,23 +28,33 @@ class OnboardingWelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageWrapper(
-      padding: EdgeInsets.zero,
-      backgroundColor: AlpacaColor.primary100,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const _Image(),
-          Container(
-            alignment: Alignment.bottomCenter,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 18.0,
+    return BlocListener<AppOutdatedBloc, AppOutdatedState>(
+      listener: (context, state) {
+        if (state.status == AppOutdatedStatus.outdated) {
+          Navigator.of(context).pushAndRemoveUntil(
+            OutdatedPage.route(),
+            (_) => false,
+          );
+        }
+      },
+      child: PageWrapper(
+        padding: EdgeInsets.zero,
+        backgroundColor: AlpacaColor.primary100,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const _Image(),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 18.0,
+                ),
+                child: _Content(),
               ),
-              child: _Content(),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

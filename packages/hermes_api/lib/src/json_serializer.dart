@@ -12,7 +12,9 @@ class JsonSerializableConverter extends JsonConverter {
       return null;
     }
 
-    return jsonFactory(values) as T;
+    final t = jsonFactory(values);
+
+    return t as T;
   }
 
   List<T> _decodeList<T>(List values) =>
@@ -31,7 +33,8 @@ class JsonSerializableConverter extends JsonConverter {
     final jsonRes = super.convertResponse(response);
 
     return jsonRes.copyWith<ResultType>(
-        body: _decode<Item>(jsonRes.body) as ResultType,);
+      body: _decode<Item>(jsonRes.body) as ResultType,
+    );
   }
 
   @override

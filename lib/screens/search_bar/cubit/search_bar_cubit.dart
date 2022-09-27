@@ -5,22 +5,22 @@ import 'package:hermes_repository/hermes_repository.dart';
 part 'search_bar_state.dart';
 
 class SearchBarCubit extends Cubit<SearchBarState> {
-  SearchBarCubit(List<GetMenusResponseDto> stores)
+  SearchBarCubit(List<GetStoresOverviewResponse> stores)
       : super(SearchBarState(stores: stores)) {
     initialStores = stores;
   }
 
-  List<GetMenusResponseDto> initialStores = [];
+  List<GetStoresOverviewResponse> initialStores = [];
 
   void search(String query) {
-    List<GetMenusResponseDto> restaurants;
+    List<GetStoresOverviewResponse> restaurants;
 
     if (query.isEmpty) {
       restaurants = initialStores;
     } else {
       restaurants = initialStores
           .where(
-            (restaurant) => restaurant.menu!.menu!
+            (restaurant) => restaurant.name!
                 .toLowerCase()
                 .contains(query.toLowerCase()),
           )
@@ -43,7 +43,7 @@ class SearchBarCubit extends Cubit<SearchBarState> {
     emit(state.copyWith(isAppBarVisible: !state.isAppBarVisible));
   }
 
-  void setStores(List<GetMenusResponseDto> stores) {
+  void setStores(List<GetStoresOverviewResponse> stores) {
     initialStores = stores;
     emit(state.copyWith(stores: stores));
   }

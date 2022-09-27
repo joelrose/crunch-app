@@ -1,4 +1,5 @@
 import 'package:alpaca/alpaca.dart';
+import 'package:app_outdated_repository/app_outdated_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:checkout_repository/checkout_repository.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:mockingjay/mockingjay.dart';
 import 'package:onesignal_repository/onesignal_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/app.dart';
+import 'package:pickup/screens/app/bloc/app_outdated/app_outdated_bloc.dart';
 import 'package:pickup/screens/discover/cubit/discover_cubit.dart';
 import 'package:stripe_repository/stripe_repository.dart';
 
@@ -24,6 +26,8 @@ class MockStripeRepository extends Mock implements StripeRepository {}
 
 class MockCheckoutRepository extends Mock implements CheckoutRepository {}
 
+class MockAppOutdatedRepository extends Mock implements AppOutdatedRepository {}
+
 extension PumpApp on WidgetTester {
   Future<void> pumpApp(
     Widget widget, {
@@ -33,7 +37,9 @@ extension PumpApp on WidgetTester {
     HermesRepository? hermesRepository,
     StripeRepository? stripeRepository,
     CheckoutRepository? checkoutRepository,
+    AppOutdatedRepository? appOutdatedRepository,
     DiscoverCubit? discoverCubit,
+    AppOutdatedBloc? appOutdatedBloc,
   }) {
     final innerChild = Scaffold(
       body: widget,
@@ -44,6 +50,7 @@ extension PumpApp on WidgetTester {
     final _hermesRepository = MockHermesRepository();
     final _stripeRepository = MockStripeRepository();
     final _checkoutRepository = MockCheckoutRepository();
+    final _appOutdatedRepository = MockAppOutdatedRepository();
 
     return pumpWidget(
       MultiRepositoryProvider(
@@ -63,6 +70,9 @@ extension PumpApp on WidgetTester {
           RepositoryProvider.value(
             value: checkoutRepository ?? _checkoutRepository,
           ),
+          RepositoryProvider.value(
+            value: appOutdatedRepository ?? _appOutdatedRepository,
+          ),
         ],
         child: MultiBlocProvider(
           providers: [
@@ -74,6 +84,13 @@ extension PumpApp on WidgetTester {
             BlocProvider(
               create: (context) =>
                   discoverCubit ?? DiscoverCubit(_hermesRepository),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  appOutdatedBloc ??
+                  AppOutdatedBloc(
+                    appOutdatedRepository: _appOutdatedRepository,
+                  ),
             )
           ],
           child: MaterialApp(

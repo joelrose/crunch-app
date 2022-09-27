@@ -19,7 +19,7 @@ class LocalStorageCheckoutApi {
   final SharedPreferences _plugin;
 
   final _checkoutStreamController =
-      BehaviorSubject<List<CreateOrderItemDto>>.seeded(const []);
+      BehaviorSubject<List<OrderItem>>.seeded(const []);
 
   /// The key used for storing the checkout items locally.
   ///
@@ -40,7 +40,7 @@ class LocalStorageCheckoutApi {
       )
           .map(
             (jsonMap) =>
-                CreateOrderItemDto.fromJson(Map<String, dynamic>.from(jsonMap)),
+                OrderItem.fromJson(Map<String, dynamic>.from(jsonMap)),
           )
           .toList();
       _checkoutStreamController.add(checkoutItems);
@@ -49,7 +49,7 @@ class LocalStorageCheckoutApi {
     }
   }
 
-  Stream<List<CreateOrderItemDto>> getCheckoutItems() =>
+  Stream<List<OrderItem>> getCheckoutItems() =>
       _checkoutStreamController.asBroadcastStream();
 
   Future<void> clear() async {
@@ -68,7 +68,9 @@ class LocalStorageCheckoutApi {
   Future<void> incrementItemQuantityByIndex(int itemIndex) async {
     final items = [..._checkoutStreamController.value];
 
-    items[itemIndex].quantity = items[itemIndex].quantity! + 1;
+    items[itemIndex] = items[itemIndex].copyWith(
+      quantity: items[itemIndex].quantity! + 1,
+    );
 
     _checkoutStreamController.add(items);
     return _setValue(kCheckoutCollectionKey, json.encode(items));
@@ -77,21 +79,26 @@ class LocalStorageCheckoutApi {
   Future<void> decrementItemQuantityByIndex(int itemIndex) async {
     final items = [..._checkoutStreamController.value];
 
-    items[itemIndex].quantity = items[itemIndex].quantity! - 1;
+    items[itemIndex] = items[itemIndex].copyWith(
+      quantity: items[itemIndex].quantity! - 1,
+    );
 
     _checkoutStreamController.add(items);
     return _setValue(kCheckoutCollectionKey, json.encode(items));
   }
 
   Future<void> addItem(
-    CreateOrderItemDto item,
+    OrderItem item,
   ) async {
     final checkoutItems = [..._checkoutStreamController.value];
 
     final checkoutItem = checkoutItems.firstWhereOrNull(
       (listItem) =>
           listItem.equals(item) &&
-          const DeepCollectionEquality().equals(item.items, listItem.items),
+          const DeepCollectionEquality().equals(
+            item.subItems,
+            listItem.subItems,
+          ),
     );
 
     if (checkoutItem == null) {

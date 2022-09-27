@@ -7,7 +7,7 @@ import 'package:pickup/shared/shared.dart';
 class Detail extends StatelessWidget {
   const Detail({Key? key, required this.order}) : super(key: key);
 
-  final GetOrderResponseDto order;
+  final GetOrdersResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,13 @@ class Detail extends StatelessWidget {
           Row(
             children: [
               Text(
-                DateFormat('dd.MM.yyyy, kk:mm')
-                    .format(order.estimatedPickUpTime!.toLocal()),
+                DateFormat('dd.MM.yyyy, kk:mm').format(
+                  DateTime.parse(order.estimatedPickupTime!).toLocal(),
+                ),
               ),
-              Text(
-                ' - ${order.status!.string}',
-              ),
+              /*Text(
+                ' - ${order.status}',
+              ),*/
             ],
           ),
           Text(
