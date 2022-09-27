@@ -24,9 +24,9 @@ class Detail extends StatelessWidget {
                   DateTime.parse(order.estimatedPickupTime!).toLocal(),
                 ),
               ),
-              Text(
+              /*Text(
                 ' - ${order.status}',
-              ),
+              ),*/
             ],
           ),
           Text(

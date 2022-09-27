@@ -2,6 +2,7 @@ import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:intl/intl.dart';
+import 'package:pickup/shared/order_id_extension.dart';
 import 'package:pickup/shared/utilities.dart';
 
 class OrdersListView extends StatelessWidget {
@@ -44,7 +45,7 @@ class OrdersListView extends StatelessWidget {
                               vertical: 12,
                             ),
                             child: Text(
-                              '#${order.id!.substring(0, 3)}',
+                              '#${order.id!.tag}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
@@ -88,9 +89,9 @@ class OrdersListView extends StatelessWidget {
                                   .toLocal(),
                             ),
                           ),
-                          Text(
+                          /*Text(
                             ' - ${order.status!}',
-                          ),
+                          ),*/
                         ],
                       ),
                       Text(
