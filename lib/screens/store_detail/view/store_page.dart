@@ -17,6 +17,10 @@ class StoreDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = item.imageUrl == null || item.imageUrl!.isEmpty
+        ? restaurantImage
+        : item.imageUrl!;
+
     return BlocProvider(
       create: (_) => StoreDetailCubit(
         item: item,
@@ -35,7 +39,7 @@ class StoreDetailPage extends StatelessWidget {
           }
         },
         child: StoreDetailView(
-          image: item.imageUrl ?? restaurantImage,
+          image: imageUrl,
         ),
       ),
     );

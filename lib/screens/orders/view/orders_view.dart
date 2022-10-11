@@ -35,7 +35,7 @@ class OrdersView extends StatelessWidget {
                   color: AlpacaColor.primary100,
                   onRefresh: () => context.read<OrdersCubit>().fetchOrders(),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 200,
+                    height: MediaQuery.of(context).size.height,
                     child: _ListView(orders: state.orders),
                   ),
                 ),
