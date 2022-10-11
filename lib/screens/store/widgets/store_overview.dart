@@ -47,7 +47,7 @@ class StoreOverview extends StatelessWidget {
                       children: [
                         StoreRating(
                           rating: store.reviewCount.toString(),
-                          reviewCount: store.reviewCount.toString(),
+                          reviewCount: store.averageReview.toString(),
                         ),
                       ],
                     ),

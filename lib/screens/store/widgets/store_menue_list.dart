@@ -196,7 +196,7 @@ class _ItemContent extends StatelessWidget {
                 ),
               ),
             ),
-            if (product.imageUrl != null)
+            if (product.imageUrl != '')
               _Image(
                 count: amountInBasket,
                 imageUrl: product.imageUrl!,
