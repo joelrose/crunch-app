@@ -101,7 +101,7 @@ class _Content extends StatelessWidget {
   Widget build(BuildContext context) {
     final storeName =
         context.select((CheckoutCubit cubit) => cubit.state.store.name);
-        
+
     return Column(
       children: [
         CheckoutNavbar(
@@ -114,9 +114,7 @@ class _Content extends StatelessWidget {
               children: [
                 CheckoutRowHeader(
                   header: context.l10n.checkoutCartItems,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => Navigator.of(context).pop(),
                   buttonText: context.l10n.edit,
                 ),
                 const ItemsOverview(),

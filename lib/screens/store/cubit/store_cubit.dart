@@ -16,7 +16,7 @@ class StoreCubit extends Cubit<StoreState> {
     emit(state.copyWith(status: StoreStatus.loading));
 
     try {
-      final store = await _hermesRepository.client.storeIdGet(
+      final store = await _hermesRepository.client.appV1StoreIdGet(
         id: storeId,
       );
 

@@ -13,4 +13,4 @@ dependencies:
     path: ../hermes_repository
   flutter:
     sdk: flutter
-  flutter_stripe: ^2.4.0
+  flutter_stripe: ^5.1.0

@@ -35,7 +35,7 @@ class StripeRepository {
     required String storeId,
     required List<OrderItem> checkoutItems,
   }) async {
-    final response = await _hermesRepository.client.ordersPost(
+    final response = await _hermesRepository.client.appV1OrdersPost(
       request: CreateOrderRequest(
         storeId: storeId,
         orderItems: checkoutItems,
@@ -54,13 +54,15 @@ class StripeRepository {
 
     await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
-        applePay: true,
-        googlePay: true,
+        applePay: PaymentSheetApplePay(merchantCountryCode: 'DE'),
+        googlePay: PaymentSheetGooglePay(
+          testEnv: isTestEnvironment,
+          merchantCountryCode: 'DE',
+        ),
         style: ThemeMode.light,
-        testEnv: isTestEnvironment,
-        merchantCountryCode: 'DE',
         merchantDisplayName: 'Crunch',
         paymentIntentClientSecret: clientSecret,
+        allowsDelayedPaymentMethods: true,
       ),
     );
 

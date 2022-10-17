@@ -50,25 +50,17 @@ Map<String, dynamic> _$CreateOrderResponseToJson(CreateOrderResponse instance) {
 
 CreateUserRequest _$CreateUserRequestFromJson(Map<String, dynamic> json) =>
     CreateUserRequest(
-      firstname: json['firstname'] as String?,
-      languageCode: json['language_code'] as String?,
-      lastname: json['lastname'] as String?,
+      firstname: json['firstname'] as String,
+      languageCode: json['language_code'] as String,
+      lastname: json['lastname'] as String,
     );
 
-Map<String, dynamic> _$CreateUserRequestToJson(CreateUserRequest instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('firstname', instance.firstname);
-  writeNotNull('language_code', instance.languageCode);
-  writeNotNull('lastname', instance.lastname);
-  return val;
-}
+Map<String, dynamic> _$CreateUserRequestToJson(CreateUserRequest instance) =>
+    <String, dynamic>{
+      'firstname': instance.firstname,
+      'language_code': instance.languageCode,
+      'lastname': instance.lastname,
+    };
 
 GetOrdersResponse _$GetOrdersResponseFromJson(Map<String, dynamic> json) =>
     GetOrdersResponse(
@@ -396,18 +388,10 @@ Map<String, dynamic> _$UserToJson(User instance) {
 
 WhitelistRequest _$WhitelistRequestFromJson(Map<String, dynamic> json) =>
     WhitelistRequest(
-      identifier: json['identifier'] as String?,
+      identifier: json['identifier'] as String,
     );
 
-Map<String, dynamic> _$WhitelistRequestToJson(WhitelistRequest instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('identifier', instance.identifier);
-  return val;
-}
+Map<String, dynamic> _$WhitelistRequestToJson(WhitelistRequest instance) =>
+    <String, dynamic>{
+      'identifier': instance.identifier,
+    };

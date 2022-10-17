@@ -59,7 +59,7 @@ class _Item extends StatelessWidget {
       return Dismissible(
         key: UniqueKey(),
         background: Container(
-          color: Colors.red,
+          color: AlpacaColor.redColor,
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.only(right: 10),
           child: Text(
@@ -75,14 +75,14 @@ class _Item extends StatelessWidget {
               .add(CheckoutBasketItemDeleted(itemIndex: itemIndex));
         },
         direction: DismissDirection.endToStart,
-        child: _Content(context),
+        child: _content(context),
       );
     } else {
-      return _Content(context);
+      return _content(context);
     }
   }
 
-  Widget _Content(BuildContext context) {
+  Widget _content(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       child: Row(

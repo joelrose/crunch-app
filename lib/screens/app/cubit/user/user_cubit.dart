@@ -16,7 +16,7 @@ class UserCubit extends Cubit<BaseState<User>> {
     emit(const BaseState<User>(status: BaseStatus.loading));
 
     try {
-      final response = await _hermesRepository.client.usersGet();
+      final response = await _hermesRepository.client.appV1UsersGet();
 
       if (response.isSuccessful) {
         emit(

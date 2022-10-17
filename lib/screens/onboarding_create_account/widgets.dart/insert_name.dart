@@ -100,7 +100,7 @@ class _StepInsertNameState extends State<StepInsertName> {
       // TODO: validate response
       final response =
           await loadingOverlayRepository.asyncLoading<Response<dynamic>>(
-        hermesRepository.client.usersPost(
+        hermesRepository.client.appV1UsersPost(
           request: CreateUserRequest(
             firstname: _firstNameController.text,
             lastname: _lastNameController.text,
