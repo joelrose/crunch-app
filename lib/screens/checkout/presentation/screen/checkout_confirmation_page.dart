@@ -94,9 +94,9 @@ class _Content extends StatelessWidget {
                 disableButton: true,
               ),
               const ItemsOverview(isEditable: false),
-              AddressDirection(
+              /*AddressDirection(
                 googleMapsLink: state.googleMapsLink,
-              ),
+              ),*/
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,

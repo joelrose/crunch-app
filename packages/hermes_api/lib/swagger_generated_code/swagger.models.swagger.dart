@@ -111,20 +111,20 @@ extension $CreateOrderResponseExtension on CreateOrderResponse {
 @JsonSerializable(explicitToJson: true)
 class CreateUserRequest {
   CreateUserRequest({
-    this.firstname,
-    this.languageCode,
-    this.lastname,
+    required this.firstname,
+    required this.languageCode,
+    required this.lastname,
   });
 
   factory CreateUserRequest.fromJson(Map<String, dynamic> json) =>
       _$CreateUserRequestFromJson(json);
 
   @JsonKey(name: 'firstname', includeIfNull: false)
-  final String? firstname;
+  final String firstname;
   @JsonKey(name: 'language_code', includeIfNull: false)
-  final String? languageCode;
+  final String languageCode;
   @JsonKey(name: 'lastname', includeIfNull: false)
-  final String? lastname;
+  final String lastname;
   static const fromJsonFactory = _$CreateUserRequestFromJson;
   static const toJsonFactory = _$CreateUserRequestToJson;
   Map<String, dynamic> toJson() => _$CreateUserRequestToJson(this);
@@ -165,9 +165,9 @@ extension $CreateUserRequestExtension on CreateUserRequest {
   }
 
   CreateUserRequest copyWithWrapped(
-      {Wrapped<String?>? firstname,
-      Wrapped<String?>? languageCode,
-      Wrapped<String?>? lastname}) {
+      {Wrapped<String>? firstname,
+      Wrapped<String>? languageCode,
+      Wrapped<String>? lastname}) {
     return CreateUserRequest(
         firstname: (firstname != null ? firstname.value : this.firstname),
         languageCode:
@@ -1352,14 +1352,14 @@ extension $UserExtension on User {
 @JsonSerializable(explicitToJson: true)
 class WhitelistRequest {
   WhitelistRequest({
-    this.identifier,
+    required this.identifier,
   });
 
   factory WhitelistRequest.fromJson(Map<String, dynamic> json) =>
       _$WhitelistRequestFromJson(json);
 
   @JsonKey(name: 'identifier', includeIfNull: false)
-  final String? identifier;
+  final String identifier;
   static const fromJsonFactory = _$WhitelistRequestFromJson;
   static const toJsonFactory = _$WhitelistRequestToJson;
   Map<String, dynamic> toJson() => _$WhitelistRequestToJson(this);
@@ -1386,7 +1386,7 @@ extension $WhitelistRequestExtension on WhitelistRequest {
     return WhitelistRequest(identifier: identifier ?? this.identifier);
   }
 
-  WhitelistRequest copyWithWrapped({Wrapped<String?>? identifier}) {
+  WhitelistRequest copyWithWrapped({Wrapped<String>? identifier}) {
     return WhitelistRequest(
         identifier: (identifier != null ? identifier.value : this.identifier));
   }

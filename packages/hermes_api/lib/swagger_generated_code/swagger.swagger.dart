@@ -31,127 +31,141 @@ abstract class Swagger extends ChopperService {
     return _$Swagger(newClient);
   }
 
-  ///Get the menu for a store
-  Future<chopper.Response<List<Menu>>> dashboardMenuGet() {
-    generatedMapping.putIfAbsent(Menu, () => Menu.fromJsonFactory);
-
-    return _dashboardMenuGet();
-  }
-
-  ///Get the menu for a store
-  @Get(path: '/dashboard/menu')
-  Future<chopper.Response<List<Menu>>> _dashboardMenuGet();
-
-  ///Get all orders from a store
-  Future<chopper.Response<List<GetOrdersResponse>>> dashboardOrdersGet() {
+  ///Get all orders from a user
+  Future<chopper.Response<List<GetOrdersResponse>>> appV1OrdersGet() {
     generatedMapping.putIfAbsent(
         GetOrdersResponse, () => GetOrdersResponse.fromJsonFactory);
 
-    return _dashboardOrdersGet();
-  }
-
-  ///Get all orders from a store
-  @Get(path: '/dashboard/orders')
-  Future<chopper.Response<List<GetOrdersResponse>>> _dashboardOrdersGet();
-
-  ///Get all orders from a user
-  Future<chopper.Response<List<GetOrdersResponse>>> ordersGet() {
-    generatedMapping.putIfAbsent(
-        GetOrdersResponse, () => GetOrdersResponse.fromJsonFactory);
-
-    return _ordersGet();
+    return _appV1OrdersGet();
   }
 
   ///Get all orders from a user
-  @Get(path: '/orders')
-  Future<chopper.Response<List<GetOrdersResponse>>> _ordersGet();
+  @Get(path: '/app/v1/orders')
+  Future<chopper.Response<List<GetOrdersResponse>>> _appV1OrdersGet();
 
   ///Create Order for a store
   ///@param request body
-  Future<chopper.Response<CreateOrderResponse>> ordersPost(
+  Future<chopper.Response<CreateOrderResponse>> appV1OrdersPost(
       {required CreateOrderRequest? request}) {
     generatedMapping.putIfAbsent(
         CreateOrderRequest, () => CreateOrderRequest.fromJsonFactory);
     generatedMapping.putIfAbsent(
         CreateOrderResponse, () => CreateOrderResponse.fromJsonFactory);
 
-    return _ordersPost(request: request);
+    return _appV1OrdersPost(request: request);
   }
 
   ///Create Order for a store
   ///@param request body
-  @Post(path: '/orders')
-  Future<chopper.Response<CreateOrderResponse>> _ordersPost(
+  @Post(path: '/app/v1/orders')
+  Future<chopper.Response<CreateOrderResponse>> _appV1OrdersPost(
       {@Body() required CreateOrderRequest? request});
 
   ///Get menu for a given store
   ///@param id Id of the store
-  Future<chopper.Response<GetStoreResponse>> storeIdGet({required String? id}) {
+  Future<chopper.Response<GetStoreResponse>> appV1StoreIdGet(
+      {required String? id}) {
     generatedMapping.putIfAbsent(
         GetStoreResponse, () => GetStoreResponse.fromJsonFactory);
 
-    return _storeIdGet(id: id);
+    return _appV1StoreIdGet(id: id);
   }
 
   ///Get menu for a given store
   ///@param id Id of the store
-  @Get(path: '/store/{id}')
-  Future<chopper.Response<GetStoreResponse>> _storeIdGet(
+  @Get(path: '/app/v1/store/{id}')
+  Future<chopper.Response<GetStoreResponse>> _appV1StoreIdGet(
       {@Path('id') required String? id});
 
   ///Get all open stores
-  Future<chopper.Response<List<GetStoresOverviewResponse>>> storesGet() {
+  Future<chopper.Response<List<GetStoresOverviewResponse>>> appV1StoresGet() {
     generatedMapping.putIfAbsent(GetStoresOverviewResponse,
         () => GetStoresOverviewResponse.fromJsonFactory);
 
-    return _storesGet();
+    return _appV1StoresGet();
   }
 
   ///Get all open stores
-  @Get(path: '/stores')
-  Future<chopper.Response<List<GetStoresOverviewResponse>>> _storesGet();
+  @Get(path: '/app/v1/stores')
+  Future<chopper.Response<List<GetStoresOverviewResponse>>> _appV1StoresGet();
 
   ///Get User associated with the given Firebase Token
-  Future<chopper.Response<User>> usersGet() {
+  Future<chopper.Response<User>> appV1UsersGet() {
     generatedMapping.putIfAbsent(User, () => User.fromJsonFactory);
 
-    return _usersGet();
+    return _appV1UsersGet();
   }
 
   ///Get User associated with the given Firebase Token
-  @Get(path: '/users')
-  Future<chopper.Response<User>> _usersGet();
+  @Get(path: '/app/v1/users')
+  Future<chopper.Response<User>> _appV1UsersGet();
 
   ///Create User associated with the given Firebase Token
   ///@param request body
-  Future<chopper.Response> usersPost({required CreateUserRequest? request}) {
+  Future<chopper.Response> appV1UsersPost(
+      {required CreateUserRequest? request}) {
     generatedMapping.putIfAbsent(
         CreateUserRequest, () => CreateUserRequest.fromJsonFactory);
 
-    return _usersPost(request: request);
+    return _appV1UsersPost(request: request);
   }
 
   ///Create User associated with the given Firebase Token
   ///@param request body
-  @Post(path: '/users')
-  Future<chopper.Response> _usersPost(
+  @Post(path: '/app/v1/users')
+  Future<chopper.Response> _appV1UsersPost(
       {@Body() required CreateUserRequest? request});
 
   ///Check if identifier is whitelisted
   ///@param request body
-  Future<chopper.Response<bool>> whitelistPost(
+  Future<chopper.Response<bool>> appV1WhitelistPost(
       {required WhitelistRequest? request}) {
     generatedMapping.putIfAbsent(
         WhitelistRequest, () => WhitelistRequest.fromJsonFactory);
 
-    return _whitelistPost(request: request);
+    return _appV1WhitelistPost(request: request);
   }
 
   ///Check if identifier is whitelisted
   ///@param request body
-  @Post(path: '/whitelist')
-  Future<chopper.Response<bool>> _whitelistPost(
+  @Post(path: '/app/v1/whitelist')
+  Future<chopper.Response<bool>> _appV1WhitelistPost(
       {@Body() required WhitelistRequest? request});
+
+  ///Get the menu for a store
+  Future<chopper.Response<List<Menu>>> dashboardV1MenuGet() {
+    generatedMapping.putIfAbsent(Menu, () => Menu.fromJsonFactory);
+
+    return _dashboardV1MenuGet();
+  }
+
+  ///Get the menu for a store
+  @Get(path: '/dashboard/v1/menu')
+  Future<chopper.Response<List<Menu>>> _dashboardV1MenuGet();
+
+  ///Get all orders from a store
+  Future<chopper.Response<List<GetOrdersResponse>>> dashboardV1OrdersGet() {
+    generatedMapping.putIfAbsent(
+        GetOrdersResponse, () => GetOrdersResponse.fromJsonFactory);
+
+    return _dashboardV1OrdersGet();
+  }
+
+  ///Get all orders from a store
+  @Get(path: '/dashboard/v1/orders')
+  Future<chopper.Response<List<GetOrdersResponse>>> _dashboardV1OrdersGet();
+
+  ///Get all products from a store
+  Future<chopper.Response<List<GetStoreProduct>>> dashboardV1ProductsGet() {
+    generatedMapping.putIfAbsent(
+        GetStoreProduct, () => GetStoreProduct.fromJsonFactory);
+
+    return _dashboardV1ProductsGet();
+  }
+
+  ///Get all products from a store
+  @Get(path: '/dashboard/v1/products')
+  Future<chopper.Response<List<GetStoreProduct>>> _dashboardV1ProductsGet();
 }
 
 typedef $JsonFactory<T> = T Function(Map<String, dynamic> json);

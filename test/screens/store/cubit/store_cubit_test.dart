@@ -29,7 +29,7 @@ void main() {
       'emits failure when expection is thrown',
       setUp: () {
         when(
-          () => hermesService.client.storeIdGet(
+          () => hermesService.client.appV1StoreIdGet(
             id: any(named: 'storeId'),
           ),
         ).thenThrow(Exception());

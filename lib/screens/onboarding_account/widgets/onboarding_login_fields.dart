@@ -166,7 +166,7 @@ class _OnboardingInputFieldsState extends State<OnboardingLoginFields> {
 
           final hermesRepository = context.read<HermesRepository>();
 
-          final response = await hermesRepository.client.whitelistPost(
+          final response = await hermesRepository.client.appV1WhitelistPost(
             request: WhitelistRequest(
               identifier: phoneNumber,
             ),

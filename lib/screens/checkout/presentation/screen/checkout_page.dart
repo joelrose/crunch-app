@@ -52,11 +52,13 @@ class CheckoutPage extends StatelessWidget {
     return BlocListener<CheckoutPaymentCubit, CheckoutPaymentState>(
       listener: (context, state) {
         if (state.status.isPaid) {
+          final store = context.read<CheckoutCubit>().state.store;
+
           Navigator.of(context).push(
             CheckoutConfirmationPage.route(
-              pickUpTime: context.read<CheckoutTimeCubit>().state.pickupTime,
-              googleMapsLink:
-                  context.read<CheckoutCubit>().state.store.googleMapsLink!,
+              pickUpTime: DateTime.now()
+                  .add(Duration(minutes: store.averageReview?.toInt() ?? 0)),
+              googleMapsLink: store.googleMapsLink!,
             ),
           );
           context.read<LoadingOverlayRepository>().hide();
@@ -101,7 +103,7 @@ class _Content extends StatelessWidget {
   Widget build(BuildContext context) {
     final storeName =
         context.select((CheckoutCubit cubit) => cubit.state.store.name);
-        
+
     return Column(
       children: [
         CheckoutNavbar(
@@ -114,10 +116,9 @@ class _Content extends StatelessWidget {
               children: [
                 CheckoutRowHeader(
                   header: context.l10n.checkoutCartItems,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => Navigator.of(context).pop(),
                   buttonText: context.l10n.edit,
+                  disableButton: true,
                 ),
                 const ItemsOverview(),
                 CheckoutTimer(),

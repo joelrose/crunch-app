@@ -76,14 +76,14 @@ class SocialOnboarding extends StatelessWidget {
     if (user != null) {
       final hermesRepository = context.read<HermesRepository>();
 
-      final response = await hermesRepository.client.whitelistPost(
+      final response = await hermesRepository.client.appV1WhitelistPost(
         request: WhitelistRequest(
-          identifier: user.email,
+          identifier: user.email ?? '',
         ),
       );
 
       if (response.isSuccessful && response.body == true) {
-        final account = await hermesRepository.client.usersGet();
+        final account = await hermesRepository.client.appV1UsersGet();
 
         if (account.isSuccessful) {
           Navigator.of(context).pushNamedAndRemoveUntil(

@@ -15,7 +15,7 @@ class OrdersCubit extends Cubit<OrdersState> {
     emit(state.copyWith(status: OrdersStatus.loading));
 
     try {
-      final orders = await _hermesRepository.client.ordersGet();
+      final orders = await _hermesRepository.client.appV1OrdersGet();
 
       if (orders.isSuccessful) {
         emit(

@@ -19,7 +19,7 @@ class StoreInformationView extends StatelessWidget {
       children: [
         CheckoutNavbar(
           storeName: store.name,
-          pageOverviewName: context.l10n.orderOverview,
+          pageOverviewName: context.l10n.storeInformation,
         ),
         CrunchMap(
           googleMapsLink: store.googleMapsLink!,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app_outdated_repository/app_outdated_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
@@ -12,7 +13,7 @@ class HermesRepository {
     required String appVersion,
   }) {
     _chopperClient = ChopperClient(
-      baseUrl: apiUrl + '/api/v1',
+      baseUrl: apiUrl,
       services: [Swagger.create()],
       converter: JsonSerializableConverter(generatedMapping),
       interceptors: [
@@ -65,7 +66,7 @@ class VersionResponseInterceptor implements ResponseInterceptor {
 
   @override
   FutureOr<Response> onResponse(Response response) {
-    if (response.statusCode == 412) {
+    if (response.statusCode == HttpStatus.preconditionFailed) {
       appOutdatedRepository.pushOutdated();
     }
 

@@ -48,7 +48,7 @@ class _CheckoutConfirmationTimeState extends State<CheckoutConfirmationTime> {
     return Text(
       waitTimeText,
       style: Theme.of(context).textTheme.headline2?.copyWith(
-            fontSize: 51,
+            fontSize: 50,
             color: AlpacaColor.primary100,
             fontWeight: FontWeight.w600,
           ),

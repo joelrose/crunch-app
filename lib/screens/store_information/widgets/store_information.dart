@@ -22,7 +22,10 @@ class StoreInformation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          const SizedBox(
+            height: 8,
+          ),
+          /*Padding(
             padding: const EdgeInsets.only(bottom: 10, top: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,7 +38,7 @@ class StoreInformation extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+          ),*/
           /*StoreInformationItem(
             icon: 'assets/icons/clock-opening-times.svg',
             title: context.l10n.storeOpenTimes,
