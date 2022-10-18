@@ -116,6 +116,7 @@ class _Content extends StatelessWidget {
                   header: context.l10n.checkoutCartItems,
                   onPressed: () => Navigator.of(context).pop(),
                   buttonText: context.l10n.edit,
+                  disableButton: true,
                 ),
                 const ItemsOverview(),
                 CheckoutTimer(),

@@ -1,6 +1,7 @@
 import 'package:alpaca/alpaca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hermes_repository/hermes_repository.dart';
 import 'package:pickup/l10n/l10n.dart';
 import 'package:pickup/screens/app/app.dart';
@@ -69,17 +70,19 @@ class _Item extends StatelessWidget {
                 ),
           ),
         ),
-        onDismissed: (direction) {
-          context
-              .read<CheckoutBasketBloc>()
-              .add(CheckoutBasketItemDeleted(itemIndex: itemIndex));
-        },
+        onDismissed: (direction) => _deleteItem(context),
         direction: DismissDirection.endToStart,
         child: _content(context),
       );
     } else {
       return _content(context);
     }
+  }
+
+  void _deleteItem(BuildContext context) {
+    context
+        .read<CheckoutBasketBloc>()
+        .add(CheckoutBasketItemDeleted(itemIndex: itemIndex));
   }
 
   Widget _content(BuildContext context) {
@@ -94,16 +97,28 @@ class _Item extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-          Expanded(
-            child: Column(
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       item.name!,
                       style: Theme.of(context).textTheme.headline4,
                     ),
+                    if (item.subItems != null && item.subItems!.isNotEmpty) ...[
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        child: _ItemDescription(item),
+                      ),
+                    ]
+                  ],
+                ),
+                Row(
+                  children: [
                     Text(
                       Utilities.currencyFormat(
                         PriceCalulcation.getPriceOfItem(item),
@@ -113,16 +128,22 @@ class _Item extends StatelessWidget {
                           .headline4!
                           .copyWith(color: AlpacaColor.blackColor),
                     ),
+                    if (isEditable) ...[
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      GestureDetector(
+                        onTap: () => _deleteItem(context),
+                        child: SvgPicture.asset(
+                          'assets/icons/trash.svg',
+                          width: 18,
+                          height: 18,
+                          color: AlpacaColor.lightBlackColor,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
-                if (item.subItems != null && item.subItems!.isNotEmpty) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _ItemDescription(item),
-                    ],
-                  ),
-                ]
               ],
             ),
           ),
@@ -139,17 +160,15 @@ class _ItemDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(
-          top: 6,
-          right: 60,
-        ),
-        child: Text(
-          _getDescription(item),
-          style: Theme.of(context).textTheme.headline5,
-          overflow: TextOverflow.ellipsis,
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 6,
+        right: 60,
+      ),
+      child: Text(
+        _getDescription(item),
+        style: Theme.of(context).textTheme.headline5,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

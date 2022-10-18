@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:alpaca/alpaca.dart';
 import 'package:custom_map_markers/custom_map_markers.dart' as custom;
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart' as map;
 import 'package:skeleton_loader/skeleton_loader.dart';
 
@@ -34,13 +35,19 @@ class CrunchMap extends StatelessWidget {
 
           return map.PlatformMap(
             initialCameraPosition: const map.CameraPosition(
-              target: map.LatLng(52.4940361, 13.4440809),
-              zoom: 14.4746,
+              target: map.LatLng(
+                52.49403052895202,
+                13.446307045002678,
+              ),
+              zoom: 15,
             ),
             markers: {
               map.Marker(
                 markerId: map.MarkerId('0'),
-                position: const map.LatLng(52.4940361, 13.4440809),
+                position: const map.LatLng(
+                  52.49403052895202,
+                  13.446307045002678,
+                ),
                 icon: map.BitmapDescriptor.fromBytes(markers[0]),
               ),
             },
@@ -51,10 +58,11 @@ class CrunchMap extends StatelessWidget {
   }
 
   Widget _customMarker() {
-    return const Icon(
-      Icons.food_bank,
-      color: AlpacaColor.primary100,
-      size: 50,
+    return SvgPicture.asset(
+      'assets/icons/map-pin.svg',
+      width: 35,
+      height: 35,
+      color: AlpacaColor.blackColor,
     );
   }
 }
