@@ -83,6 +83,7 @@ class OrderItemWidget extends StatelessWidget {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
                       Utilities.currencyFormat(
