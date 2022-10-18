@@ -76,7 +76,7 @@ class OrderItemWidget extends StatelessWidget {
                     ),
                     if (item.subItems != null && item.subItems!.isNotEmpty) ...[
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.65,
+                        width: MediaQuery.of(context).size.width * 0.5,
                         child: _ItemDescription(item),
                       ),
                     ]
