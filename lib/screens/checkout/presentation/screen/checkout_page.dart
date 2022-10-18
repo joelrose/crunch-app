@@ -52,11 +52,13 @@ class CheckoutPage extends StatelessWidget {
     return BlocListener<CheckoutPaymentCubit, CheckoutPaymentState>(
       listener: (context, state) {
         if (state.status.isPaid) {
+          final store = context.read<CheckoutCubit>().state.store;
+
           Navigator.of(context).push(
             CheckoutConfirmationPage.route(
-              pickUpTime: context.read<CheckoutTimeCubit>().state.pickupTime,
-              googleMapsLink:
-                  context.read<CheckoutCubit>().state.store.googleMapsLink!,
+              pickUpTime: DateTime.now()
+                  .add(Duration(minutes: store.averageReview?.toInt() ?? 0)),
+              googleMapsLink: store.googleMapsLink!,
             ),
           );
           context.read<LoadingOverlayRepository>().hide();
